@@ -6,13 +6,11 @@ using System.Threading.Tasks;
 
 namespace server.Model
 {
-    abstract class MemberRole
+    class Trainer : MemberRole
     {
-        public Member Member { get; private set; }
-
-        public MemberRole(Member member)
+        public Trainer(Member member) : base(member)
         {
-            this.Member = member;
+
         }
     }
 }

@@ -6,13 +6,8 @@ using System.Threading.Tasks;
 
 namespace server.Model
 {
-    class Player : MemberRole
+    class FocusPointDescriptor
     {
-        public List<PracticeTeam> Teams { get; set; }
 
-        public Player(Member member) : base(member)
-        {
-
-        }
     }
 }

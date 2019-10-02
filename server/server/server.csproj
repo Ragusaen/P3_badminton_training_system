@@ -33,6 +33,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HtmlAgilityPack, Version=1.11.15.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.11.15\lib\Net45\HtmlAgilityPack.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,11 +46,23 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Model\Feedback.cs" />
+    <Compile Include="Model\FocusPoint.cs" />
+    <Compile Include="Model\Lineup.cs" />
+    <Compile Include="Model\Match.cs" />
+    <Compile Include="Model\Member.cs" />
+    <Compile Include="Model\MemberRole.cs" />
+    <Compile Include="Model\Player.cs" />
+    <Compile Include="Model\PlaySession.cs" />
+    <Compile Include="Model\Practice.cs" />
+    <Compile Include="Model\PracticeTeam.cs" />
+    <Compile Include="Model\Trainer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

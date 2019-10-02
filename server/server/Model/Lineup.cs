@@ -6,13 +6,10 @@ using System.Threading.Tasks;
 
 namespace server.Model
 {
-    class Player : MemberRole
+    class Lineup
     {
-        public List<PracticeTeam> Teams { get; set; }
+        public Match Match { get; set; }
+        public List<Player> Players { get; set; }
 
-        public Player(Member member) : base(member)
-        {
-
-        }
     }
 }

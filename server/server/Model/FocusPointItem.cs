@@ -6,13 +6,10 @@ using System.Threading.Tasks;
 
 namespace server.Model
 {
-    class Player : MemberRole
+    class FocusPointItem
     {
-        public List<PracticeTeam> Teams { get; set; }
+        public DateTime DateAssigned { get; }
 
-        public Player(Member member) : base(member)
-        {
-
-        }
+        public FocusPointDescriptor Descriptor;
     }
 }

@@ -6,13 +6,14 @@ using System.Threading.Tasks;
 
 namespace server.Model
 {
-    abstract class MemberRole
+    class Practice
     {
-        public Member Member { get; private set; }
+        private PracticeTeam _team;
+        private DateTime _time;
 
-        public MemberRole(Member member)
+        public Practice(PracticeTeam team, DateTime time)
         {
-            this.Member = member;
+
         }
     }
 }

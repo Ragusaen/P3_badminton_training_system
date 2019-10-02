@@ -6,13 +6,9 @@ using System.Threading.Tasks;
 
 namespace server.Model
 {
-    class Player : MemberRole
+    class Feedback
     {
-        public List<PracticeTeam> Teams { get; set; }
-
-        public Player(Member member) : base(member)
-        {
-
-        }
+        public Player Player { get; set; }
+        public PlaySession PlaySession { get; set; }
     }
 }
