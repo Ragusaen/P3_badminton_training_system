@@ -25,15 +25,14 @@ namespace server.DAL
         /// <param name="sqlParameters"></param>
         public DataTable ExecuteSelectQuery(string query, SqlParameter[] sqlParameters)
         {
-            DataTable dt = new DataTable();
-            dt = null;
+            DataTable dt = null;
             DataSet ds = new DataSet();
             using (SqlConnection conn = new SqlConnection(connString))
             {
-                SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddRange(sqlParameters);
                 try
                 {
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddRange(sqlParameters);
                     conn.Open();
                     cmd.ExecuteNonQuery();
                     SqlDataAdapter adapter = new SqlDataAdapter(cmd);
@@ -57,10 +56,10 @@ namespace server.DAL
         {
             using(SqlConnection conn = new SqlConnection(connString))
             {
-                SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddRange(sqlParameters);
                 try
                 {
+                    SqlCommand cmd = new SqlCommand(query, conn);
+                    cmd.Parameters.AddRange(sqlParameters);
                     conn.Open();
                     cmd.ExecuteNonQuery();
                 }catch(SqlException e)
