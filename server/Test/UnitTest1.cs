@@ -1,6 +1,6 @@
 using NUnit.Framework;
-using server.RankingsParser;
-using server.Model;
+using Server.RankingsParser;
+using Server.Model;
 
 namespace Test
 {
