@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace server.Model
 {
-    class PlayerRanking
+    public class PlayerRanking
     {
         public int Points;
         public string Level;
