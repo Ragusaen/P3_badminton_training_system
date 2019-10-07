@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace server.Model
 {
-    public abstract class MemberRole
+    abstract class MemberRole
     {
         public Member Member { get; private set; }
 

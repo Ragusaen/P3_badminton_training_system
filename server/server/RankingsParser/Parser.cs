@@ -11,7 +11,7 @@ using System.IO;
 
 namespace server.RankingsParser
 {
-    public class Parser
+    class Parser
     {
         public List<Dictionary<Player, PlayerRanking>> PlayerRankings = new List<Dictionary<Player, PlayerRanking>>();
 

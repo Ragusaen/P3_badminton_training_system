@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace server.Model
 {
-    public class Player : MemberRole
+    class Player : MemberRole
     {
         public List<PracticeTeam> Teams { get; set; }
 

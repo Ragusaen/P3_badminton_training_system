@@ -1,5 +1,6 @@
 using NUnit.Framework;
 using server.RankingsParser;
+using server.Model;
 
 namespace Test
 {
@@ -13,7 +14,7 @@ namespace Test
         [Test]
         public void Test1()
         {
-            Parser parser = new Parser();
+            Player player = new Player(new Member());
             Assert.Pass();
         }
     }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace server.Model
 {
-    public class Member
+    class Member
     {
         private List<MemberRole> _roles = new List<MemberRole>();
 
