@@ -43,7 +43,11 @@ namespace server.Controller
 
                 if (user.PasswordHash.SequenceEqual(input_pw_hash))
                 {
+                    var rng = new RNGCryptoServiceProvider();
+                    byte[] token = new byte[hash_size];
+                    rng.GetBytes(token);
 
+                    return token;
                 }
             }
 
