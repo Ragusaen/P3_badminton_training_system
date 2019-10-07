@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using server.Model;
+using Server.Model;
 using OpenQA.Selenium.PhantomJS;
 using OpenQA.Selenium.Remote;
 using System.Threading;
 using System.IO;
 
-namespace server.RankingsParser
+namespace Server.RankingsParser
 {
     class Parser
     {
