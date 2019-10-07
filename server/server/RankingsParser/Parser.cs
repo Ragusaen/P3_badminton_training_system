@@ -13,7 +13,6 @@ namespace server.RankingsParser
 {
     public class Parser
     {
-
         public List<Dictionary<Player, PlayerRanking>> PlayerRankings = new List<Dictionary<Player, PlayerRanking>>();
 
         public void UpdateAllRankings(List<Player> players)
