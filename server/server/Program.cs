@@ -1,7 +1,7 @@
-﻿using server.Controller;
+﻿using Server.Controller;
 using System;
 
-namespace server
+namespace Server
 {
     class Program
     {
