@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MySql.Data.MySqlClient;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -23,19 +24,19 @@ namespace server.DAL
         /// </summary>
         /// <param name="query"></param>
         /// <param name="sqlParameters"></param>
-        public DataTable ExecuteSelectQuery(string query, SqlParameter[] sqlParameters)
+        public DataTable ExecuteSelectQuery(string query, MySqlParameter[] sqlParameters)
         {
             DataTable dt = null;
             DataSet ds = new DataSet();
-            using (SqlConnection conn = new SqlConnection(connString))
+            using (MySqlConnection conn = new MySqlConnection(connString))
             {
                 try
                 {
-                    SqlCommand cmd = new SqlCommand(query, conn);
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
                     cmd.Parameters.AddRange(sqlParameters);
                     conn.Open();
                     cmd.ExecuteNonQuery();
-                    SqlDataAdapter adapter = new SqlDataAdapter(cmd);
+                    MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                     adapter.Fill(ds);
                     dt = ds.Tables[0];
                 }catch(SqlException e)
@@ -52,17 +53,17 @@ namespace server.DAL
         /// <param name="query"></param>
         /// <param name="sqlParameters"></param>
         /// <returns></returns>
-        public bool ExecuteInsertUpdateDeleteQuery(string query, SqlParameter[] sqlParameters)
+        public bool ExecuteInsertUpdateDeleteQuery(string query, MySqlParameter[] sqlParameters)
         {
-            using(SqlConnection conn = new SqlConnection(connString))
+            using(MySqlConnection conn = new MySqlConnection(connString))
             {
                 try
                 {
-                    SqlCommand cmd = new SqlCommand(query, conn);
+                    MySqlCommand cmd = new MySqlCommand(query, conn);
                     cmd.Parameters.AddRange(sqlParameters);
                     conn.Open();
                     cmd.ExecuteNonQuery();
-                }catch(SqlException e)
+                }catch(MySqlException e)
                 {
                     Console.WriteLine("Error ExecuteInsertUpdateDeleteQuery - " + e.Message);
                     return false;
