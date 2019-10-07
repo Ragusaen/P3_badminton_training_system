@@ -9,5 +9,14 @@ namespace server.Model
     abstract class PlaySession
     {
         public DateTime SessionStart { get; set; }
+
+        private List<Trainer> _trainers = new List<Trainer>();
+
+        public void AssignTrainer(Trainer trainer)
+        {
+            trainer.AssignToPlaySession(this);
+        }
+
+        private Feedback _feedback;
     }
 }

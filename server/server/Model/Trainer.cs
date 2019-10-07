@@ -8,9 +8,18 @@ namespace server.Model
 {
     class Trainer : MemberRole
     {
+        private List<PlaySession> _playSessions = new List<PlaySession>();
+
         public Trainer(Member member) : base(member)
         {
-
+            
         }
+
+        public void AssignToPlaySession(PlaySession playSession)
+        {
+            _playSessions.Add(playSession);
+        }
+
+
     }
 }

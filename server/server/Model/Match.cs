@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace server.Model
 {
-    class Match
+    class Match : PlaySession
     {
+        private Lineup _lineup;
     }
 }

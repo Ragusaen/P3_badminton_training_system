@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using server.Controller;
+using System;
 
 namespace server
 {
@@ -10,7 +7,6 @@ namespace server
     {
         static void Main(string[] args)
         {
-
         }
     }
 }

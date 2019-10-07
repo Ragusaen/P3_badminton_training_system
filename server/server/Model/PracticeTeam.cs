@@ -8,9 +8,9 @@ namespace server.Model
 {
     class PracticeTeam
     {
-        public List<Player> Players { get; set; }
-        public List<Trainer> Trainers { get; set; }
-        public List<Practice> Practices { get; set; }
+        public List<Player> Players { get; set; } = new List<Player>();
+        public List<Trainer> Trainers { get; set; } = new List<Trainer>();
+        public List<Practice> Practices { get; set; } = new List<Practice>();
 
 
     }
