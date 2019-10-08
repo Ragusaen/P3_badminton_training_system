@@ -4,8 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
+using server.DAL;
+using MySql.Data.MySqlClient;
+using Server.Model;
+using System.Data;
 
-namespace server.Controller
+namespace Server.Controller
 {
     class User
     {
@@ -48,9 +52,13 @@ namespace server.Controller
 
         private UserInfo? FindUser(string username)
         {
-            //Actually find the user in the database !!!
-            var pbkdf2 = new Rfc2898DeriveBytes(Encoding.ASCII.GetBytes("password123"), Encoding.ASCII.GetBytes("randomstring"), pbkdf2_iterations);
-            return new UserInfo("hansemand", pbkdf2.GetBytes(hash_size), Encoding.ASCII.GetBytes("randomstring"));
+            string query = string.Format("select Username, PasswordHash, PasswordSalt from `Account` where Username=@Username;");
+            MySqlParameter[] param = new MySqlParameter[1];
+            param[0] = new MySqlParameter("@Username", username);
+
+            DBConnection db = new DBConnection();
+            DataTable dt = db.ExecuteSelectQuery(query, param);
+            return new UserInfo(dt.Rows[0][0].ToString(), (byte[])dt.Rows[0][1], (byte[])dt.Rows[0][2]);
         }
 
         private byte[] GenerateLoginToken()
@@ -64,7 +72,7 @@ namespace server.Controller
         #endregion
 
         #region Create
-        public void Create(string username, string password)
+        public void Create(string username, string password, Member member)
         {
             var pw_info = GenerateHashedPasswordAndSalt(password);
             UserInfo user_info = new UserInfo(
@@ -73,14 +81,24 @@ namespace server.Controller
                 pw_info.salt
             );
 
-            AddUserToDatabase(user_info);
+            AddUserToDatabase(user_info, member);
         }
         #endregion
 
         #region Database
-        private void AddUserToDatabase(UserInfo user_info)
+        private void AddUserToDatabase(UserInfo user_info, Member member)
         {
-            // Do that
+            string query = string.Format("insert into `Member`(`Name`, Sex) values(@Name, @Sex); " +
+                "insert into `Account`(MemberID, Username, PasswordHash, PasswordSalt) values(LAST_INSERT_ID(), @Username, @Hash, @Salt);");
+            MySqlParameter[] param = new MySqlParameter[5];
+            param[0] = new MySqlParameter("@Name", member.Name);
+            param[1] = new MySqlParameter("@Sex", member.Sex);
+            param[2] = new MySqlParameter("@Username", user_info.Username);
+            param[3] = new MySqlParameter("@Hash", user_info.PasswordHash);
+            param[4] = new MySqlParameter("@Salt", user_info.Salt);
+
+            DBConnection db = new DBConnection();
+            db.ExecuteInsertUpdateDeleteQuery(query, param);
         }
         #endregion
 
