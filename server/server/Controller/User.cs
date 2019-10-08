@@ -13,10 +13,10 @@ namespace Server.Controller
 {
     class User
     {
-        private const int pbkdf2_iterations = 100000;
-        private const int hash_size = 32;
-        private const int salt_size = 128;
-        private const int token_size = 64;
+        private const int pbkdf2Iterations = 100000;
+        private const int hashSize = 32;
+        private const int saltSize = 128;
+        private const int tokenSize = 64;
         
 
         struct UserInfo
@@ -36,10 +36,10 @@ namespace Server.Controller
         #region Login
         public byte[] Login(string username, string password)
         {
-            UserInfo? user_info = FindUser(username);
-            if (user_info.HasValue)
+            UserInfo? userInfo = FindUser(username);
+            if (userInfo.HasValue)
             {
-                UserInfo user = user_info.Value;
+                UserInfo user = userInfo.Value;
 
                 if (VerifyPassword(password, user.Salt, user.PasswordHash))
                 {
@@ -65,7 +65,7 @@ namespace Server.Controller
         {
             // Generate a random token for the user to login with
             var rng = new RNGCryptoServiceProvider();
-            byte[] token = new byte[token_size];
+            byte[] token = new byte[tokenSize];
             rng.GetBytes(token);
             return token;
         }
@@ -75,27 +75,27 @@ namespace Server.Controller
         public void Create(string username, string password, Member member)
         {
             var pw_info = GenerateHashedPasswordAndSalt(password);
-            UserInfo user_info = new UserInfo(
+            UserInfo userInfo = new UserInfo(
                 username,
                 pw_info.password,
                 pw_info.salt
             );
 
-            AddUserToDatabase(user_info, member);
+            AddUserToDatabase(userInfo, member);
         }
         #endregion
 
         #region Database
-        private void AddUserToDatabase(UserInfo user_info, Member member)
+        private void AddUserToDatabase(UserInfo userInfo, Member member)
         {
             string query = string.Format("insert into `Member`(`Name`, Sex) values(@Name, @Sex); " +
                 "insert into `Account`(MemberID, Username, PasswordHash, PasswordSalt) values(LAST_INSERT_ID(), @Username, @Hash, @Salt);");
             MySqlParameter[] param = new MySqlParameter[5];
             param[0] = new MySqlParameter("@Name", member.Name);
             param[1] = new MySqlParameter("@Sex", member.Sex);
-            param[2] = new MySqlParameter("@Username", user_info.Username);
-            param[3] = new MySqlParameter("@Hash", user_info.PasswordHash);
-            param[4] = new MySqlParameter("@Salt", user_info.Salt);
+            param[2] = new MySqlParameter("@Username", userInfo.Username);
+            param[3] = new MySqlParameter("@Hash", userInfo.PasswordHash);
+            param[4] = new MySqlParameter("@Salt", userInfo.Salt);
 
             DBConnection db = new DBConnection();
             db.ExecuteInsertUpdateDeleteQuery(query, param);
@@ -106,22 +106,22 @@ namespace Server.Controller
         {
             // Generate a new salt
             var rng = new RNGCryptoServiceProvider();
-            byte[] salt = new byte[salt_size];
+            byte[] salt = new byte[saltSize];
             rng.GetBytes(salt);
 
             // Hash password with salt
-            var pbkdf2 = new Rfc2898DeriveBytes(password, salt, pbkdf2_iterations);
-            byte[] password_hash = pbkdf2.GetBytes(hash_size);
+            var pbkdf2 = new Rfc2898DeriveBytes(password, salt, pbkdf2Iterations);
+            byte[] passwordHash = pbkdf2.GetBytes(hashSize);
 
-            return (password_hash, salt);
+            return (passwordHash, salt);
         }
 
-        private bool VerifyPassword(string input_pw, byte[] salt, byte[] hashed_pw)
+        private bool VerifyPassword(string inputPw, byte[] salt, byte[] hashedPw)
         {
-            var pbkdf2 = new Rfc2898DeriveBytes(input_pw, salt, pbkdf2_iterations);
-            byte[] input_pw_hash = pbkdf2.GetBytes(hash_size);
+            var pbkdf2 = new Rfc2898DeriveBytes(inputPw, salt, pbkdf2Iterations);
+            byte[] inputPwHash = pbkdf2.GetBytes(hashSize);
 
-            return input_pw_hash.SequenceEqual(hashed_pw);
+            return inputPwHash.SequenceEqual(hashedPw);
         }
     }
 }
