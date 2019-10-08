@@ -11,8 +11,7 @@ namespace Server
     {
         static void Main(string[] args)
         {
-            User user = new User();
-            user.Login("Slurp", "pw");
+
         }
     }
 }

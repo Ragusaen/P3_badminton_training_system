@@ -17,7 +17,6 @@ namespace Server.Controller
         private const int hashSize = 32;
         private const int saltSize = 128;
         private const int tokenSize = 64;
-        
 
         struct UserInfo
         {
