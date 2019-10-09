@@ -30,6 +30,8 @@ namespace Server.RankingsParser
                 DistributeRankings(players, rawRanking, i);
                 Console.WriteLine("Completed: " + i);
             }
+
+            browser.Close();
         }
 
         private List<IWebElement> ScrapeRankingsWebsite(IWebDriver driver)

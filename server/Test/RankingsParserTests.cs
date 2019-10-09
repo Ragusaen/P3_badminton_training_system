@@ -18,8 +18,7 @@ namespace Test
 
             parser.UpdatePlayers(p);
             int actual = p[0].Rankings.LevelPoints;
-            System.Console.WriteLine("Actual: "+actual);
-
+            System.Console.WriteLine("Actual: " + actual);
 
             Assert.IsTrue(actual > 0);
         }
@@ -27,8 +26,8 @@ namespace Test
     [TestFixture]
     [Parallelizable]
     public class ParserUpdatesLevelPointsForSecondPlayerOnRankings
-    { 
-    [Test]
+    {
+        [Test]
         public void Test()
         {
             List<Player> p = new List<Player>() { new Player(new Member()), new Player(new Member()) };
