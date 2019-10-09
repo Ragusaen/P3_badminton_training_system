@@ -102,6 +102,7 @@
     <Compile Include="Model\Practice.cs" />
     <Compile Include="Model\PracticeTeam.cs" />
     <Compile Include="Model\Member\PlayerRanking.cs" />
+    <Compile Include="Model\RuleBreak.cs" />
     <Compile Include="Model\Trainer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
