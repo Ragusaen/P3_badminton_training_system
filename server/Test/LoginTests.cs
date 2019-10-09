@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using NUnit.Framework;
-using server.Controller;
+using Server.Controller;
 
 namespace Test
 {
@@ -11,7 +11,7 @@ namespace Test
         [Test]
         public void login_with_hansemand_password123()
         {
-            UserLogin ui = new UserLogin();
+            User ui = new User();
 
             byte[] token = ui.Login("hansemand", Encoding.ASCII.GetBytes("password123"));
 

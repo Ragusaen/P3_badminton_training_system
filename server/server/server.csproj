@@ -103,6 +103,10 @@
     <Compile Include="Model\PracticeTeam.cs" />
     <Compile Include="Model\Member\PlayerRanking.cs" />
     <Compile Include="Model\RuleBreak.cs" />
+    <Compile Include="Model\Rules\AgeRule.cs" />
+    <Compile Include="Model\Rules\CorrectLineup.cs" />
+    <Compile Include="Model\Rules\IRule.cs" />
+    <Compile Include="Model\Rules\SexRule.cs" />
     <Compile Include="Model\Trainer.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

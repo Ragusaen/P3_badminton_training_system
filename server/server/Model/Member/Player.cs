@@ -8,7 +8,10 @@ namespace Server.Model
 {
     class Player : MemberRole
     {
+        
         public List<PracticeTeam> Teams { get; set; }
+
+        public int Age { get; set; }
 
         public string BadmintonId;
 
