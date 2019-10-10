@@ -34,6 +34,7 @@ namespace Server.RankingsParser
             browser.Quit();
         }
 
+        #pragma warning disable CS0618
         private List<IWebElement> ScrapeRankingsWebsite(IWebDriver driver)
         {
             IWait<IWebDriver> wait = new WebDriverWait(driver, TimeSpan.FromMilliseconds(3000));
