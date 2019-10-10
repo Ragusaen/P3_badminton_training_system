@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using server.Model.Positions;
 using Server.Model;
+using static server.Model.Lineup;
+using static Server.Model.Player;
 
 namespace server.Model.Rules
 {
@@ -14,38 +17,31 @@ namespace server.Model.Rules
 
         public List<RuleBreak> Rule(Lineup lineup)
         {
-            if (lineup.League < 6)
+            if (lineup.League <= Leagues.DenmarkSeries)
             {
-                CheckPlayerAge(lineup.MensSingle, 17, 16);
-                CheckPlayerAge(lineup.MensDouble, 17, 16);
-                CheckPlayerAge(lineup.WomensSingle, 17, 16);
-                CheckPlayerAge(lineup.WomensDouble, 17, 16);
-                CheckPlayerAge(lineup.MixDouble, 17, 16);
+                CheckPlayerAge(lineup, AgeGroup.U17);
                 return RuleBreaks;
             }
             else 
             {
-                CheckPlayerAge(lineup.MensSingle, 17, 15);
-                CheckPlayerAge(lineup.MensDouble, 17, 15);
-                CheckPlayerAge(lineup.WomensSingle, 17, 15);
-                CheckPlayerAge(lineup.WomensDouble, 17, 15);
-                CheckPlayerAge(lineup.MixDouble, 17, 15);
+                CheckPlayerAge(lineup, AgeGroup.U17, AgeGroup.U15);
                 return RuleBreaks;
             }
-            
-
         }
-        public void CheckPlayerAge(List<Player> List, int age1, int age2)
+        public void CheckPlayerAge(Lineup lineup, AgeGroup warningAge) { CheckPlayerAge(lineup, warningAge, warningAge); }
+        public void CheckPlayerAge(Lineup lineup, AgeGroup warningAge, AgeGroup errorAge)
         {
-            foreach (Player Player in List)
-            {
-                if (Player.Age <= age1 && Player.Age >= age2) {
-                    ErrorMessage = "Warning because of player age placeing is subjektiv";
-                    RuleBreaks.Add(new RuleBreak(Player, ErrorMessage));
-                }
-                else if (Player.Age < age2) {
-                    ErrorMessage = "Error player age is to low";
-                    RuleBreaks.Add(new RuleBreak(Player, ErrorMessage));
+            foreach (Position Position in lineup.Positions) {
+                foreach (Player Player in Position.Player)
+                {
+                    if (Player.Age <= warningAge && Player.Age >= errorAge) {
+                        ErrorMessage = "Warning because of player age placeing is subjektiv, may require exemption";
+                        RuleBreaks.Add(new RuleBreak(Player, ErrorMessage));
+                    }
+                    else if (Player.Age < errorAge) {
+                        ErrorMessage = "Error player age is to low";
+                        RuleBreaks.Add(new RuleBreak(Player, ErrorMessage));
+                    }
                 }
             }
         }

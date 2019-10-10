@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using server.Model.Positions;
 using Server.Model;
 
 namespace server.Model.Rules
@@ -21,30 +22,41 @@ namespace server.Model.Rules
         public List<RuleBreak> Rule(Lineup lineup)
         {
 
-            CheckSameSex(lineup.MensSingle, Convert.ToByte("M"));
-            CheckSameSex(lineup.WomensSingle, Convert.ToByte("W"));
-            CheckSameSex(lineup.MensDouble, Convert.ToByte("M"));
-            CheckSameSex(lineup.WomensDouble, Convert.ToByte("W"));
-            CheckMixSex(lineup.MixDouble);
+            CheckSameSex(lineup);
+            CheckMixSex(lineup);
             return RuleBreaks;
         }
-        public void CheckSameSex(List<Player> List, byte sex)
+        public void CheckSameSex(Lineup lineup)
         {
-            foreach (Player Player in List)
+            foreach (Position position in lineup.Positions)
             {
-                if (Player.Member.Sex != sex)
-                    RuleBreaks.Add(new RuleBreak(Player, ErrorMessage));
+                if (!(position is MixDouble))
+                {
+                    foreach (Player player in position.Player)
+                    {
+                        if (player.Member.Sex != Convert.ToByte("M") && ((position is MensSingle) || (position is MensDouble)))
+                            RuleBreaks.Add(new RuleBreak(player, ErrorMessage));
+                        else if (player.Member.Sex != Convert.ToByte("W") && ((position is WomensSingle) || (position is WomensDouble)))
+                            RuleBreaks.Add(new RuleBreak(player, ErrorMessage));
+                    }
+                }
             }
         }
 
-        public void CheckMixSex(List<Player> List)
+        public void CheckMixSex(Lineup lineup)
         {
-            for (int i = 0; i < List.Count - 1; i++)
+            bool first = true;
+            foreach (MixDouble Mix in lineup.Positions)
             {
-                if (i % 2 == 1 && List[i].Member.Sex != Convert.ToByte("M"))
-                    RuleBreaks.Add(new RuleBreak(List[i], ErrorMessage));
-                else if (i % 2 == 0 && List[i].Member.Sex != Convert.ToByte("W"))
-                    RuleBreaks.Add(new RuleBreak(List[i], ErrorMessage));
+                first = true;
+                foreach (Player Player in Mix.Player)
+                {
+                    if (first && Player.Member.Sex != Convert.ToByte("M"))
+                        RuleBreaks.Add(new RuleBreak(Mix.Player[1], ErrorMessage));
+                    else if (!first && Player.Member.Sex != Convert.ToByte("W"))
+                        RuleBreaks.Add(new RuleBreak(Mix.Player[2], ErrorMessage));
+                    first = false;
+                }
             }
         }
     }

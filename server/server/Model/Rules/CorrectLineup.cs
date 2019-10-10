@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using server.Model.Positions;
 using Server.Model;
 
 namespace server.Model.Rules
@@ -14,27 +15,29 @@ namespace server.Model.Rules
 
         public List<RuleBreak> Rule(Lineup lineup)
         {
-            LineupSingleCheck(lineup.MensSingle);
-            LineupSingleCheck(lineup.WomensSingle);
-            LineupDoubleCheck(lineup.MensDouble);
-            LineupDoubleCheck(lineup.WomensDouble);
-            LineupDoubleCheck(lineup.MixDouble);
+            LineupSingleCheck(lineup.Positions.Where(p => p is MensSingle).ToList());
+            LineupSingleCheck(lineup.Positions.Where(p => p is WomensSingle).ToList());
+            LineupDoubleCheck(lineup.Positions.Where(p => p is MensDouble).ToList());
+            LineupDoubleCheck(lineup.Positions.Where(p => p is WomensDouble).ToList());
+            LineupDoubleCheck(lineup.Positions.Where(p => p is MixDouble).ToList());
             return RuleBreaks;
         }
-        public void LineupSingleCheck(List<Player> List)
+        public void LineupSingleCheck(List<Position> list)
         {
-            for (int i = 0; i > List.Count - 2; i++)
-            {
-                SingleCheck(List[i], List[i + 1]);
+
+            foreach (Position position in list)
+            { 
+                for(int i = list.IndexOf(position) + 1; i < list.Count;i++)
+                    SingleCheck(position.Player.First(), list[i].Player.First());
             }
         }
 
-        public void LineupDoubleCheck(List<Player> List)
+        public void LineupDoubleCheck(List<Position> list)
         {
-            for (int i = 0; i > List.Count - 4; i += 2)
+            foreach (Position position in list)
             {
-                if (List[i + 3] != null)
-                    DoubleCheck(List[i], List[i + 1], List[i + 2], List[i + 3]);
+                for (int i = list.IndexOf(position) + 1; i < list.Count; i++)
+                    DoubleCheck(position.Player.First(), position.Player.Last(), list[i].Player.First(), list[i].Player.Last());
             }
         }
 
