@@ -6,7 +6,6 @@ using Server.Model;
 using System.Threading;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium;
-using SeleniumExtras.WaitHelpers;
 using OpenQA.Selenium.Support.UI;
 
 namespace Server.RankingsParser
@@ -38,7 +37,7 @@ namespace Server.RankingsParser
         {
             IWait<IWebDriver> wait = new WebDriverWait(driver, TimeSpan.FromMilliseconds(3000));
 
-            wait.Until(OpenQA.Selenium.Support.UI.ExpectedConditions.ElementIsVisible(By.XPath("/html/body/form/div[4]/div[1]/div[5]/table")));
+            wait.Until(ExpectedConditions.ElementIsVisible(By.XPath("/html/body/form/div[4]/div[1]/div[5]/table")));
             Thread.Sleep(1000);
 
             return driver.FindElement(By.ClassName(RankingListElementClassName)).FindElements(By.TagName("tr")).ToList();
