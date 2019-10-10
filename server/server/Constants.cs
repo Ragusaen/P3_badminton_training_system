@@ -8,7 +8,7 @@ namespace Server
 {
     static class Constants
     {
-        public enum EnumRankings {Level = 0, MS, WS, MD, WB, MMD, WMD}
+        public enum EnumRankings {Level = 0, MS, WS, MD, WD, MMD, WMD}
 
         public static string[] RankingUrlArray =
         {

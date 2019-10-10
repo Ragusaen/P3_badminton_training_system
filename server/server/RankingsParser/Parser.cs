@@ -2,56 +2,117 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 using Server.Model;
-using OpenQA.Selenium.PhantomJS;
-using OpenQA.Selenium.Remote;
 using System.Threading;
-using System.IO;
+using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium;
+using SeleniumExtras.WaitHelpers;
+using OpenQA.Selenium.Support.UI;
 
 namespace Server.RankingsParser
 {
     class Parser
     {
-        public List<Dictionary<Player, PlayerRanking>> PlayerRankings = new List<Dictionary<Player, PlayerRanking>>();
+        private const string RankingListElementClassName = "RankingListGrid";
 
-        public void UpdateAllRankings(List<Player> players)
+        public void UpdatePlayers(List<Player> players)
         {
-            for (int i = 0; i < 1 /*Constants.RankingUrlArray.Length*/; i++)
+            var chromeOptions = new ChromeOptions();
+            chromeOptions.AddArguments("--headless");
+            IWebDriver browser = new ChromeDriver(chromeOptions);
+
+            for (int i = 0; i < Constants.RankingUrlArray.Length; i++)
             {
-                string url = Constants.RankingUrlArray[i];
+                browser.Navigate().GoToUrl(Constants.RankingUrlArray[i]);
 
-                string rawRanking = ScrapeRankingsWebsite(url);
+                List<IWebElement> rawRanking = ScrapeRankingsWebsite(browser);
 
-                DistributeRankings(players, rawRanking);
+                DistributeRankings(players, rawRanking, i);
+                Console.WriteLine("Completed: " + i);
+            }
+
+            browser.Close();
+        }
+
+        private List<IWebElement> ScrapeRankingsWebsite(IWebDriver driver)
+        {
+            IWait<IWebDriver> wait = new WebDriverWait(driver, TimeSpan.FromMilliseconds(3000));
+
+            wait.Until(OpenQA.Selenium.Support.UI.ExpectedConditions.ElementIsVisible(By.XPath("/html/body/form/div[4]/div[1]/div[5]/table")));
+            Thread.Sleep(1000);
+
+            return driver.FindElement(By.ClassName(RankingListElementClassName)).FindElements(By.TagName("tr")).ToList();
+        }
+
+        private void DistributeRankings(List<Player> players, List<IWebElement> rawRanking, int category)
+        {
+            // skips first row to avoid the title
+            for (int i = 1; i < rawRanking.Count - 1; i++)
+            {
+                IWebElement elem = rawRanking[i];
+                string rawPlayerid = rawRanking[i].FindElement(By.ClassName("playerid")).GetAttribute("innerHTML");
+                int playerid = RemoveFalseHyphen(rawPlayerid);
+
+                bool playerExists = players.Exists(p => p.BadmintonId.Equals(playerid));
+
+                if (playerExists)
+                {
+                    Player a = players.Find(p => p.BadmintonId.Equals(playerid));
+                    a.Rankings.Level = FetchSkillLevelFromRow(elem);
+
+                    switch (category)
+                    {
+                        case (int)Constants.EnumRankings.Level:
+                            a.Rankings.LevelPoints = FetchPointsFromRow(elem);
+                            break;
+                        case (int)Constants.EnumRankings.MS:
+                            a.Rankings.SinglesPoints = FetchPointsFromRow(elem);
+                            break;
+                        case (int)Constants.EnumRankings.WS:
+                            a.Rankings.SinglesPoints = FetchPointsFromRow(elem);
+                            break;
+                        case (int)Constants.EnumRankings.MD:
+                            a.Rankings.DoublesPoints = FetchPointsFromRow(elem);
+                            break;
+                        case (int)Constants.EnumRankings.WD:
+                            a.Rankings.DoublesPoints = FetchPointsFromRow(elem);
+                            break;
+                        case (int)Constants.EnumRankings.MMD:
+                            a.Rankings.MixPoints = FetchPointsFromRow(elem);
+                            break;
+                        case (int)Constants.EnumRankings.WMD:
+                            a.Rankings.MixPoints = FetchPointsFromRow(elem);
+                            break;
+                        default:
+                            break;
+                    }
+                }
             }
         }
 
-        private string ScrapeRankingsWebsite(string url)
+        private string FetchSkillLevelFromRow(IWebElement elem)
         {
-            string result;
-            var driver = new PhantomJSDriver();
-            driver.Url = url;
-            driver.Navigate();
-
-            Thread.Sleep(2000);
-            result = driver.FindElementByClassName("RankingListGrid").Text;
-
-            File.WriteAllText(@"C:\users\odum\res.txt", result);
-
-            return result;
+            return elem.FindElement(By.ClassName("clas")).GetAttribute("innerHTML");
         }
 
-        private void DistributeRankings(List<Player> players, string rawRanking)
-        { 
-            string[] rankingArray = rawRanking.Split('\n');
-            players.Sort((p1, p2) => p1.BadmintonId.CompareTo(p2.BadmintonId));
+        private int FetchPointsFromRow(IWebElement elem)
+        {
+            return Int32.Parse(elem.FindElement(By.ClassName("points")).GetAttribute("innerHTML"));
+        }
 
-            // skips first row to skip the title
-            for (int i = 1; i < rankingArray.Length; i++)
-            {
-                // players.BinarySearch();
-            }
+        private int RemoveFalseHyphen(string s)
+        {
+            byte[] bytes = Encoding.UTF8.GetBytes(s);
+            byte[] newBytes = new byte[bytes.Length - 3];
+
+            int i = 0;
+
+            while (!(bytes[i] == 0xE2 && bytes[i + 1] == 0x80 && bytes[i + 2] == 0x91) && i < bytes.Length) // while(byte sequence does not equal the Non-Breaking-Hyphen) { ... }
+                i++;
+            Array.Copy(bytes, 0, newBytes, 0, i);
+            Array.Copy(bytes, i + 3, newBytes, i, 2);
+
+            return Int32.Parse(Encoding.UTF8.GetString(newBytes));
         }
     }
 }
