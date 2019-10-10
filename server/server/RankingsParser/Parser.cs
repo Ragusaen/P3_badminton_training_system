@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Server.Model;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Support.UI;
-using SeleniumExtras.WaitHelpers;
 using System.Threading;
+using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 
 namespace Server.RankingsParser
 {
@@ -19,6 +18,7 @@ namespace Server.RankingsParser
         {
             var chromeOptions = new ChromeOptions();
             chromeOptions.AddArguments("--headless");
+            chromeOptions.AddUserProfilePreference("profile.default_content_setting_values.images", 2);
             IWebDriver browser = new ChromeDriver(chromeOptions);
 
             for (int i = 0; i < Constants.RankingUrlArray.Length; i++)
@@ -28,12 +28,13 @@ namespace Server.RankingsParser
                 List<IWebElement> rawRanking = ScrapeRankingsWebsite(browser);
 
                 DistributeRankings(players, rawRanking, i);
-                Console.WriteLine("Completed: " + i);
             }
 
             browser.Close();
+            browser.Quit();
         }
 
+        #pragma warning disable CS0618
         private List<IWebElement> ScrapeRankingsWebsite(IWebDriver driver)
         {
             IWait<IWebDriver> wait = new WebDriverWait(driver, TimeSpan.FromMilliseconds(3000));
@@ -45,20 +46,20 @@ namespace Server.RankingsParser
         }
 
         private void DistributeRankings(List<Player> players, List<IWebElement> rawRanking, int category)
-        { 
+        {
             // skips first row to avoid the title
-            for (int i = 1; i < rawRanking.Count-1; i++)
+            for (int i = 1; i < rawRanking.Count - 1; i++)
             {
                 IWebElement elem = rawRanking[i];
                 string rawPlayerid = rawRanking[i].FindElement(By.ClassName("playerid")).GetAttribute("innerHTML");
                 int playerid = RemoveFalseHyphen(rawPlayerid);
 
-                bool playerExists = players.Exists(p => p.PlayerId.Equals(playerid));
+                bool playerExists = players.Exists(p => p.BadmintonId.Equals(playerid));
 
                 if (playerExists)
                 {
-                    Player a = players.Find(p => p.PlayerId.Equals(playerid));
-                    a.Rankings.SkillLevel = FetchSkillLevelFromRow(elem);
+                    Player a = players.Find(p => p.BadmintonId.Equals(playerid));
+                    a.Rankings.Level = FetchSkillLevelFromRow(elem);
 
                     switch (category)
                     {
@@ -78,10 +79,10 @@ namespace Server.RankingsParser
                             a.Rankings.DoublesPoints = FetchPointsFromRow(elem);
                             break;
                         case (int)Constants.EnumRankings.MMD:
-                            a.Rankings.MixedDoublesPoints = FetchPointsFromRow(elem);
+                            a.Rankings.MixPoints = FetchPointsFromRow(elem);
                             break;
                         case (int)Constants.EnumRankings.WMD:
-                            a.Rankings.MixedDoublesPoints = FetchPointsFromRow(elem);
+                            a.Rankings.MixPoints = FetchPointsFromRow(elem);
                             break;
                         default:
                             break;
@@ -103,7 +104,7 @@ namespace Server.RankingsParser
         private int RemoveFalseHyphen(string s)
         {
             byte[] bytes = Encoding.UTF8.GetBytes(s);
-            byte[] newBytes = new byte[bytes.Length-3];
+            byte[] newBytes = new byte[bytes.Length - 3];
 
             int i = 0;
 

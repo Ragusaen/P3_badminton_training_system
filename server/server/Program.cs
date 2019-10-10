@@ -1,8 +1,9 @@
-﻿using Server.Controller;
-using Server.Model;
-using Server.RankingsParser;
+﻿using MySql.Data.MySqlClient;
+using server.DAL;
+using Server.Controller;
 using System;
-using System.Collections.Generic;
+using System.Data;
+using System.Data.SqlClient;
 
 namespace Server
 {
@@ -10,14 +11,12 @@ namespace Server
     {
         static void Main(string[] args)
         {
-            List<Player> players = new List<Player>() { new Player(new Member()), new Player(new Member()) };
-            players[0].PlayerId = 96021601; players[0].Rankings = new PlayerRanking(); players[0].Rankings.LevelPoints = 50;
-            players[1].PlayerId = 97022603; players[1].Rankings = new PlayerRanking(); players[1].Rankings.LevelPoints = 50;
-            Parser parser = new Parser();
-
-            parser.UpdatePlayers(players);
-
-            Console.WriteLine("Done");
+            /*string query = "insert into `member`(Name, Sex) values(@Name, @Sex)";
+            MySqlParameter[] sqlParameters = new MySqlParameter[2];
+            sqlParameters[0] = new MySqlParameter("@Name", "Test");
+            sqlParameters[1] = new MySqlParameter("@Sex", "M");
+            DBConnection db = new DBConnection();
+            bool res = db.ExecuteInsertUpdateDeleteQuery(query, sqlParameters);*/
         }
     }
 }

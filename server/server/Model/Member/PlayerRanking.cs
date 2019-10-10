@@ -8,11 +8,11 @@ namespace Server.Model
 {
     class PlayerRanking
     {
-        public string SkillLevel;
+        public string Level;
 
         public int LevelPoints;
         public int SinglesPoints;
         public int DoublesPoints;
-        public int MixedDoublesPoints;
+        public int MixPoints;
     }
 }
