@@ -18,6 +18,7 @@ namespace Server.RankingsParser
         {
             var chromeOptions = new ChromeOptions();
             chromeOptions.AddArguments("--headless");
+            chromeOptions.AddUserProfilePreference("profile.default_content_setting_values.images", 2);
             IWebDriver browser = new ChromeDriver(chromeOptions);
 
             for (int i = 0; i < Constants.RankingUrlArray.Length; i++)
@@ -27,10 +28,10 @@ namespace Server.RankingsParser
                 List<IWebElement> rawRanking = ScrapeRankingsWebsite(browser);
 
                 DistributeRankings(players, rawRanking, i);
-                Console.WriteLine("Completed: " + i);
             }
 
             browser.Close();
+            browser.Quit();
         }
 
         private List<IWebElement> ScrapeRankingsWebsite(IWebDriver driver)
