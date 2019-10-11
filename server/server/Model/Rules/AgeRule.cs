@@ -31,7 +31,7 @@ namespace server.Model.Rules
         public void CheckPlayerAge(Lineup lineup, AgeGroup warningAge) { CheckPlayerAge(lineup, warningAge, warningAge); }
         public void CheckPlayerAge(Lineup lineup, AgeGroup warningAge, AgeGroup errorAge)
         {
-            foreach (Position Position in lineup.Positions) {
+            foreach (IPosition Position in lineup.Positions) {
                 foreach (Player Player in Position.Player)
                 {
                     if (Player.Age <= warningAge && Player.Age >= errorAge) {

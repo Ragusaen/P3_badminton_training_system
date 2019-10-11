@@ -22,19 +22,19 @@ namespace server.Model.Rules
             LineupDoubleCheck(lineup.Positions.Where(p => p is MixDouble).ToList());
             return RuleBreaks;
         }
-        public void LineupSingleCheck(List<Position> list)
+        public void LineupSingleCheck(List<IPosition> list)
         {
 
-            foreach (Position position in list)
+            foreach (IPosition position in list)
             { 
                 for(int i = list.IndexOf(position) + 1; i < list.Count;i++)
                     SingleCheck(position.Player.First(), list[i].Player.First());
             }
         }
 
-        public void LineupDoubleCheck(List<Position> list)
+        public void LineupDoubleCheck(List<IPosition> list)
         {
-            foreach (Position position in list)
+            foreach (IPosition position in list)
             {
                 for (int i = list.IndexOf(position) + 1; i < list.Count; i++)
                     DoubleCheck(position.Player.First(), position.Player.Last(), list[i].Player.First(), list[i].Player.Last());

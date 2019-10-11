@@ -21,14 +21,13 @@ namespace server.Model.Rules
 
         public List<RuleBreak> Rule(Lineup lineup)
         {
-
             CheckSameSex(lineup);
             CheckMixSex(lineup);
             return RuleBreaks;
         }
         public void CheckSameSex(Lineup lineup)
         {
-            foreach (Position position in lineup.Positions)
+            foreach (IPosition position in lineup.Positions)
             {
                 if (!(position is MixDouble))
                 {
