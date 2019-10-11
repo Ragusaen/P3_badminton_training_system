@@ -17,11 +17,13 @@ namespace Server
             AgeRule Testrule2 = new AgeRule();
             SexRule Testrule3 = new SexRule();
             CorrectLineup Testrule4 = new CorrectLineup();
+            ExtraPlayer Testrule5 = new ExtraPlayer();
             Lineup Linetest = new Lineup();
             Testrule.Rule(Linetest);
             Testrule2.Rule(Linetest);
             Testrule3.Rule(Linetest);
             Testrule4.Rule(Linetest);
+            Testrule5.Rule(Linetest);
         }
     }
 }
