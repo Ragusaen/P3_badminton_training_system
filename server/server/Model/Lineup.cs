@@ -21,6 +21,7 @@ namespace server.Model
         }
         public Match Match { get; set; }
         public Leagues League { get; set; }
+        public int Round { get; set; }
         public List<RuleBreak> RuleBakes { get; set; } = new List<RuleBreak>();
         public List<IPosition> Positions { get; set; } = new List<IPosition>();
     }
