@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace server.Model
 {
-    interface Position
+    interface IPosition
     {
         bool Legal { get; set; }
         List<Player> Player { get; set; }

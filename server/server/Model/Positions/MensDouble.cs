@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace server.Model.Positions
 {
-    class MensDouble : Position
+    class MensDouble : IPosition
     {
         public bool Legal { get; set; }
         public List<Player> Player { get; set; } = new List<Player>();

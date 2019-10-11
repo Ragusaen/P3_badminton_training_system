@@ -102,7 +102,7 @@
     <Compile Include="Model\Positions\MensDouble.cs" />
     <Compile Include="Model\Positions\MensSingle.cs" />
     <Compile Include="Model\Positions\MixDouble.cs" />
-    <Compile Include="Model\Positions\Position.cs" />
+    <Compile Include="Model\Positions\IPosition.cs" />
     <Compile Include="Model\Positions\WomensDouble.cs" />
     <Compile Include="Model\Positions\WomensSingle.cs" />
     <Compile Include="Model\Practice.cs" />
@@ -111,7 +111,9 @@
     <Compile Include="Model\RuleBreak.cs" />
     <Compile Include="Model\Rules\AgeRule.cs" />
     <Compile Include="Model\Rules\CorrectLineup.cs" />
+    <Compile Include="Model\Rules\ExtraPlayer.cs" />
     <Compile Include="Model\Rules\IRule.cs" />
+    <Compile Include="Model\Rules\Reserves.cs" />
     <Compile Include="Model\Rules\SexRule.cs" />
     <Compile Include="Model\Trainer.cs" />
     <Compile Include="Program.cs" />
