@@ -1,9 +1,9 @@
 using NUnit.Framework;
 using Server.Model;
-using Server.RankingsParser;
+using Server.Controller;
 using System.Collections.Generic;
 
-namespace Test
+namespace RankingsParserTest.UpdatePlayers
 {
     [TestFixture]
     [Parallelizable]
@@ -12,11 +12,11 @@ namespace Test
         [Test]
         public void Test()
         {
-            List<Player> p = new List<Player>() { new Player(new Member()) };
-            p[0].BadmintonId = 96021601; p[0].Rankings = new PlayerRanking(); 
+            List<Player> p = new List<Player>() { new Player(new Member(), 96021601) };
+            p[0].Rankings = new PlayerRanking(); 
             Parser parser = new Parser();
 
-            parser.UpdatePlayers(p);
+            parser.UpdatePlayers();
             int actual = p[0].Rankings.LevelPoints;
             System.Console.WriteLine("Actual: " + actual);
 
@@ -31,8 +31,8 @@ namespace Test
         public void Test()
         {
             List<Player> p = new List<Player>() { new Player(new Member()), new Player(new Member()) };
-            p[0].BadmintonId = 96021601; p[0].Rankings = new PlayerRanking(); 
-            p[1].BadmintonId = 97022603; p[1].Rankings = new PlayerRanking(); 
+            p[0].BadmintonPlayerID = 96021601; p[0].Rankings = new PlayerRanking(); 
+            p[1].BadmintonPlayerID = 97022603; p[1].Rankings = new PlayerRanking(); 
 
             Parser parser = new Parser();
 
@@ -52,7 +52,7 @@ namespace Test
         public void Test()
         {
             List<Player> p = new List<Player>() { new Player(new Member()), new Player(new Member()) };
-            p[1].BadmintonId = 97022603; p[1].Rankings = new PlayerRanking(); 
+            p[1].BadmintonPlayerID = 97022603; p[1].Rankings = new PlayerRanking(); 
 
             Parser parser = new Parser();
 
@@ -72,7 +72,7 @@ namespace Test
         {
             List<Player> p = new List<Player>() { new Player(new Member()), new Player(new Member()) };
             string expected = "SEN E-M";
-            p[0].BadmintonId = 96021601; p[0].Rankings = new PlayerRanking(); 
+            p[0].BadmintonPlayerID = 96021601; p[0].Rankings = new PlayerRanking(); 
 
             Parser parser = new Parser();
 
@@ -85,21 +85,169 @@ namespace Test
     }
     [TestFixture]
     [Parallelizable]
-    public class ParserUpdatesSinglesPoints
+    public class ParserUpdatesMensSinglesPoints
     {
         [Test]
         public void Test()
         {
             List<Player> p = new List<Player>() { new Player(new Member()), new Player(new Member()) };
-            p[0].BadmintonId = 97022603; p[0].Rankings = new PlayerRanking(); 
+            p[0].BadmintonPlayerID = 97022603; p[0].Rankings = new PlayerRanking(); 
 
             Parser parser = new Parser();
 
             parser.UpdatePlayers(p);
-            int actual = p[0].Rankings.SinglesPoints; 
+            int actual = p[0].Rankings.SinglesPoints;
             System.Console.WriteLine("Actual: " + actual);
 
-            Assert.IsTrue(actual > 0);
+            Assert.AreNotEqual(0, actual);
+        }
+    }
+    [TestFixture]
+    [Parallelizable]
+    public class ParserUpdatesWomensSinglesPoints
+    {
+        [Test]
+        public void Test()
+        {
+            List<Player> p = new List<Player>() { new Player(new Member()), new Player(new Member()) };
+            p[0].BadmintonPlayerID = 03082601; p[0].Rankings = new PlayerRanking();
+            Parser parser = new Parser();
+
+            parser.UpdatePlayers(p);
+            int actual = p[0].Rankings.SinglesPoints;
+            System.Console.WriteLine("Actual: " + actual);
+
+            Assert.AreNotEqual(0, actual);
+        }
+    }
+    [TestFixture]
+    [Parallelizable]
+    public class ParserUpdatesMensDoublesPoints
+    {
+        [Test]
+        public void Test()
+        {
+            List<Player> p = new List<Player>() { new Player(new Member()), new Player(new Member()) };
+            p[0].BadmintonPlayerID = 96021601; p[0].Rankings = new PlayerRanking();
+            Parser parser = new Parser();
+
+            parser.UpdatePlayers(p);
+            int actual = p[0].Rankings.DoublesPoints;
+            System.Console.WriteLine("Actual: " + actual);
+
+            Assert.AreNotEqual(0, actual);
+        }
+    }
+    [TestFixture]
+    [Parallelizable]
+    public class ParserUpdatesWomensDoublesPoints
+    {
+        [Test]
+        public void Test()
+        {
+            List<Player> p = new List<Player>() { new Player(new Member()), new Player(new Member()) };
+            p[0].BadmintonPlayerID = 96021601; p[0].Rankings = new PlayerRanking();
+            Parser parser = new Parser();
+
+            parser.UpdatePlayers(p);
+            int actual = p[0].Rankings.DoublesPoints;
+            System.Console.WriteLine("Actual: " + actual);
+
+            Assert.AreNotEqual(0, actual);
+        }
+    }
+    [TestFixture]
+    [Parallelizable]
+    public class ParserUpdatesMensMixedDoublesPoints
+    {
+        [Test]
+        public void Test()
+        {
+            List<Player> p = new List<Player>() { new Player(new Member()), new Player(new Member()) };
+            p[0].BadmintonPlayerID = 96021601; p[0].Rankings = new PlayerRanking();
+            Parser parser = new Parser();
+
+            parser.UpdatePlayers(p);
+            int actual = p[0].Rankings.MixPoints;
+            System.Console.WriteLine("Actual: " + actual);
+
+            Assert.AreNotEqual(0, actual);
+        }
+    }
+    [TestFixture]
+    [Parallelizable]
+    public class ParserUpdatesWomensMixedDoulesPoints
+    {
+        [Test]
+        public void Test()
+        {
+            List<Player> p = new List<Player>() { new Player(new Member()), new Player(new Member()) };
+            p[0].BadmintonPlayerID = 79122601; p[0].Rankings = new PlayerRanking();
+
+            Parser parser = new Parser();
+
+            parser.UpdatePlayers(p);
+            int actual = p[0].Rankings.MixPoints;
+            System.Console.WriteLine("Actual: " + actual);
+
+            Assert.AreNotEqual(0, actual);
+        }
+    }
+    [TestFixture]
+    [Parallelizable]
+    public class ParserDoesNotUpdateIfThereIsNoPointsInSingles
+    {
+        [Test]
+        public void Test()
+        {
+            List<Player> p = new List<Player>() { new Player(new Member()), new Player(new Member()) };
+            p[0].BadmintonPlayerID = 96021601; p[0].Rankings = new PlayerRanking();
+
+            Parser parser = new Parser();
+
+            parser.UpdatePlayers(p);
+            int actual = p[0].Rankings.SinglesPoints;
+            System.Console.WriteLine("Actual: " + actual);
+
+            Assert.AreEqual(0, actual);
+        }
+    }
+    [TestFixture]
+    [Parallelizable]
+    public class ParserDoesNotUpdateIfThereIsNoPointsInDoubles
+    {
+        [Test]
+        public void Test()
+        {
+            List<Player> p = new List<Player>() { new Player(new Member()), new Player(new Member()) };
+            p[0].BadmintonPlayerID = 93062527; p[0].Rankings = new PlayerRanking();
+
+            Parser parser = new Parser();
+
+            parser.UpdatePlayers(p);
+            int actual = p[0].Rankings.DoublesPoints;
+            System.Console.WriteLine("Actual: " + actual);
+
+            Assert.AreEqual(0, actual);
+        }
+    }
+    [TestFixture]
+    [Parallelizable]
+    public class ParserUsesCorrectVersion
+    {
+        [Test]
+        public void Test()
+        {
+            List<Player> p = new List<Player>() { new Player(new Member()), new Player(new Member()) };
+            p[0].BadmintonPlayerID = 93062527; p[0].Rankings = new PlayerRanking();
+
+            Parser parser = new Parser();
+
+            parser.UpdatePlayers(p);
+            int actual = p[0].Rankings.DoublesPoints;
+            System.Console.WriteLine("Actual: " + actual);
+
+            Assert.AreEqual(0, actual);
         }
     }
 }

@@ -14,5 +14,10 @@ namespace Server.Model
         public int SinglesPoints;
         public int DoublesPoints;
         public int MixPoints;
+
+        public override string ToString()
+        {
+            return $"Level: {Level}, LVL: {LevelPoints}, Singles: {SinglesPoints}, Doubles: {DoublesPoints} , Mixed: {MixPoints}";
+        }
     }
 }

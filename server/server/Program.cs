@@ -1,9 +1,10 @@
 ﻿using MySql.Data.MySqlClient;
-using server.DAL;
+using Server.DAL;
 using Server.Controller;
 using System;
 using System.Data;
 using System.Data.SqlClient;
+using Server.Controller;
 
 namespace Server
 {
@@ -11,6 +12,10 @@ namespace Server
     {
         static void Main(string[] args)
         {
+            Parser parser = new Parser();
+
+            parser.UpdatePlayers();
+
             /*string query = "insert into `member`(Name, Sex) values(@Name, @Sex)";
             MySqlParameter[] sqlParameters = new MySqlParameter[2];
             sqlParameters[0] = new MySqlParameter("@Name", "Test");

@@ -10,12 +10,12 @@ namespace Server.Model
     {
         public List<PracticeTeam> Teams { get; set; }
 
-        public int BadmintonId;
-        public PlayerRanking Rankings;
+        public int BadmintonPlayerID;
+        public PlayerRanking Rankings = new PlayerRanking();
 
-        public Player(Member member) : base(member)
+        public Player(Member member, int badmintonPlayerID) : base(member)
         {
-
+            BadmintonPlayerID = badmintonPlayerID;
         }
     }
 }

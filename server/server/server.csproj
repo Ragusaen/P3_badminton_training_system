@@ -95,7 +95,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="RankingsParser\Parser.cs" />
+    <Compile Include="Controller\Parser.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
