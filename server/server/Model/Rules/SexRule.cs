@@ -14,13 +14,10 @@ namespace server.Model.Rules
 
         public List<RuleBreak> RuleBreaks { get; set; } = new List<RuleBreak>();
 
-        SexRule() 
-        {
-            ErrorMessage = "Is Not the correct gender";
-        }
 
         public List<RuleBreak> Rule(Lineup lineup)
         {
+            ErrorMessage = "Is Not the correct gender";
             CheckSameSex(lineup);
             CheckMixSex(lineup);
             return RuleBreaks;

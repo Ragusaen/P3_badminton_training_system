@@ -14,8 +14,14 @@ namespace Server
         static void Main(string[] args)
         {
             Reserves Testrule = new Reserves();
+            AgeRule Testrule2 = new AgeRule();
+            SexRule Testrule3 = new SexRule();
+            CorrectLineup Testrule4 = new CorrectLineup();
             Lineup Linetest = new Lineup();
             Testrule.Rule(Linetest);
+            Testrule2.Rule(Linetest);
+            Testrule3.Rule(Linetest);
+            Testrule4.Rule(Linetest);
         }
     }
 }
