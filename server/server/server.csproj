@@ -116,9 +116,7 @@
     <Compile Include="Controller\Requests\Serialization\Serializer.cs" />
     <Compile Include="Controller\User.cs" />
     <Compile Include="DAL\DBConnection.cs" />
-    <Compile Include="DAL\DBReader.cs" />
-    <Compile Include="DAL\DBWriter.cs" />
-    <Compile Include="DAL\IDAO.cs" />
+    <Compile Include="DAL\IDAOEnumerable.cs" />
     <Compile Include="DAL\PlayerDAO.cs" />
     <Compile Include="Model\Feedback.cs" />
     <Compile Include="Model\FocusPointDescriptor.cs" />

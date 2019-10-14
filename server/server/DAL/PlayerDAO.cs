@@ -59,7 +59,6 @@ namespace Server.DAL
                     sqlParameters[7] = new MySqlParameter("@Level", p.Rankings.Level);
                     DBConnection db = new DBConnection();
                     bool res = db.ExecuteInsertUpdateDeleteQuery(query, sqlParameters);
-
                 }
             }
         }

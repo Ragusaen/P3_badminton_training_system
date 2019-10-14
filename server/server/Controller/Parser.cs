@@ -68,7 +68,8 @@ namespace Server.Controller
             {
                 var currentRow = rawRanking[i];
 
-                //Fetches information from the current row
+                
+                // Fetches information from the current row
                 string rawPlayerid = currentRow.FindElement(By.ClassName("playerid")).GetAttribute("innerHTML");
                 int BadmintonPlayerId = RemoveFalseHyphen(rawPlayerid);
                 int points = FetchPointsFromRow(currentRow);
