@@ -17,7 +17,9 @@ namespace Test
         {
             byte[] expected = new byte[] { 1, 1 };
 
-            SslTcpServer server = new SslTcpServer();
+            Console.WriteLine(TestContext.CurrentContext.TestDirectory);
+
+            SslTcpServer server = new SslTcpServer("localhost.cer");
             SslTcpClient client = new SslTcpClient();
 
             Thread serverThread = new Thread(new ThreadStart(server.RunServer));
@@ -26,11 +28,10 @@ namespace Test
 
             client.Connect("localhost", "localhost");
             byte[] payload = new byte[] { 1, (byte)RequestManager.Type.ConnectionTest };
-            
-            byte[] response = client.SendRequest(payload);
 
+            byte[] actual = client.SendRequest(payload);
 
-
+            CollectionAssert.AreEqual(expected, actual);
         }
 
     }

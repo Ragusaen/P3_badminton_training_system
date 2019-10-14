@@ -18,9 +18,14 @@ namespace Server.Controller.Network
     {
         // The certificate for SSL/TSL communication
         private X509Certificate _serverCertificate = null;
-        private const string _certificatePath = "localhost.cer";
+        private string _certificatePath;
 
         public bool Running { get; private set; } = false;
+
+        public SslTcpServer(string certificatePath)
+        {
+            _certificatePath = certificatePath;
+        }
 
         public void RunServer()
         {
