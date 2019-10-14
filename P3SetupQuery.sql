@@ -1,16 +1,16 @@
 create table `Member`(
 ID int primary key auto_increment,
 `Name` varchar(255) not null,
-Sex varchar(1) not null
+Sex tinyint not null
 );
 
 create table `Account`
 (
 MemberID int,
 foreign key(MemberID) references `Member`(ID),
-Username varchar(32) not null,
-PasswordHash varchar(32) not null,
-PasswordSalt varchar(128) not null
+Username varchar(32) primary key,
+PasswordHash binary(32) not null,
+PasswordSalt binary(128) not null
 );
 
 create table Trainer
@@ -33,7 +33,8 @@ foreign key(PlayerMemberID) references Player(MemberID),
 MixPoints int not null,
 SinglePoints int not null,
 DoublePoints int not null,
-OverallPoints int not null
+OverallPoints int not null,
+`Level` varchar(16) not null
 );
 
 create table Team
@@ -72,7 +73,6 @@ create table `Match`
 (
 ID int primary key auto_increment,
 StartDate datetime not null,
-League varchar(32) not null,
 OpponentName varchar(64) not null,
 `Location` varchar(255) not null
 );
@@ -84,7 +84,10 @@ foreign key(MatchID) references `Match`(ID),
 PlayerMemberID int,
 foreign key(PlayerMemberID) references Player(MemberID),
 primary key(MatchID, PlayerMemberID),
-Position varchar(16)
+Position varchar(16),
+League varchar(32),
+LeagueRound int,
+Season int
 );
 
 create table FocusPoint
