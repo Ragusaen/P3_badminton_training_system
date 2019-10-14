@@ -2,17 +2,36 @@
 using Server.Model;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Server.DAL
 {
-    class DBWriter
+    class PlayerDAO : IDAOEnumerable<Player>
     {
-        public void WritePlayers(List<Player> players)
+        public IEnumerable<Player> Read()
         {
-            for (int i = 0; i < players.Count; i++)
+            List<Player> players = new List<Player>();
+            DBConnection dbc = new DBConnection();
+            MySqlParameter[] arr = new MySqlParameter[0];
+            string query = "SELECT * FROM p3_db.player";
+
+            DataTable dt = dbc.ExecuteSelectQuery(query, arr);
+
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                int ID = (int)dt.Rows[i]["BadmintonPlayerId"];
+                players.Add(new Player(new Member(), ID));
+            }
+
+            return players;
+        }
+
+        public void Write(IEnumerable<Player> players)
+        {
+            for (int i = 0; i < players.Count(); i++)
             {
                 bool PlayerIsInDB = false;
 
@@ -28,7 +47,7 @@ namespace Server.DAL
                                    "insert into RankList(PlayerMemberID, MixPoints, SinglePoints, DoublePoints, OverallPoints, `Level`) " +
                                    "values(last_insert_id(), @MixPoints, @SinglePoints, @DoublePoints, @OverallPoints, @Level);";
 
-                    Player p = players[i];
+                    Player p = players.ElementAt(i);
                     MySqlParameter[] sqlParameters = new MySqlParameter[8];
                     sqlParameters[0] = new MySqlParameter("@Name", p.Member.Name);
                     sqlParameters[1] = new MySqlParameter("@sex", p.Member.Sex);

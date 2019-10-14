@@ -17,8 +17,8 @@ namespace Server.Controller
     {
         public void UpdatePlayers()
         {
-            DBReader dbr = new DBReader();
-            var players = dbr.FetchPlayers();
+            var pdao = new PlayerDAO();
+            List<Player> players = pdao.Read().ToList();
             
             var chromeOptions = new ChromeOptions();
             chromeOptions.AddArguments("--headless");
@@ -46,8 +46,8 @@ namespace Server.Controller
             }
             browser.Quit();
 
-            DBWriter dbw = new DBWriter();
-            dbw.WritePlayers(players);
+            
+            pdao.Write(players);
         }
 
         #pragma warning disable CS0618
