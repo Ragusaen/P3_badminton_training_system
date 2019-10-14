@@ -1,22 +1,32 @@
 ﻿using MySql.Data.MySqlClient;
 using server.DAL;
 using Server.Controller;
+using Server.Model;
 using System;
 using System.Data;
 using System.Data.SqlClient;
+using System.Linq;
+using System.Runtime.Serialization.Json;
+using System.Runtime.Serialization;
+using System.IO;
+using Server.Controller.Network;
+using System.Threading;
 
 namespace Server
 {
     class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            /*string query = "insert into `member`(Name, Sex) values(@Name, @Sex)";
-            MySqlParameter[] sqlParameters = new MySqlParameter[2];
-            sqlParameters[0] = new MySqlParameter("@Name", "Test");
-            sqlParameters[1] = new MySqlParameter("@Sex", "M");
-            DBConnection db = new DBConnection();
-            bool res = db.ExecuteInsertUpdateDeleteQuery(query, sqlParameters);*/
+            SslTcpServer server = new SslTcpServer();
+            SslTcpClient client = new SslTcpClient();
+
+            Thread serverThread = new Thread(new ThreadStart(server.RunServer));
+            serverThread.Start();
+
+            while (!server.Running) ;
+
+            client.Connect("localhost", "localhost");
         }
     }
 }

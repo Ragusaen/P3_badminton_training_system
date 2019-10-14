@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -19,6 +20,16 @@ namespace Server.Model
             {
                 _roles.Add(Role);
             }
+        }
+
+        public T GetRole<T>() where T : MemberRole
+        {
+            var r = _roles.Where(role => role is T);
+            if (r.Count() < 1)
+            {
+                throw new ArgumentException("Member does not have this role");
+            }
+            return r.First() as T;
         }
     }
 }
