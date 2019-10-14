@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using server.Model.Positions;
+using Server.Model.Positions;
 using Server.Model;
 
-namespace server.Model.Rules
+namespace Server.Model.Rules
 {
     class SexRule : IRule
     {

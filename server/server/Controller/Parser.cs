@@ -70,20 +70,20 @@ namespace Server.Controller
 
                 //Fetches information from the current row
                 string rawPlayerid = currentRow.FindElement(By.ClassName("playerid")).GetAttribute("innerHTML");
-                int badmintonPlayerID = RemoveFalseHyphen(rawPlayerid);
+                int BadmintonPlayerId = RemoveFalseHyphen(rawPlayerid);
                 int points = FetchPointsFromRow(currentRow);
                 string level = FetchSkillLevelFromRow(currentRow);
 
                 Player p2;
 
-                if (players.Exists(p => p.BadmintonPlayerID.Equals(badmintonPlayerID)))
+                if (players.Exists(p => p.BadmintonPlayerId.Equals(BadmintonPlayerId)))
                 {
-                    p2 = players.Find(p => p.BadmintonPlayerID.Equals(badmintonPlayerID));
+                    p2 = players.Find(p => p.BadmintonPlayerId.Equals(BadmintonPlayerId));
                     AssignPointsFromRow(p2, points, level, category);
                 }
                 else
                 {
-                    p2 = new Player(new Member(), badmintonPlayerID);
+                    p2 = new Player(new Member(), BadmintonPlayerId);
                     AssignPointsFromRow(p2, points, level, category);
                     players.Add(p2);
                 }

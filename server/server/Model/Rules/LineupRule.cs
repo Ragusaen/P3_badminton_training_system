@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Server.Model;
-using static server.Model.Lineup;
+using static Server.Model.Lineup;
 
-namespace server.Model.Rules
+namespace Server.Model.Rules
 {
     class LineupRule : IRule
     {
@@ -52,8 +52,8 @@ namespace server.Model.Rules
         }
         public void SingleCheck(Player UpperPlayer, Player LowerPlayer, Leagues league)
         {
-            if (league >= Leagues.Devision1 || league < Leagues.DenmarkSeries && UpperPlayer.RankingSingle.Points < (LowerPlayer.RankingSingle.Points - 50) ||
-                league < Leagues.Devision1 || league >= Leagues.DenmarkSeries && UpperPlayer.RankingLevel.Points < (LowerPlayer.RankingLevel.Points - 50))
+            if (league >= Leagues.Devision1 || league < Leagues.DenmarkSeries && UpperPlayer.Rankings.SinglesPoints < (LowerPlayer.Rankings.SinglesPoints - 50) ||
+                league < Leagues.Devision1 || league >= Leagues.DenmarkSeries && UpperPlayer.Rankings.LevelPoints < (LowerPlayer.Rankings.LevelPoints - 50))
             {
                 RuleBreaks.Add(new RuleBreak(UpperPlayer, "Lower player has to many points"));
                 RuleBreaks.Add(new RuleBreak(LowerPlayer, "Upper player has to few points"));
@@ -61,8 +61,8 @@ namespace server.Model.Rules
         }
         public void DoubleCheck(Player UpperPlayer1, Player UpperPlayer2, Player LowerPlayer1, Player LowerPlayer2, Leagues league)
         {
-            if (league >= Leagues.Devision1 || league < Leagues.DenmarkSeries && UpperPlayer1.RankingDouble.Points + UpperPlayer2.RankingDouble.Points < (LowerPlayer1.RankingDouble.Points + LowerPlayer2.RankingDouble.Points - 100) ||
-                league < Leagues.Devision1 || league >= Leagues.DenmarkSeries && UpperPlayer1.RankingLevel.Points + UpperPlayer2.RankingLevel.Points < (LowerPlayer1.RankingLevel.Points + LowerPlayer2.RankingLevel.Points - 100))
+            if (league >= Leagues.Devision1 || league < Leagues.DenmarkSeries && UpperPlayer1.Rankings.DoublesPoints + UpperPlayer2.Rankings.DoublesPoints < (LowerPlayer1.Rankings.DoublesPoints + LowerPlayer2.Rankings.DoublesPoints - 100) ||
+                league < Leagues.Devision1 || league >= Leagues.DenmarkSeries && UpperPlayer1.Rankings.LevelPoints + UpperPlayer2.Rankings.LevelPoints < (LowerPlayer1.Rankings.LevelPoints + LowerPlayer2.Rankings.LevelPoints - 100))
             {
                 RuleBreaks.Add(new RuleBreak(UpperPlayer1, "Lower player has to many points"));
                 RuleBreaks.Add(new RuleBreak(UpperPlayer2, "Lower player has to many points"));
@@ -72,8 +72,8 @@ namespace server.Model.Rules
         }
         public void MixCheck(Player UpperPlayer1, Player UpperPlayer2, Player LowerPlayer1, Player LowerPlayer2, Leagues league)
         {
-            if (league >= Leagues.Devision1 || league < Leagues.DenmarkSeries && UpperPlayer1.RankingMixed.Points + UpperPlayer2.RankingMixed.Points < (LowerPlayer1.RankingMixed.Points + LowerPlayer2.RankingMixed.Points - 100) ||
-                league < Leagues.Devision1 || league >= Leagues.DenmarkSeries && UpperPlayer1.RankingLevel.Points + UpperPlayer2.RankingLevel.Points < (LowerPlayer1.RankingLevel.Points + LowerPlayer2.RankingLevel.Points - 100))
+            if (league >= Leagues.Devision1 || league < Leagues.DenmarkSeries && UpperPlayer1.Rankings.MixPoints + UpperPlayer2.Rankings.MixPoints < (LowerPlayer1.Rankings.MixPoints + LowerPlayer2.Rankings.MixPoints - 100) ||
+                league < Leagues.Devision1 || league >= Leagues.DenmarkSeries && UpperPlayer1.Rankings.LevelPoints + UpperPlayer2.Rankings.LevelPoints < (LowerPlayer1.Rankings.LevelPoints + LowerPlayer2.Rankings.LevelPoints - 100))
             {
                 RuleBreaks.Add(new RuleBreak(UpperPlayer1, "Lower player has to many points"));
                 RuleBreaks.Add(new RuleBreak(UpperPlayer2, "Lower player has to many points"));

@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Server.Model;
 
-namespace server.Model.Rules
+namespace Server.Model.Rules
 {
     class ExtraPlayer : IRule
     {
@@ -22,7 +22,7 @@ namespace server.Model.Rules
                     Count = 0;
                     foreach (Player player1 in position.Player)
                     {
-                        if (player.Member.ID == player1.Member.ID)
+                        if (player.Member.Id == player1.Member.Id)
                             Count++;
                     }
                     if (Count < 2)

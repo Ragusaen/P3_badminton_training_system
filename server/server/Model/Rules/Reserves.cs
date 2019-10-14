@@ -5,10 +5,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
-using server.DAL;
+using Server.DAL;
 using Server.Model;
 
-namespace server.Model.Rules
+namespace Server.Model.Rules
 {
     class Reserves : IRule
     {
@@ -54,7 +54,7 @@ namespace server.Model.Rules
                     Count = 0;
                     foreach (int id in memberids)
                     {
-                        if (player.Member.ID == id)
+                        if (player.Member.Id == id)
                             Count++;
                     }
                     if (Count >= number)

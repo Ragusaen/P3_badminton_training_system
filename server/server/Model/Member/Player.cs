@@ -19,11 +19,11 @@ namespace Server.Model
 
         public PlayerRanking Rankings = new PlayerRanking();
         public AgeGroup Age { get; set; }
-        public string BadmintonId { get; private set; }
+        public int BadmintonPlayerId { get; private set; }
 
-        public Player(Member member, string badmintonId) : base(member)
+        public Player(Member member, int BadmintonPlayerId) : base(member)
         {
-            BadmintonId = badmintonId;
+            BadmintonPlayerId = BadmintonPlayerId;
         }
     }
 }

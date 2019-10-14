@@ -24,7 +24,7 @@ namespace Server.DAL
                 {
 
                     string query = "insert into `Member`(`Name`, Sex) values(@Name, @Sex);" +
-                                   "insert into Player(MemberID, BadmintonPlayerID) values(LAST_INSERT_ID(), @BadmintonPlayerID);" +
+                                   "insert into Player(MemberID, BadmintonPlayerId) values(LAST_INSERT_ID(), @BadmintonPlayerId);" +
                                    "insert into RankList(PlayerMemberID, MixPoints, SinglePoints, DoublePoints, OverallPoints, `Level`) " +
                                    "values(last_insert_id(), @MixPoints, @SinglePoints, @DoublePoints, @OverallPoints, @Level);";
 
@@ -32,7 +32,7 @@ namespace Server.DAL
                     MySqlParameter[] sqlParameters = new MySqlParameter[8];
                     sqlParameters[0] = new MySqlParameter("@Name", p.Member.Name);
                     sqlParameters[1] = new MySqlParameter("@sex", p.Member.Sex);
-                    sqlParameters[2] = new MySqlParameter("@BadmintonPlayerID", p.BadmintonPlayerID);
+                    sqlParameters[2] = new MySqlParameter("@BadmintonPlayerId", p.BadmintonPlayerId);
                     sqlParameters[3] = new MySqlParameter("@MixPoints", p.Rankings.MixPoints);
                     sqlParameters[4] = new MySqlParameter("@SinglePoints", p.Rankings.SinglesPoints);
                     sqlParameters[5] = new MySqlParameter("@DoublePoints", p.Rankings.DoublesPoints);

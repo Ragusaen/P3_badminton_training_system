@@ -49,7 +49,7 @@ namespace RankingsParserTest.UpdatePlayers
         public void Test()
         {
             List<Player> p = new List<Player>() { new Player(new Member()), new Player(new Member()) };
-            p[1].BadmintonPlayerID = 97022603; p[1].Rankings = new PlayerRanking(); 
+            p[1].BadmintonPlayerId = 97022603; p[1].Rankings = new PlayerRanking(); 
 
             Parser parser = new Parser();
 
@@ -69,7 +69,7 @@ namespace RankingsParserTest.UpdatePlayers
         {
             List<Player> p = new List<Player>() { new Player(new Member()), new Player(new Member()) };
             string expected = "SEN E-M";
-            p[0].BadmintonPlayerID = 96021601; p[0].Rankings = new PlayerRanking(); 
+            p[0].BadmintonPlayerId = 96021601; p[0].Rankings = new PlayerRanking(); 
 
             Parser parser = new Parser();
 
@@ -88,7 +88,7 @@ namespace RankingsParserTest.UpdatePlayers
         public void Test()
         {
             List<Player> p = new List<Player>() { new Player(new Member()), new Player(new Member()) };
-            p[0].BadmintonPlayerID = 97022603; p[0].Rankings = new PlayerRanking(); 
+            p[0].BadmintonPlayerId = 97022603; p[0].Rankings = new PlayerRanking(); 
 
             Parser parser = new Parser();
 
@@ -107,7 +107,7 @@ namespace RankingsParserTest.UpdatePlayers
         public void Test()
         {
             List<Player> p = new List<Player>() { new Player(new Member()), new Player(new Member()) };
-            p[0].BadmintonPlayerID = 03082601; p[0].Rankings = new PlayerRanking();
+            p[0].BadmintonPlayerId = 03082601; p[0].Rankings = new PlayerRanking();
             Parser parser = new Parser();
 
             parser.UpdatePlayers(p);
@@ -125,7 +125,7 @@ namespace RankingsParserTest.UpdatePlayers
         public void Test()
         {
             List<Player> p = new List<Player>() { new Player(new Member()), new Player(new Member()) };
-            p[0].BadmintonPlayerID = 96021601; p[0].Rankings = new PlayerRanking();
+            p[0].BadmintonPlayerId = 96021601; p[0].Rankings = new PlayerRanking();
             Parser parser = new Parser();
 
             parser.UpdatePlayers(p);
@@ -143,7 +143,7 @@ namespace RankingsParserTest.UpdatePlayers
         public void Test()
         {
             List<Player> p = new List<Player>() { new Player(new Member()), new Player(new Member()) };
-            p[0].BadmintonPlayerID = 96021601; p[0].Rankings = new PlayerRanking();
+            p[0].BadmintonPlayerId = 96021601; p[0].Rankings = new PlayerRanking();
             Parser parser = new Parser();
 
             parser.UpdatePlayers(p);
@@ -161,7 +161,7 @@ namespace RankingsParserTest.UpdatePlayers
         public void Test()
         {
             List<Player> p = new List<Player>() { new Player(new Member()), new Player(new Member()) };
-            p[0].BadmintonPlayerID = 96021601; p[0].Rankings = new PlayerRanking();
+            p[0].BadmintonPlayerId = 96021601; p[0].Rankings = new PlayerRanking();
             Parser parser = new Parser();
 
             parser.UpdatePlayers(p);
@@ -179,7 +179,7 @@ namespace RankingsParserTest.UpdatePlayers
         public void Test()
         {
             List<Player> p = new List<Player>() { new Player(new Member()), new Player(new Member()) };
-            p[0].BadmintonPlayerID = 79122601; p[0].Rankings = new PlayerRanking();
+            p[0].BadmintonPlayerId = 79122601; p[0].Rankings = new PlayerRanking();
 
             Parser parser = new Parser();
 
@@ -198,7 +198,7 @@ namespace RankingsParserTest.UpdatePlayers
         public void Test()
         {
             List<Player> p = new List<Player>() { new Player(new Member()), new Player(new Member()) };
-            p[0].BadmintonPlayerID = 96021601; p[0].Rankings = new PlayerRanking();
+            p[0].BadmintonPlayerId = 96021601; p[0].Rankings = new PlayerRanking();
 
             Parser parser = new Parser();
 
@@ -217,7 +217,7 @@ namespace RankingsParserTest.UpdatePlayers
         public void Test()
         {
             List<Player> p = new List<Player>() { new Player(new Member()), new Player(new Member()) };
-            p[0].BadmintonPlayerID = 93062527; p[0].Rankings = new PlayerRanking();
+            p[0].BadmintonPlayerId = 93062527; p[0].Rankings = new PlayerRanking();
 
             Parser parser = new Parser();
 
@@ -236,7 +236,7 @@ namespace RankingsParserTest.UpdatePlayers
         public void Test()
         {
             List<Player> p = new List<Player>() { new Player(new Member()), new Player(new Member()) };
-            p[0].BadmintonPlayerID = 93062527; p[0].Rankings = new PlayerRanking();
+            p[0].BadmintonPlayerId = 93062527; p[0].Rankings = new PlayerRanking();
 
             Parser parser = new Parser();
 

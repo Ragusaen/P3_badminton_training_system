@@ -22,7 +22,7 @@ namespace Server.DAL
 
             for (int i = 0; i < dt.Rows.Count; i++)
             {
-                int ID = (int)dt.Rows[i]["BadmintonPlayerID"];
+                int ID = (int)dt.Rows[i]["BadmintonPlayerId"];
                 players.Add(new Player(new Member(), ID));
             }
 

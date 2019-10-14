@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using server.Model.Positions;
+using Server.Model.Positions;
 using Server.Model;
 
-namespace server.Model.Rules
+namespace Server.Model.Rules
 {
     class CorrectLineup : IRule
     {
@@ -51,7 +51,7 @@ namespace server.Model.Rules
 
         public void SingleCheck(Player UpperPlayer, Player LowerPlayer)
         {
-            if (UpperPlayer.RankingSingle.Points < (LowerPlayer.RankingSingle.Points - 50))
+            if (UpperPlayer.Rankings.SinglesPoints < (LowerPlayer.Rankings.SinglesPoints - 50))
             {
                 RuleBreaks.Add(new RuleBreak(UpperPlayer, "Lower player has to many points"));
                 RuleBreaks.Add(new RuleBreak(LowerPlayer, "Upper player has to few points"));
@@ -59,7 +59,7 @@ namespace server.Model.Rules
         }
         public void DoubleCheck(Player UpperPlayer1, Player UpperPlayer2, Player LowerPlayer1, Player LowerPlayer2)
         {
-            if (UpperPlayer1.RankingDouble.Points + UpperPlayer2.RankingDouble.Points < (LowerPlayer1.RankingDouble.Points + LowerPlayer2.RankingDouble.Points - 100))
+            if (UpperPlayer1.Rankings.DoublesPoints + UpperPlayer2.Rankings.DoublesPoints < (LowerPlayer1.Rankings.DoublesPoints + LowerPlayer2.Rankings.DoublesPoints - 100))
             {
                 RuleBreaks.Add(new RuleBreak(UpperPlayer1, "Lower player has to many points"));
                 RuleBreaks.Add(new RuleBreak(UpperPlayer2, "Lower player has to many points"));
@@ -69,7 +69,7 @@ namespace server.Model.Rules
         }
         public void MixCheck(Player UpperPlayer1, Player UpperPlayer2, Player LowerPlayer1, Player LowerPlayer2)
         {
-            if (UpperPlayer1.RankingMixed.Points + UpperPlayer2.RankingMixed.Points < (LowerPlayer1.RankingMixed.Points + LowerPlayer2.RankingMixed.Points - 100))
+            if (UpperPlayer1.Rankings.MixPoints + UpperPlayer2.Rankings.MixPoints < (LowerPlayer1.Rankings.MixPoints + LowerPlayer2.Rankings.MixPoints - 100))
             {
                 RuleBreaks.Add(new RuleBreak(UpperPlayer1, "Lower player has to many points"));
                 RuleBreaks.Add(new RuleBreak(UpperPlayer2, "Lower player has to many points"));
