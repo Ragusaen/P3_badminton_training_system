@@ -5,6 +5,8 @@ using Server.Model;
 using System;
 using System.Data;
 using System.Data.SqlClient;
+using server.Model.Rules;
+using server.Model;
 using System.Linq;
 using System.Runtime.Serialization.Json;
 using System.Runtime.Serialization;
@@ -18,15 +20,7 @@ namespace Server
     {
         public static void Main(string[] args)
         {
-            SslTcpServer server = new SslTcpServer();
-            SslTcpClient client = new SslTcpClient();
-
-            Thread serverThread = new Thread(new ThreadStart(server.RunServer));
-            serverThread.Start();
-
-            while (!server.Running) ;
-
-            client.Connect("localhost", "localhost");
+          
         }
     }
 }

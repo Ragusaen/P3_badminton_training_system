@@ -12,6 +12,8 @@ namespace Server.Model
         private List<MemberRole> _roles = new List<MemberRole>();
 
         public string Name { get; set; }
+        public byte Sex { get; set; }
+        public int ID { get; set; }
 
         public void AddRole<T>(T Role) where T : MemberRole
         {

@@ -9,8 +9,15 @@ namespace Server.Model
 {
     class Player : MemberRole
     {
+        internal enum AgeGroup 
+        {
+            U15,
+            U17,
+            Senior
+        } 
         public List<PracticeTeam> Teams { get; set; }
 
+        public AgeGroup Age { get; set; }
         public string BadmintonId { get; private set; }
 
         public PlayerRanking RankingLevel;

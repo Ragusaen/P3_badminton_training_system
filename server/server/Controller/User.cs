@@ -4,16 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
+using server.DAL;
+using MySql.Data.MySqlClient;
+using Server.Model;
+using System.Data;
 
 namespace Server.Controller
 {
     class User
     {
-        private const int pbkdf2_iterations = 100000;
-        private const int hash_size = 32;
-        private const int salt_size = 128;
-        private const int token_size = 64;
-        
+        private const int pbkdf2Iterations = 100000;
+        private const int hashSize = 32;
+        private const int saltSize = 128;
+        private const int tokenSize = 64;
 
         struct UserInfo
         {
@@ -32,10 +35,10 @@ namespace Server.Controller
         #region Login
         public byte[] Login(string username, string password)
         {
-            UserInfo? user_info = FindUser(username);
-            if (user_info.HasValue)
+            UserInfo? userInfo = FindUser(username);
+            if (userInfo.HasValue)
             {
-                UserInfo user = user_info.Value;
+                UserInfo user = userInfo.Value;
 
                 if (VerifyPassword(password, user.Salt, user.PasswordHash))
                 {
@@ -48,39 +51,53 @@ namespace Server.Controller
 
         private UserInfo? FindUser(string username)
         {
-            //Actually find the user in the database !!!
-            var pbkdf2 = new Rfc2898DeriveBytes(Encoding.ASCII.GetBytes("password123"), Encoding.ASCII.GetBytes("randomstring"), pbkdf2_iterations);
-            return new UserInfo("hansemand", pbkdf2.GetBytes(hash_size), Encoding.ASCII.GetBytes("randomstring"));
+            string query = string.Format("select Username, PasswordHash, PasswordSalt from `Account` where Username=@Username;");
+            MySqlParameter[] param = new MySqlParameter[1];
+            param[0] = new MySqlParameter("@Username", username);
+
+            DBConnection db = new DBConnection();
+            DataTable dt = db.ExecuteSelectQuery(query, param);
+            return new UserInfo(dt.Rows[0][0].ToString(), (byte[])dt.Rows[0][1], (byte[])dt.Rows[0][2]);
         }
 
         private byte[] GenerateLoginToken()
         {
             // Generate a random token for the user to login with
             var rng = new RNGCryptoServiceProvider();
-            byte[] token = new byte[token_size];
+            byte[] token = new byte[tokenSize];
             rng.GetBytes(token);
             return token;
         }
         #endregion
 
         #region Create
-        public void Create(string username, string password)
+        public void Create(string username, string password, Member member)
         {
             var pw_info = GenerateHashedPasswordAndSalt(password);
-            UserInfo user_info = new UserInfo(
+            UserInfo userInfo = new UserInfo(
                 username,
                 pw_info.password,
                 pw_info.salt
             );
 
-            AddUserToDatabase(user_info);
+            AddUserToDatabase(userInfo, member);
         }
         #endregion
 
         #region Database
-        private void AddUserToDatabase(UserInfo user_info)
+        private void AddUserToDatabase(UserInfo userInfo, Member member)
         {
-            // Do that
+            string query = string.Format("insert into `Member`(`Name`, Sex) values(@Name, @Sex); " +
+                "insert into `Account`(MemberID, Username, PasswordHash, PasswordSalt) values(LAST_INSERT_ID(), @Username, @Hash, @Salt);");
+            MySqlParameter[] param = new MySqlParameter[5];
+            param[0] = new MySqlParameter("@Name", member.Name);
+            param[1] = new MySqlParameter("@Sex", member.Sex);
+            param[2] = new MySqlParameter("@Username", userInfo.Username);
+            param[3] = new MySqlParameter("@Hash", userInfo.PasswordHash);
+            param[4] = new MySqlParameter("@Salt", userInfo.Salt);
+
+            DBConnection db = new DBConnection();
+            db.ExecuteInsertUpdateDeleteQuery(query, param);
         }
         #endregion
 
@@ -88,22 +105,22 @@ namespace Server.Controller
         {
             // Generate a new salt
             var rng = new RNGCryptoServiceProvider();
-            byte[] salt = new byte[salt_size];
+            byte[] salt = new byte[saltSize];
             rng.GetBytes(salt);
 
             // Hash password with salt
-            var pbkdf2 = new Rfc2898DeriveBytes(password, salt, pbkdf2_iterations);
-            byte[] password_hash = pbkdf2.GetBytes(hash_size);
+            var pbkdf2 = new Rfc2898DeriveBytes(password, salt, pbkdf2Iterations);
+            byte[] passwordHash = pbkdf2.GetBytes(hashSize);
 
-            return (password_hash, salt);
+            return (passwordHash, salt);
         }
 
-        private bool VerifyPassword(string input_pw, byte[] salt, byte[] hashed_pw)
+        private bool VerifyPassword(string inputPw, byte[] salt, byte[] hashedPw)
         {
-            var pbkdf2 = new Rfc2898DeriveBytes(input_pw, salt, pbkdf2_iterations);
-            byte[] input_pw_hash = pbkdf2.GetBytes(hash_size);
+            var pbkdf2 = new Rfc2898DeriveBytes(inputPw, salt, pbkdf2Iterations);
+            byte[] inputPwHash = pbkdf2.GetBytes(hashSize);
 
-            return input_pw_hash.SequenceEqual(hashed_pw);
+            return inputPwHash.SequenceEqual(hashedPw);
         }
     }
 }

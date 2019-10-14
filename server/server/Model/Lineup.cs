@@ -1,15 +1,29 @@
-﻿using System;
+﻿using Server.Model;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Server.Model
+
+namespace server.Model
 {
     class Lineup
     {
+        internal enum Leagues
+        {
+            BatmintonLeague,
+            Devision1,
+            Devision2,
+            Devision3,
+            DenmarkSeries,
+            RegionalSeries,
+            Series1,
+            Series2,
+            Series3,
+            Series4
+        }
         public Match Match { get; set; }
-        public List<Player> Players { get; set; } = new List<Player>();
-
+        public Leagues League { get; set; }
+        public int Round { get; set; }
+        public List<RuleBreak> RuleBakes { get; set; } = new List<RuleBreak>();
+        public List<IPosition> Positions { get; set; } = new List<IPosition>();
     }
 }
+
