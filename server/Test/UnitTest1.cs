@@ -14,7 +14,7 @@ namespace Test
         [Test]
         public void Test1()
         {
-            Player player = new Player(new Member());
+            Player player = new Player(new Member(), "214354531");
             Assert.Pass();
         }
     }
