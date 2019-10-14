@@ -16,6 +16,6 @@ namespace Server.Model
         public Player(Member member, int badmintonPlayerID) : base(member)
         {
             BadmintonPlayerID = badmintonPlayerID;
-        }
+        }   
     }
 }

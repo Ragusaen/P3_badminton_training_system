@@ -20,6 +20,8 @@ namespace RankingsParserTest.UpdatePlayers
             int actual = p[0].Rankings.LevelPoints;
             System.Console.WriteLine("Actual: " + actual);
 
+
+
             Assert.IsTrue(actual > 0);
         }
     }
@@ -30,13 +32,8 @@ namespace RankingsParserTest.UpdatePlayers
         [Test]
         public void Test()
         {
-            List<Player> p = new List<Player>() { new Player(new Member()), new Player(new Member()) };
-            p[0].BadmintonPlayerID = 96021601; p[0].Rankings = new PlayerRanking(); 
-            p[1].BadmintonPlayerID = 97022603; p[1].Rankings = new PlayerRanking(); 
 
-            Parser parser = new Parser();
-
-            parser.UpdatePlayers(p);
+            parser.UpdatePlayers();
             int actual = p[1].Rankings.LevelPoints;
             System.Console.WriteLine("Actual: " + actual);
 

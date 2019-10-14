@@ -16,6 +16,7 @@ namespace Server
 
             parser.UpdatePlayers();
 
+            Console.ReadKey();
             /*string query = "insert into `member`(Name, Sex) values(@Name, @Sex)";
             MySqlParameter[] sqlParameters = new MySqlParameter[2];
             sqlParameters[0] = new MySqlParameter("@Name", "Test");

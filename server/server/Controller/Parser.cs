@@ -17,7 +17,8 @@ namespace Server.Controller
     {
         public void UpdatePlayers()
         {
-            var players = FetchPlayersFromSQL();
+            DBReader dbr = new DBReader();
+            var players = dbr.FetchPlayers();
             
             var chromeOptions = new ChromeOptions();
             chromeOptions.AddArguments("--headless");
@@ -31,10 +32,22 @@ namespace Server.Controller
                 List<IWebElement> rawRanking = ScrapeRankingsWebsite(browser);
 
                 DistributeRankings(players, rawRanking, i);
+
+                try
+                {
+                    var nextPage = browser.FindElement(By.XPath("/html/body/form/div[4]/div[1]/div[5]/table/tbody/tr[102]/td/a"));
+                    nextPage.Click();
+                    Thread.Sleep(4000);
+
+                    rawRanking = ScrapeRankingsWebsite(browser);
+                    DistributeRankings(players, rawRanking, i);
+                }
+                catch (Exception) { }
             }
             browser.Quit();
 
-            WritePlayersToSQL(players);
+            DBWriter dbw = new DBWriter();
+            dbw.WritePlayers(players);
         }
 
         #pragma warning disable CS0618
@@ -59,26 +72,29 @@ namespace Server.Controller
                 string rawPlayerid = currentRow.FindElement(By.ClassName("playerid")).GetAttribute("innerHTML");
                 int badmintonPlayerID = RemoveFalseHyphen(rawPlayerid);
                 int points = FetchPointsFromRow(currentRow);
-                string skillLevel = FetchSkillLevelFromRow(currentRow);
+                string level = FetchSkillLevelFromRow(currentRow);
 
                 Player p2;
 
                 if (players.Exists(p => p.BadmintonPlayerID.Equals(badmintonPlayerID)))
                 {
                     p2 = players.Find(p => p.BadmintonPlayerID.Equals(badmintonPlayerID));
-                    AssignPointsFromRow(p2, points, category);
+                    AssignPointsFromRow(p2, points, level, category);
                 }
                 else
                 {
                     p2 = new Player(new Member(), badmintonPlayerID);
-                    AssignPointsFromRow(p2, points, category);
+                    AssignPointsFromRow(p2, points, level, category);
                     players.Add(p2);
                 }
             }
         }
 
-        private void AssignPointsFromRow(Player p, int points, int category)
+        private void AssignPointsFromRow(Player p, int points, string level, int category)
         {
+            if (category == 0)
+                p.Rankings.Level = level;
+
             switch (category)
             {
                 case (int)Constants.EnumRankings.Level:
@@ -130,60 +146,6 @@ namespace Server.Controller
             Array.Copy(bytes, i + 3, newBytes, i, 2);
 
             return Int32.Parse(Encoding.UTF8.GetString(newBytes));
-        }
-
-        private List<Player> FetchPlayersFromSQL()
-        {
-            List<Player> players = new List<Player>();
-            DBConnection dbc = new DBConnection();
-            string query = "SELECT * FROM p3_db.player";
-
-            MySqlParameter[] arr = new MySqlParameter[0];
-
-            DataTable dt = dbc.ExecuteSelectQuery(query, arr);
-
-            for (int i = 0; i < dt.Rows.Count; i++)
-            {
-                int ID = (int) dt.Rows[i]["BadmintonPlayerID"];
-                players.Add(new Player(new Member(), ID));
-            }
-
-            return players;
-        }
-        
-        private void WritePlayersToSQL(List<Player> players)
-        {
-            for (int i = 0; i < players.Count; i++)
-            {
-                bool PlayerIsInDB = false;
-
-                if (PlayerIsInDB)
-                {
-
-                }
-                else
-                {
-
-                    string query = "insert into `Member`(`Name`, Sex) values(@Name, @Sex);" +
-                                   "insert into Player(MemberID, BadmintonPlayerID) values(LAST_INSERTED_ID(), @BadmintonPlayerID);" +
-                                   "insert into RankList(PlayerMemberID, MixPoints, SinglePoints, DoublePoints, OverallPoints, `Level`) " +
-                                   "values(last_insert_id(), @MixPoints, @SinglePoints, @DoublePoints, @OverallPoints, @Level);";
-
-                    Player p = players[i];
-                    MySqlParameter[] sqlParameters = new MySqlParameter[8];
-                    sqlParameters[0] = new MySqlParameter("@Name", p.Member.Name);
-                    sqlParameters[1] = new MySqlParameter("@sex", p.Member.Sex);
-                    sqlParameters[2] = new MySqlParameter("@BadmintonPlayerID", p.BadmintonPlayerID);
-                    sqlParameters[3] = new MySqlParameter("@MixPoints", p.Rankings.MixPoints);
-                    sqlParameters[4] = new MySqlParameter("@SinglePoints", p.Rankings.SinglesPoints);
-                    sqlParameters[5] = new MySqlParameter("@DoublePoints", p.Rankings.DoublesPoints);
-                    sqlParameters[6] = new MySqlParameter("@Overallpoints", p.Rankings.LevelPoints);
-                    sqlParameters[7] = new MySqlParameter("@Level", p.Rankings.Level);
-                    DBConnection db = new DBConnection();
-                    bool res = db.ExecuteInsertUpdateDeleteQuery(query, sqlParameters);
-
-                }
-            }
         }
     }
 }
