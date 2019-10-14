@@ -1,5 +1,5 @@
 ﻿using Server.Controller.Network;
-using Server.Controller.Serialization;
+using Server.Controller.Requests.Serialization;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -8,7 +8,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Server.Controller
+namespace Server.Controller.Requests
 {
     class RequestManager
     {

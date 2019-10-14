@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Server.Controller.Serialization
+namespace Server.Controller.Requests.Serialization
 {
     class Serializer
     {
