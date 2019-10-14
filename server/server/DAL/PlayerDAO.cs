@@ -33,34 +33,57 @@ namespace Server.DAL
         {
             for (int i = 0; i < players.Count(); i++)
             {
-                bool PlayerIsInDB = false;
-
-                if (PlayerIsInDB)
-                {
-
-                }
+                Player p = players.ElementAt(i);
+                if (CheckPlayerInDB(p))
+                    UpdatePlayerRow(p);
                 else
-                {
-
-                    string query = "insert into `Member`(`Name`, Sex) values(@Name, @Sex);" +
-                                   "insert into Player(MemberID, BadmintonPlayerId) values(LAST_INSERT_ID(), @BadmintonPlayerId);" +
-                                   "insert into RankList(PlayerMemberID, MixPoints, SinglePoints, DoublePoints, OverallPoints, `Level`) " +
-                                   "values(last_insert_id(), @MixPoints, @SinglePoints, @DoublePoints, @OverallPoints, @Level);";
-
-                    Player p = players.ElementAt(i);
-                    MySqlParameter[] sqlParameters = new MySqlParameter[8];
-                    sqlParameters[0] = new MySqlParameter("@Name", p.Member.Name);
-                    sqlParameters[1] = new MySqlParameter("@sex", p.Member.Sex);
-                    sqlParameters[2] = new MySqlParameter("@BadmintonPlayerId", p.BadmintonPlayerId);
-                    sqlParameters[3] = new MySqlParameter("@MixPoints", p.Rankings.MixPoints);
-                    sqlParameters[4] = new MySqlParameter("@SinglePoints", p.Rankings.SinglesPoints);
-                    sqlParameters[5] = new MySqlParameter("@DoublePoints", p.Rankings.DoublesPoints);
-                    sqlParameters[6] = new MySqlParameter("@Overallpoints", p.Rankings.LevelPoints);
-                    sqlParameters[7] = new MySqlParameter("@Level", p.Rankings.Level);
-                    DBConnection db = new DBConnection();
-                    bool res = db.ExecuteInsertUpdateDeleteQuery(query, sqlParameters);
-                }
+                    InsertPlayerRow(p);
             }
+        }
+
+        private bool CheckPlayerInDB(Player p)
+        {
+            MySqlParameter[] param = new MySqlParameter[1];
+            string query = "select MemberID from Player where MemberID = @ID";
+            param[0] = new MySqlParameter("@ID", p.Member.Id);
+            DBConnection db = new DBConnection();
+            DataTable dt = db.ExecuteSelectQuery(query, param);
+            return dt.Rows.Count > 0;
+        }
+
+        private void UpdatePlayerRow(Player p)
+        {
+            string query = "update RankList set MixPoints=@MixPoints, SinglePoints=@SinglePoints, DoublePoints=@DoublePoints, " +
+                           "OverallPoints=@OverallPoints, Level=@Level where PlayerMemberID=@ID;";
+            MySqlParameter[] sqlParameters = new MySqlParameter[6];
+            sqlParameters[0] = new MySqlParameter("@MixPoints", p.Rankings.MixPoints);
+            sqlParameters[1] = new MySqlParameter("@SinglePoints", p.Rankings.SinglesPoints);
+            sqlParameters[2] = new MySqlParameter("@DoublePoints", p.Rankings.DoublesPoints);
+            sqlParameters[3] = new MySqlParameter("@OverallPoints", p.Rankings.LevelPoints);
+            sqlParameters[4] = new MySqlParameter("@Level", p.Rankings.Level);
+            sqlParameters[5] = new MySqlParameter("@ID", p.Member.Id);
+            DBConnection db = new DBConnection();
+            db.ExecuteInsertUpdateDeleteQuery(query, sqlParameters);
+        }
+
+        private void InsertPlayerRow(Player p)
+        {
+            string query = "insert into `Member`(`Name`, Sex) values(@Name, @Sex);" +
+                           "insert into Player(MemberID, BadmintonPlayerId) values(LAST_INSERT_ID(), @BadmintonPlayerId);" +
+                           "insert into RankList(PlayerMemberID, MixPoints, SinglePoints, DoublePoints, OverallPoints, `Level`) " +
+                           "values(last_insert_id(), @MixPoints, @SinglePoints, @DoublePoints, @OverallPoints, @Level);";
+
+            MySqlParameter[] sqlParameters = new MySqlParameter[8];
+            sqlParameters[0] = new MySqlParameter("@Name", p.Member.Name);
+            sqlParameters[1] = new MySqlParameter("@sex", p.Member.Sex);
+            sqlParameters[2] = new MySqlParameter("@BadmintonPlayerId", p.BadmintonPlayerId);
+            sqlParameters[3] = new MySqlParameter("@MixPoints", p.Rankings.MixPoints);
+            sqlParameters[4] = new MySqlParameter("@SinglePoints", p.Rankings.SinglesPoints);
+            sqlParameters[5] = new MySqlParameter("@DoublePoints", p.Rankings.DoublesPoints);
+            sqlParameters[6] = new MySqlParameter("@Overallpoints", p.Rankings.LevelPoints);
+            sqlParameters[7] = new MySqlParameter("@Level", p.Rankings.Level);
+            DBConnection db = new DBConnection();
+            db.ExecuteInsertUpdateDeleteQuery(query, sqlParameters);
         }
     }
 }
