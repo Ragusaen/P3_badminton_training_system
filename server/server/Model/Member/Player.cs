@@ -3,19 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Runtime.Serialization;
 
 namespace Server.Model
 {
     class Player : MemberRole
     {
+        internal enum AgeGroup 
+        {
+            U15,
+            U17,
+            Senior
+        } 
         public List<PracticeTeam> Teams { get; set; }
 
-        public int BadmintonPlayerID;
         public PlayerRanking Rankings = new PlayerRanking();
+        public AgeGroup Age { get; set; }
+        public string BadmintonId { get; private set; }
 
-        public Player(Member member, int badmintonPlayerID) : base(member)
+        public Player(Member member, string badmintonId) : base(member)
         {
-            BadmintonPlayerID = badmintonPlayerID;
-        }   
+            BadmintonId = badmintonId;
+        }
     }
 }

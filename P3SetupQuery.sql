@@ -34,7 +34,7 @@ MixPoints int not null,
 SinglePoints int not null,
 DoublePoints int not null,
 OverallPoints int not null,
-`Level` varchar(16) not null
+`Level` varchar(16)
 );
 
 create table Team
