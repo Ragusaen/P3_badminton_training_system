@@ -70,7 +70,7 @@ namespace Server.Controller
                 CorrectVersion = browser.FindElement(By.XPath(xpath)).Text.Contains("senior");
             }
 
-            _log.Debug("Found correct rank list version: {0}", browser.FindElement(By.XPath(xpath)).Text);
+            _log.Debug("Using rank list version: {0}", browser.FindElement(By.XPath(xpath)).Text);
             browser.FindElement(By.XPath(xpath)).Click();
 
             browser.FindElement(By.Id("LinkButtonSearch")).Click();
