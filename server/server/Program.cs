@@ -6,7 +6,6 @@ using System;
 using System.Data;
 using System.Data.SqlClient;
 using Server.Model.Rules;
-using Server.Model;
 using System.Linq;
 using System.Runtime.Serialization.Json;
 using System.Runtime.Serialization;
@@ -21,8 +20,8 @@ namespace Server
         public static void Main(string[] args)
         {
             var parser = new Parser();
-
             parser.UpdatePlayers();
+            NLog.LogManager.Shutdown();
         }
     }
 }
