@@ -21,7 +21,7 @@ namespace Server
         {
             var parser = new Parser();
             parser.UpdatePlayers();
-            Console.ReadKey();
+            NLog.LogManager.Shutdown();
         }
     }
 }

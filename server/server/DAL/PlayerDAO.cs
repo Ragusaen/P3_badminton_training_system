@@ -6,11 +6,14 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using NLog;
 
 namespace Server.DAL
 {
     class PlayerDAO : IDAOEnumerable<Player>
     {
+        private static Logger _log = LogManager.GetCurrentClassLogger();
+
         public IEnumerable<Player> Read()
         {
             List<Player> players = new List<Player>();
@@ -33,7 +36,7 @@ namespace Server.DAL
 
                 players.Add(new Player(new Member(), badmintonPlayerID));
                 players[i].Member.Name = (string) memberRow["Name"];
-                players[i].Member.Sex = (int)memberRow["Sex"];
+                players[i].Member.Sex = (int) memberRow["Sex"];
             }
 
             return players;
@@ -63,6 +66,7 @@ namespace Server.DAL
 
         private void UpdatePlayerRow(Player p)
         {
+            _log.Debug("Updating player in DB: {0}, BadmintonPlayerID: {1}", p.Member.Name, p.BadmintonPlayerId);
             string query = "update RankList set MixPoints=@MixPoints, SinglePoints=@SinglePoints, DoublePoints=@DoublePoints, " +
                            "OverallPoints=@OverallPoints, Level=@Level where PlayerMemberID=@ID;";
             MySqlParameter[] sqlParameters = new MySqlParameter[6];
@@ -78,6 +82,8 @@ namespace Server.DAL
 
         private void InsertPlayerRow(Player p)
         {
+            _log.Debug("Inserting new player in DB: {0}, BadmintonPlayerID: {1}", p.Member.Name, p.BadmintonPlayerId);
+
             string query = "insert into `Member`(`Name`, Sex) values(@Name, @Sex);" +
                            "insert into Player(MemberID, BadmintonPlayerId) values(LAST_INSERT_ID(), @BadmintonPlayerId);" +
                            "insert into RankList(PlayerMemberID, MixPoints, SinglePoints, DoublePoints, OverallPoints, `Level`) " +
