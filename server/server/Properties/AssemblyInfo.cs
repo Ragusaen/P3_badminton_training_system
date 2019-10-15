@@ -37,3 +37,4 @@ using System.Runtime.InteropServices;
 
 // Make internal classes visible to unit tests
 [assembly: InternalsVisibleTo("Test")]
+[assembly: InternalsVisibleTo("TestOtherWat")]

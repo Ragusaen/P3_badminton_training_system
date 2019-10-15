@@ -13,6 +13,8 @@ using System.IO;
 using Server.Controller.Network;
 using System.Threading;
 using NLog;
+using Server.Controller.Requests;
+using System.Security.Cryptography;
 
 namespace Server
 {
