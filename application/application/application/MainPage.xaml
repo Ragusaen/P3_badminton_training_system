@@ -6,11 +6,19 @@
              mc:Ignorable="d"
              x:Class="application.MainPage">
 
-    <StackLayout>
+    <StackLayout HorizontalOptions="Center" VerticalOptions="Center" BackgroundColor="Gray">
         <!-- Place new controls here -->
-        <Label Text="Welcome to Xamarin.Forms!" 
-           HorizontalOptions="Center"
-           VerticalOptions="CenterAndExpand" />
+        <!-- <Image Source="http://upload.wikimedia.org/wikipedia/commons/thumb/f/fc/Papio_anubis_%28Serengeti%2C_2009%29.jpg/200px-Papio_anubis_%28Serengeti%2C_2009%29.jpg"
+               HeightRequest="300" /> -->
+        <Label Text="Welcome to where dreams come true" FontSize="Large" />
+        <Label Text="Username" />
+        <Entry x:Name="username" Placeholder="Type that username right here..."/>
+        <Label Text="Password"/>
+        <Entry x:Name="password" Placeholder="Hurry up while no one is looking"/>
+        <Button Text="Login"/>
+                
+            
+
     </StackLayout>
 
 </ContentPage>

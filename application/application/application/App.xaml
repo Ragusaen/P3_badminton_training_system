@@ -7,5 +7,7 @@
              x:Class="application.App">
     <Application.Resources>
 
+        <!-- For shared resources like colors -->
+        
     </Application.Resources>
 </Application>
