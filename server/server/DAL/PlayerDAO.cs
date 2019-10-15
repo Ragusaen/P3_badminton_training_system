@@ -18,12 +18,23 @@ namespace Server.DAL
             MySqlParameter[] arr = new MySqlParameter[0];
             string query = "SELECT * FROM p3_db.player";
 
-            DataTable dt = dbc.ExecuteSelectQuery(query, arr);
+            DataTable playersTable = dbc.ExecuteSelectQuery(query, arr);
 
-            for (int i = 0; i < dt.Rows.Count; i++)
+            for (int i = 0; i < playersTable.Rows.Count; i++)
             {
-                int ID = (int)dt.Rows[i]["BadmintonPlayerId"];
-                players.Add(new Player(new Member(), ID));
+                int badmintonPlayerID = (int)playersTable.Rows[i]["BadmintonPlayerID"];
+                int memberID = (int)playersTable.Rows[i]["MemberID"];
+
+                query = "select `Name`, Sex from `Member` where ID = @ID;";
+                arr = new MySqlParameter[1];
+                arr[0] = new MySqlParameter("@ID", memberID);
+
+                DataTable memberDt = dbc.ExecuteSelectQuery(query, arr);
+
+                players.Add(new Player(new Member(), badmintonPlayerID));
+                players[i].Member.Name = (string) memberDt.Rows[i]["Name"];
+                Console.WriteLine((memberDt.Rows[i]["Sex"]).GetType());
+                players[i].Member.Sex = (byte)memberDt.Rows[i]["Sex"];
             }
 
             return players;

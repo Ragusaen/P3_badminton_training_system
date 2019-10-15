@@ -21,8 +21,8 @@ namespace Server
         public static void Main(string[] args)
         {
             var parser = new Parser();
-
             parser.UpdatePlayers();
+            Console.ReadKey();
         }
     }
 }

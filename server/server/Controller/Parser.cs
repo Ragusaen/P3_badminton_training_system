@@ -33,7 +33,7 @@ namespace Server.Controller
 
                 DistributeRankings(players, rawRanking, i);
 
-                try
+                try // Checking for next page
                 {
                     var nextPage = browser.FindElement(By.XPath("/html/body/form/div[4]/div[1]/div[5]/table/tbody/tr[102]/td/a"));
                     nextPage.Click();
@@ -46,7 +46,6 @@ namespace Server.Controller
             }
             browser.Quit();
 
-            
             pdao.Write(players);
         }
 
@@ -85,6 +84,9 @@ namespace Server.Controller
                 else
                 {
                     p2 = new Player(new Member(), BadmintonPlayerId);
+                    string name = new string(currentRow.FindElement(By.ClassName("name")).Text.TakeWhile(p => p != ',').ToArray());
+                    p2.Member.Name = name;
+                    Console.WriteLine(p2.Member.Name);
                     AssignPointsFromRow(p2, points, level, category);
                     players.Add(p2);
                 }
@@ -93,31 +95,35 @@ namespace Server.Controller
 
         private void AssignPointsFromRow(Player p, int points, string level, int category)
         {
-            if (category == 0)
-                p.Rankings.Level = level;
-
             switch (category)
             {
                 case (int)Constants.EnumRankings.Level:
                     p.Rankings.LevelPoints = points;
+                    p.Rankings.Level = level;
                     break;
                 case (int)Constants.EnumRankings.MS:
                     p.Rankings.SinglesPoints = points;
+                    p.Member.Sex = 0;
                     break;
                 case (int)Constants.EnumRankings.WS:
                     p.Rankings.SinglesPoints = points;
+                    p.Member.Sex = 1;
                     break;
                 case (int)Constants.EnumRankings.MD:
                     p.Rankings.DoublesPoints = points;
+                    p.Member.Sex = 0;
                     break;
                 case (int)Constants.EnumRankings.WD:
                     p.Rankings.DoublesPoints = points;
+                    p.Member.Sex = 1;
                     break;
                 case (int)Constants.EnumRankings.MMD:
                     p.Rankings.MixPoints = points;
+                    p.Member.Sex = 0;
                     break;
                 case (int)Constants.EnumRankings.WMD:
                     p.Rankings.MixPoints = points;
+                    p.Member.Sex = 1;
                     break;
                 default:
                     throw new Exception($"Category could not be recognised. Category is: {category}");

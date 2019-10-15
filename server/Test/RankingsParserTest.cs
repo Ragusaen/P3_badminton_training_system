@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace RankingsParserTest.UpdatePlayers
 {
-    [TestFixture]
+    /*[TestFixture]
     [Parallelizable]
     public class ParserUpdatesLevelPointsForFirstPlayerOnRankings
     {
@@ -246,5 +246,5 @@ namespace RankingsParserTest.UpdatePlayers
 
             Assert.AreEqual(0, actual);
         }
-    }
+    }*/
 }
