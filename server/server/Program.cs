@@ -21,16 +21,9 @@ namespace Server
     {
         public static void Main(string[] args)
         {
-            var byts = new byte[128];
-            byts[0] = 0x42;
-            var pkbdf2 = new Rfc2898DeriveBytes("fortytwo", byts, 100000);
-
-            byte[] pw_hash = pkbdf2.GetBytes(32);
-
-            string s = BitConverter.ToString(pw_hash).Replace("-", "");
-
-            Console.WriteLine(s);
-            Console.ReadKey();
+            var parser = new Parser();
+            parser.UpdatePlayers();
+            NLog.LogManager.Shutdown();
         }
     }
 }

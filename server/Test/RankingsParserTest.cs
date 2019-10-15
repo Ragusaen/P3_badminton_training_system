@@ -4,8 +4,8 @@ using Server.Controller;
 using System.Collections.Generic;
 
 namespace RankingsParserTest.UpdatePlayers
-{/*
-    [TestFixture]
+{
+    /*[TestFixture]
     [Parallelizable]
     public class ParserUpdatesLevelPointsForFirstPlayerOnRankings
     {
