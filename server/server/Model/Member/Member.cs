@@ -15,6 +15,17 @@ namespace Server.Model
         public int Sex { get; set; }
         public int Id { get; set; }
 
+        public Member()
+        {
+
+        }
+
+        public Member(string name, int sex)
+        {
+            Name = name;
+            Sex = sex;
+        }
+
         public void AddRole<T>(T Role) where T : MemberRole
         {
             // Check if member already has role

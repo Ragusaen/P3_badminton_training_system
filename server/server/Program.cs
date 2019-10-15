@@ -12,6 +12,8 @@ using System.Runtime.Serialization;
 using System.IO;
 using Server.Controller.Network;
 using System.Threading;
+using Server.Controller.Requests;
+using System.Security.Cryptography;
 
 namespace Server
 {

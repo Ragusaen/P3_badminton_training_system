@@ -14,9 +14,9 @@ namespace Server.Controller
     class User
     {
         private const int pbkdf2Iterations = 100000;
-        private const int hashSize = 32;
-        private const int saltSize = 128;
-        private const int tokenSize = 64;
+        public const int hashSize = 32;
+        public const int saltSize = 128;
+        public const int tokenSize = 64;
 
         struct UserInfo
         {
