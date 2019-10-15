@@ -33,14 +33,12 @@ namespace Server.Controller.Network
                     reqman.Parse(request);
                     Respond(reqman.Response);
                 }
-                catch (InvalidRequestException e)
+                catch (InvalidRequestException)
                 {
+                    Console.WriteLine("FUCK, IT WENT WRONG!!!");
                     _sslStream.Flush();
                     continue;
                 }
-                
-
-
             }
         }
 
@@ -53,6 +51,7 @@ namespace Server.Controller.Network
             Array.Copy(data, 0, response, 4, data.Length);
 
             _sslStream.Write(response);
+            Console.WriteLine("Wrote to client");
         }
 
         public void Close()
@@ -65,7 +64,9 @@ namespace Server.Controller.Network
         {
             // Read first 4 bytes, which is the size of the request
             byte[] request_size_buffer = new byte[4];
+            Console.WriteLine("Waiting to read... ");
             int bytes = _sslStream.Read(request_size_buffer, 0, request_size_buffer.Length);
+            Console.WriteLine("READ1 {0}", bytes);
             if (bytes != 4)
             {
                 throw new InvalidRequestException("Request was smaller than 4 bytes");
@@ -74,14 +75,14 @@ namespace Server.Controller.Network
             // Convert to int (byte order is big endian)
             int request_size = BitConverter.ToInt32(request_size_buffer, 0);
 
-            byte[] buffer = new byte[request_size - 4];
+            byte[] buffer = new byte[request_size];
             bytes = _sslStream.Read(buffer, 0, buffer.Length);
             
-            if (bytes != request_size - 4)
+            if (bytes != request_size)
             {
                 throw new InvalidRequestException("Request was not expected size");
             }
-
+            Console.WriteLine("READ2 {0}", bytes);
             return buffer;
         }
     }
