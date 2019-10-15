@@ -29,12 +29,11 @@ namespace Server.DAL
                 arr = new MySqlParameter[1];
                 arr[0] = new MySqlParameter("@ID", memberID);
 
-                DataTable memberDt = dbc.ExecuteSelectQuery(query, arr);
+                DataRow memberRow = dbc.ExecuteSelectQuery(query, arr).Rows[0];
 
                 players.Add(new Player(new Member(), badmintonPlayerID));
-                players[i].Member.Name = (string) memberDt.Rows[i]["Name"];
-                Console.WriteLine((memberDt.Rows[i]["Sex"]).GetType());
-                players[i].Member.Sex = (byte)memberDt.Rows[i]["Sex"];
+                players[i].Member.Name = (string) memberRow["Name"];
+                players[i].Member.Sex = (int)memberRow["Sex"];
             }
 
             return players;

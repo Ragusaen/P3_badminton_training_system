@@ -126,7 +126,7 @@ namespace Server.Controller
                     p.Member.Sex = 1;
                     break;
                 default:
-                    throw new Exception($"Category could not be recognised. Category is: {category}");
+                    throw new ArgumentException($"Category could not be recognised. Category is: {category}");
             }
         }
 
