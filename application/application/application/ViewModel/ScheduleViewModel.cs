@@ -4,7 +4,7 @@ using System.Text;
 
 namespace application.ViewModel
 {
-    class ScheduleViewModel
+    class ScheduleViewModel : BaseViewModel
     {
     }
 }

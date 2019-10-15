@@ -10,9 +10,9 @@ using Xamarin.Forms.Xaml;
 namespace application.UI
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class Schedule : ContentPage
+    public partial class SchedulePage : ContentPage
     {
-        public Schedule()
+        public SchedulePage()
         {
             InitializeComponent();
         }

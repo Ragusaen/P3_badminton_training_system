@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
+using Xamarin.Forms;
 
 namespace application.ViewModel
 {
     public abstract class BaseViewModel : INotifyPropertyChanged
     {
+        public INavigation NavigationPage { get; set; }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         //Invokes PropertyChanged if not null. Updates UI for property.

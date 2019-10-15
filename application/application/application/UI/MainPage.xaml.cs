@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 
-namespace application
+namespace application.UI
 {
     // Learn more about making custom code visible in the Xamarin.Forms previewer
     // by visiting https://aka.ms/xamarinforms-previewer
@@ -19,7 +19,7 @@ namespace application
             InitializeComponent();
             MainPageViewModel vm = new MainPageViewModel();
             BindingContext = vm;
-            vm.Navigation = Navigation;
+            vm.NavigationPage = new NavigationPage();
 
             RedLogo.Source = ImageSource.FromResource("application.Images.tritonlogo.jpg");
             NaviLogo.Source = ImageSource.FromResource("application.Images.logo.gif");
