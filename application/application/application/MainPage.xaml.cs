@@ -16,6 +16,10 @@ namespace application
         public MainPage()
         {
             InitializeComponent();
+            RedLogo.Source = ImageSource.FromResource("application.Images.tritonlogo.jpg");
+            NaviLogo.Source = ImageSource.FromResource("application.Images.logo.gif");
+
+            
         }
     }
 }
