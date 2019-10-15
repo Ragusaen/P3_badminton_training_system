@@ -7,7 +7,7 @@ using Server.Model;
 
 namespace Server.Model.Rules
 {
-    class ExtraPlayer : IRule
+    class ExtraPlayerRule : IRule
     {
         public string ErrorMessage { get; set; }
         public List<RuleBreak> RuleBreaks { get; set; }

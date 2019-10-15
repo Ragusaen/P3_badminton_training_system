@@ -20,9 +20,9 @@ namespace Server
     {
         public static void Main(string[] args)
         {
-            var parser = new Parser();
-
-            parser.UpdatePlayers();
+            Lineup lineup = new Lineup();
+            LineupRule line = new LineupRule();
+            line.Rule(lineup);
         }
     }
 }

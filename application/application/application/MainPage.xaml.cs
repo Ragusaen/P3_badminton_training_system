@@ -1,4 +1,5 @@
-﻿using System;
+﻿using application.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -16,6 +17,10 @@ namespace application
         public MainPage()
         {
             InitializeComponent();
+            MainPageViewModel vm = new MainPageViewModel();
+            BindingContext = vm;
+            vm.Navigation = Navigation;
+
         }
     }
 }

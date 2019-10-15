@@ -9,7 +9,6 @@ namespace application
         public App()
         {
             InitializeComponent();
-
             MainPage = new MainPage();
         }
 
