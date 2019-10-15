@@ -44,21 +44,24 @@ namespace Server.DAL
             for (int i = 0; i < players.Count(); i++)
             {
                 Player p = players.ElementAt(i);
-                if (CheckPlayerInDB(p))
-                    UpdatePlayerRow(p);
-                else
+                if(p.Member.Id == 0)
+                    p.Member.Id = GetMemberIDFromBadmintonPlayerID(p.BadmintonPlayerId);
+
+                if (p.Member.Id == 0)
                     InsertPlayerRow(p);
+                else
+                    UpdatePlayerRow(p);
             }
         }
 
-        private bool CheckPlayerInDB(Player p)
+        private int GetMemberIDFromBadmintonPlayerID(int badmintonPlayerId)
         {
             MySqlParameter[] param = new MySqlParameter[1];
-            string query = "select MemberID from Player where MemberID = @ID";
-            param[0] = new MySqlParameter("@ID", p.Member.Id);
+            string query = "select MemberID from Player where BadmintonPlayerID = @BadmintonPlayerID";
+            param[0] = new MySqlParameter("@BadmintonPlayerID", badmintonPlayerId);
             DBConnection db = new DBConnection();
-            DataTable dt = db.ExecuteSelectQuery(query, param);
-            return dt.Rows.Count > 0;
+            var id = db.ExecuteSelectQuery(query, param).Rows[0][0];
+            return id == null ? 0 : (int)id;
         }
 
         private void UpdatePlayerRow(Player p)
