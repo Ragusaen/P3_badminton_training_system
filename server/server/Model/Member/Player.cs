@@ -21,9 +21,9 @@ namespace Server.Model
         public AgeGroup Age { get; set; }
         public int BadmintonPlayerId { get; private set; }
 
-        public Player(Member member, int BadmintonPlayerId) : base(member)
+        public Player(Member member, int badmintonPlayerId) : base(member)
         {
-            BadmintonPlayerId = BadmintonPlayerId;
+            BadmintonPlayerId = badmintonPlayerId;
         }
     }
 }
