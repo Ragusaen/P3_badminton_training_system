@@ -12,15 +12,28 @@ using System.Runtime.Serialization;
 using System.IO;
 using Server.Controller.Network;
 using System.Threading;
+using NLog;
 
 namespace Server
 {
     class Program
     {
+        private static Logger _log = LogManager.GetCurrentClassLogger();
+
         public static void Main(string[] args)
         {
             var parser = new Parser();
-            parser.UpdatePlayers();
+
+            try
+            {
+                parser.UpdatePlayers();
+            }
+
+            catch (Exception e)
+            {
+                _log.Error(e, e.Message);
+                throw;
+            }
             NLog.LogManager.Shutdown();
         }
     }
