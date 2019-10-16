@@ -4,7 +4,6 @@ using System.Net;
 using System.Net.Sockets;
 using System.Net.Security;
 using System.Security.Authentication;
-using System.Text;
 using System.Security.Cryptography.X509Certificates;
 using System.IO;
 using System.Security;
@@ -14,13 +13,18 @@ using Server.Controller.Network;
 
 namespace Server.Controller.Network
 {
-    public sealed class SslTcpServer
+    sealed class SslTcpServer
     {
         // The certificate for SSL/TSL communication
         private X509Certificate _serverCertificate = null;
-        private const string _certificatePath = "localhost.cer";
+        private string _certificatePath;
 
         public bool Running { get; private set; } = false;
+
+        public SslTcpServer(string certificatePath)
+        {
+            _certificatePath = certificatePath;
+        }
 
         public void RunServer()
         {
@@ -76,6 +80,8 @@ namespace Server.Controller.Network
             Connection connection = new Connection(client, sslStream);
 
             Thread t = new Thread(new ThreadStart(connection.AcceptRequests));
+            Console.WriteLine("Starting new thread");
+            t.Start();
         }
 
     }

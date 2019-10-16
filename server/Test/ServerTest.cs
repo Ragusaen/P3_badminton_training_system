@@ -1,23 +1,21 @@
-﻿using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+
 using Server.Controller.Network;
-using System.Threading;
-using Server.Controller.Requests.Serialization;
 using Server.Controller.Requests;
+using System.Threading;
 
 namespace Test
 {
-    class ServerTest
+    [TestClass]
+    public class ServerTest
     {
-
-        [Test]
-        public void connection_test()
+        [TestMethod]
+        public void ConnectionTest()
         {
-            byte[] expected = new byte[] { 1, 1 };
+            byte[] expected = new byte[] { 1 };
 
-            SslTcpServer server = new SslTcpServer();
+            SslTcpServer server = new SslTcpServer(AppDomain.CurrentDomain.SetupInformation.ApplicationBase + "\\localhost.cer");
             SslTcpClient client = new SslTcpClient();
 
             Thread serverThread = new Thread(new ThreadStart(server.RunServer));
@@ -25,13 +23,11 @@ namespace Test
             while (!server.Running) ;
 
             client.Connect("localhost", "localhost");
-            byte[] payload = new byte[] { 1, (byte)RequestManager.Type.ConnectionTest };
-            
-            byte[] response = client.SendRequest(payload);
+            byte[] payload = new byte[] { 1, 0, 0, 0, (byte)RequestManager.Type.ConnectionTest };
 
+            byte[] actual = client.SendRequest(payload);
 
-
+            CollectionAssert.AreEqual(expected, actual);
         }
-
     }
 }

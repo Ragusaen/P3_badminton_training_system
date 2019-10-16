@@ -6,23 +6,37 @@ using System;
 using System.Data;
 using System.Data.SqlClient;
 using Server.Model.Rules;
-using Server.Model;
 using System.Linq;
 using System.Runtime.Serialization.Json;
 using System.Runtime.Serialization;
 using System.IO;
 using Server.Controller.Network;
 using System.Threading;
+using NLog;
+using Server.Controller.Requests;
+using System.Security.Cryptography;
 
 namespace Server
 {
     class Program
     {
+        private static Logger _log = LogManager.GetCurrentClassLogger();
+
         public static void Main(string[] args)
         {
-            Lineup lineup = new Lineup();
-            LineupRule line = new LineupRule();
-            line.Rule(lineup);
+            var parser = new Parser();
+
+            try
+            {
+                parser.UpdatePlayers();
+            }
+
+            catch (Exception e)
+            {
+                _log.Error(e, e.Message);
+                throw;
+            }
+            NLog.LogManager.Shutdown();
         }
     }
 }
