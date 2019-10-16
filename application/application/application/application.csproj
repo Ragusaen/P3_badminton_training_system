@@ -7,13 +7,11 @@
 
   <ItemGroup>
     <None Remove="Images\logo.gif" />
-    <None Remove="Images\Tiger.jpg" />
     <None Remove="Images\tritonlogo.jpg" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Images\logo.gif" />
-    <EmbeddedResource Include="Images\tiger.jpg" />
     <EmbeddedResource Include="Images\tritonlogo.jpg" />
   </ItemGroup>
 
