@@ -1,7 +1,12 @@
+DELIMITER //
+DROP PROCEDURE IF EXISTS SP_SETUP;
+CREATE PROCEDURE SP_SETUP()
+BEGIN
+
 create table `Member`(
 ID int primary key auto_increment,
 `Name` varchar(255) not null,
-Sex tinyint not null
+Sex int
 );
 
 create table `Account`
@@ -34,7 +39,7 @@ MixPoints int not null,
 SinglePoints int not null,
 DoublePoints int not null,
 OverallPoints int not null,
-`Level` varchar(16) not null
+`Level` varchar(16)
 );
 
 create table Team
@@ -114,3 +119,7 @@ PracticeSessionID int,
 foreign key(PracticeSessionID) references PracticeSession(ID),
 primary key(FocusPointName, PracticeSessionID)
 );
+
+END
+//
+DELIMITER ;

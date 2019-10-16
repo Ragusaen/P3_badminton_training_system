@@ -17,17 +17,13 @@ namespace Server.Model
         } 
         public List<PracticeTeam> Teams { get; set; }
 
+        public PlayerRanking Rankings = new PlayerRanking();
         public AgeGroup Age { get; set; }
-        public string BadmintonId { get; private set; }
+        public int BadmintonPlayerId { get; private set; }
 
-        public PlayerRanking RankingLevel;
-        public PlayerRanking RankingSingle;
-        public PlayerRanking RankingDouble;
-        public PlayerRanking RankingMixed;
-
-        public Player(Member member, string badmintonId) : base(member)
+        public Player(Member member, int badmintonPlayerId) : base(member)
         {
-            BadmintonId = badmintonId;
+            BadmintonPlayerId = badmintonPlayerId;
         }
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 
 
-namespace server.Model
+namespace Server.Model
 {
     class Lineup
     {

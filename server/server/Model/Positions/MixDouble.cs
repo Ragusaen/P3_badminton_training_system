@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace server.Model.Positions
+namespace Server.Model.Positions
 {
     class MixDouble : IPosition
     {

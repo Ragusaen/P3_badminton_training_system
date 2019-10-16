@@ -8,9 +8,16 @@ namespace Server.Model
 {
     class PlayerRanking
     {
-        public int Points;
         public string Level;
-        public int RankingRelative;
-        public int RankingNational;
+
+        public int LevelPoints;
+        public int SinglesPoints;
+        public int DoublesPoints;
+        public int MixPoints;
+
+        public override string ToString()
+        {
+            return $"Level: {Level}, LVL: {LevelPoints}, Singles: {SinglesPoints}, Doubles: {DoublesPoints} , Mixed: {MixPoints}";
+        }
     }
 }

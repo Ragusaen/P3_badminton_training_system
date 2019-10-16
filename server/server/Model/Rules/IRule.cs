@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace server.Model.Rules
+namespace Server.Model.Rules
 {
     interface IRule
     {

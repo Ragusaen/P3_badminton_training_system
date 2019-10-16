@@ -10,10 +10,8 @@ using System.IO;
 
 namespace Server.Controller.Network
 {
-    public class SslTcpClient
-    {
-        private Hashtable certificateErrors = new Hashtable();
-        
+    class SslTcpClient
+    {        
         TcpClient _tcpClient = null;
         SslStream _sslStream = null;
 
@@ -69,7 +67,6 @@ namespace Server.Controller.Network
 
         public void Disconnect()
         {
-            _sslStream.Write(Encoding.UTF8.GetBytes("CLOSE<EOF>"));
             _sslStream.Close();
             _tcpClient.Close();
         }
@@ -77,7 +74,7 @@ namespace Server.Controller.Network
         public byte[] SendRequest(byte[] request)
         {
             _sslStream.Write(request);
-            //_sslStream.Flush();
+            _sslStream.Flush();
 
             Console.WriteLine("Waiting for server response...");
 
@@ -99,10 +96,10 @@ namespace Server.Controller.Network
             // Convert to int (byte order is big endian)
             int request_size = BitConverter.ToInt32(request_size_buffer, 0);
 
-            byte[] buffer = new byte[request_size - 4];
+            byte[] buffer = new byte[request_size];
             bytes = _sslStream.Read(buffer, 0, buffer.Length);
 
-            if (bytes != request_size - 4)
+            if (bytes != request_size)
             {
                 throw new InvalidRequestException("Request was not expected size");
             }

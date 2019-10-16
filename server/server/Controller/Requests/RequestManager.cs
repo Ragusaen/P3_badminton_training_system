@@ -38,7 +38,7 @@ namespace Server.Controller.Requests
 
         private void ConnectionTestRequest(byte[] data)
         {
-
+            Response = new byte[] { 1 };
         }
 
         private void LoginRequest(byte[] data)
