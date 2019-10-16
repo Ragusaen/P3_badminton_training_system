@@ -64,8 +64,8 @@ namespace application.ViewModel
         //Check if user is in database. Navigate to main page.
         private void ExecuteFogotPassWordClick(object param)
         {
-            ScheduleViewModel vm = new ScheduleViewModel();
-            Navigation.PushAsync(new SchedulePage() { BindingContext = vm });
+            ForgotPasswordViewModel vm = new ForgotPasswordViewModel();
+            Navigation.PushAsync(new ForgotPasswordPage() { BindingContext = vm });
             vm.Navigation = Navigation;
         }
         private RelayCommand _createAccountClickCommand;
@@ -81,8 +81,8 @@ namespace application.ViewModel
         //Check if user is in database. Navigate to main page.
         private void ExecuteCreateAccountClick(object param)
         {
-            ScheduleViewModel vm = new ScheduleViewModel();
-            Navigation.PushAsync(new SchedulePage() { BindingContext = vm });
+            CreateAccountViewModel vm = new CreateAccountViewModel();
+            Navigation.PushAsync(new CreateAccountPage() { BindingContext = vm });
             vm.Navigation = Navigation;
         }
     }
