@@ -19,7 +19,7 @@ namespace application.UI
             InitializeComponent();
             MainPageViewModel vm = new MainPageViewModel();
             BindingContext = vm;
-            vm.NavigationPage = new NavigationPage();
+            vm.Navigation = Navigation;
 
             RedLogo.Source = ImageSource.FromResource("application.Images.tritonlogo.jpg");
             NaviLogo.Source = ImageSource.FromResource("application.Images.logo.gif");

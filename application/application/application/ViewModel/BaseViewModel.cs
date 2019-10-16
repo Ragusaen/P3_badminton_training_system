@@ -9,7 +9,7 @@ namespace application.ViewModel
 {
     public abstract class BaseViewModel : INotifyPropertyChanged
     {
-        public INavigation NavigationPage { get; set; }
+        public INavigation Navigation { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
 

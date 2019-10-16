@@ -14,19 +14,21 @@ namespace application.ViewModel
         public string UserName
         {
             get { return _userName; }
-            set { SetProperty(ref _userName, value); }
+            set { if (SetProperty(ref _userName, value))
+                    LoginClickCommand.RaiseCanExecuteChanged(); }
         }
         private string _passWord;
 
         public string PassWord
         {
             get { return _passWord; }
-            set { SetProperty(ref _passWord, value); }
+            set { if (SetProperty(ref _passWord, value))
+                    LoginClickCommand.RaiseCanExecuteChanged(); }
         }
 
-        private ICommand _loginClickCommand;
+        private RelayCommand _loginClickCommand;
 
-        public ICommand LoginClickCommand
+        public RelayCommand LoginClickCommand
         {
             get
             {
@@ -36,15 +38,52 @@ namespace application.ViewModel
 
         private bool CanExecuteLoginClick(object param)
         {
-            return true;
+            if((PassWord == null || PassWord == "") || (UserName == null || UserName == ""))
+                return false;
+            else
+                return true;
         }
 
         //Check if user is in database. Navigate to main page.
         private void ExecuteLoginClick(object param)
         {
             ScheduleViewModel vm = new ScheduleViewModel();
-            NavigationPage.PushAsync( new SchedulePage() {BindingContext = vm});
-            vm.NavigationPage = NavigationPage;
+            Navigation.PushAsync( new SchedulePage() {BindingContext = vm});
+            vm.Navigation = Navigation;
+        }
+        private RelayCommand _fogotPassWordClickCommand;
+
+        public RelayCommand FogotPassWordClickCommand
+        {
+            get
+            {
+                return _fogotPassWordClickCommand ?? (_fogotPassWordClickCommand = new RelayCommand(param => ExecuteFogotPassWordClick(param)));
+            }
+        }
+
+        //Check if user is in database. Navigate to main page.
+        private void ExecuteFogotPassWordClick(object param)
+        {
+            ScheduleViewModel vm = new ScheduleViewModel();
+            Navigation.PushAsync(new SchedulePage() { BindingContext = vm });
+            vm.Navigation = Navigation;
+        }
+        private RelayCommand _createAccountClickCommand;
+
+        public RelayCommand CreateAccountClickCommand
+        {
+            get
+            {
+                return _createAccountClickCommand ?? (_createAccountClickCommand = new RelayCommand(param => ExecuteCreateAccountClick(param)));
+            }
+        }
+
+        //Check if user is in database. Navigate to main page.
+        private void ExecuteCreateAccountClick(object param)
+        {
+            ScheduleViewModel vm = new ScheduleViewModel();
+            Navigation.PushAsync(new SchedulePage() { BindingContext = vm });
+            vm.Navigation = Navigation;
         }
     }
 }
