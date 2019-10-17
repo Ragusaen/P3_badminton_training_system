@@ -11,9 +11,13 @@ namespace Server.Model
     {
         internal enum AgeGroup 
         {
+            U9,
+            U11,
+            U13,
             U15,
             U17,
-            Senior
+            Senior,
+            Veteran
         } 
         public List<PracticeTeam> Teams { get; set; }
 
@@ -24,6 +28,11 @@ namespace Server.Model
         public Player(Member member, int badmintonPlayerId) : base(member)
         {
             BadmintonPlayerId = badmintonPlayerId;
+        }
+
+        public override string ToString()
+        {
+            return base.ToString() + " - " + BadmintonPlayerId;
         }
     }
 }
