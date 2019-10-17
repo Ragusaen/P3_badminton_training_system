@@ -143,11 +143,11 @@
     <Compile Include="Model\Member\PlayerRanking.cs" />
     <Compile Include="Model\RuleBreak.cs" />
     <Compile Include="Model\Rules\AgeRule.cs" />
-    <Compile Include="Model\Rules\CorrectLineup.cs" />
-    <Compile Include="Model\Rules\ExtraPlayer.cs" />
+    <Compile Include="Model\Rules\CorrectLineupRule.cs" />
+    <Compile Include="Model\Rules\ExtraPlayerRule.cs" />
     <Compile Include="Model\Rules\LineupRule.cs" />
     <Compile Include="Model\Rules\IRule.cs" />
-    <Compile Include="Model\Rules\Reserves.cs" />
+    <Compile Include="Model\Rules\ReservesRule.cs" />
     <Compile Include="Model\Rules\SexRule.cs" />
     <Compile Include="Model\Trainer.cs" />
     <Compile Include="Program.cs" />
