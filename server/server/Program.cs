@@ -17,6 +17,7 @@ using Server.Controller.Requests;
 using System.Security.Cryptography;
 using Server.Controller.Requests.Serialization;
 using System.Text;
+using System.Collections.Generic;
 
 namespace Server
 {
@@ -27,17 +28,24 @@ namespace Server
         public static void Main(string[] args)
         {
             var parser = new Parser();
+            var pdao = new PlayerDAO();
 
             try
             {
                 parser.UpdatePlayers();
+                var o = pdao.ReadAll().ToList();
+                var p = o[0];
+                Console.WriteLine(p);
+                Console.WriteLine(p.Rankings);
+                Console.ReadKey();
             }
 
             catch (Exception e)
             {
-                _log.Error(e, e.Message);
+                _log.Error(e, e.ToString());
                 throw;
             }
+
             NLog.LogManager.Shutdown();
         }
     }

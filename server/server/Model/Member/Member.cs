@@ -15,15 +15,17 @@ namespace Server.Model
         public int Sex { get; set; }
         public int Id { get; set; }
 
-        public Member()
-        {
-
-        }
-
         public Member(string name, int sex)
         {
             Name = name;
             Sex = sex;
+        }
+
+        public Member(string name, int sex, int id)
+        {
+            Name = name;
+            Sex = sex;
+            Id = id;
         }
 
         public void AddRole<T>(T Role) where T : MemberRole
@@ -43,6 +45,11 @@ namespace Server.Model
                 throw new ArgumentException("Member does not have this role");
             }
             return r.First() as T;
+        }
+
+        public override string ToString()
+        {
+            return Id + " - " + Name;
         }
     }
 }
