@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -74,25 +74,36 @@
     <AndroidResource Include="Resources\values\colors.xml" />
     <AndroidResource Include="Resources\mipmap-anydpi-v26\icon.xml" />
     <AndroidResource Include="Resources\mipmap-anydpi-v26\icon_round.xml" />
-    <AndroidResource Include="Resources\mipmap-hdpi\icon.png" />
     <AndroidResource Include="Resources\mipmap-hdpi\launcher_foreground.png" />
-    <AndroidResource Include="Resources\mipmap-mdpi\icon.png" />
     <AndroidResource Include="Resources\mipmap-mdpi\launcher_foreground.png" />
-    <AndroidResource Include="Resources\mipmap-xhdpi\icon.png" />
     <AndroidResource Include="Resources\mipmap-xhdpi\launcher_foreground.png" />
-    <AndroidResource Include="Resources\mipmap-xxhdpi\icon.png" />
     <AndroidResource Include="Resources\mipmap-xxhdpi\launcher_foreground.png" />
-    <AndroidResource Include="Resources\mipmap-xxxhdpi\icon.png" />
     <AndroidResource Include="Resources\mipmap-xxxhdpi\launcher_foreground.png" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Resources\drawable\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\application\application.csproj">
       <Project>{4C54E26D-F0ED-486F-8CBC-E6AF7C8E1910}</Project>
       <Name>application</Name>
     </ProjectReference>
   </ItemGroup>
- <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
+  <ItemGroup>
+    <AndroidResource Include="Resources\mipmap-hdpi\icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\mipmap-mdpi\icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\mipmap-xhdpi\icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\mipmap-xxhdpi\icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\mipmap-xxxhdpi\icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Resources\drawable\tritonlogo.jpg" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>
