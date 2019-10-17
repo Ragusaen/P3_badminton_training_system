@@ -14,6 +14,8 @@ using Server.Controller.Network;
 using System.Threading;
 using Server.Controller.Requests;
 using System.Security.Cryptography;
+using Server.Controller.Requests.Serialization;
+using System.Text;
 
 namespace Server
 {
@@ -21,8 +23,6 @@ namespace Server
     {
         public static void Main(string[] args)
         {
-            var parser = new Parser();
-            parser.UpdatePlayers();
             NLog.LogManager.Shutdown();
         }
     }

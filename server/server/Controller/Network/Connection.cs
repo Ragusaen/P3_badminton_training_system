@@ -51,7 +51,7 @@ namespace Server.Controller.Network
             Array.Copy(data, 0, response, 4, data.Length);
 
             _sslStream.Write(response);
-            Console.WriteLine("Wrote to client");
+            Console.WriteLine($"SERVER: Wrote {response.Length}");
         }
 
         public void Close()
@@ -64,9 +64,7 @@ namespace Server.Controller.Network
         {
             // Read first 4 bytes, which is the size of the request
             byte[] request_size_buffer = new byte[4];
-            Console.WriteLine("Waiting to read... ");
             int bytes = _sslStream.Read(request_size_buffer, 0, request_size_buffer.Length);
-            Console.WriteLine("READ1 {0}", bytes);
             if (bytes != 4)
             {
                 throw new InvalidRequestException("Request was smaller than 4 bytes");
@@ -82,7 +80,7 @@ namespace Server.Controller.Network
             {
                 throw new InvalidRequestException("Request was not expected size");
             }
-            Console.WriteLine("READ2 {0}", bytes);
+            Console.WriteLine($"SERVER: Read {bytes} bytes");
             return buffer;
         }
     }

@@ -47,7 +47,7 @@ namespace Server.Controller.Requests
             User user = new User();
 
             var serializer = new Serializer();
-            
+
             // Get the data
             LoginData loginData = serializer.Deserialize<LoginData>(data);
  
