@@ -1,9 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using MySql.Data.MySqlClient;
+using Server.DAL;
 using Server.Model;
+using Server.Model.Positions;
 using static Server.Model.Lineup;
 
 namespace Server.Model.Rules
@@ -15,7 +19,12 @@ namespace Server.Model.Rules
 
         public List<RuleBreak> Rule(Lineup lineup)
         {
-
+            Lineup lineup2 = new Lineup();
+            LineupSingleCheck(lineup.Positions.Where(p => p is MensSingle).ToList(), lineup2.Positions.Where(p => p is MensSingle).ToList(), lineup.League);
+            LineupSingleCheck(lineup.Positions.Where(p => p is WomensSingle).ToList(), lineup2.Positions.Where(p => p is WomensSingle).ToList(), lineup.League);
+            LineupDoubleCheck(lineup.Positions.Where(p => p is MensDouble).ToList(), lineup2.Positions.Where(p => p is MensDouble).ToList(), lineup.League);
+            LineupDoubleCheck(lineup.Positions.Where(p => p is WomensDouble).ToList(), lineup2.Positions.Where(p => p is WomensDouble).ToList(), lineup.League);
+            LineupMixCheck(lineup.Positions.Where(p => p is MixDouble).ToList(), lineup2.Positions.Where(p => p is MixDouble).ToList(), lineup.League);
             return RuleBreaks;
         }
         public void LineupSingleCheck(List<IPosition> list, List<IPosition> list2, Leagues league)

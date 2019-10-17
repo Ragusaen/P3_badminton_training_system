@@ -8,7 +8,7 @@ using Server.Model;
 
 namespace Server.Model.Rules
 {
-    class CorrectLineup : IRule
+    class CorrectLineupRule : IRule
     {
         public string ErrorMessage { get; set; }
         public List<RuleBreak> RuleBreaks { get; set; }

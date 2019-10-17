@@ -10,7 +10,7 @@ using Server.Model;
 
 namespace Server.Model.Rules
 {
-    class Reserves : IRule
+    class ReservesRule : IRule
     {
         public string ErrorMessage { get; set; }
         public List<RuleBreak> RuleBreaks { get; set; }

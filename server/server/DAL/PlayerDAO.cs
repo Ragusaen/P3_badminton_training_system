@@ -63,8 +63,11 @@ namespace Server.DAL
             string query = "select MemberID from Player where BadmintonPlayerID = @BadmintonPlayerID";
             param[0] = new MySqlParameter("@BadmintonPlayerID", badmintonPlayerId);
             DBConnection db = new DBConnection();
-            var id = db.ExecuteSelectQuery(query, param).Rows[0][0];
-            return id == null ? 0 : (int)id;
+            int id = 0;
+            DataTable dt = db.ExecuteSelectQuery(query, param);
+            if (dt.Rows.Count > 0)
+                id = (int) dt.Rows[0][0];
+            return id;
         }
 
         private void UpdatePlayerRow(Player p)

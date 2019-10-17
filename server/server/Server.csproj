@@ -109,12 +109,10 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Controller\Network\ClientConnection.cs" />
     <Compile Include="Controller\Network\Connection.cs" />
     <Compile Include="Controller\Network\NetworkException.cs" />
     <Compile Include="Controller\Network\SslTcpClient.cs" />
     <Compile Include="Controller\Network\SslTcpServer.cs" />
-    <Compile Include="Controller\Requests\ClientRequests.cs" />
     <Compile Include="Controller\Requests\RequestManager.cs" />
     <Compile Include="Controller\Requests\Serialization\LoginSerialization.cs" />
     <Compile Include="Controller\Requests\Serialization\Serializer.cs" />
