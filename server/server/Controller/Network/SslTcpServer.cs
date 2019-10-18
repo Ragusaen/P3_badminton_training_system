@@ -10,11 +10,15 @@ using System.Security;
 using Server.Controller;
 using System.Threading;
 using Server.Controller.Network;
+using System.Collections.Generic;
 
 namespace Server.Controller.Network
 {
+
     sealed class SslTcpServer
     {
+        private List<Thread> _threads = new List<Thread>();
+
         // The certificate for SSL/TSL communication
         private X509Certificate _serverCertificate = null;
         private string _certificatePath;
@@ -28,7 +32,6 @@ namespace Server.Controller.Network
 
         public void RunServer()
         {
-            Console.WriteLine("Running server!");
             // Create the server certificate
             _serverCertificate = new X509Certificate(_certificatePath);
 
@@ -40,14 +43,17 @@ namespace Server.Controller.Network
             Running = true;
             while (Running)
             {
-                Console.WriteLine("Waiting for a client to connect...");
-
                 // Listen to port and block until client connects
                 TcpClient client = listener.AcceptTcpClient();
 
                 // Process the client
                 StartConnection(client);
             }
+        }
+
+        public void Close()
+        {
+            _threads.ForEach(t => t.Abort());
         }
 
         private void StartConnection(TcpClient client)
@@ -79,8 +85,8 @@ namespace Server.Controller.Network
 
             Connection connection = new Connection(client, sslStream);
 
-            Thread t = new Thread(new ThreadStart(connection.AcceptRequests));
-            Console.WriteLine("Starting new thread");
+            Thread t = new Thread(new ThreadStart(connection.AcceptRequests)) { IsBackground = true };
+            _threads.Add(t);
             t.Start();
         }
 

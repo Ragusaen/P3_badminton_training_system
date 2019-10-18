@@ -25,6 +25,7 @@ CALL SP_SETUP;
 CALL SP_UT_CREATE_PLAYER('John Doe', 0, 88190246);
 CALL SP_UT_CREATE_PLAYER('Jane Doe', 1, 92020288);
 CALL SP_UT_CREATE_PLAYER('Johnathan Doemouth', 0, 15083094);
+CALL SP_UT_CREATE_PLAYER('Peter S. Parker', 0, 89010165);
 
 # Create accounts
 INSERT INTO `account` (`MemberID`, `Username`, `PasswordHash`, `PasswordSalt`) VALUES (1, 'johninator', CAST(0xB52C497703A85E8E34450AEB2336029B3A828526C6BFF26B58401BD131B72F43 as binary(32)), CAST(0x42 as binary(128)));

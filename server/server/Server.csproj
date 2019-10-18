@@ -109,17 +109,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controller\Network\ClientConnection.cs" />
     <Compile Include="Controller\Network\Connection.cs" />
     <Compile Include="Controller\Network\NetworkException.cs" />
     <Compile Include="Controller\Network\SslTcpClient.cs" />
     <Compile Include="Controller\Network\SslTcpServer.cs" />
+    <Compile Include="Controller\Requests\ClientRequests.cs" />
     <Compile Include="Controller\Requests\RequestManager.cs" />
     <Compile Include="Controller\Requests\Serialization\LoginSerialization.cs" />
     <Compile Include="Controller\Requests\Serialization\Serializer.cs" />
     <Compile Include="Controller\User.cs" />
     <Compile Include="DAL\DBConnection.cs" />
-    <Compile Include="DAL\IDAOEnumerable.cs" />
+    <Compile Include="DAL\IDAO.cs" />
     <Compile Include="DAL\PlayerDAO.cs" />
+    <Compile Include="DAL\TrainerDAO.cs" />
     <Compile Include="Model\Feedback.cs" />
     <Compile Include="Model\FocusPointDescriptor.cs" />
     <Compile Include="Model\FocusPointItem.cs" />

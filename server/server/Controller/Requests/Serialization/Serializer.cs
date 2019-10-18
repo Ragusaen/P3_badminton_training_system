@@ -13,13 +13,12 @@ namespace Server.Controller.Requests.Serialization
         public T Deserialize<T>(byte[] data) where T : class
         {
             var stream = new MemoryStream();
+            stream.Write(data, 0, data.Length);
+            stream.Flush();
             stream.Position = 0;
-            stream.Read(data, 0, data.Length);
 
             var serializer = new DataContractSerializer(typeof(T));
-            T d = serializer.ReadObject(stream) as T;
-
-            return d;
+            return serializer.ReadObject(stream) as T;
         }
 
         public byte[] Serialize<T>(T obj)

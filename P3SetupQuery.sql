@@ -37,8 +37,8 @@ PlayerMemberID int primary key,
 foreign key(PlayerMemberID) references Player(MemberID),
 MixPoints int not null,
 SinglePoints int not null,
-DoublePoints int not null,
-OverallPoints int not null,
+DoublesPoints int not null,
+LevelPoints int not null,
 `Level` varchar(16)
 );
 

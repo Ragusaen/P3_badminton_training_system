@@ -57,6 +57,11 @@ namespace Server.Controller
 
             DBConnection db = new DBConnection();
             DataTable dt = db.ExecuteSelectQuery(query, param);
+
+            if (dt.Rows.Count != 1)
+            {
+                return null;
+            }
             return new UserInfo(dt.Rows[0][0].ToString(), (byte[])dt.Rows[0][1], (byte[])dt.Rows[0][2]);
         }
 

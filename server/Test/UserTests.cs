@@ -10,7 +10,7 @@ using Server.Model;
 namespace Test
 {
     [TestClass]
-    public class LoginTests : DBResetter
+    public class UserTests : DBResetter
     {
         [TestMethod]
         public void LoginAccount_johninator_pw_fortytwo()
