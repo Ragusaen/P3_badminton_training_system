@@ -82,14 +82,14 @@ OpponentName varchar(64) not null,
 `Location` varchar(255) not null
 );
 
-create table PlayerMatch
+create table MatchPosition
 (
 MatchID int,
 foreign key(MatchID) references `Match`(ID),
 PlayerMemberID int,
 foreign key(PlayerMemberID) references Player(MemberID),
-primary key(MatchID, PlayerMemberID),
 Position varchar(16),
+primary key(MatchID, PlayerMemberID, Position),
 League varchar(32),
 LeagueRound int,
 Season int
