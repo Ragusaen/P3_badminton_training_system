@@ -6,10 +6,14 @@
              mc:Ignorable="d"
              x:Class="application.UI.CreateAccountPage">
     <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Create Account"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout Margin="10,10,10,10">
+            <Label Text="Create an account" FontSize="Title" HorizontalOptions="Center" Margin="0,10,0,10"/>
+            <Label Text="Username" />
+            <Entry x:Name="username" Placeholder="Type an username"/>
+            <Label Text="Password"/>
+            <Entry x:Name="password" Placeholder="Type a password" IsPassword="True"/>
+            <Label Text="E-mail" />
+            <Entry x:Name="email" Placeholder="Enter e-mail"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
