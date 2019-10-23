@@ -6,12 +6,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\editicon.png" />
     <None Remove="Images\logo.gif" />
+    <None Remove="Images\menuicon.jpg" />
+    <None Remove="Images\plusicon.jpg" />
+    <None Remove="Images\settingsicon.jpg" />
     <None Remove="Images\tritonlogo.jpg" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Images\editicon.png" />
     <EmbeddedResource Include="Images\logo.gif" />
+    <EmbeddedResource Include="Images\menuicon.jpg" />
+    <EmbeddedResource Include="Images\plusicon.jpg" />
+    <EmbeddedResource Include="Images\settingsicon.jpg" />
     <EmbeddedResource Include="Images\tritonlogo.jpg" />
   </ItemGroup>
 
@@ -55,6 +63,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="UI\PracticeSessionPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="UI\ProfilePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="UI\SchedulePage.xaml">
