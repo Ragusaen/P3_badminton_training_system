@@ -5,12 +5,48 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="application.UI.SchedulePage">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
-            
+    
+        <NavigationPage.TitleView>
+            <StackLayout Orientation="Horizontal" Spacing="10">
+                <Image Source="" x:Name="NaviLogo" HeightRequest="50" VerticalOptions="CenterAndExpand" HorizontalOptions="Start"/>
+                <Label Text="Schedule" FontAttributes="Bold" FontSize="20" TextColor="White" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand"/>
+            </StackLayout>
+        </NavigationPage.TitleView>
+
+    <ScrollView>
+        <StackLayout HorizontalOptions="Center">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Text="Month" Grid.Column="1" Grid.Row="0" Grid.ColumnSpan="6" FontSize="Small" HorizontalTextAlignment="Center" BackgroundColor="Gray"/>
+                <Label Text="Week" Grid.Column="0" Grid.Row="1" FontSize="Small" HorizontalTextAlignment="Center" BackgroundColor="Gray"/>
+                <Label Text="Mon" Grid.Column="1" Grid.Row="1" FontSize="Small" HorizontalTextAlignment="Center" BackgroundColor="Gray"/>
+                <Label Text="Tue" Grid.Column="2" Grid.Row="1" FontSize="Small" HorizontalTextAlignment="Center" BackgroundColor="Gray"/>
+                <Label Text="Wed" Grid.Column="3" Grid.Row="1" FontSize="Small" HorizontalTextAlignment="Center" BackgroundColor="Gray"/>
+                <Label Text="Thu" Grid.Column="4" Grid.Row="1" FontSize="Small" HorizontalTextAlignment="Center" BackgroundColor="Gray"/>
+                <Label Text="Fri" Grid.Column="5" Grid.Row="1" FontSize="Small" HorizontalTextAlignment="Center" BackgroundColor="Gray"/>
+                <Label Text="Sat" Grid.Column="6" Grid.Row="1" FontSize="Small" HorizontalTextAlignment="Center" BackgroundColor="Gray"/>
+                <Label Text="Sun" Grid.Column="7" Grid.Row="1" FontSize="Small" HorizontalTextAlignment="Center" BackgroundColor="Gray"/>
+            </Grid>
         </StackLayout>
-    </ContentPage.Content>
+    </ScrollView>
+
 </ContentPage>
