@@ -16,7 +16,6 @@
     <ScrollView>
         <StackLayout HorizontalOptions="Center">
             <Image Source="" x:Name="RedLogo" HeightRequest="222" Margin="20,25,20,25"/>
-            <Label Text="Welcome!" FontSize="Large" Margin="0,0,0,25"/>
             <Label Text="Username" />
             <Entry x:Name="username" Placeholder="Enter username" Text="{Binding UserName}"/>
             <Label Text="Password"/>
