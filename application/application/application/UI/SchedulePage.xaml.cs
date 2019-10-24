@@ -15,6 +15,7 @@ namespace application.UI
         public SchedulePage()
         {
             InitializeComponent();
+            Date1.Text = "1";
         }
     }
 }
