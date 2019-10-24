@@ -16,6 +16,8 @@ namespace application.UI
         {
             InitializeComponent();
             Date1.Text = "1";
+
+            BullseyeIcon.Source = ImageSource.FromResource("application.Images.bullseyeicon.png");
         }
     }
 }

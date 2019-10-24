@@ -15,6 +15,10 @@
 
     <ScrollView>
         <StackLayout HorizontalOptions="Center">
+            <StackLayout Orientation="Horizontal" Margin="10,10,10,25">
+                <Image Source="" x:Name="BullseyeIcon" HeightRequest="30" HorizontalOptions="Start"/>
+                <Label Text="Main focus point" FontSize="20" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand"/>
+            </StackLayout>
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition/>
