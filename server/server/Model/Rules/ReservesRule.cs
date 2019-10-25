@@ -28,7 +28,7 @@ namespace Server.Model.Rules
             {
                 memberids.Add(Convert.ToInt32(dt.Rows[i][0]));
             }
-            ErrorMessage = "Warning the player is allready on a lineup this round";
+            ErrorMessage = "Warning the player is already on a lineup this round";
             CheckPlayer(lineup, memberids, 2);
 
             param[0] = new MySqlParameter("@LeagueRound", lineup.Round - 1);
@@ -44,6 +44,7 @@ namespace Server.Model.Rules
 
             return RuleBreaks;  
         }
+
         public void CheckPlayer(Lineup lineup, List<int> memberids, int number) 
         {
             int Count = 0;
