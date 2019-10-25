@@ -9,8 +9,9 @@
 
     <NavigationPage.TitleView>
         <StackLayout Orientation="Horizontal" Spacing="10">
-            <Image Source="" x:Name="NaviLogo" HeightRequest="50" VerticalOptions="CenterAndExpand" HorizontalOptions="Start"/>
-            <Label Text="Schedule" FontAttributes="Bold" FontSize="20" TextColor="White" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand"/>
+            <Image Source="" x:Name="Menuicon" HeightRequest="30" VerticalOptions="CenterAndExpand" HorizontalOptions="Start"/>
+            <Label Text="Schedule" FontAttributes="Bold" FontSize="30" TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+            <Image Source="" x:Name="Plusicon" HeightRequest="30" VerticalOptions="CenterAndExpand" HorizontalOptions="End" Margin="0,0,15,0"/>
         </StackLayout>
     </NavigationPage.TitleView>
 

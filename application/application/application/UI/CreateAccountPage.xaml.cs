@@ -1,4 +1,5 @@
-﻿using System;
+﻿using application.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,9 @@ namespace application.UI
         public CreateAccountPage()
         {
             InitializeComponent();
+            CreateAccountViewModel vm = new CreateAccountViewModel();
+            BindingContext = vm;
+            vm.Navigation = Navigation;
         }
     }
 }

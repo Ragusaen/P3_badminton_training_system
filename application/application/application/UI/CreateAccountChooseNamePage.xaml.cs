@@ -11,12 +11,12 @@ using Xamarin.Forms.Xaml;
 namespace application.UI
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ForgotPasswordPage : ContentPage
+    public partial class CreateAccountChooseNamePage : ContentPage
     {
-        public ForgotPasswordPage()
+        public CreateAccountChooseNamePage()
         {
             InitializeComponent();
-            ForgotPasswordViewModel vm = new ForgotPasswordViewModel();
+            CreateAccountChooseNameViewModel vm = new CreateAccountChooseNameViewModel();
             BindingContext = vm;
             vm.Navigation = Navigation;
         }

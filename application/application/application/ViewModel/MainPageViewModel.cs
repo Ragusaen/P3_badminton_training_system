@@ -51,18 +51,18 @@ namespace application.ViewModel
             Navigation.PushAsync( new SchedulePage() {BindingContext = vm});
             vm.Navigation = Navigation;
         }
-        private RelayCommand _fogotPassWordClickCommand;
+        private RelayCommand _forgotPassWordClickCommand;
 
-        public RelayCommand FogotPassWordClickCommand
+        public RelayCommand ForgotPassWordClickCommand
         {
             get
             {
-                return _fogotPassWordClickCommand ?? (_fogotPassWordClickCommand = new RelayCommand(param => ExecuteFogotPassWordClick(param)));
+                return _forgotPassWordClickCommand ?? (_forgotPassWordClickCommand = new RelayCommand(param => ExecuteForgotPassWordClick(param)));
             }
         }
 
         //Check if user is in database. Navigate to main page.
-        private void ExecuteFogotPassWordClick(object param)
+        private void ExecuteForgotPassWordClick(object param)
         {
             ForgotPasswordViewModel vm = new ForgotPasswordViewModel();
             Navigation.PushAsync(new ForgotPasswordPage() { BindingContext = vm });

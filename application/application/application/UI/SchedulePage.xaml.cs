@@ -15,7 +15,8 @@ namespace application.UI
         public SchedulePage()
         {
             InitializeComponent();
-            
+            Menuicon.Source = ImageSource.FromResource("application.Images.menuicon.jpg");
+            Plusicon.Source = ImageSource.FromResource("application.Images.plusicon.jpg");
         }
     }
 }
