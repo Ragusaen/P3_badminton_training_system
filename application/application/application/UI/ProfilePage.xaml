@@ -15,8 +15,24 @@
     </NavigationPage.TitleView>
     
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout Margin="10,10,10,10">
             <Label Text="{Binding Name}" VerticalOptions="Start" HorizontalOptions="CenterAndExpand" FontSize="Large"/>
+            <Label Text="Team" VerticalOptions="Start" HorizontalOptions="StartAndExpand" FontSize="Medium"/>
+          
+            
+            <Frame
+    Padding="0"
+    BackgroundColor="Black"
+    CornerRadius="7"
+    HasShadow="False" HeightRequest="80">
+                <Frame
+        Margin="1"
+        BackgroundColor="White"
+        CornerRadius="5"
+        HasShadow="False">
+                </Frame>
+            </Frame>
+
         </StackLayout>
     </ContentPage.Content>
 
