@@ -19,8 +19,10 @@ namespace application.UI
             BindingContext = vm;
             vm.Navigation = Navigation;
 
-            MenuItem1.IconImageSource = ImageSource.FromResource("application.Images.menuicon.jpg");
-            MenuItem2.IconImageSource = ImageSource.FromResource("application.Images.plusicon.jpg");
+ 
+
+            Menuicon.Source = ImageSource.FromResource("application.Images.menuicon.jpg");
+            Plusicon.Source = ImageSource.FromResource("application.Images.plusicon.jpg");
         }
     }
 }
