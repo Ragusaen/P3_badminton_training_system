@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\bullseyeicon.png" />
     <None Remove="Images\editicon.png" />
     <None Remove="Images\logo.gif" />
     <None Remove="Images\menuicon.jpg" />
@@ -15,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Images\bullseyeicon.png" />
     <EmbeddedResource Include="Images\editicon.png" />
     <EmbeddedResource Include="Images\logo.gif" />
     <EmbeddedResource Include="Images\menuicon.jpg" />
@@ -26,6 +28,7 @@
   <ItemGroup>
     <PackageReference Include="Xamarin.Forms" Version="4.2.0.709249" />
     <PackageReference Include="Xamarin.Essentials" Version="1.2.0" />
+    <PackageReference Include="Xamarin.Plugin.Calendar" Version="1.0.3.200" />
   </ItemGroup>
 
   <ItemGroup>
