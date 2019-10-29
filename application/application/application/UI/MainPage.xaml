@@ -6,6 +6,10 @@
              mc:Ignorable="d"
              x:Class="application.UI.MainPage" BackgroundColor="white">
 
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness" iOS="0,20,0,0"/>
+    </ContentPage.Padding>
+
     <NavigationPage.TitleView>
         <StackLayout Orientation="Horizontal" Spacing="10">
             <Image Source="" x:Name="NaviLogo" HeightRequest="50" VerticalOptions="CenterAndExpand" HorizontalOptions="Start"/>
