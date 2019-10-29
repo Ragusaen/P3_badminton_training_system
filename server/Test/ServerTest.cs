@@ -8,6 +8,8 @@ using Server.Controller.Requests.Serialization;
 using System.Text;
 using Server.Controller;
 
+using System.Diagnostics;
+
 namespace Test
 {
     [TestClass]
@@ -37,6 +39,8 @@ namespace Test
 
             byte[] actual = conn.SendRequest(new byte[] { (byte)RequestManager.Type.ConnectionTest });
 
+            s.server.Close();
+
             CollectionAssert.AreEqual(expected, actual);
         }
 
@@ -57,6 +61,8 @@ namespace Test
 
             LoginAttempt la = ser.Deserialize<LoginAttempt>(response);
 
+            s.server.Close();
+
             Assert.AreEqual(true, la.LoginSuccessful);
             Assert.AreEqual(User.tokenSize, la.token.Length);
         }
@@ -68,6 +74,8 @@ namespace Test
             ClientRequests cr = new ClientRequests(s.conn);
 
             LoginAttempt la = cr.Login("someuserthatdoesnotexist", "hypnotoad");
+
+            s.server.Close();
 
             Assert.IsFalse(la.LoginSuccessful);
             Assert.AreEqual(0, la.token.Length);
