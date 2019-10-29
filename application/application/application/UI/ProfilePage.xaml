@@ -13,27 +13,45 @@
             <Image Source="" x:Name="Plusicon" HeightRequest="30" VerticalOptions="CenterAndExpand" HorizontalOptions="End" Margin="0,0,15,0"/>
         </StackLayout>
     </NavigationPage.TitleView>
-    
-    <ContentPage.Content>
-        <StackLayout Margin="10,10,10,10">
-            <Label Text="{Binding Name}" VerticalOptions="Start" HorizontalOptions="CenterAndExpand" FontSize="Large"/>
-            <Label Text="Team" VerticalOptions="Start" HorizontalOptions="StartAndExpand" FontSize="Medium"/>
-          
-            
-            <Frame
-    Padding="0"
-    BackgroundColor="Black"
-    CornerRadius="7"
-    HasShadow="False" HeightRequest="80">
-                <Frame
-        Margin="1"
-        BackgroundColor="White"
-        CornerRadius="5"
-        HasShadow="False">
-                </Frame>
-            </Frame>
 
-        </StackLayout>
+    <ContentPage.Content>
+
+        <ScrollView>
+            <StackLayout Margin="10,10,10,10">
+                <Label Text="{Binding Name}" VerticalOptions="Start" HorizontalOptions="CenterAndExpand" FontSize="Large"/>
+                <Label Text="Team" VerticalOptions="Start" HorizontalOptions="StartAndExpand" FontSize="Medium"/>
+                <ListView ItemsSource="{Binding Teams}" HeightRequest="300" SeparatorVisibility="None">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell >
+                                    <Grid Margin="0,0,0,10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <Label Text="{Binding Name}"  VerticalOptions="Center"/>
+                                        <Switch IsToggled="{Binding OnTeam}"  />
+                                    </Grid>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <Label Text="Focus Point" FontSize="Medium"/>
+                
+                
+                
+                
+                <Label Text="Comments" FontSize="Medium"/>
+                <Frame BorderColor="Black" CornerRadius="6">
+                    <Entry x:Name="comments" Placeholder="Enter a comment"/>
+                </Frame>
+
+
+
+
+
+            </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 
 </ContentPage>
