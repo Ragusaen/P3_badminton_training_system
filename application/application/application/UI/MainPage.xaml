@@ -22,7 +22,7 @@
             <Entry x:Name="password" Placeholder="Enter password" IsPassword="True" Text="{Binding PassWord}"/>
             <Button Text="Log In" Command="{Binding LoginClickCommand}"/>
             <StackLayout Orientation="Horizontal" >
-                <Button Text="Forgot password?" FontSize="Micro" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Command="{Binding FogotPassWordClickCommand}"/>
+                <Button Text="Forgot password?" FontSize="Micro" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Command="{Binding ForgotPassWordClickCommand}"/>
                 <Button Text="Create a New Account" FontSize="Micro" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Command="{Binding CreateAccountClickCommand}"/>
             </StackLayout>
         </StackLayout>
