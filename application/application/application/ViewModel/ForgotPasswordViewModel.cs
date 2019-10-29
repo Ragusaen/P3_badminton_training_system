@@ -25,22 +25,20 @@ namespace application.ViewModel
             vm.Navigation = Navigation;
         }
 
-        private RelayCommand _forgotPasswordEmailClickCommand;
+        private RelayCommand _sendEmailClickCommand;
 
-        public RelayCommand ForgotPasswordEmailClickCommand
+        public RelayCommand SendEmailClickCommand
         {
             get
             {
-                return _forgotPasswordEmailClickCommand ?? (_forgotPasswordEmailClickCommand = new RelayCommand(param => ExecuteForgotPasswordEmailClick(param)));
+                return _sendEmailClickCommand ?? (_sendEmailClickCommand = new RelayCommand(param => ExecuteSendEmailClick(param)));
             }
         }
 
         //Check if user is in database. Navigate to main page.
-        private void ExecuteForgotPasswordEmailClick(object param)
+        private void ExecuteSendEmailClick(object param)
         {
-            MainPageViewModel vm = new MainPageViewModel();
-            Navigation.PushAsync(new MainPage() { BindingContext = vm });
-            vm.Navigation = Navigation;
+            
         }
     }
 }

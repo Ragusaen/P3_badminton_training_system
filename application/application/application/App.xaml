@@ -7,6 +7,7 @@
              x:Class="application.App">
     <Application.Resources>
 
+        
         <!-- For shared resources like colors -->
         <Style TargetType="NavigationPage">
             <Setter Property="BarBackgroundColor" Value="Red"/>
