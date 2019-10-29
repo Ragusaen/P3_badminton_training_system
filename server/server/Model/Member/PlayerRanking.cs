@@ -17,7 +17,7 @@ namespace Server.Model
 
         public override string ToString()
         {
-            return $"Level: {Level}, LVL: {LevelPoints}, Singles: {SinglesPoints}, Doubles: {DoublesPoints} , Mixed: {MixPoints}";
+            return $"LVL: {Level}, Level: {LevelPoints}, Singles: {SinglesPoints}, Doubles: {DoublesPoints} , Mixed: {MixPoints}";
         }
     }
 }

@@ -15,5 +15,10 @@ namespace Server.Model
         {
             this.Member = member;
         }
+
+        public override string ToString()
+        {
+            return Member.ToString();
+        }
     }
 }
