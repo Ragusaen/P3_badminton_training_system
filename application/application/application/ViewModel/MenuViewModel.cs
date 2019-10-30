@@ -49,7 +49,7 @@ namespace application.ViewModel
         {
             ProfilePageViewModel vm = new ProfilePageViewModel();
             Navigation.PushAsync(new ProfilePage() { BindingContext = vm });
-            vm.Navigation = Navigation;
+            vm.Navigation = Navigation;  
         }
     }
 }

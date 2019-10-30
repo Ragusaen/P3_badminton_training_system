@@ -47,8 +47,8 @@ namespace application.ViewModel
         //Check if user is in database. Navigate to main page.
         private void ExecuteLoginClick(object param)
         {
-            ScheduleViewModel vm = new ScheduleViewModel();
-            Navigation.PushAsync( new SchedulePage() {BindingContext = vm});
+            MenuViewModel vm = new MenuViewModel();
+            Navigation.PushAsync( new MenuPage() {BindingContext = vm});
             vm.Navigation = Navigation;
         }
         private RelayCommand _forgotPassWordClickCommand;

@@ -17,6 +17,8 @@ namespace application.UI
         {
             InitializeComponent();
             Detail = new NavigationPage(new SchedulePage());
+            IsPresented = false;
+
             MenuViewModel vm = new MenuViewModel();
             BindingContext = vm;
             vm.Navigation = Navigation;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using application.UI;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -20,7 +21,7 @@ namespace application.ViewModel
         private void ExecuteCreateAccountClick(object param)
         {
             ProfilePageViewModel vm = new ProfilePageViewModel();
-            Navigation.PushAsync(new ProfilPage() { BindingContext = vm });
+            Navigation.PushAsync(new ProfilePage() { BindingContext = vm });
             vm.Navigation = Navigation;
         }
     }

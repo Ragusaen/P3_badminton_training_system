@@ -15,6 +15,7 @@ namespace application.UI
         public ProfilePage()
         {
             InitializeComponent();
+            
             ProfilePageViewModel vm = new ProfilePageViewModel();
             BindingContext = vm;
             vm.Navigation = Navigation;
