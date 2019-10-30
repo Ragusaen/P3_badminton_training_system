@@ -22,7 +22,7 @@ namespace application.UI
  
 
             Menuicon.Source = ImageSource.FromResource("application.Images.menuicon.jpg");
-            Plusicon.Source = ImageSource.FromResource("application.Images.plusicon.jpg");
+            Settingsicon.Source = ImageSource.FromResource("application.Images.settingsicon.jpg");
         }
     }
 }
