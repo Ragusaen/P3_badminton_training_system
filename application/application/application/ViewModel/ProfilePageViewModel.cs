@@ -51,6 +51,24 @@ namespace application.ViewModel
                 SetProperty(ref _searchResultFocusPoints, value);
             }
         }
+
+        private int _teamListHeight;
+
+        public int TeamListHeight
+        {
+            get { return _teamListHeight; }
+            set { SetProperty(ref _teamListHeight, value); }
+        }
+
+        private int _focusPointListHeight;
+
+        public int FocusPointListHeight
+        {
+            get { return _focusPointListHeight; }
+            set { SetProperty(ref _focusPointListHeight, value); }
+        }
+
+
         public ProfilePageViewModel() 
         {
             Teams = new List<PracticeTeam>();
@@ -58,10 +76,13 @@ namespace application.ViewModel
             Name = CurrentMember.Name;
             Teams.Add(new PracticeTeam("U17", true));
             Teams.Add(new PracticeTeam("Senior", false));
-            List<FocusPoint> FocusPoint = new List<FocusPoint>();
-            FocusPoint.Add(new FocusPoint("Serv"));
-            FocusPoint.Add(new FocusPoint("Slag"));
-            SearchResultFocusPoints = FocusPoint;
+            List<FocusPoint> focusPoint = new List<FocusPoint>();
+            focusPoint.Add(new FocusPoint("Serv"));
+            focusPoint.Add(new FocusPoint("Slag"));
+            SearchResultFocusPoints = focusPoint;
+
+            TeamListHeight = Teams.Count * 45;
+            FocusPointListHeight = focusPoint.Count * 45;
         }
         private RelayCommand _profileSettingCommand;
 
