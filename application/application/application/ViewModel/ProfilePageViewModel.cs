@@ -30,7 +30,27 @@ namespace application.ViewModel
             }
         }
 
+        private string _searchtext;
 
+        public string SearchText
+        {
+            get { return _searchtext; }
+            set
+            {
+                SetProperty(ref _searchtext, value);
+            }
+        }
+
+        private List<FocusPoint> _searchResultFocusPoints;
+
+        public List<FocusPoint> SearchResultFocusPoints
+        {
+            get { return _searchResultFocusPoints; }
+            set
+            {
+                SetProperty(ref _searchResultFocusPoints, value);
+            }
+        }
         public ProfilePageViewModel() 
         {
             Teams = new List<PracticeTeam>();
@@ -38,22 +58,25 @@ namespace application.ViewModel
             Name = CurrentMember.Name;
             Teams.Add(new PracticeTeam("U17", true));
             Teams.Add(new PracticeTeam("Senior", false));
-
+            List<FocusPoint> FocusPoint = new List<FocusPoint>();
+            FocusPoint.Add(new FocusPoint("Serv"));
+            FocusPoint.Add(new FocusPoint("Slag"));
+            SearchResultFocusPoints = FocusPoint;
         }
-        private RelayCommand _teamToggleCommand;
+        private RelayCommand _profileSettingCommand;
 
-        public RelayCommand TeamToggleCommand
+        public RelayCommand ProfileSettingCommand
         {
             get
             {
-                return _teamToggleCommand ?? (_teamToggleCommand = new RelayCommand(param => ExecuteTeamToogle(param)));
+                return _profileSettingCommand ?? (_profileSettingCommand = new RelayCommand(param => ExecuteProfileSettingTap(param)));
             }
         }
 
         //Check if user is in database. Navigate to main page.
-        private void ExecuteTeamToogle(object param)
+        private void ExecuteProfileSettingTap(object param)
         {
-
+            Name = "Hallo";
         }
     }
 }
