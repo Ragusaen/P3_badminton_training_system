@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="application.UI.MenuPage"
+             xmlns:pages="clr-namespace:application.UI">
+  <MasterDetailPage.Master>
+        <ContentPage Title="Master" BackgroundColor="White">
+            <StackLayout HorizontalOptions="CenterAndExpand">
+                <Label Text="Menu" FontSize="Title" Margin="0,10,0,20"/>
+                <Label Text="Schedule" FontSize="20">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ToSchedulePageClickCommand}"/>
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label Text="Team" FontSize="20">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ToTeamPageClickCommand}"/>
+                    </Label.GestureRecognizers>
+                </Label>
+                <Label Text="Profile" FontSize="20">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ToProfilePageClickCommand}"/>
+                    </Label.GestureRecognizers>
+                </Label>
+                <Button Text="Sign out" Margin="0,20,0,10"/>
+            </StackLayout>
+        </ContentPage>
+  </MasterDetailPage.Master>
+    
+  <MasterDetailPage.Detail>
+        <ContentPage>
+            <StackLayout>
+                <Label Text="Choose page from menu"/>
+            </StackLayout>
+        </ContentPage>
+  </MasterDetailPage.Detail>
+</MasterDetailPage>
