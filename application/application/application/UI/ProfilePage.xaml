@@ -4,14 +4,14 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="application.UI.ProfilePage">
+             x:Class="application.UI.ProfilePage" BackgroundColor="White">
 
     <NavigationPage.TitleView>
         <StackLayout Orientation="Horizontal" Spacing="10">
             <Image x:Name="Menuicon" HeightRequest="30" VerticalOptions="CenterAndExpand" HorizontalOptions="Start"/>
             <Label Text="Profile" FontAttributes="Bold" FontSize="30" TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
             <Image x:Name="Settingsicon" HeightRequest="30" VerticalOptions="CenterAndExpand" HorizontalOptions="End" Margin="0,0,15,0" >
-            <Image.GestureRecognizers>
+                <Image.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding ProfileSettingCommand}" />
                 </Image.GestureRecognizers>
             </Image>
@@ -24,43 +24,36 @@
             <StackLayout Margin="10,10,10,10">
                 <Label Text="{Binding Name}" VerticalOptions="Start" HorizontalOptions="CenterAndExpand" FontSize="Large"/>
                 <Label Text="Team" VerticalOptions="Start" HorizontalOptions="StartAndExpand" FontSize="Medium"/>
-                <ListView ItemsSource="{Binding Teams}" HeightRequest="300" SeparatorVisibility="None">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <ViewCell>
-                                    <Grid Margin="0,0,0,10">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="*" />
-                                            <ColumnDefinition Width="Auto" />
-                                        </Grid.ColumnDefinitions>
-                                        <Label Text="{Binding Name}" VerticalOptions="Center"/>
-                                        <Switch IsToggled="{Binding OnTeam}"  />
-                                    </Grid>
-                                </ViewCell>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                    <Label Text="Focus Point" FontSize="Medium"/>
-
-                <SearchBar Placeholder="Enter your focus point" Text="{Binding SearchText}"/>
-                <ListView ItemsSource="{Binding SearchResultFocusPoints}">
+                <ListView ItemsSource="{Binding Teams}" VerticalScrollBarVisibility="Never" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding TeamListHeight}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <TextCell Text="{Binding Description}"/>
+                            <ViewCell>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Text="{Binding Name}" VerticalOptions="Center"/>
+                                    <Switch IsToggled="{Binding OnTeam}" ThumbColor="Red" OnColor="LightPink"/>
+                                </Grid>
+                            </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
+                <Label Text="Focus Point" FontSize="Medium"/>
 
-
+                <SearchBar Placeholder="Enter your focus point" Text="{Binding SearchText}"/>
+                <ListView ItemsSource="{Binding SearchResultFocusPoints}" VerticalScrollBarVisibility="Never" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding FocusPointListHeight}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextCell Height="45" Text="{Binding Description}"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
                 <Label Text="Comments" FontSize="Medium"/>
                 <Frame BorderColor="Black" CornerRadius="6">
                     <Entry x:Name="comments" Placeholder="Enter a comment"/>
                 </Frame>
-
-
-
-
-
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>
