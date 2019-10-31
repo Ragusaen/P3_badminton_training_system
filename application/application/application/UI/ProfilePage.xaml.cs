@@ -20,10 +20,11 @@ namespace application.UI
             BindingContext = vm;
             vm.Navigation = Navigation;
 
- 
-
-            Menuicon.Source = ImageSource.FromResource("application.Images.menuicon.jpg");
+            //Menuicon.Source = ImageSource.FromResource("application.Images.menuicon.jpg");
             Settingsicon.Source = ImageSource.FromResource("application.Images.settingsicon.jpg");
+
+            //Sub page navigation:
+            //((MasterDetailPage)Application.Current.MainPage).Detail = new NavigationPage(new SubmitFeedbackPage());
         }
     }
 }

@@ -8,7 +8,6 @@
 
     <NavigationPage.TitleView>
         <StackLayout Orientation="Horizontal" Spacing="10">
-            <Image x:Name="Menuicon" HeightRequest="30" VerticalOptions="CenterAndExpand" HorizontalOptions="Start"/>
             <Label Text="Profile" FontAttributes="Bold" FontSize="30" TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
             <Image x:Name="Settingsicon" HeightRequest="30" VerticalOptions="CenterAndExpand" HorizontalOptions="End" Margin="0,0,15,0" >
                 <Image.GestureRecognizers>

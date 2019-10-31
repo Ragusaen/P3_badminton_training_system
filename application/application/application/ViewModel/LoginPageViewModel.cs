@@ -7,7 +7,7 @@ using application.UI;
 
 namespace application.ViewModel
 {
-    class MainPageViewModel : BaseViewModel
+    class LoginPageViewModel : BaseViewModel
     {
         private string _userName;
 
@@ -48,8 +48,10 @@ namespace application.ViewModel
         private void ExecuteLoginClick(object param)
         {
             MenuViewModel vm = new MenuViewModel();
-            Navigation.PushAsync( new MenuPage() {BindingContext = vm});
-            vm.Navigation = Navigation;
+           /* Navigation.PushAsync( new MenuPage() {BindingContext = vm});
+            vm.Navigation = Navigation;*/
+
+            Application.Current.MainPage = new NavigationPage(new MenuPage() { BindingContext = vm });
         }
         private RelayCommand _forgotPassWordClickCommand;
 
