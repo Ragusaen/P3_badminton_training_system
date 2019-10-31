@@ -20,9 +20,7 @@ namespace application.ViewModel
         //Check if user is in database. Navigate to main page.
         private void ExecuteBackToLogInClick(object param)
         {
-            MainPageViewModel vm = new MainPageViewModel();
-            Navigation.PushAsync(new MainPage() { BindingContext = vm });
-            vm.Navigation = Navigation;
+            Navigation.PushAsync(new LoginPage());
         }
 
         private RelayCommand _sendEmailClickCommand;

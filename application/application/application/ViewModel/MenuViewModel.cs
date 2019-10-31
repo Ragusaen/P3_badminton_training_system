@@ -7,7 +7,7 @@ namespace application.ViewModel
 {
     class MenuViewModel : BaseViewModel
     {
-        private RelayCommand _toSchedulePageClickCommand;
+        /*private RelayCommand _toSchedulePageClickCommand;
 
         public RelayCommand ToSchedulePageClickCommand
         {
@@ -50,6 +50,6 @@ namespace application.ViewModel
             ProfilePageViewModel vm = new ProfilePageViewModel();
             Navigation.PushAsync(new ProfilePage() { BindingContext = vm });
             vm.Navigation = Navigation;  
-        }
+        }*/
     }
 }

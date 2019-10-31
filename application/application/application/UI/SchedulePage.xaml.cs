@@ -1,4 +1,5 @@
-﻿using System;
+﻿using application.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,7 @@ namespace application.UI
         public SchedulePage()
         {
             InitializeComponent();
+            BindingContext = new ScheduleViewModel();
             Plusicon.Source = ImageSource.FromResource("application.Images.plusicon.jpg");
         }
     }
