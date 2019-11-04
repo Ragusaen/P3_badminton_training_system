@@ -49,7 +49,6 @@ namespace application.UI
             Chart1.Chart = new LineChart { Entries = entries };
 
             
-
             ProfilePageViewModel vm = new ProfilePageViewModel();
             BindingContext = vm;
             vm.Navigation = Navigation;
