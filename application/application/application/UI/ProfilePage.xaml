@@ -4,7 +4,7 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="application.UI.ProfilePage" BackgroundColor="White">
+             x:Class="application.UI.ProfilePage" BackgroundColor="White" NavigationPage.HasBackButton="False">
 
     <NavigationPage.TitleView>
         <StackLayout Orientation="Horizontal" Spacing="10">

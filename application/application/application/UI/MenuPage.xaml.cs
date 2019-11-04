@@ -33,7 +33,7 @@ namespace application.UI
 
         private void OnMenuItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            Detail = new NavigationPage((Page)Activator.CreateInstance(((MasterPageItem)e.SelectedItem).TargetType));
+            (Detail as NavigationPage).PushAsync((Page)Activator.CreateInstance(((MasterPageItem)e.SelectedItem).TargetType));
             IsPresented = false;
         }
 

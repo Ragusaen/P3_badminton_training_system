@@ -15,16 +15,15 @@ namespace application.UI
         public ProfilePage()
         {
             InitializeComponent();
-            
+
             ProfilePageViewModel vm = new ProfilePageViewModel();
             BindingContext = vm;
             vm.Navigation = Navigation;
 
-            //Menuicon.Source = ImageSource.FromResource("application.Images.menuicon.jpg");
             Settingsicon.Source = ImageSource.FromResource("application.Images.settingsicon.jpg");
 
             //Sub page navigation:
-            //((MasterDetailPage)Application.Current.MainPage).Detail = new NavigationPage(new SubmitFeedbackPage());
+            //(((MasterDetailPage)Application.Current.MainPage).Detail as NavigationPage).PushAsync(new SubmitFeedbackPage());
         }
     }
 }
