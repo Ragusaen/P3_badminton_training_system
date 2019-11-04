@@ -54,7 +54,6 @@ namespace application.UI
             vm.Navigation = Navigation;
 
 
-            Menuicon.Source = ImageSource.FromResource("application.Images.menuicon.jpg");
             Settingsicon.Source = ImageSource.FromResource("application.Images.settingsicon.jpg");
 
             Settingsicon.Source = ImageSource.FromResource("application.Images.settingsicon.jpg");
