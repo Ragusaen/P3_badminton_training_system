@@ -18,6 +18,14 @@ namespace application.UI
             InitializeComponent();
             BindingContext = new ScheduleViewModel();
             Plusicon.Source = ImageSource.FromResource("application.Images.plusicon.jpg");
+
+            
+        }
+
+        void AddPracticeSessionClicked(object sender, EventArgs e)
+        {
+            //Sub page navigation:
+            //((MasterDetailPage)Application.Current.MainPage).Detail = new NavigationPage(new CreatePracticePage());
         }
     }
 }
