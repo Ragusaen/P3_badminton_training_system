@@ -49,6 +49,7 @@ namespace application.UI
             Chart1.Chart = new LineChart { Entries = entries };
 
             
+
             ProfilePageViewModel vm = new ProfilePageViewModel();
             BindingContext = vm;
             vm.Navigation = Navigation;
@@ -57,6 +58,10 @@ namespace application.UI
             Menuicon.Source = ImageSource.FromResource("application.Images.menuicon.jpg");
             Settingsicon.Source = ImageSource.FromResource("application.Images.settingsicon.jpg");
 
+            Settingsicon.Source = ImageSource.FromResource("application.Images.settingsicon.jpg");
+
+            //Sub page navigation:
+            //(((MasterDetailPage)Application.Current.MainPage).Detail as NavigationPage).PushAsync(new SubmitFeedbackPage());
         }
     }
 }
