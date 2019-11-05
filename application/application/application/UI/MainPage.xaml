@@ -16,13 +16,14 @@
     <StackLayout HorizontalOptions="Center" >
         <Image Source="" x:Name="RedLogo" HeightRequest="222" Margin="20,25,20,25"/>
         <Label Text="Welcome to where dreams come true" FontSize="Large" Margin="0,0,0,25"/>
+        <Label Text="Invalid username or password" TextColor="Red" IsVisible="{Binding InvalidLoginTextVisible}" HeightRequest="{Binding InvalidLoginTextHeight}"/>
         <Label Text="Username" />
         <Entry x:Name="username" Placeholder="Type username" Text="{Binding UserName}"/>
         <Label Text="Password"/>
         <Entry x:Name="password" Placeholder="Type password" IsPassword="True" Text="{Binding PassWord}"/>
         <Button Text="Log In" Command="{Binding LoginClickCommand}"/>
         <StackLayout Orientation="Horizontal" >
-            <Button Text="Forgot password?" FontSize="Micro" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Command="{Binding FogotPassWordClickCommand}"/>
+            <Button Text="Forgot password?" FontSize="Micro" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Command="{Binding ForgotPassWordClickCommand}"/>
             <Button Text="Create a New Account" FontSize="Micro" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Command="{Binding CreateAccountClickCommand}"/>
         </StackLayout>
 

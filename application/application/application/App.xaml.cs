@@ -2,6 +2,9 @@
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using application.UI;
+using application.SystemInterface.Network;
+using application.SystemInterface;
+using System.Diagnostics;
 
 namespace application
 {
@@ -15,7 +18,7 @@ namespace application
 
         protected override void OnStart()
         {
-            // Handle when your app starts
+            RequestCreator.Connect();
         }
 
         protected override void OnSleep()

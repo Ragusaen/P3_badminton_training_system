@@ -26,5 +26,10 @@ namespace application.UI
 
             
         }
+
+        private void ContentPage_Appearing(object sender, EventArgs e)
+        {
+
+        }
     }
 }
