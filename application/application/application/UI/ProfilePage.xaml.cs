@@ -21,9 +21,6 @@ namespace application.UI
             vm.Navigation = Navigation;
 
             Settingsicon.Source = ImageSource.FromResource("application.Images.settingsicon.jpg");
-
-            //Sub page navigation:
-            //(((MasterDetailPage)Application.Current.MainPage).Detail as NavigationPage).PushAsync(new SubmitFeedbackPage());
         }
     }
 }
