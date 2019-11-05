@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="application.UI.CreatePracticePage">
+
+    <NavigationPage.TitleView>
+        <StackLayout Orientation="Horizontal" Spacing="10">
+            <Label Text="Practice Session" FontAttributes="Bold" FontSize="30" TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+        </StackLayout>
+    </NavigationPage.TitleView>
+
+    <ScrollView>
+    <StackLayout>
+        <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="15"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+            </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="70"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Text="Title" FontSize="20" HorizontalOptions="End" VerticalOptions="Center"/>
+                <Entry Grid.Row="0" Grid.Column="1" Placeholder="Enter title" VerticalOptions="Center"/>
+                <Label Grid.Row="1" Grid.Column="0" Text="Date" FontSize="20" HorizontalOptions="End" VerticalOptions="Center"/>
+                <DatePicker Grid.Row="1" Grid.Column="1" MinimumDate="11/01/2019" MaximumDate="12/31/2019" VerticalOptions="Center"/>
+                <Label Grid.Row="2" Grid.Column="0" Text="Time" FontSize="20" HorizontalOptions="End" VerticalOptions="Center"/>
+                <TimePicker Grid.Row="2" Grid.Column="1" VerticalOptions="Center"/>
+                <Label Grid.Row="3" Grid.Column="0" Text="Trainer" FontSize="20" HorizontalOptions="End" VerticalOptions="Center"/>
+                <Entry Grid.Row="3" Grid.Column="1" Placeholder="Enter trainer's name" VerticalOptions="Center"/>
+                <BoxView Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="4" Color="Gainsboro"/>
+                <Image Grid.Row="5" Grid.Column="0" Source="" x:Name="BullsEyeIcon" HeightRequest="10"/>
+                <Label Grid.Row="5" Grid.Column="1" Text="Focus Points" FontSize="Title" HorizontalOptions="Start" VerticalOptions="Center"/>
+                <Label Grid.Row="6" Grid.Column="0" Text="Main" FontSize="20" HorizontalOptions="End" VerticalOptions="Center"/>
+                <Label Grid.Row="6" Grid.Column="1" Text="Main focus point" FontSize="18" VerticalOptions="Center"/>
+                <Label Grid.Row="7" Grid.Column="0" Text="Today" FontSize="20" HorizontalOptions="End" VerticalOptions="Center"/>
+                <SearchBar Grid.Row="7" Grid.Column="1" Placeholder="Enter focus point" Text="{Binding FocusPointsSearchText}"/>
+                <ListView ItemsSource="{Binding FocusPointsSearchResult}" VerticalScrollBarVisibility="Never" VerticalOptions="Fill" SeparatorVisibility="None">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextCell Height="45" Text="{Binding Description}"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <BoxView Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" Color="Gainsboro" HeightRequest="10"/>
+            </Grid>
+    </StackLayout>
+    </ScrollView>
+</ContentPage>
