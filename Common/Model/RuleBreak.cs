@@ -2,7 +2,7 @@
 
 namespace Common.Model
 {
-    class RuleBreak
+    public class RuleBreak
     {
         public Player Player { get; set; }
         public string Brake { get; set; }

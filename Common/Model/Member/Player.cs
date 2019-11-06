@@ -2,9 +2,9 @@
 
 namespace Common.Model.Member
 {
-    class Player : MemberRole
+    public class Player : MemberRole
     {
-        internal enum AgeGroup 
+        public enum AgeGroup 
         {
             U9,
             U11,

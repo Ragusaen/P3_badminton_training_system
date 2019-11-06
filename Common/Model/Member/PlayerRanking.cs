@@ -1,6 +1,6 @@
 ﻿namespace Common.Model.Member
 {
-    class PlayerRanking
+    public class PlayerRanking
     {
         public string Level;
 

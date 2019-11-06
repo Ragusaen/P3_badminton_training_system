@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Common.Model.Member;
+using Common.Model.Positions;
 
 namespace Common.Model.Rules
 {

@@ -2,7 +2,7 @@
 
 namespace Common.Model
 {
-    abstract class PlaySession
+    public abstract class PlaySession
     {
         public DateTime Start;
         public DateTime End;

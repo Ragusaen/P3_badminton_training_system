@@ -3,9 +3,9 @@ using Common.Model.Positions;
 
 namespace Common.Model
 {
-    class Lineup
+    public class Lineup
     {
-        internal enum Leagues
+        public enum Leagues
         {
             BatmintonLeague,
             Devision1,

@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using System.Security.Cryptography;
 using Server.DAL;
 using MySql.Data.MySqlClient;
-using Server.Model;
 using System.Data;
 
 namespace Server.Controller

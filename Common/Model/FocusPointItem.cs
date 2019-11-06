@@ -2,7 +2,7 @@
 
 namespace Common.Model
 {
-    class FocusPointItem
+    public class FocusPointItem
     {
         public DateTime DateAssigned { get; }
 

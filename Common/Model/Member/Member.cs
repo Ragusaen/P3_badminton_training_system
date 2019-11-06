@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Common.Model.Member
 {
-    class Member
+    public class Member
     {
         private List<MemberRole> _roles = new List<MemberRole>();
 

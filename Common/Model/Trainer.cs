@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
+using Common.Model.Member;
 
 namespace Common.Model
 {
-    class Trainer : MemberRole
+    public class Trainer : MemberRole
     {
         public List<PlaySession> PlaySession;
     }

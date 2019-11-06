@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Server.Model;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium;
 using System.Threading;
 using Server.DAL;
+using Common.Model.Member;
 using NLog;
 
 namespace Server.Controller

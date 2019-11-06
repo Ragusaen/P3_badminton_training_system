@@ -2,7 +2,7 @@
 
 namespace Common.Model
 {
-    class PracticeSession : PlaySession
+    public class PracticeSession : PlaySession
     {
         public PracticeTeam PracticeTeam;
         public Trainer Trainer;

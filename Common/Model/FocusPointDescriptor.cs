@@ -1,6 +1,6 @@
 ﻿namespace Common.Model
 {
-    class FocusPointDescriptor
+    public class FocusPointDescriptor
     {
 
     }
