@@ -1,5 +1,4 @@
 ﻿using Common.Model;
-using Common.Model.Member;
 using System;
 using System.Collections.Generic;
 
