@@ -100,6 +100,17 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAL\LineupDAO.cs" />
+    <Compile Include="Function\LineupVerification.cs" />
+    <Compile Include="Function\Rules\IRule.cs" />
+    <Compile Include="Function\Rules\LeagueRules.cs" />
+    <Compile Include="Function\Rules\LineupPointsRule.cs" />
+    <Compile Include="Function\Rules\MaxPlayerOccurrencesRule.cs" />
+    <Compile Include="Function\Rules\MinAgeRule.cs" />
+    <Compile Include="Function\Rules\MultipleLineupPointsRule.cs" />
+    <Compile Include="Function\Rules\ReservesRule.cs" />
+    <Compile Include="Function\Rules\RuleBreak.cs" />
+    <Compile Include="Function\Rules\SexRule.cs" />
     <Compile Include="SystemInterface\Network\ClientConnection.cs" />
     <Compile Include="SystemInterface\Network\Connection.cs" />
     <Compile Include="SystemInterface\Network\NetworkException.cs" />
