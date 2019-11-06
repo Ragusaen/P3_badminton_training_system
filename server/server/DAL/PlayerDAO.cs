@@ -108,7 +108,7 @@ namespace Server.DAL
                 ranking.Level = (string)dt.Rows[0]["Level"];
             }
 
-            Player p = new Player(new Member(name, sex), BadmintonPlayerID);
+            Player p = new Player();
             p.Member.Id = int.Parse(id);
             p.Rankings = ranking;
             return p;

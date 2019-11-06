@@ -3,7 +3,6 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 using Server.SystemInterface.Network;
 using Server.SystemInterface.Requests;
-using Server.SystemInterface.Requests.Serialization;
 using System.Threading;
 using Server.Controller;
 
@@ -61,7 +60,7 @@ namespace Test
             s.server.Close();
 
             Assert.AreEqual(true, la.LoginSuccessful);
-            Assert.AreEqual(User.tokenSize, la.token.Length);
+            Assert.AreEqual(UserManager.TokenSize, la.token.Length);
         }
 
         [TestMethod]
@@ -70,7 +69,7 @@ namespace Test
             var s = StartServerAndClient();
             ClientRequests cr = new ClientRequests(s.conn);
 
-            LoginAttempt la = cr.Login("someuserthatdoesnotexist", "hypnotoad");
+            LoginResponse la = cr.Login("someuserthatdoesnotexist", "hypnotoad");
 
             s.server.Close();
 

@@ -115,7 +115,7 @@ namespace Server.Controller
                         sex = 1;
                     }
 
-                    Player player = new Player(new Member(name, sex), BadmintonPlayerId);
+                    Player player = new Player();
                     player.Rankings = playerRanking;
                     players.Add(player);
                 }

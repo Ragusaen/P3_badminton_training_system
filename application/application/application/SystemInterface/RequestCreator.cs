@@ -42,15 +42,27 @@ namespace application.SystemInterface
 
         public static bool LoginRequest(string username, string password)
         {
-            LoginRequest request = new LoginRequest() { username = username, password = password };
+            LoginRequest request = new LoginRequest() { Username = username, Password = password };
 
             LoginResponse response = SimpleRequest<LoginResponse, LoginRequest>(RequestType.Login, request);
 
             if (!response.LoginSuccessful)
                 return false;
             
-            _accessToken = response.token;
+            _accessToken = response.Token;
             return true;
+        }
+
+        public static bool CreateAccountRequest(string username, string password, int badmintonId)
+        {
+            var careq = new CreateAccountRequest()
+            {
+                Username = username, BadmintonId = badmintonId, Password = password
+            };
+
+            var response = SimpleRequest<CreateAccountResponse, CreateAccountRequest>(RequestType.CreateAccount, careq);
+
+            return response.WasSuccessful;
         }
 
     }

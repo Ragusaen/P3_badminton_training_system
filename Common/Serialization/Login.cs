@@ -2,21 +2,17 @@
 
 namespace Common.Serialization
 {
-    [DataContract]
-    public class LoginRequest
+    public class LoginRequest : Request
     {
-        [DataMember]
-        public string username;
-        [DataMember]
-        public string password;
+        public string Username;
+        
+        public string Password;
     }
 
-    [DataContract]
-    public class LoginResponse
+    public class LoginResponse : Response
     {
-        [DataMember]
         public bool LoginSuccessful;
-        [DataMember]
-        public byte[] token;
+     
+        public byte[] Token;
     }
 }

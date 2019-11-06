@@ -16,7 +16,7 @@ namespace Server.SystemInterface.Requests
 
         public LoginResponse Login(string username, string password)
         {
-            LoginRequest login = new LoginRequest() {username = username, password = password};
+            LoginRequest login = new LoginRequest() {Username = username, Password = password};
 
             var ser = new Serializer();
             byte[] data = ser.Serialize(login);

@@ -3,7 +3,7 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Text;
 
-namespace application.SystemInterface.Requests.Serialization
+namespace Common.Serialization
 {
     public class Serializer
     {

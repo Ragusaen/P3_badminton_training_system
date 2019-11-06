@@ -15,23 +15,23 @@ namespace Test
         [TestMethod]
         public void LoginAccount_johninator_pw_fortytwo()
         {
-            var user = new User();
+            var user = new UserManager();
 
             byte[] token = user.Login("johninator", "fortytwo");
 
-            Assert.AreEqual(User.tokenSize, token.Length);
+            Assert.AreEqual(UserManager.TokenSize, token.Length);
         }
 
         [TestMethod]
         public void CreateAccountAndLogin()
         {
-            var user = new User();
+            var user = new UserManager();
 
-            user.Create("manspider", "trashman", new Member("Frank Reynolds", 0));
+            user.Create("manspider", "trashman");
 
             byte[] b = user.Login("manspider", "trashman");
 
-            Assert.AreEqual(User.tokenSize, b.Length);
+            Assert.AreEqual(UserManager.TokenSize, b.Length);
         }
     }
 }
