@@ -5,6 +5,8 @@ using Server.SystemInterface.Network;
 using Server.SystemInterface.Requests;
 using System.Threading;
 using Server.Controller;
+using Common.Serialization;
+using Common;
 
 namespace Test
 {
@@ -33,7 +35,7 @@ namespace Test
             var s = StartServerAndClient();
             ClientConnection conn = s.conn;
 
-            byte[] actual = conn.SendRequest(new byte[] { (byte)RequestManager.Type.ConnectionTest });
+            byte[] actual = conn.SendRequest(new byte[] { (byte)RequestType.ConnectionTest });
 
             s.server.Close();
 
@@ -47,20 +49,20 @@ namespace Test
             var conn = s.conn;
 
             var ser = new Serializer();
-            byte[] data = ser.Serialize(new LoginData() { username = "johninator", password = "fortytwo" });
+            byte[] data = ser.Serialize(new LoginRequest() { Username = "johninator", Password = "fortytwo" });
             byte[] request = new byte[data.Length + 1];
 
-            request[0] = (byte)RequestManager.Type.Login;
+            request[0] = (byte)RequestType.Login;
             Array.Copy(data, 0, request, 1, data.Length);
 
             var response = conn.SendRequest(request);
 
-            LoginAttempt la = ser.Deserialize<LoginAttempt>(response);
+            LoginResponse la = ser.Deserialize<LoginResponse>(response);
 
             s.server.Close();
 
             Assert.AreEqual(true, la.LoginSuccessful);
-            Assert.AreEqual(UserManager.TokenSize, la.token.Length);
+            Assert.AreEqual(UserManager.TokenSize, la.Token.Length);
         }
 
         [TestMethod]
@@ -74,7 +76,7 @@ namespace Test
             s.server.Close();
 
             Assert.IsFalse(la.LoginSuccessful);
-            Assert.AreEqual(0, la.token.Length);
+            Assert.AreEqual(0, la.Token.Length);
         }
 
     }
