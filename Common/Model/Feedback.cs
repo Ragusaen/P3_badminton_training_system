@@ -1,6 +1,4 @@
-﻿using Common.Model.Member;
-
-namespace Common.Model
+﻿namespace Common.Model
 {
     public class Feedback
     {

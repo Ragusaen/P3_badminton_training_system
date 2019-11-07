@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Common.Model.Member;
 
 namespace Common.Model
 {
