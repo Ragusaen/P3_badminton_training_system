@@ -45,6 +45,7 @@ foreign key(MemberID) references `Member`(ID),
 primary key(TeamID, MemberID)
 );
 
+
 create table YearPlanSection(
 ID int primary key auto_increment,
 TeamID int not null,
@@ -52,6 +53,7 @@ foreign key(TeamID) references PracticeTeam(ID),
 StartDate datetime not null,
 EndDate datetime not null
 );
+
 
 create table FocusPoint(
 ID int primary key auto_increment,
@@ -79,6 +81,7 @@ primary key(MemberID, FocusPointID)
 
 create table PlaySession(
 ID int primary key auto_increment,
+`Type` int not null,
 Location varchar(256) not null,
 StartDate datetime not null,
 EndDate datetime not null
