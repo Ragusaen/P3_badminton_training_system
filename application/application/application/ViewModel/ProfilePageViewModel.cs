@@ -8,17 +8,7 @@ namespace application.ViewModel
     class ProfilePageViewModel : BaseViewModel
     {
         public Member CurrentMember { get; set; } = new Member();
-        
-        private string _name;
-
-        public string Name
-        {
-            get { return _name; }
-            set
-            {
-                SetProperty(ref _name, value);
-            }
-        }
+       
         private List<PracticeTeam> _teams;
 
         public List<PracticeTeam> Teams
@@ -73,7 +63,6 @@ namespace application.ViewModel
         {
             Teams = new List<PracticeTeam>();
             CurrentMember.Name = "Pernille Pedersen";
-            Name = CurrentMember.Name;
             Teams.Add(new PracticeTeam("U17", true));
             Teams.Add(new PracticeTeam("Senior", false));
             List<FocusPoint> focusPoint = new List<FocusPoint>();
@@ -97,7 +86,7 @@ namespace application.ViewModel
         //Check if user is in database. Navigate to main page.
         private void ExecuteProfileSettingTap(object param)
         {
-            Name = "Hallo";
+            CurrentMember.Name = "Hallo";
         }
     }
 }

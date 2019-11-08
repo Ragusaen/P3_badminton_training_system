@@ -22,7 +22,7 @@
 
         <ScrollView>
             <StackLayout Margin="10,10,10,10">
-                <Label Text="{Binding Name}" VerticalOptions="Start" HorizontalOptions="CenterAndExpand" FontSize="Large"/>
+                <Label Text="{Binding CurrentMember.Name}" VerticalOptions="Start" HorizontalOptions="CenterAndExpand" FontSize="Large"/>
                 <Label Text="Team" VerticalOptions="Start" HorizontalOptions="StartAndExpand" FontSize="Medium"/>
                 <ListView ItemsSource="{Binding Teams}" VerticalScrollBarVisibility="Never" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding TeamListHeight}">
                     <ListView.ItemTemplate>
@@ -56,7 +56,7 @@
                 </Frame>
                 
                 
-                   <forms:ChartView x:Name="Chart1" HeightRequest="200"/>  
+                   <forms:ChartView x:Name="Chart1" HeightRequest="300" Margin="-90, 0, -90, 0" />  
                
                
 
