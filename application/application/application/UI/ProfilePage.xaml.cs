@@ -20,26 +20,35 @@ namespace application.UI
             new Entry (5)
             {
                 Color = SKColor.Parse("#33ccff"),
-                Label = "Dato"},
+                Label = "Dato",
+                ValueLabel = "5"
+
+            },
 
             new Entry(2)
             {
                 Color = SKColor.Parse("#ff3399"),
-                Label = "Dato"},
+                Label = "Dato",
+                ValueLabel = "2"
+            },
 
              new Entry(3)
             {
                 Color = SKColor.Parse("#0099ff"),
-                Label = "Dato"}
+                Label = "Dato",
+                
+               
+                ValueLabel = "3"
+            }
         };
 
-        
         public ProfilePage()
         {
             InitializeComponent();
-            
-            Chart1.Chart = new LineChart() { Entries = entries, LineMode = LineMode.Straight, LineSize = 8, PointMode = PointMode.Square, PointSize = 15, LabelTextSize = 45 };
 
+            Chart1.Chart = new LineChart { Entries = entries };
+
+            
             ProfilePageViewModel vm = new ProfilePageViewModel();
             BindingContext = vm;
             vm.Navigation = Navigation;
@@ -47,8 +56,7 @@ namespace application.UI
 
             Settingsicon.Source = ImageSource.FromResource("application.Images.settingsicon.jpg");
 
-            //Sub page navigation:
-            //(((MasterDetailPage)Application.Current.MainPage).Detail as NavigationPage).PushAsync(new SubmitFeedbackPage());
+            Settingsicon.Source = ImageSource.FromResource("application.Images.settingsicon.jpg");
         }
     }
 }
