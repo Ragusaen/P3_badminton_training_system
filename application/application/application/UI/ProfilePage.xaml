@@ -51,8 +51,8 @@
                     </ListView.ItemTemplate>
                 </ListView>
                 <Label Text="Comments" FontSize="Medium"/>
-                <Frame BorderColor="Black" CornerRadius="6">
-                    <Entry Placeholder="Enter a comment"/>
+                <Frame  CornerRadius="5" HasShadow="True">
+                    <Editor Placeholder="Enter a comment"/>
                 </Frame>
                 
                 

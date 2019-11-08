@@ -20,25 +20,19 @@ namespace application.UI
             new Entry (2)
             {
                 Color = SKColor.Parse("#33ccff"),
-                Label = "Dato",
-                ValueLabel = "5"
-
+                Label = "Dato"
             },
 
             new Entry(-1)
             {
                 Color = SKColor.Parse("#ff3399"),
-                Label = "Dato",
-                ValueLabel = "2"
+                Label = "Dato"
             },
 
              new Entry(0)
             {
                 Color = SKColor.Parse("#0099ff"),
-                Label = "Dato",
-                
-               
-                ValueLabel = "3"
+                Label = "Dato"
             }
         };
 
