@@ -52,11 +52,11 @@
                 </ListView>
                 <Label Text="Comments" FontSize="Medium"/>
                 <Frame  CornerRadius="5" HasShadow="True">
-                    <Editor Placeholder="Enter a comment"/>
+                    <Editor Placeholder="Enter a comment" AutoSize="TextChanges"/>
                 </Frame>
                 
                 
-                   <forms:ChartView x:Name="Chart1" HeightRequest="300" Margin="-90, 0, -90, 0" />  
+                   <forms:ChartView x:Name="Chart1" HeightRequest="300" Margin="-85, 0, -85, 0" />  
                
                
 
