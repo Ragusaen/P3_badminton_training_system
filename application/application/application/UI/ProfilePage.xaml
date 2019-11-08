@@ -19,7 +19,6 @@
     </NavigationPage.TitleView>
 
     <ContentPage.Content>
-
         <ScrollView>
             <StackLayout Margin="10,10,10,10">
                 <Label Text="{Binding Name}" VerticalOptions="Start" HorizontalOptions="CenterAndExpand" FontSize="Large"/>
@@ -51,14 +50,14 @@
                     </ListView.ItemTemplate>
                 </ListView>
                 <Label Text="Comments" FontSize="Medium"/>
-                <Frame BorderColor="Black" CornerRadius="6">
-                    <Entry Placeholder="Enter a comment"/>
+                <Frame CornerRadius="5" HasShadow="True">
+                    <Editor Placeholder="Enter a comment" AutoSize ="TextChanges"/>
                 </Frame>
                 
                 
-                   <forms:ChartView x:Name="Chart1" HeightRequest="200"/>  
-               
-               
+                   <forms:ChartView x:Name="Chart1" HeightRequest="200"/>
+
+                <Button Text="View feedback" Command="{Binding ViewFeedbackCommand}"/>
 
             </StackLayout>
         </ScrollView>

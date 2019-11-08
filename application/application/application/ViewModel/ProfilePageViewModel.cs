@@ -99,5 +99,19 @@ namespace application.ViewModel
         {
             Name = "Hallo";
         }
+
+        private RelayCommand _viewFeedbackCommand;
+
+        public RelayCommand ViewFeedbackCommand
+        {
+            get
+            {
+                return _viewFeedbackCommand ?? (_viewFeedbackCommand = new RelayCommand(param => ExecuteViewFeedbackClick(param)));
+            }
+        }
+        private void ExecuteViewFeedbackClick(object param)
+        {
+            
+        }
     }
 }

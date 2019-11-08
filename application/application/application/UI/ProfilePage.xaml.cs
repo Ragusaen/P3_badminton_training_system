@@ -20,41 +20,30 @@ namespace application.UI
             new Entry (5)
             {
                 Color = SKColor.Parse("#33ccff"),
-                Label = "Dato",
-                ValueLabel = "5"
-
-            },
+                Label = "Dato"},
 
             new Entry(2)
             {
                 Color = SKColor.Parse("#ff3399"),
-                Label = "Dato",
-                ValueLabel = "2"
-            },
+                Label = "Dato"},
 
              new Entry(3)
             {
                 Color = SKColor.Parse("#0099ff"),
-                Label = "Dato",
-                
-               
-                ValueLabel = "3"
-            }
+                Label = "Dato"}
         };
 
+        
         public ProfilePage()
         {
             InitializeComponent();
-
-            Chart1.Chart = new LineChart { Entries = entries };
-
             
+            Chart1.Chart = new LineChart() { Entries = entries, LineMode = LineMode.Straight, LineSize = 8, PointMode = PointMode.Square, PointSize = 15, LabelTextSize = 45 };
+
             ProfilePageViewModel vm = new ProfilePageViewModel();
             BindingContext = vm;
             vm.Navigation = Navigation;
 
-
-            Settingsicon.Source = ImageSource.FromResource("application.Images.settingsicon.jpg");
 
             Settingsicon.Source = ImageSource.FromResource("application.Images.settingsicon.jpg");
 
