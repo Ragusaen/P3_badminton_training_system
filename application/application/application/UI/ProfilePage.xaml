@@ -22,7 +22,7 @@
 
         <ScrollView>
             <StackLayout Margin="10,10,10,10">
-                <Label Text="{Binding Name}" VerticalOptions="Start" HorizontalOptions="CenterAndExpand" FontSize="Large"/>
+                <Label Text="{Binding CurrentMember.Name}" VerticalOptions="Start" HorizontalOptions="CenterAndExpand" FontSize="Large"/>
                 <Label Text="Team" VerticalOptions="Start" HorizontalOptions="StartAndExpand" FontSize="Medium"/>
                 <ListView ItemsSource="{Binding Teams}" VerticalScrollBarVisibility="Never" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding TeamListHeight}">
                     <ListView.ItemTemplate>
@@ -51,12 +51,12 @@
                     </ListView.ItemTemplate>
                 </ListView>
                 <Label Text="Comments" FontSize="Medium"/>
-                <Frame BorderColor="Black" CornerRadius="6">
-                    <Entry Placeholder="Enter a comment"/>
+                <Frame  CornerRadius="5" HasShadow="True">
+                    <Editor Placeholder="Enter a comment" AutoSize="TextChanges"/>
                 </Frame>
                 
                 
-                   <forms:ChartView x:Name="Chart1" HeightRequest="200"/>  
+                   <forms:ChartView x:Name="Chart1" HeightRequest="300" Margin="-85, 0, -85, 0" />  
                
                
 
