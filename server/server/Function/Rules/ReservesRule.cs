@@ -17,7 +17,7 @@ namespace Server.Function.Rules
             List<RuleBreak> ruleBreaks = new List<RuleBreak>();
             LineupDAO lineupDAO = new LineupDAO();
 
-            List<int> memberidsRound = lineupDAO.GetMemberIDsPlayingInLeagueRound(match.LeagueRound, match.Season);
+            List<int> memberidsRound = null;//lineupDAO.GetMemberIDsPlayingInLeagueRound(match.LeagueRound, match.Season);
             foreach (var position in match.Lineup.Positions)
             {
                 if (memberidsRound.Count(p => p == position.Value.Player.Member.Id) > 2)
@@ -26,7 +26,7 @@ namespace Server.Function.Rules
                     ruleBreaks.Add(new RuleBreak(position.Key, 1, "WARNING: Player is already on another lineup this round!"));
             }
 
-            memberidsRound = lineupDAO.GetMemberIDsPlayingInLeagueRound(match.LeagueRound - 1, match.Season);
+            memberidsRound = null;// lineupDAO.GetMemberIDsPlayingInLeagueRound(match.LeagueRound - 1, match.Season);
             foreach (var position in match.Lineup.Positions)
             {
                 if (memberidsRound.Count(p => p == position.Value.Player.Member.Id) > 4)
