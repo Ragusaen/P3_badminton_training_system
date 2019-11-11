@@ -7,7 +7,7 @@ namespace application.ViewModel
 {
     class ProfilePageViewModel : BaseViewModel
     {
-        public Member CurrentMember { get; set; } = new Member();
+        public Member CurrentMember { get; set; } = new Member("Pernille Pedersen");
        
         private List<PracticeTeam> _teams;
 
@@ -62,7 +62,6 @@ namespace application.ViewModel
         public ProfilePageViewModel() 
         {
             Teams = new List<PracticeTeam>();
-            CurrentMember.Name = "Pernille Pedersen";
             Teams.Add(new PracticeTeam("U17", true));
             Teams.Add(new PracticeTeam("Senior", false));
             List<FocusPoint> focusPoint = new List<FocusPoint>();

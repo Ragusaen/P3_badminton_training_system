@@ -7,9 +7,15 @@
              x:Class="application.UI.CreateTeamPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+
+            <SearchBar Placeholder="Enter the name of the member" Text="{Binding SearchText}"/>
+            <ListView ItemsSource="{Binding SearchResultMember}" VerticalScrollBarVisibility="Never" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding MemberListHeight}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <TextCell Text="hej"/>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
