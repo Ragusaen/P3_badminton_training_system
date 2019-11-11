@@ -15,6 +15,8 @@ namespace application.UI
         public CreateTeamPage()
         {
             InitializeComponent();
+
+
         }
     }
 }

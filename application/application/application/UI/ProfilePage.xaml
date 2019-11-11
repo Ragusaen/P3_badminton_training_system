@@ -54,12 +54,9 @@
                 <Frame  CornerRadius="5" HasShadow="True">
                     <Editor Placeholder="Enter a comment" AutoSize="TextChanges"/>
                 </Frame>
-                
-                
-                   <forms:ChartView x:Name="Chart1" HeightRequest="300" Margin="-85, 0, -85, 0" />  
-               
-               
 
+                   <forms:ChartView x:Name="Chart1" HeightRequest="300" Margin="-80, 0, -80, 0" />  
+               
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>
