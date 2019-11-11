@@ -7,6 +7,8 @@ create table MemberType(
 ID int primary key auto_increment,
 `Description` varchar(32) not null
 );
+INSERT INTO `membertype`(`Description`) VALUES ('Player');
+INSERT INTO `membertype`(`Description`) VALUES ('Trainer');
 
 create table `Account`(
 Username varchar(32) primary key,
