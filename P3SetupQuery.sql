@@ -3,11 +3,6 @@ DROP PROCEDURE IF EXISTS SP_SETUP;
 CREATE PROCEDURE SP_SETUP()
 BEGIN
 
-create table MemberType(
-ID int primary key auto_increment,
-`Description` varchar(32) not null
-);
-
 create table `Account`(
 Username varchar(32) primary key,
 PasswordHash binary(32) not null,
@@ -23,11 +18,9 @@ foreign key(AccountUsername) references `Account`(Username)
 create table `Member`(
 ID int primary key auto_increment,
 MemberTypeID int not null,
-foreign key(MemberTypeID) references MemberType(ID),
 Username varchar(32),
 foreign key(Username) references `Account`(Username),
 `Name` varchar(256) not null,
-`Status` bit not null,
 Sex int not null,
 BadmintonPlayerID int
 );
@@ -45,6 +38,7 @@ foreign key(MemberID) references `Member`(ID),
 primary key(TeamID, MemberID)
 );
 
+
 create table YearPlanSection(
 ID int primary key auto_increment,
 TeamID int not null,
@@ -52,6 +46,7 @@ foreign key(TeamID) references PracticeTeam(ID),
 StartDate datetime not null,
 EndDate datetime not null
 );
+
 
 create table FocusPoint(
 ID int primary key auto_increment,
@@ -79,6 +74,7 @@ primary key(MemberID, FocusPointID)
 
 create table PlaySession(
 ID int primary key auto_increment,
+`Type` int not null,
 Location varchar(256) not null,
 StartDate datetime not null,
 EndDate datetime not null

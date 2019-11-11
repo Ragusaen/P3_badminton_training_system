@@ -5,8 +5,8 @@ using System.Text;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium;
 using System.Threading;
+using Common.Model;
 using Server.DAL;
-using Common.Model.Member;
 using NLog;
 
 namespace Server.Controller
@@ -19,7 +19,7 @@ namespace Server.Controller
         {
             _log.Debug("UpdatePlayers startup");
             var pdao = new PlayerDAO();
-            List<Player> players = pdao.ReadAll().ToList();
+            List<Player> players = null;// pdao.ReadAll().ToList();
 
             var chromeOptions = new ChromeOptions();
             // chromeOptions.AddArguments("--headless"); 
@@ -53,7 +53,7 @@ namespace Server.Controller
             }
             browser.Quit();
 
-            pdao.WriteMany(players);
+            //pdao.WriteMany(players);
         }
 
         private void FindRootRankList(IWebDriver browser)

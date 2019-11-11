@@ -100,7 +100,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAL\FocusPointDescriptorDAO.cs" />
     <Compile Include="DAL\LineupDAO.cs" />
+    <Compile Include="DAL\MemberDAO.cs" />
+    <Compile Include="DAL\PlayerDAO.cs" />
+    <Compile Include="DAL\PlaySessionDao.cs" />
+    <Compile Include="DAL\TrainerDAO.cs" />
     <Compile Include="Function\LineupVerification.cs" />
     <Compile Include="Function\Rules\IRule.cs" />
     <Compile Include="Function\Rules\LeagueRules.cs" />
@@ -124,9 +129,7 @@
     <Compile Include="SystemInterface\Requests\RequestManager.cs" />
     <Compile Include="Controller\UserManager.cs" />
     <Compile Include="DAL\DBConnection.cs" />
-    <Compile Include="DAL\IDAO.cs" />
-    <Compile Include="DAL\PlayerDAO.cs" />
-    <Compile Include="DAL\TrainerDAO.cs" />
+    <Compile Include="DAL\DAO.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />

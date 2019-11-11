@@ -1,4 +1,4 @@
-﻿namespace Common.Model.Member
+﻿namespace Common.Model
 {
     public class PlayerRanking
     {

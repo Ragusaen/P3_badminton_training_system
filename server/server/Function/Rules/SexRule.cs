@@ -13,19 +13,19 @@ namespace Server.Function.Rules
             foreach (var position in match.Lineup.Positions)
             {
                 Lineup.PositionType type = position.Key.Item1;
-                if (!SexGood(type, position.Value.Player.Member.Sex))
-                {
+                if (!SexGood(type, position.Value.Player.Sex))
+                {   
                     ruleBreaks.Add(new RuleBreak(position.Key, 0, "Wrong gender"));
                 }
 
                 if (position.Value is DoublePosition dp)
                 {
-                    if (type == Lineup.PositionType.MixDouble && position.Value.Player.Member.Sex == dp.OtherPlayer.Member.Sex)
+                    if (type == Lineup.PositionType.MixDouble && position.Value.Player.Sex == dp.OtherPlayer.Sex)
                     {
                         ruleBreaks.Add(new RuleBreak(position.Key, 0, "Wrong gender"));
                         ruleBreaks.Add(new RuleBreak(position.Key, 1, "Wrong gender"));
                     }
-                    else if (!SexGood(type, dp.OtherPlayer.Member.Sex))
+                    else if (!SexGood(type, dp.OtherPlayer.Sex))
                     {
                         ruleBreaks.Add(new RuleBreak(position.Key, 1, "Wrong gender"));
                     }
@@ -34,7 +34,7 @@ namespace Server.Function.Rules
             return ruleBreaks;
         }
 
-        private bool SexGood(Lineup.PositionType position, int sex)
+        private bool SexGood(Lineup.PositionType position, Sex sex)
         {
             switch (position)
             {
@@ -42,10 +42,10 @@ namespace Server.Function.Rules
                     return true;
                 case Lineup.PositionType.MensSingle:
                 case Lineup.PositionType.MensDouble:
-                    return sex == 0;
+                    return sex == Sex.Male;
                 case Lineup.PositionType.WomensSingle:
                 case Lineup.PositionType.WomensDouble:
-                    return sex == 1;
+                    return sex == Sex.Female;
                 default:
                     return false;
             }
