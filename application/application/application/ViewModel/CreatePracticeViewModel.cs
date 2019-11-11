@@ -137,7 +137,7 @@ namespace application.ViewModel
 
         private bool CanExecuteSaveCreatedPracticeClick(object param)
         {
-            if ((PracticeTitle == null || PracticeTitle == "") || (SelectedDateStart == null ) || (SelectedDateEnd == null) || (SelectedTimeStart == null) || (SelectedTimeEnd == null))
+            if (PracticeTitle == null || PracticeTitle == "")
                 return false;
             else
                 return true;

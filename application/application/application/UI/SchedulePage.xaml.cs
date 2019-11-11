@@ -22,13 +22,5 @@ namespace application.UI
             Plusicon.Source = ImageSource.FromResource("application.Images.plusicon.jpg");
 
         }
-
-        /*void AddPracticeSessionClicked(object sender, EventArgs e)
-        {
-            //Sub page navigation:
-            Navigation.PushAsync(new CreatePracticePage());
-            //((MasterDetailPage)Application.Current.MainPage).Detail = new NavigationPage(new CreatePracticePage());
-            //(((MasterDetailPage)Application.Current.MainPage).Detail as NavigationPage).PushAsync(new CreatePracticePage());
-        }*/
     }
 }
