@@ -1,6 +1,8 @@
 ﻿using NLog;
 using Server.SystemInterface.Network;
 using System;
+using Common.Model;
+using Server.DAL;
 
 namespace Server
 {
@@ -10,6 +12,13 @@ namespace Server
 
         public static void Main(string[] args)
         {
+            var md = new MemberDAO();
+            var b = md.Create(null, true, "Hans Peter", Sex.Male, null);
+
+            Console.WriteLine(b);
+            Console.ReadKey();
+
+            return;
             try
             {
                 SslTcpServer sslTcpServer = new SslTcpServer("localhost.cer");

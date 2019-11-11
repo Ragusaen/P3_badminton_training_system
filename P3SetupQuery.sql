@@ -3,13 +3,6 @@ DROP PROCEDURE IF EXISTS SP_SETUP;
 CREATE PROCEDURE SP_SETUP()
 BEGIN
 
-create table MemberType(
-ID int primary key auto_increment,
-`Description` varchar(32) not null
-);
-INSERT INTO `membertype`(`Description`) VALUES ('Player');
-INSERT INTO `membertype`(`Description`) VALUES ('Trainer');
-
 create table `Account`(
 Username varchar(32) primary key,
 PasswordHash binary(32) not null,
@@ -25,7 +18,6 @@ foreign key(AccountUsername) references `Account`(Username)
 create table `Member`(
 ID int primary key auto_increment,
 MemberTypeID int not null,
-foreign key(MemberTypeID) references MemberType(ID),
 Username varchar(32),
 foreign key(Username) references `Account`(Username),
 `Name` varchar(256) not null,

@@ -7,14 +7,8 @@ using Common.Model;
 
 namespace Server.DAL
 {
-    class TrainerDAO : DAO<Trainer>
-    {
-        public TrainerDAO()
-        {
-            FieldColumnDictionary = new Dictionary<string, string>()
-            {
-                {"" }
-            };
-        }
+    class TrainerDAO
+    { 
+
     }
 }

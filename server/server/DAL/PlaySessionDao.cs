@@ -43,7 +43,7 @@ namespace Server.DAL
 
                 if (ps is PracticeSession practice)
                 {
-                    var dt = db.ExecuteSelectQuery("SELECT (`ID`, `Location`, `StartDate`, `EndData`, `Type`) FROM playsession WHERE `StartDate` BETWEEN @start AND @end",
+                    var dt1 = db.ExecuteSelectQuery("SELECT (`ID`, `Location`, `StartDate`, `EndData`, `Type`) FROM playsession WHERE `StartDate` BETWEEN @start AND @end",
                         new MySqlParameter[]
                         {
                             new MySqlParameter("@start", start),
@@ -55,8 +55,10 @@ namespace Server.DAL
                 {
 
                 }
+
             }
 
+            return (null, null);
         }
     }
 }

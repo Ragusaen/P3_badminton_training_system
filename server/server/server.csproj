@@ -100,7 +100,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAL\LineupDAO.cs" />
     <Compile Include="DAL\MemberDAO.cs" />
+    <Compile Include="DAL\PlayerDAO.cs" />
     <Compile Include="DAL\PlaySessionDao.cs" />
     <Compile Include="DAL\TrainerDAO.cs" />
     <Compile Include="Function\LineupVerification.cs" />
