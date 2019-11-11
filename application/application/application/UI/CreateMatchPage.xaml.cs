@@ -1,4 +1,5 @@
-﻿using System;
+﻿using application.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,9 @@ namespace application.UI
         public CreateMatchPage()
         {
             InitializeComponent();
+            BindingContext = new CreateMatchViewModel();
+
+            SaveIcon.Source = ImageSource.FromResource("application.Images.saveicon.png");
         }
     }
 }

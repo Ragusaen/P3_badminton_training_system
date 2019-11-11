@@ -7,20 +7,24 @@
 
   <ItemGroup>
     <None Remove="Images\bullseyeicon.png" />
+    <None Remove="Images\deleteicon.png" />
     <None Remove="Images\editicon.png" />
     <None Remove="Images\logo.gif" />
     <None Remove="Images\menuicon.jpg" />
     <None Remove="Images\plusicon.jpg" />
+    <None Remove="Images\saveicon.png" />
     <None Remove="Images\settingsicon.jpg" />
     <None Remove="Images\tritonlogo.jpg" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Images\bullseyeicon.png" />
+    <EmbeddedResource Include="Images\deleteicon.png" />
     <EmbeddedResource Include="Images\editicon.png" />
     <EmbeddedResource Include="Images\logo.gif" />
     <EmbeddedResource Include="Images\menuicon.jpg" />
     <EmbeddedResource Include="Images\plusicon.jpg" />
+    <EmbeddedResource Include="Images\saveicon.png" />
     <EmbeddedResource Include="Images\settingsicon.jpg" />
     <EmbeddedResource Include="Images\tritonlogo.jpg" />
   </ItemGroup>

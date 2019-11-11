@@ -1,4 +1,5 @@
-﻿using System;
+﻿using application.UI;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Xamarin.Forms;
@@ -45,6 +46,29 @@ namespace application.ViewModel
         private void ExecuteDateClick(object param)
         {
            
+        }
+
+        private RelayCommand _addPracticeSessionClickCommand;
+
+        public RelayCommand AddPracticeSessionClickCommand
+        {
+            get
+            {
+                return _addPracticeSessionClickCommand ?? (_addPracticeSessionClickCommand = new RelayCommand(param => ExecuteAddPracticeSessionClick(param), param => CanExecuteAddPracticeSessionClick(param)));
+            }
+        }
+
+        private bool CanExecuteAddPracticeSessionClick(object param)
+        {
+           return true;
+        }
+
+        //Check if username is free in database.
+        private void ExecuteAddPracticeSessionClick(object param)
+        {
+            CreatePracticeViewModel vm = new CreatePracticeViewModel();
+            Navigation.PushAsync(new CreatePracticePage() { BindingContext = vm });
+            vm.Navigation = Navigation;
         }
     }
 }
