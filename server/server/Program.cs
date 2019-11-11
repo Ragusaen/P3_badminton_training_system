@@ -13,7 +13,7 @@ namespace Server
         public static void Main(string[] args)
         {
             var md = new MemberDAO();
-            var b = md.Create(null, true, "Hans Peter", Sex.Male, null);
+            var b = md.Create(null, MemberRole.Type.Trainer, "Hans Peter", Sex.Male, null);
 
             Console.WriteLine(b);
             Console.ReadKey();
