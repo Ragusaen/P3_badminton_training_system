@@ -10,7 +10,7 @@ namespace Server.DAL
 {
     class MemberDAO
     {
-        public bool Create(string username, bool isTrainer, string name, Sex sex, int? badmintonPlayerId)
+        public bool Create(string username, MemberRole.Type memberType, string name, Sex sex, int? badmintonPlayerId)
         {
             string findUser = "(SELECT `Username` FROM `account` WHERE `Username`= @username)";
             if (username == null)
@@ -22,15 +22,14 @@ namespace Server.DAL
                 "(SELECT `ID` FROM `membertype` WHERE `Description`= @membertype)," +
                 findUser + "," +
                 "@name, " +
-                "1, " +
                 "@sex," +
                 "@badmintonPlayerId);";
 
             var db = new DBConnection();
 
-            var parameters = new List<MySqlParameter>()
+            var parameters = new MySqlParameter[]
             {
-                new MySqlParameter("@membertype", isTrainer ? "Trainer" : "Player"),
+                new MySqlParameter("@membertype", memberType),
                 new MySqlParameter("@name", name),
                 new MySqlParameter("@sex", (int) sex),
                 new MySqlParameter("@badmintonPlayerId",
@@ -38,7 +37,7 @@ namespace Server.DAL
                 new MySqlParameter("@username", username)
             };
 
-            var b = db.ExecuteInsertUpdateDeleteQuery(query, parameters.ToArray());
+            var b = db.ExecuteInsertUpdateDeleteQuery(query, parameters);
 
             return b;
         }

@@ -21,7 +21,6 @@ MemberTypeID int not null,
 Username varchar(32),
 foreign key(Username) references `Account`(Username),
 `Name` varchar(256) not null,
-`Status` bit not null,
 Sex int not null,
 BadmintonPlayerID int
 );
