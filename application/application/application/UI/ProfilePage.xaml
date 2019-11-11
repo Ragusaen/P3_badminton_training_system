@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:forms="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
+             mc:Ignorable="d"
+             x:Class="application.UI.ProfilePage" BackgroundColor="White" NavigationPage.HasBackButton="False">
+
+    <NavigationPage.TitleView>
+        <StackLayout Orientation="Horizontal" Spacing="10">
+            <Label Text="Profile" FontAttributes="Bold" FontSize="30" TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+            <Image x:Name="Settingsicon" HeightRequest="30" VerticalOptions="CenterAndExpand" HorizontalOptions="End" Margin="0,0,15,0" >
+                <Image.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding ProfileSettingCommand}" />
+                </Image.GestureRecognizers>
+            </Image>
+        </StackLayout>
+    </NavigationPage.TitleView>
+
+    <ContentPage.Content>
+
+        <ScrollView>
+            <StackLayout Margin="10,10,10,10">
+                <Label Text="{Binding CurrentMember.Name}" VerticalOptions="Start" HorizontalOptions="CenterAndExpand" FontSize="Large"/>
+                <Label Text="Team" VerticalOptions="Start" HorizontalOptions="StartAndExpand" FontSize="Medium"/>
+                <ListView ItemsSource="{Binding Teams}" VerticalScrollBarVisibility="Never" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding TeamListHeight}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Text="{Binding Name}" VerticalOptions="Center"/>
+                                    <Switch IsToggled="{Binding OnTeam}" ThumbColor="Red" OnColor="LightPink"/>
+                                </Grid>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <Label Text="Focus Point" FontSize="Medium"/>
+
+                <SearchBar Placeholder="Enter your focus point" Text="{Binding SearchText}"/>
+                <ListView ItemsSource="{Binding SearchResultFocusPoints}" VerticalScrollBarVisibility="Never" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding FocusPointListHeight}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextCell Height="45" Text="{Binding Description}"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+                <Label Text="Comments" FontSize="Medium"/>
+                <Frame  CornerRadius="5" HasShadow="True">
+                    <Editor Placeholder="Enter a comment" AutoSize="TextChanges"/>
+                </Frame>
+
+                   <forms:ChartView x:Name="Chart1" HeightRequest="300" Margin="-80, 0, -80, 0" />  
+               
+            </StackLayout>
+        </ScrollView>
+    </ContentPage.Content>
+</ContentPage>

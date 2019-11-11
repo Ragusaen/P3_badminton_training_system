@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="application.UI.LoginPage" BackgroundColor="White">
+
+    <ContentPage.Padding>
+        <OnPlatform x:TypeArguments="Thickness" iOS="0,20,0,0"/>
+    </ContentPage.Padding>
+
+    <NavigationPage.TitleView>
+        <StackLayout Orientation="Horizontal" Spacing="10">
+            <Image Source="" x:Name="NaviLogo" HeightRequest="50" VerticalOptions="CenterAndExpand" HorizontalOptions="Start"/>
+            <Label Text="Aalborg Triton" FontAttributes="Bold" FontSize="20" TextColor="White" HorizontalOptions="StartAndExpand" VerticalOptions="CenterAndExpand"/>
+        </StackLayout>
+    </NavigationPage.TitleView>
+    
+    <ScrollView>
+        <StackLayout HorizontalOptions="Center">
+            <Image Source="" x:Name="RedLogo" HeightRequest="222" Margin="20,25,20,25"/>
+            <Label Text="Username" />
+            <Entry x:Name="username" Placeholder="Enter username" Text="{Binding UserName}"/>
+            <Label Text="Password"/>
+            <Entry x:Name="password" Placeholder="Enter password" IsPassword="True" Text="{Binding PassWord}"/>
+            <Button Text="Log In" Command="{Binding LoginClickCommand}"/>
+            <StackLayout Orientation="Horizontal" >
+                <Button Text="Forgot password?" FontSize="Micro" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Command="{Binding ForgotPassWordClickCommand}"/>
+                <Button Text="Create a New Account" FontSize="Micro" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Command="{Binding CreateAccountClickCommand}"/>
+            </StackLayout>
+        </StackLayout>
+    </ScrollView>
+    
+</ContentPage>

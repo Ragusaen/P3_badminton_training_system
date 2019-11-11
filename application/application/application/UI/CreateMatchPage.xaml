@@ -1,0 +1,76 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="application.UI.CreateMatchPage">
+    <NavigationPage.TitleView>
+        <StackLayout Orientation="Horizontal" Spacing="10">
+            <Label Text="Team Match" FontAttributes="Bold" FontSize="30" TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+            <ImageButton Source="" x:Name="SaveIcon" Command="{Binding SaveMatchClickCommand}" HeightRequest="25" VerticalOptions="CenterAndExpand" HorizontalOptions="End" Margin="0,0,15,0" BackgroundColor="Red"/>
+        </StackLayout>
+    </NavigationPage.TitleView>
+
+    <ScrollView>
+        <StackLayout>
+            <Grid Margin="15,15,15,10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="15"/>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="70"/>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <Label Grid.Row="0" Grid.Column="0" Text="Team" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
+                <Entry Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Placeholder="Enter team name" Text="{Binding TeamName}" VerticalOptions="Center"/>
+                <Label Grid.Row="1" Grid.Column="0" Text="Date" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
+                <StackLayout Orientation="Horizontal" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2">
+                    <DatePicker MinimumDate="{Binding MinDate}" MaximumDate="{Binding MaxDate}" Date="{Binding SelectedDateStart}"/>
+                    <Label Text="-" VerticalOptions="Center"/>
+                    <DatePicker MinimumDate="{Binding MinDate}" MaximumDate="{Binding MaxDate}" Date="{Binding SelectedDateEnd}"/>
+                </StackLayout>
+                <Label Grid.Row="2" Grid.Column="0" Text="Time" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
+                <StackLayout Orientation="Horizontal" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" VerticalOptions="Center">
+                    <TimePicker Format="HH:mm" Time="{Binding SelectedTimeStart}"/>
+                    <Label Text="-" VerticalOptions="Center"/>
+                    <TimePicker Format="HH:mm" Time="{Binding SelectedTimeEnd}"/>
+                </StackLayout>
+                <Label Grid.Row="3" Grid.Column="0" Text="Trainer" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
+                <Entry Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Placeholder="Enter trainer's name" Text="{Binding MatchResponsibleName}" VerticalOptions="Center"/>
+                <Label Grid.Row="4" Grid.Column="0" Text="Location" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
+                <Entry Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Location}"  Placeholder="Enter location" VerticalOptions="Center"/>
+                <Label Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Text="Lineup" FontSize="Title" HorizontalOptions="Start" VerticalOptions="Center"/>
+                <Label Grid.Row="6" Grid.Column="2" Text="Legal" TextColor="Green" FontSize="16" VerticalOptions="Center" HorizontalOptions="Start"/>
+                <Label Grid.Row="6" Grid.Column="2" Text="/" FontSize="16" VerticalOptions="Center" HorizontalOptions="Center"/>
+                <Label Grid.Row="6" Grid.Column="2" Text="Illegal" TextColor="Red" FontSize="16" VerticalOptions="Center" HorizontalOptions="End"/>
+            </Grid>
+
+            <Frame CornerRadius="5" HasShadow="True" Margin="15,0,15,10">
+                <StackLayout>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Row="0" Grid.Column="0" Text="Match" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
+                        <Label Grid.Row="0" Grid.Column="1" Text="Name" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        <Label Grid.Row="0" Grid.Column="2" Text="Name" FontSize="20" HorizontalOptions="Center" VerticalOptions="Center"/>
+                    </Grid>
+                </StackLayout>
+            </Frame>
+            
+        </StackLayout>
+    </ScrollView>
+</ContentPage>

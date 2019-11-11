@@ -5,33 +5,10 @@ using System.Windows.Input;
 using Xamarin.Forms;
 using application.UI;
 
-using application.SystemInterface.Network;
-using System.Net.Sockets;
-using System.Diagnostics;
-using application.SystemInterface;
-
 namespace application.ViewModel
 {
-    class MainPageViewModel : BaseViewModel
+    class LoginPageViewModel : BaseViewModel
     {
-        #region InvalidLogin
-        private bool _invalidLoginTextVisible;
-
-        public bool InvalidLoginTextVisible
-        {
-            get { return _invalidLoginTextVisible; }
-            set { SetProperty(ref _invalidLoginTextVisible, value); }
-        }
-
-        private int _invalidLoginTextHeight;
-
-        public int InvalidLoginTextHeight
-        {
-            get { return _invalidLoginTextHeight; }
-            set { SetProperty(ref _invalidLoginTextHeight, value); }
-        }
-        #endregion
-
         private string _userName;
 
         public string UserName
@@ -70,18 +47,11 @@ namespace application.ViewModel
         //Check if user is in database. Navigate to main page.
         private void ExecuteLoginClick(object param)
         {
+            MenuViewModel vm = new MenuViewModel();
+           /* Navigation.PushAsync( new MenuPage() {BindingContext = vm});
+            vm.Navigation = Navigation;*/
 
-            if (RequestCreator.LoginRequest("johninator", "forty2"))
-            {
-                ScheduleViewModel vm = new ScheduleViewModel();
-                Navigation.PushAsync(new SchedulePage() { BindingContext = vm });
-                vm.Navigation = Navigation;
-            } else
-            {
-                InvalidLoginTextHeight = 20;
-                InvalidLoginTextVisible = true;
-            }
-
+            Application.Current.MainPage = new NavigationPage(new MenuPage() { BindingContext = vm });
         }
         private RelayCommand _forgotPassWordClickCommand;
 
@@ -89,15 +59,15 @@ namespace application.ViewModel
         {
             get
             {
-                return _forgotPassWordClickCommand ?? (_forgotPassWordClickCommand = new RelayCommand(param => ExecuteFogotPassWordClick(param)));
+                return _forgotPassWordClickCommand ?? (_forgotPassWordClickCommand = new RelayCommand(param => ExecuteForgotPassWordClick(param)));
             }
         }
 
         //Check if user is in database. Navigate to main page.
-        private void ExecuteFogotPassWordClick(object param)
+        private void ExecuteForgotPassWordClick(object param)
         {
-            ScheduleViewModel vm = new ScheduleViewModel();
-            Navigation.PushAsync(new SchedulePage() { BindingContext = vm });
+            ForgotPasswordViewModel vm = new ForgotPasswordViewModel();
+            Navigation.PushAsync(new ForgotPasswordPage() { BindingContext = vm });
             vm.Navigation = Navigation;
         }
         private RelayCommand _createAccountClickCommand;
@@ -113,8 +83,8 @@ namespace application.ViewModel
         //Check if user is in database. Navigate to main page.
         private void ExecuteCreateAccountClick(object param)
         {
-            ScheduleViewModel vm = new ScheduleViewModel();
-            Navigation.PushAsync(new SchedulePage() { BindingContext = vm });
+            CreateAccountViewModel vm = new CreateAccountViewModel();
+            Navigation.PushAsync(new CreateAccountPage() { BindingContext = vm });
             vm.Navigation = Navigation;
         }
     }
