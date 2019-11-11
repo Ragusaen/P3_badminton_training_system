@@ -100,6 +100,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DAL\FocusPointDescriptorDAO.cs" />
     <Compile Include="DAL\LineupDAO.cs" />
     <Compile Include="DAL\MemberDAO.cs" />
     <Compile Include="DAL\PlayerDAO.cs" />
