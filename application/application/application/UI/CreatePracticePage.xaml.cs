@@ -16,12 +16,11 @@ namespace application.UI
         public CreatePracticePage()
         {
             InitializeComponent();
-
-            CreatePracticeViewModel vm = new CreatePracticeViewModel();
-            BindingContext = vm;
-            vm.Navigation = Navigation;
-
+            BindingContext = new ScheduleViewModel();
+            
+            SaveIcon.Source = ImageSource.FromResource("application.Images.saveicon.png");
             BullsEyeIcon.Source = ImageSource.FromResource("application.Images.bullseyeicon.png");
+            //DeleteIcon.Source = ImageSource.FromResource("application.Images.deleteicon.png");
         }
     }
 }
