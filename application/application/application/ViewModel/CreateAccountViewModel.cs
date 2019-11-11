@@ -61,7 +61,7 @@ namespace application.ViewModel
                 return true;
         }
 
-        //Check if username is free in database.
+        //Check if username is free in database
         private void ExecuteCreateAccountContinueClick(object param)
         {
             CreateAccountChooseNameViewModel vm = new CreateAccountChooseNameViewModel();
