@@ -13,7 +13,7 @@ namespace Server.Function
         public List<RuleBreak> VerifyLineup(Match match)
         {
             List<IRule> rules = LeagueRules.Dict[match.League];
-            //Sort rules by priority
+            rules.Sort((p, q) => p.Priority.CompareTo(q.Priority));
 
             List<RuleBreak> rulebreaks = new List<RuleBreak>();
             foreach (IRule rule in rules)

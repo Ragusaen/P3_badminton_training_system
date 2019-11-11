@@ -18,4 +18,3 @@ namespace Common.Model
         public Dictionary<Tuple<PositionType, int>, Position> Positions { get; set; }
     }
 }
-
