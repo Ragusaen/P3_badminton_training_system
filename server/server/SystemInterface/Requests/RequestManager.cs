@@ -26,7 +26,8 @@ namespace Server.SystemInterface.Requests
             {
                 {RequestType.Login, new LoginHandler() },
                 {RequestType.CreateAccount, new CreateAccountHandler() },
-                //{RequestType.GetSchedule, new  }
+                {RequestType.GetPracticeTeam, new GetPracticeTeamHandler() },
+                //{RequestType., new  }
             };
 
         public void Parse(byte[] request)
@@ -47,6 +48,7 @@ namespace Server.SystemInterface.Requests
                     LoginRequest(data);
                     break;
                 case RequestType.CreateAccount:
+                    break;
                 default:
                     throw new InvalidRequestException("Request type was invalid!");
             }

@@ -6,5 +6,6 @@ namespace Common.Model
 {
     class YearPlan
     {
+
     }
 }
