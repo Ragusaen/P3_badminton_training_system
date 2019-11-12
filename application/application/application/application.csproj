@@ -6,20 +6,35 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\bullseyeicon.png" />
+    <None Remove="Images\deleteicon.png" />
+    <None Remove="Images\editicon.png" />
     <None Remove="Images\logo.gif" />
-    <None Remove="Images\Tiger.jpg" />
+    <None Remove="Images\menuicon.jpg" />
+    <None Remove="Images\plusicon.jpg" />
+    <None Remove="Images\saveicon.png" />
+    <None Remove="Images\settingsicon.jpg" />
     <None Remove="Images\tritonlogo.jpg" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Images\bullseyeicon.png" />
+    <EmbeddedResource Include="Images\deleteicon.png" />
+    <EmbeddedResource Include="Images\editicon.png" />
     <EmbeddedResource Include="Images\logo.gif" />
-    <EmbeddedResource Include="Images\tiger.jpg" />
+    <EmbeddedResource Include="Images\menuicon.jpg" />
+    <EmbeddedResource Include="Images\plusicon.jpg" />
+    <EmbeddedResource Include="Images\saveicon.png" />
+    <EmbeddedResource Include="Images\settingsicon.jpg" />
     <EmbeddedResource Include="Images\tritonlogo.jpg" />
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microcharts" Version="0.7.1" />
+    <PackageReference Include="Microcharts.Forms" Version="0.7.1" />
     <PackageReference Include="Xamarin.Forms" Version="4.2.0.709249" />
     <PackageReference Include="Xamarin.Essentials" Version="1.2.0" />
+    <PackageReference Include="Xamarin.Plugin.Calendar" Version="1.0.3.200" />
   </ItemGroup>
 
   <ItemGroup>
@@ -27,13 +42,64 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="UI\CreatePracticePage.xaml.cs">
+      <DependentUpon>CreatePracticePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\LoginPage.xaml.cs">
+      <DependentUpon>LoginPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="UI\MenuPage.xaml.cs">
+      <DependentUpon>MenuPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="UI\SchedulePage.xaml.cs">
       <DependentUpon>SchedulePage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="UI\CreateAccountChooseNamePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="UI\CreateAccountPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="UI\CreateFocusPointPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="UI\CreateMatchPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="UI\CreateTeamPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="UI\CreatePracticePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="UI\ForgotPasswordPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="UI\LineupPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="UI\ManageFocusPointPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="UI\ManageTeamPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="UI\MenuPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="UI\PracticeSessionPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="UI\ProfilePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="UI\SchedulePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="UI\SubmitFeedbackPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>
