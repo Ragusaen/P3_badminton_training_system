@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
 using System.Data;
+using System.Data.Entity;
 
 namespace Server.Controller
 {
@@ -32,23 +33,25 @@ namespace Server.Controller
         #region Login
         public byte[] Login(string username, string password)
         {
-            UserInfo? userInfo = FindUser(username);
-            if (userInfo.HasValue)
-            {
-                UserInfo user = userInfo.Value;
+            var db = new DatabaseEntities();
+            var account = db.accounts.First(p => p.Username == username);
 
-                if (VerifyPassword(password, user.Salt, user.PasswordHash))
+            // Check if account was found
+            if (account != null &&
+                VerifyPassword(password, account.PasswordSalt, account.PasswordHash))
+            {
+                var token = GenerateLoginToken();
+
+                db.tokens.Add(new token()
                 {
-                    return GenerateLoginToken();
-                }
+                    account = account,
+                    AccessToken = token
+                });
+                db.SaveChanges();
             }
 
+            // On error return empty array
             return new byte[0];
-        }
-
-        private UserInfo? FindUser(string username)
-        {
-            return null;
         }
 
         private byte[] GenerateLoginToken()
@@ -64,27 +67,28 @@ namespace Server.Controller
         #region Create
         public bool Create(string username, string password)
         {
-            if (FindUser(username).HasValue)
+            var db = new DatabaseEntities();
+
+            // Check if username is already taken
+            if (db.accounts.Count(p => p.Username == username) > 0)
                 return false;
             
+            // Generate a hash and salt for the new user
             var pw_info = GenerateHashedPasswordAndSalt(password);
-            UserInfo userInfo = new UserInfo(
-                username,
-                pw_info.password,
-                pw_info.salt
-            );
-
-            AddUserToDatabase(userInfo);
+            
+            var account = new account()
+            {
+                Username = username,
+                PasswordHash = pw_info.password,
+                PasswordSalt = pw_info.salt
+            };
+            db.accounts.Add(account);
+            db.SaveChanges();
 
             return true;
         }
         #endregion
 
-        #region Database
-        private void AddUserToDatabase(UserInfo userInfo)
-        {
-        }
-        #endregion
 
         private (byte[] password, byte[] salt) GenerateHashedPasswordAndSalt(string password)
         {

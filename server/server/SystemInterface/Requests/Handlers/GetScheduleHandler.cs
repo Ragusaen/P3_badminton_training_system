@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Server.SystemInterface.Requests.Handlers
 {
-    /*class GetScheduleHandler : MiddleRequestHandler<>
+    class GetScheduleHandler : MiddleRequestHandler<>
     {
-    }*/
+    }
 }

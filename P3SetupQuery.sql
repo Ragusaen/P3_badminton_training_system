@@ -1,7 +1,8 @@
-DELIMITER //
-DROP PROCEDURE IF EXISTS SP_SETUP;
-CREATE PROCEDURE SP_SETUP()
-BEGIN
+create table MemberType(
+ID int primary key auto_increment,
+`Description` varchar(32) not null
+);
+
 
 create table `Account`(
 Username varchar(32) primary key,
@@ -17,10 +18,12 @@ foreign key(AccountUsername) references `Account`(Username)
 
 create table `Member`(
 ID int primary key auto_increment,
-MemberType int not null,
+MemberTypeID int not null,
+foreign key(MemberTypeID) references MemberType(ID),
 Username varchar(32),
 foreign key(Username) references `Account`(Username),
 `Name` varchar(256) not null,
+`Status` bit not null,
 Sex int not null,
 BadmintonPlayerID int
 );
@@ -156,7 +159,3 @@ Bad varchar(1024),
 FocusPoint varchar(1024),
 `Day` varchar(1024)
 );
-
-END
-//
-DELIMITER ;

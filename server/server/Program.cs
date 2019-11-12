@@ -14,11 +14,6 @@ namespace Server
 
         public static void Main(string[] args)
         {
-            var db = new p3_dbEntities();
-
-            db.SaveChanges();
-
-
             return;
             try
             {
