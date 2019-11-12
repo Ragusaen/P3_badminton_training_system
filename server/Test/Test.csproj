@@ -45,7 +45,6 @@
     <Reference Include="Google.Protobuf, Version=3.6.1.0, Culture=neutral, PublicKeyToken=a7d26565bac4d604, processorArchitecture=MSIL">
       <HintPath>..\packages\Google.Protobuf.3.6.1\lib\net45\Google.Protobuf.dll</HintPath>
     </Reference>
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.VisualStudio.TestPlatform.TestFramework, Version=14.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\MSTest.TestFramework.1.3.2\lib\net45\Microsoft.VisualStudio.TestPlatform.TestFramework.dll</HintPath>
     </Reference>
@@ -75,7 +74,7 @@
     <Compile Include="DataTableComparer.cs" />
     <Compile Include="DBResetter.cs" />
     <Compile Include="DBTests.cs" />
-    <Compile Include="LoginTests.cs" />
+    <Compile Include="UserTests.cs" />
     <Compile Include="ServerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -84,6 +83,10 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Common\Common.csproj">
+      <Project>{c1e33d67-0b8d-4208-a406-e508a335e4b3}</Project>
+      <Name>Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\server\Server.csproj">
       <Project>{17222b97-98b4-44ed-a5f2-1f91ff26ee83}</Project>
       <Name>Server</Name>

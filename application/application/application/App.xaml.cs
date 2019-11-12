@@ -2,6 +2,10 @@
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using application.UI;
+using application.SystemInterface.Network;
+using application.SystemInterface;
+using System.Diagnostics;
+using application.ViewModel;
 
 namespace application
 {
@@ -10,12 +14,12 @@ namespace application
         public App()
         {
             InitializeComponent();
-            MainPage = new NavigationPage(new LoginPage());
+            MainPage = new NavigationPage(new LineupPage());
         }
 
         protected override void OnStart()
         {
-            // Handle when your app starts
+            //RequestCreator.Connect();
         }
 
         protected override void OnSleep()

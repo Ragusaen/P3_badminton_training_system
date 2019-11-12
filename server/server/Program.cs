@@ -1,20 +1,8 @@
-﻿using MySql.Data.MySqlClient;
-using Server.DAL;
-using Server.Controller;
-using Server.Model;
+﻿using NLog;
+using Server.SystemInterface.Network;
 using System;
-using System.Data;
-using System.Data.SqlClient;
-using Server.Model.Rules;
-using System.Linq;
-using System.Runtime.Serialization.Json;
-using System.Runtime.Serialization;
-using System.IO;
-using Server.Controller.Network;
-using System.Threading;
-using NLog;
-using Server.Controller.Requests;
-using System.Security.Cryptography;
+using Common.Model;
+using Server.DAL;
 
 namespace Server
 {
@@ -24,18 +12,25 @@ namespace Server
 
         public static void Main(string[] args)
         {
-            var parser = new Parser();
+            var md = new MemberDAO();
+            var b = md.Create(null, MemberRole.Type.Trainer, "Hans Peter", Sex.Male, null);
 
+            Console.WriteLine(b);
+            Console.ReadKey();
+
+            return;
             try
             {
-                parser.UpdatePlayers();
-            }
-
-            catch (Exception e)
+                SslTcpServer sslTcpServer = new SslTcpServer("localhost.cer");
+                sslTcpServer.RunServer();
+            } catch (Exception e)
             {
-                _log.Error(e, e.Message);
+                if (e.InnerException != null)
+                    _log.Error(e.InnerException.Message);
+                _log.Error(e, e.ToString());
                 throw;
             }
+
             NLog.LogManager.Shutdown();
         }
     }

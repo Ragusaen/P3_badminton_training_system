@@ -24,5 +24,10 @@ namespace application.UI
             RedLogo.Source = ImageSource.FromResource("application.Images.tritonlogo.jpg");
             NaviLogo.Source = ImageSource.FromResource("application.Images.logo.gif");
         }
+
+        private void ContentPage_Appearing(object sender, EventArgs e)
+        {
+
+        }
     }
 }

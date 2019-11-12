@@ -51,7 +51,7 @@ namespace Test
                                       new MySqlParameter("@name", "Jakob Andersen")
                                   });
 
-            Assert.AreEqual(4, (int)dt.Rows[0].ItemArray[0]);
+            Assert.AreEqual(5, (int)dt.Rows[0].ItemArray[0]);
         }
 
         [TestMethod]
@@ -70,7 +70,7 @@ namespace Test
                                       new MySqlParameter("@name", "Jorn Abakus")
                                   });
 
-            Assert.AreEqual(4, (int)dt.Rows[0].ItemArray[0]);
+            Assert.AreEqual(5, (int)dt.Rows[0].ItemArray[0]);
         }
     }
 }
