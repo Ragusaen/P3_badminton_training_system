@@ -200,6 +200,7 @@
     <Compile Include="DAL\playsession.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\PlaysessionCast.cs" />
     <Compile Include="DAL\position.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
