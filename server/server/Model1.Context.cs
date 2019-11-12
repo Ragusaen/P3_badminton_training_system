@@ -13,10 +13,10 @@ namespace Server
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class p3_dbEntities : DbContext
+    public partial class DatabaseEntities : DbContext
     {
-        public p3_dbEntities()
-            : base("name=p3_dbEntities")
+        public DatabaseEntities()
+            : base("name=DatabaseEntities")
         {
         }
     
