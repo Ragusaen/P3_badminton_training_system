@@ -4,8 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
-using Server.DAL;
-using MySql.Data.MySqlClient;
 using System.Data;
 
 namespace Server.Controller
@@ -50,18 +48,7 @@ namespace Server.Controller
 
         private UserInfo? FindUser(string username)
         {
-            string query = string.Format("select Username, PasswordHash, PasswordSalt from `Account` where Username=@Username;");
-            MySqlParameter[] param = new MySqlParameter[1];
-            param[0] = new MySqlParameter("@Username", username);
-
-            DBConnection db = new DBConnection();
-            DataTable dt = db.ExecuteSelectQuery(query, param);
-
-            if (dt.Rows.Count != 1)
-            {
-                return null;
-            }
-            return new UserInfo(dt.Rows[0][0].ToString(), (byte[])dt.Rows[0][1], (byte[])dt.Rows[0][2]);
+            return null;
         }
 
         private byte[] GenerateLoginToken()
@@ -96,14 +83,6 @@ namespace Server.Controller
         #region Database
         private void AddUserToDatabase(UserInfo userInfo)
         {
-            string query = string.Format("insert into `Account`(Username, PasswordHash, PasswordSalt) values(@Username, @Hash, @Salt);");
-            MySqlParameter[] param = new MySqlParameter[5];
-            param[2] = new MySqlParameter("@Username", userInfo.Username);
-            param[3] = new MySqlParameter("@Hash", userInfo.PasswordHash);
-            param[4] = new MySqlParameter("@Salt", userInfo.Salt);
-
-            DBConnection db = new DBConnection();
-            db.ExecuteInsertUpdateDeleteQuery(query, param);
         }
         #endregion
 

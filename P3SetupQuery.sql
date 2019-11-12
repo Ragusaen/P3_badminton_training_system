@@ -17,7 +17,7 @@ foreign key(AccountUsername) references `Account`(Username)
 
 create table `Member`(
 ID int primary key auto_increment,
-MemberTypeID int not null,
+MemberType int not null,
 Username varchar(32),
 foreign key(Username) references `Account`(Username),
 `Name` varchar(256) not null,

@@ -1,6 +1,8 @@
 ﻿using NLog;
 using Server.SystemInterface.Network;
 using System;
+using System.Data.Entity;
+using System.Linq;
 using Common.Model;
 using Server.DAL;
 
@@ -12,11 +14,10 @@ namespace Server
 
         public static void Main(string[] args)
         {
-            var md = new MemberDAO();
-            var b = md.Create(null, MemberRole.Type.Trainer, "Hans Peter", Sex.Male, null);
+            var db = new p3_dbEntities();
 
-            Console.WriteLine(b);
-            Console.ReadKey();
+            db.SaveChanges();
+
 
             return;
             try

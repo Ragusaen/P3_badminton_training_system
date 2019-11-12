@@ -6,7 +6,6 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium;
 using System.Threading;
 using Common.Model;
-using Server.DAL;
 using NLog;
 
 namespace Server.Controller
@@ -18,7 +17,6 @@ namespace Server.Controller
         public void UpdatePlayers()
         {
             _log.Debug("UpdatePlayers startup");
-            var pdao = new PlayerDAO();
             List<Player> players = null;// pdao.ReadAll().ToList();
 
             var chromeOptions = new ChromeOptions();

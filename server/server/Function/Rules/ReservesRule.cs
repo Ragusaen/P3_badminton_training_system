@@ -15,7 +15,6 @@ namespace Server.Function.Rules
         public List<RuleBreak> Rule(Match match) //TODO: Check if rules are correct + Make an extra method to clean up code
         {
             List<RuleBreak> ruleBreaks = new List<RuleBreak>();
-            LineupDAO lineupDAO = new LineupDAO();
 
             List<int> memberidsRound = null;//lineupDAO.GetMemberIDsPlayingInLeagueRound(match.LeagueRound, match.Season);
             foreach (var position in match.Lineup.Positions)

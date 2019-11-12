@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Server.DAL
 {
-    class LineupDAO
+    class Class1
     {
+
     }
 }
