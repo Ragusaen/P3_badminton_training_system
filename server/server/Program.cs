@@ -4,7 +4,6 @@ using System;
 using System.Data.Entity;
 using System.Linq;
 using Common.Model;
-using Server.DAL;
 
 namespace Server
 {

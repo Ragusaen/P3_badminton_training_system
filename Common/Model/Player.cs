@@ -24,10 +24,8 @@ namespace Common.Model
             Veteran
         }
 
-        public List<PracticeTeam> PracticeTeams;
         public PlayerRanking Rankings;
 
-        public AgeGroup Age;
         public Sex Sex;
         public int BadmintonPlayerId;
     }

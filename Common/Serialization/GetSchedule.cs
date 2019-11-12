@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Text;
+using Common.Model;
 
 namespace Common.Serialization
 {
@@ -15,5 +16,7 @@ namespace Common.Serialization
     [DataContract]
     class GetScheduleResponse
     {
+        [DataMember] public List<PracticeSession> PracticeSessions;
+        [DataMember] public List<>
     }
 }
