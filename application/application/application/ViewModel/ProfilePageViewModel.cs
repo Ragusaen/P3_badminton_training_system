@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using application.Model;
+using Common.Model;
 
 namespace application.ViewModel
 {
     class ProfilePageViewModel : BaseViewModel
     {
-        public Member CurrentMember { get; set; } = new Member("Pernille Pedersen");
+        public Member CurrentMember { get; set; } = new Member() { Name = "Pernille Pedersen"};
        
         private List<PracticeTeam> _teams;
 
@@ -31,9 +31,9 @@ namespace application.ViewModel
             }
         }
 
-        private List<FocusPoint> _searchResultFocusPoints;
+        private List<FocusPointItem> _searchResultFocusPoints;
 
-        public List<FocusPoint> SearchResultFocusPoints
+        public List<FocusPointItem> SearchResultFocusPoints
         {
             get { return _searchResultFocusPoints; }
             set
@@ -62,11 +62,11 @@ namespace application.ViewModel
         public ProfilePageViewModel() 
         {
             Teams = new List<PracticeTeam>();
-            Teams.Add(new PracticeTeam("U17", true));
-            Teams.Add(new PracticeTeam("Senior", false));
-            List<FocusPoint> focusPoint = new List<FocusPoint>();
-            focusPoint.Add(new FocusPoint("Serv"));
-            focusPoint.Add(new FocusPoint("Slag"));
+            Teams.Add(new PracticeTeam() {Name = "U17"});
+            Teams.Add(new PracticeTeam() { Name = "Senior" });
+            List<FocusPointItem> focusPoint = new List<FocusPointItem>();
+            focusPoint.Add(new FocusPointItem() { Descriptor = new FocusPointDescriptor() { Name = "Slag" } });
+            focusPoint.Add(new FocusPointItem() { Descriptor = new FocusPointDescriptor() {Name = "Serv"} });
             SearchResultFocusPoints = focusPoint;
 
             TeamListHeight = Teams.Count * 45;

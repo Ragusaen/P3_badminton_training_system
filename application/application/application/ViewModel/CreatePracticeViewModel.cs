@@ -1,8 +1,8 @@
-﻿using application.Model;
-using application.UI;
+﻿using application.UI;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Common.Model;
 
 namespace application.ViewModel
 {
@@ -163,9 +163,9 @@ namespace application.ViewModel
             }
         }
 
-        private List<FocusPoint> _focusPointsSearchResult;
+        private List<FocusPointItem> _focusPointsSearchResult;
 
-        public List<FocusPoint> FocusPointsSearchResult
+        public List<FocusPointItem> FocusPointsSearchResult
         {
             get { return _focusPointsSearchResult; }
             set
@@ -208,7 +208,7 @@ namespace application.ViewModel
             MinDate = DateTime.Today;
             MaxDate = new DateTime(2020, 1, 1);
 
-            List<FocusPoint> focusPoint = new List<FocusPoint>();
+            List<FocusPointItem> focusPoint = new List<FocusPointItem>();
             //FocusPointsSearchText = focusPoint;
 
             PlanElement = new List<string>();

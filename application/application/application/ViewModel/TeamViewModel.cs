@@ -24,15 +24,13 @@ namespace application.ViewModel
         public ObservableCollection<Team> TeamList
         {
             get { return _teamList; }
-            set
-            {
-                SetProperty(ref _teamList, value);
-            }
+            set { SetProperty(ref _teamList, value); }
         }
         
         public TeamViewModel()
         {
-            
+            TeamList = new ObservableCollection<Team>();
+            TeamList.Add(new Team() { Name = "TeamName"});
         }
     }
 }
