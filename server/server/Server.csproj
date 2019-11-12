@@ -212,6 +212,7 @@
     <Compile Include="DAL\practiceteam.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\PracticeTeamCast.cs" />
     <Compile Include="DAL\ranklist.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
