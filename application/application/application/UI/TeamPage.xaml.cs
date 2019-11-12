@@ -15,7 +15,7 @@ namespace application.UI
         public TeamPage()
         {
             InitializeComponent();
-            CreateTeamViewModel vm = new CreateTeamViewModel();
+            TeamViewModel vm = new TeamViewModel();
             BindingContext = vm;
             vm.Navigation = Navigation;
 

@@ -21,7 +21,7 @@ namespace application.UI
             MenuList = new List<MasterPageItem>();
 
             MenuList.Add(new MasterPageItem() { Title = "Schedule", TargetType = typeof(SchedulePage)}); //Set icons
-            MenuList.Add(new MasterPageItem() { Title = "Team", TargetType = typeof(CreateTeamPage) }); //Set icons
+            MenuList.Add(new MasterPageItem() { Title = "Team", TargetType = typeof(TeamPage) }); //Set icons
             MenuList.Add(new MasterPageItem() { Title = "Profile", TargetType = typeof(ProfilePage)}); //Set icons
 
             NavigationList.ItemsSource = MenuList;
