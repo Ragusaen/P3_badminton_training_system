@@ -10,9 +10,9 @@ using Xamarin.Forms.Xaml;
 namespace application.UI
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class CreateTeamPage : ContentPage
+    public partial class TeamPage : ContentPage
     {
-        public CreateTeamPage()
+        public TeamPage()
         {
             InitializeComponent();
 

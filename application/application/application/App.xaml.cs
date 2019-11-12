@@ -5,6 +5,7 @@ using application.UI;
 using application.SystemInterface.Network;
 using application.SystemInterface;
 using System.Diagnostics;
+using application.ViewModel;
 
 namespace application
 {
@@ -13,12 +14,12 @@ namespace application
         public App()
         {
             InitializeComponent();
-            MainPage = new NavigationPage(new LoginPage());
+            MainPage = new NavigationPage(new LineupPage());
         }
 
         protected override void OnStart()
         {
-            RequestCreator.Connect();
+            //RequestCreator.Connect();
         }
 
         protected override void OnSleep()
