@@ -4,10 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Server.DAL
+namespace Server.SystemInterface.Requests.Handlers
 {
-    class Class1
+    class GetPracticeTeamHandler
     {
-
     }
 }

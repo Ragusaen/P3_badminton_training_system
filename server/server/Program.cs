@@ -16,8 +16,9 @@ namespace Server
         {
             var db = new p3_dbEntities();
 
-            db.SaveChanges();
+            db.members.Add(new member {Name = "John Larsen", Sex = (int)Sex.Male, BadmintonPlayerID = 02221208, MemberType = 0});
 
+            db.SaveChanges();
 
             return;
             try
