@@ -13,9 +13,21 @@
         </StackLayout>
     </NavigationPage.TitleView>
 
-    <StackLayout Margin="10,25,10,25">
-        <Label Text="Name" />
-        <SearchBar x:Name="Name" Placeholder="Enter your full name and choose yourself from the list" Text="{Binding Name}"/>
+    <StackLayout Margin="15,25,15,25">
+        <Label Text="Please enter your full name and select yourself from the ranking list"/>
+        <SearchBar Placeholder="Enter your full name" Text="{Binding SearchText}"/>
+        <ListView ItemsSource="{Binding Name}" VerticalScrollBarVisibility="Never" VerticalOptions="Fill" SeparatorVisibility="None">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <StackLayout>
+                            <Label Text="{Binding Name}"/>
+                        </StackLayout>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
         <StackLayout Orientation="Horizontal" Margin="0,25,0,25">
             <CheckBox x:Name="NotOnList"/>
             <Label Text="Check here if you are not on the list"/>
