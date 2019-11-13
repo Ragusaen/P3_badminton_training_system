@@ -20,7 +20,6 @@
 
     <ContentPage.Content>
 
-        <ScrollView>
             <StackLayout Margin="10,10,10,10">
                 <Label Text="{Binding CurrentMember.Name}" VerticalOptions="Start" HorizontalOptions="CenterAndExpand" FontSize="Large"/>
                 <Label Text="Team" VerticalOptions="Start" HorizontalOptions="StartAndExpand" FontSize="Medium"/>
@@ -43,10 +42,10 @@
                 <Label Text="Focus Point" FontSize="Medium"/>
 
                 <SearchBar Placeholder="Enter your focus point" Text="{Binding SearchText}"/>
-                <ListView ItemsSource="{Binding SearchResultFocusPoints}" VerticalScrollBarVisibility="Never" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding FocusPointListHeight}">
+                <ListView VerticalScrollBarVisibility="Always" ItemsSource="{Binding SearchResultFocusPoints}" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding FocusPointListHeight}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <TextCell Height="45" Text="{Binding Description}"/>
+                            <TextCell Height="45" Text="{Binding Descriptor.Name}"/>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
@@ -55,9 +54,8 @@
                     <Editor Placeholder="Enter a comment" AutoSize="TextChanges"/>
                 </Frame>
 
-                   <forms:ChartView x:Name="Chart1" HeightRequest="300" Margin="-80, 0, -80, 0" />  
-               
+                <forms:ChartView x:Name="Chart1" HeightRequest="300" Margin="-80, 0, -80, 0" />
+
             </StackLayout>
-        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

@@ -31,15 +31,17 @@ namespace application.ViewModel
             }
         }
 
-        private string _email;
+        private string _cantContinueText;
 
-        public string Email
+        public string CantContinueText
         {
-            get { return _email; }
+            get { return _cantContinueText; }
             set
             {
-                if (SetProperty(ref _email, value))
+                
+                if (SetProperty( ref _cantContinueText, value))
                     CreateAccountContinueClickCommand.RaiseCanExecuteChanged();
+
             }
         }
 
@@ -55,10 +57,16 @@ namespace application.ViewModel
 
         private bool CanExecuteCreateAccountContinueClick(object param)
         {
-            if ((PassWord == null || PassWord == "") || (UserName == null || UserName == "") || (Email == null || Email == ""))
+            if ((PassWord == null || PassWord == "") || (UserName == null || UserName == ""))
+            {
+                CantContinueText = "You need to enter an username and a password before you can continue";
                 return false;
-            else
+            }
+            else 
+            {
+                CantContinueText = " ";
                 return true;
+            }
         }
 
         //Check if username is free in database
