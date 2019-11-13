@@ -17,7 +17,8 @@ namespace Server.DAL
                 var practice = p.practicesession;
                 playSession = new PracticeSession()
                 {
-                    PracticeTeam = (Common.Model.PracticeTeam)practice.yearplansection.practiceteam;
+                    PracticeTeam = (Common.Model.PracticeTeam) practice.yearplansection.practiceteam,
+                    Trainer = (Common.Model.Trainer) practice.member
                 };
             }
             else
@@ -25,16 +26,19 @@ namespace Server.DAL
                 var match = p.teammatch;
                 playSession = new Match()
                 {
-
+                    Captain = (Member)match.member,
+                    League =  (Match.Leagues)match.League,
+                    LeagueRound = match.LeagueRound,
+                    Lineup = (new LineUpCast()).CreateLineup(match.positions)
                 };
             }
 
             playSession.End = p.EndDate;
             playSession.Start = p.StartDate;
             playSession.Location = p.Location;
-            playSession.Id = p.ID; 
+            playSession.Id = p.ID;
 
-            return 
+            return playSession;
         }
     }
 }

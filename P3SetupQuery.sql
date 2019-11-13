@@ -1,8 +1,6 @@
-create table MemberType(
-ID int primary key auto_increment,
-`Description` varchar(32) not null
-);
-
+DROP SCHEMA IF EXISTS `p3_db`;
+CREATE SCHEMA `p3_db`;
+USE `p3_db`;
 
 create table `Account`(
 Username varchar(32) primary key,
@@ -18,8 +16,7 @@ foreign key(AccountUsername) references `Account`(Username)
 
 create table `Member`(
 ID int primary key auto_increment,
-MemberTypeID int not null,
-foreign key(MemberTypeID) references MemberType(ID),
+MemberType int not null,
 Username varchar(32),
 foreign key(Username) references `Account`(Username),
 `Name` varchar(256) not null,
@@ -117,11 +114,13 @@ ExerciseIndex int not null
 
 create table RankList(
 MemberID int primary key,
+foreign key(MemberID) references `Member`(ID),
 MixPoints int not null,
 SinglesPoints int not null,
 DoublesPoints int not null,
 LevelPoints int not null,
-`Level` varchar(16)
+`Level` int not null,
+`AgeGroup` int not null
 );
 
 create table TeamMatch(
@@ -130,7 +129,7 @@ foreign key(PlaySessionID) references PlaySession(ID),
 CaptainID int not null,
 foreign key(CaptainID) references `Member`(ID),
 OpponentName varchar(64) not null,
-League varchar(32) not null,
+League int not null,
 LeagueRound int not null,
 Season int not null
 );
@@ -140,8 +139,10 @@ MemberID int,
 foreign key(MemberID) references `Member`(ID),
 TeamMatchPlaySessionID int,
 foreign key(TeamMatchPlaySessionID) references TeamMatch(PlaySessionID),
-Position varchar(32),
-primary key(MemberID, TeamMatchPlaySessionID, Position)
+`Type` int not null,
+`Order` int not null,
+`IsExtra` int not null,
+primary key(MemberID, TeamMatchPlaySessionID, `Type`, `Order`)
 );
 
 create table Feedback(
@@ -158,4 +159,4 @@ Good varchar(1024),
 Bad varchar(1024),
 FocusPoint varchar(1024),
 `Day` varchar(1024)
-);
+);	

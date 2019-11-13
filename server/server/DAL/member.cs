@@ -29,6 +29,7 @@ namespace Server.DAL
         public int MemberType { get; set; }
         public string Username { get; set; }
         public string Name { get; set; }
+        public bool Status { get; set; }
         public int Sex { get; set; }
         public Nullable<int> BadmintonPlayerID { get; set; }
     
@@ -39,6 +40,7 @@ namespace Server.DAL
         public virtual ICollection<position> positions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<practicesession> practicesessions { get; set; }
+        public virtual ranklist ranklist { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<teammatch> teammatches { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

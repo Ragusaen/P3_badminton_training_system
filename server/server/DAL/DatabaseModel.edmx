@@ -55,6 +55,7 @@
           <Property Name="MemberType" Type="int" Nullable="false" />
           <Property Name="Username" Type="varchar" MaxLength="32" />
           <Property Name="Name" Type="varchar" MaxLength="256" Nullable="false" />
+          <Property Name="Status" Type="bit" Nullable="false" />
           <Property Name="Sex" Type="int" Nullable="false" />
           <Property Name="BadmintonPlayerID" Type="int" />
         </EntityType>
@@ -80,11 +81,14 @@
           <Key>
             <PropertyRef Name="MemberID" />
             <PropertyRef Name="TeamMatchPlaySessionID" />
-            <PropertyRef Name="Position" />
+            <PropertyRef Name="Type" />
+            <PropertyRef Name="Order" />
           </Key>
           <Property Name="MemberID" Type="int" Nullable="false" />
           <Property Name="TeamMatchPlaySessionID" Type="int" Nullable="false" />
-          <Property Name="Position" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="Type" Type="int" Nullable="false" />
+          <Property Name="Order" Type="int" Nullable="false" />
+          <Property Name="IsExtra" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="practicesession">
           <Key>
@@ -127,7 +131,8 @@
           <Property Name="SinglesPoints" Type="int" Nullable="false" />
           <Property Name="DoublesPoints" Type="int" Nullable="false" />
           <Property Name="LevelPoints" Type="int" Nullable="false" />
-          <Property Name="Level" Type="varchar" MaxLength="16" />
+          <Property Name="Level" Type="int" Nullable="false" />
+          <Property Name="AgeGroup" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="teammatch">
           <Key>
@@ -136,7 +141,7 @@
           <Property Name="PlaySessionID" Type="int" Nullable="false" />
           <Property Name="CaptainID" Type="int" Nullable="false" />
           <Property Name="OpponentName" Type="varchar" MaxLength="64" Nullable="false" />
-          <Property Name="League" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="League" Type="int" Nullable="false" />
           <Property Name="LeagueRound" Type="int" Nullable="false" />
           <Property Name="Season" Type="int" Nullable="false" />
         </EntityType>
@@ -340,6 +345,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="ranklist_ibfk_1">
+          <End Role="member" Type="Self.member" Multiplicity="1" />
+          <End Role="ranklist" Type="Self.ranklist" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="member">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ranklist">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="teammatch_ibfk_1">
           <End Role="playsession" Type="Self.playsession" Multiplicity="1" />
           <End Role="teammatch" Type="Self.teammatch" Multiplicity="0..1" />
@@ -511,6 +528,10 @@
             <End Role="practicesession" EntitySet="practicesession" />
             <End Role="practicesessionfocuspoint" EntitySet="practicesessionfocuspoint" />
           </AssociationSet>
+          <AssociationSet Name="ranklist_ibfk_1" Association="Self.ranklist_ibfk_1">
+            <End Role="member" EntitySet="member" />
+            <End Role="ranklist" EntitySet="ranklist" />
+          </AssociationSet>
           <AssociationSet Name="teammatch_ibfk_1" Association="Self.teammatch_ibfk_1">
             <End Role="playsession" EntitySet="playsession" />
             <End Role="teammatch" EntitySet="teammatch" />
@@ -607,12 +628,14 @@
           <Property Name="MemberType" Type="Int32" Nullable="false" />
           <Property Name="Username" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
           <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Status" Type="Boolean" Nullable="false" />
           <Property Name="Sex" Type="Int32" Nullable="false" />
           <Property Name="BadmintonPlayerID" Type="Int32" />
           <NavigationProperty Name="account" Relationship="Self.member_ibfk_1" FromRole="member" ToRole="account" />
           <NavigationProperty Name="feedbacks" Relationship="Self.feedback_ibfk_1" FromRole="member" ToRole="feedback" />
           <NavigationProperty Name="positions" Relationship="Self.position_ibfk_1" FromRole="member" ToRole="position" />
           <NavigationProperty Name="practicesessions" Relationship="Self.practicesession_ibfk_3" FromRole="member" ToRole="practicesession" />
+          <NavigationProperty Name="ranklist" Relationship="Self.ranklist_ibfk_1" FromRole="member" ToRole="ranklist" />
           <NavigationProperty Name="teammatches" Relationship="Self.teammatch_ibfk_2" FromRole="member" ToRole="teammatch" />
           <NavigationProperty Name="focuspoints" Relationship="Self.memberfocuspoint" FromRole="member" ToRole="focuspoint" />
           <NavigationProperty Name="practiceteams" Relationship="Self.teammember" FromRole="member" ToRole="practiceteam" />
@@ -634,11 +657,14 @@
           <Key>
             <PropertyRef Name="MemberID" />
             <PropertyRef Name="TeamMatchPlaySessionID" />
-            <PropertyRef Name="Position1" />
+            <PropertyRef Name="Type" />
+            <PropertyRef Name="Order" />
           </Key>
           <Property Name="MemberID" Type="Int32" Nullable="false" />
           <Property Name="TeamMatchPlaySessionID" Type="Int32" Nullable="false" />
-          <Property Name="Position1" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Type" Type="Int32" Nullable="false" />
+          <Property Name="Order" Type="Int32" Nullable="false" />
+          <Property Name="IsExtra" Type="Int32" Nullable="false" />
           <NavigationProperty Name="member" Relationship="Self.position_ibfk_1" FromRole="position" ToRole="member" />
           <NavigationProperty Name="teammatch" Relationship="Self.position_ibfk_2" FromRole="position" ToRole="teammatch" />
         </EntityType>
@@ -684,7 +710,9 @@
           <Property Name="SinglesPoints" Type="Int32" Nullable="false" />
           <Property Name="DoublesPoints" Type="Int32" Nullable="false" />
           <Property Name="LevelPoints" Type="Int32" Nullable="false" />
-          <Property Name="Level" Type="String" MaxLength="16" FixedLength="false" Unicode="false" />
+          <Property Name="Level" Type="Int32" Nullable="false" />
+          <Property Name="AgeGroup" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="member" Relationship="Self.ranklist_ibfk_1" FromRole="ranklist" ToRole="member" />
         </EntityType>
         <EntityType Name="teammatch">
           <Key>
@@ -693,7 +721,7 @@
           <Property Name="PlaySessionID" Type="Int32" Nullable="false" />
           <Property Name="CaptainID" Type="Int32" Nullable="false" />
           <Property Name="OpponentName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="League" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="League" Type="Int32" Nullable="false" />
           <Property Name="LeagueRound" Type="Int32" Nullable="false" />
           <Property Name="Season" Type="Int32" Nullable="false" />
           <NavigationProperty Name="member" Relationship="Self.teammatch_ibfk_2" FromRole="teammatch" ToRole="member" />
@@ -801,6 +829,18 @@
             </Principal>
             <Dependent Role="practicesession">
               <PropertyRef Name="TrainerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ranklist_ibfk_1">
+          <End Role="member" Type="Self.member" Multiplicity="1" />
+          <End Role="ranklist" Type="Self.ranklist" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="member">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ranklist">
+              <PropertyRef Name="MemberID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -947,6 +987,10 @@
             <End Role="member" EntitySet="members" />
             <End Role="practicesession" EntitySet="practicesessions" />
           </AssociationSet>
+          <AssociationSet Name="ranklist_ibfk_1" Association="Self.ranklist_ibfk_1">
+            <End Role="member" EntitySet="members" />
+            <End Role="ranklist" EntitySet="ranklists" />
+          </AssociationSet>
           <AssociationSet Name="teammatch_ibfk_2" Association="Self.teammatch_ibfk_2">
             <End Role="member" EntitySet="members" />
             <End Role="teammatch" EntitySet="teammatches" />
@@ -1050,6 +1094,7 @@
                 <ScalarProperty Name="MemberType" ColumnName="MemberType" />
                 <ScalarProperty Name="Username" ColumnName="Username" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="Sex" ColumnName="Sex" />
                 <ScalarProperty Name="BadmintonPlayerID" ColumnName="BadmintonPlayerID" />
               </MappingFragment>
@@ -1071,7 +1116,9 @@
               <MappingFragment StoreEntitySet="position">
                 <ScalarProperty Name="MemberID" ColumnName="MemberID" />
                 <ScalarProperty Name="TeamMatchPlaySessionID" ColumnName="TeamMatchPlaySessionID" />
-                <ScalarProperty Name="Position1" ColumnName="Position" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Order" ColumnName="Order" />
+                <ScalarProperty Name="IsExtra" ColumnName="IsExtra" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -1110,6 +1157,7 @@
                 <ScalarProperty Name="DoublesPoints" ColumnName="DoublesPoints" />
                 <ScalarProperty Name="LevelPoints" ColumnName="LevelPoints" />
                 <ScalarProperty Name="Level" ColumnName="Level" />
+                <ScalarProperty Name="AgeGroup" ColumnName="AgeGroup" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

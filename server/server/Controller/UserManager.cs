@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Security.Cryptography;
 using System.Data;
 using System.Data.Entity;
+using Server.DAL;
 
 namespace Server.Controller
 {

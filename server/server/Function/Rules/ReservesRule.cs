@@ -21,7 +21,7 @@ namespace Server.Function.Rules
             {
                 if (memberidsRound.Count(p => p == position.Value.Player.Member.Id) > 2)
                     ruleBreaks.Add(new RuleBreak(position.Key, 0, "WARNING: Player is already on another lineup this round!"));
-                if ((position.Value is DoublePosition dp) && memberidsRound.Count(p => p == dp.OtherPlayer.Member.Id) > 2)
+                if ((position.Value.OtherPlayer != null) && memberidsRound.Count(p => p == position.Value.OtherPlayer.Member.Id) > 2)
                     ruleBreaks.Add(new RuleBreak(position.Key, 1, "WARNING: Player is already on another lineup this round!"));
             }
 
@@ -30,7 +30,7 @@ namespace Server.Function.Rules
             {
                 if (memberidsRound.Count(p => p == position.Value.Player.Member.Id) > 4)
                     ruleBreaks.Add(new RuleBreak(position.Key, 0, "This played played twice last round!"));
-                if ((position.Value is DoublePosition dp) && memberidsRound.Count(p => p == dp.OtherPlayer.Member.Id) > 4)
+                if ((position.Value.OtherPlayer != null) && memberidsRound.Count(p => p == position.Value.OtherPlayer.Member.Id) > 4)
                     ruleBreaks.Add(new RuleBreak(position.Key, 1, "This played played twice last round!"));
             }
 

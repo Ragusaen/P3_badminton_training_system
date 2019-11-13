@@ -8,10 +8,6 @@ namespace Common.Model
     {
         public Player Player { get; set; }
         public bool IsExtra { get; set; }
-    }
-
-    public class DoublePosition : Position
-    {
         public Player OtherPlayer { get; set; }
         public bool OtherIsExtra { get; set; }
     }

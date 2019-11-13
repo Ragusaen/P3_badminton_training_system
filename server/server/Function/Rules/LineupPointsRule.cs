@@ -22,11 +22,11 @@ namespace Server.Function.Rules
 
             foreach (var position in match.Lineup.Positions)
             {
-                if (position.Value is DoublePosition dp)
+                if (position.Value is Position dp)
                 {
                     for (int i = position.Key.Item2 - 1; i >= 1; i--)
                     {
-                        if (!CheckDouble(position.Value as DoublePosition, match.Lineup.Positions[new Tuple<Lineup.PositionType, int>(position.Key.Item1, i)] as DoublePosition, position.Key.Item1))
+                        if (!CheckDouble(position.Value, match.Lineup.Positions[new Tuple<Lineup.PositionType, int>(position.Key.Item1, i)], position.Key.Item1))
                         {
                             ruleBreaks.Add(new RuleBreak(position.Key, 0, $"Double has too many points compared to double at position {i}!"));
                             ruleBreaks.Add(new RuleBreak(position.Key, 1, $"Double has too many points compared to double at position {i}!"));
@@ -55,7 +55,7 @@ namespace Server.Function.Rules
             return (lowerPlayer.Rankings.SinglesPoints - upperPlayer.Rankings.SinglesPoints) <= _maxSingleDiff;
         }
 
-        private bool CheckDouble(DoublePosition lowerDouble, DoublePosition upperDouble, Lineup.PositionType positionType)
+        private bool CheckDouble(Position lowerDouble, Position upperDouble, Lineup.PositionType positionType)
         {
             if (positionType == Lineup.PositionType.MixDouble)
                 return ((lowerDouble.Player.Rankings.MixPoints + lowerDouble.OtherPlayer.Rankings.MixPoints) - (upperDouble.Player.Rankings.MixPoints + upperDouble.OtherPlayer.Rankings.MixPoints)) <= _maxDoubleDiff;

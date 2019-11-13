@@ -2,8 +2,20 @@
 {
     public class PlayerRanking
     {
-        public string Level;
+        public enum AgeGroup
+        {
+            U9,
+            U11,
+            U13,
+            U15,
+            U17,
+            Senior,
+            Veteran
+        }
 
+        public int Level;
+
+        public AgeGroup Age;
         public int LevelPoints;
         public int SinglesPoints;
         public int DoublesPoints;
