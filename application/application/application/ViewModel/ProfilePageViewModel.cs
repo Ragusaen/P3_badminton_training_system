@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using application.Controller;
+using application.UI;
 using Common.Model;
 
 namespace application.ViewModel
@@ -13,15 +14,15 @@ namespace application.ViewModel
         public ObservableCollection<FocusPointItem> FocusPoint;
         public Member CurrentMember { get; set; } = new Member() { Name = "Pernille Pedersen"};
        
-        private List<PracticeTeam> _teams;
+        private ObservableCollection<PracticeTeam> _teams;
 
-        public List<PracticeTeam> Teams
+        public ObservableCollection<PracticeTeam> Teams
         {
             get { return _teams; }
             set
             {
                 SetProperty(ref _teams, value);
-                            TeamListHeight = Teams.Count * 45;
+                TeamListHeight = 2 * 45;
             }
         }
 
@@ -71,7 +72,7 @@ namespace application.ViewModel
 
         public ProfilePageViewModel() 
         {
-            Teams = new List<PracticeTeam>();
+            Teams = new ObservableCollection<PracticeTeam>();
             Teams.Add(new PracticeTeam() {Name = "U17"});
             Teams.Add(new PracticeTeam() { Name = "Senior" });
             FocusPoint = new ObservableCollection<FocusPointItem>();
@@ -110,7 +111,7 @@ namespace application.ViewModel
         }
         private void ExecuteViewFeedbackClick(object param)
         {
-            
+            Navigation.PushAsync(new ViewFeedbackPage());
         }
     }
 }
