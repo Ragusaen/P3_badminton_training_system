@@ -212,6 +212,7 @@
     <Compile Include="DAL\practicesession.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\PracticeSessionCast.cs" />
     <Compile Include="DAL\practicesessionexercise.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
@@ -253,6 +254,7 @@
     <Compile Include="SystemInterface\Requests\Handlers\GetAllPlayersHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetFeedbackListFromMemberIdHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetFeedbackListFromPlaySessionIdHandler.cs" />
+    <Compile Include="SystemInterface\Requests\Handlers\GetPracticeSessionHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetPracticeTeamHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetScheduleHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\LoginHandler.cs" />

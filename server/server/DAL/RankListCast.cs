@@ -11,12 +11,12 @@ namespace Server.DAL
     {
         public static explicit operator PlayerRanking(ranklist r)
         {
-            return new PlayerRanking()
+            return new PlayerRanking
             {
                 SinglesPoints = r.SinglesPoints,
                 DoublesPoints = r.DoublesPoints,
                 MixPoints = r.MixPoints,
-                Level = r.Level,
+                Level = (PlayerRanking.LevelGroup) r.Level,
                 LevelPoints = r.LevelPoints
             };
         }
