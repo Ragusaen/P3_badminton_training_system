@@ -10,7 +10,7 @@ using Server.DAL;
 
 namespace Server.SystemInterface.Requests.Handlers
 {
-    class GetFeedbackListFromPlaySessionHandler : MiddleRequestHandler<GetFeedbackRequest, GetFeedbackResponse>
+    class GetFeedbackListFromPlaySessionIdHandler : MiddleRequestHandler<GetFeedbackRequest, GetFeedbackResponse>
     {
         protected override GetFeedbackResponse InnerHandle(GetFeedbackRequest request)
         {
