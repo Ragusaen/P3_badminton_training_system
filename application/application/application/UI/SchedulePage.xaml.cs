@@ -20,7 +20,6 @@ namespace application.UI
             vm.Navigation = Navigation;
             BindingContext = vm;
             Plusicon.Source = ImageSource.FromResource("application.Images.plusicon.jpg");
-
         }
     }
 }

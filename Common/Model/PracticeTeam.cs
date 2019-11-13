@@ -4,7 +4,6 @@ namespace Common.Model
 {
     public class PracticeTeam
     {
-
         public string Name { get; set; }
         public int Id { get; set; }
         public List<Member> Members { get; set; }

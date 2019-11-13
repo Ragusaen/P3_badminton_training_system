@@ -7,7 +7,7 @@ namespace application.ViewModel
 {
     class ProfilePageViewModel : BaseViewModel
     {
-        public Member CurrentMember { get; set; } = new Member() { Name = "Pernille Pedersen"};
+        public Member CurrentMember { get; set; }
        
         private List<PracticeTeam> _teams;
 
@@ -85,7 +85,7 @@ namespace application.ViewModel
         //Check if user is in database. Navigate to main page.
         private void ExecuteProfileSettingTap(object param)
         {
-            CurrentMember.Name = "Hallo";
+            //CurrentMember.Name = "Hallo";
         }
 
         private RelayCommand _viewFeedbackCommand;
