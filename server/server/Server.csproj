@@ -175,6 +175,7 @@
     <Compile Include="DAL\feedback.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\FeedbackCast.cs" />
     <Compile Include="DAL\focuspoint.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -242,6 +243,8 @@
     <Compile Include="SystemInterface\Network\SslTcpServer.cs" />
     <Compile Include="SystemInterface\Requests\ClientRequests.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\CreateAccountHandler.cs" />
+    <Compile Include="SystemInterface\Requests\Handlers\GetFeedbackFromMemberId.cs" />
+    <Compile Include="SystemInterface\Requests\Handlers\GetFeedbackListFromPlaySessionHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetPracticeTeamHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetScheduleHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\LoginHandler.cs" />
