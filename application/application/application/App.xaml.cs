@@ -14,7 +14,7 @@ namespace application
         public App()
         {
             InitializeComponent();
-            MainPage = new NavigationPage(new LineupPage());
+            MainPage = new NavigationPage(new LoginPage());
         }
 
         protected override void OnStart()
