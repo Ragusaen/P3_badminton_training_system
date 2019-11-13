@@ -20,11 +20,16 @@ namespace application.ViewModel
         public LineupViewModel()
         {
             Positions = new Dictionary<Tuple<Lineup.PositionType, int>, Position>();
-            //Positions.Add(new Tuple<Lineup.PositionType, int>(Lineup.PositionType.MensSingle, 4), new Player() { BadmintonPlayerId = 123 });
-            //Positions.Add(new Tuple<Lineup.PositionType, int>(Lineup.PositionType.MixDouble, 3), new Player() { BadmintonPlayerId = 321 });
 
-            Positions.Add(new Tuple<Lineup.PositionType, int>(Lineup.PositionType.MixDouble, 0), new Position() { Player = new Player() { BadmintonPlayerId = 1234 } });
-            Positions.Add(new Tuple<Lineup.PositionType, int>(Lineup.PositionType.MixDouble, 1), new Position() { Player = new Player() { BadmintonPlayerId=1234} });
+            Position p = new Position();
+            p.Player = new Player() { BadmintonPlayerId = 1234, Member = new Member() { Name = "Bob" } };
+            p.OtherPlayer = new Player() { BadmintonPlayerId = 4321, Member = new Member() { Name = "Jens" } };
+
+            Position q = new Position();
+            q.Player = new Player() { BadmintonPlayerId = 1234, Member = new Member() { Name = "Jens" } };
+
+            Positions.Add(new Tuple<Lineup.PositionType, int>(Lineup.PositionType.MensDouble, 1), p);
+            Positions.Add(new Tuple<Lineup.PositionType, int>(Lineup.PositionType.MensSingle, 2), q);
         }
     }
 }
