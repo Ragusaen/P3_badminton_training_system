@@ -4,16 +4,27 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="application.UI.TeamPage">
+             x:Class="application.UI.PracticeTeamPage" NavigationPage.HasBackButton="False">
     <ContentPage.Content>
         <StackLayout>
 
             <SearchBar Placeholder="Enter the name of the member" Text="{Binding SearchText}"/>
-            <ListView ItemsSource="{Binding TeamList}" BackgroundColor="Blue" VerticalScrollBarVisibility="Never" VerticalOptions="Fill" SeparatorVisibility="None">
+            <ListView ItemsSource="{Binding TeamList}" VerticalScrollBarVisibility="Never" VerticalOptions="Fill" SeparatorVisibility="None">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
-                            <StackLayout BackgroundColor="Yellow">
+                            <StackLayout>
+                                <Label Text="{Binding Name}"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <ListView ItemsSource="{Binding MemberList}" VerticalScrollBarVisibility="Never" VerticalOptions="Fill" SeparatorVisibility="None">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout>
                                 <Label Text="{Binding Name}"/>
                             </StackLayout>
                         </ViewCell>
