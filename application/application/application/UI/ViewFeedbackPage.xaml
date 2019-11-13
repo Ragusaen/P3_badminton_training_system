@@ -3,16 +3,55 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:forms="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
+             xmlns:microcharts="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
              mc:Ignorable="d"
              x:Class="application.UI.ViewFeedbackPage">
-    <ContentPage.Content>
-        <StackLayout>
+
+    <NavigationPage.TitleView>
+        <StackLayout Orientation="Horizontal" Spacing="10">
+            <Label Text="View Feedback" FontAttributes="Bold" FontSize="30" TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+        </StackLayout>
+    </NavigationPage.TitleView>
+    
+ <ContentPage.Content>
+        <StackLayout  Margin="10,10,10,10">
             <ScrollView>
 
-                <forms:ChartView x:Name="Slider1" HeightRequest="300" Margin="-80, 0, -80, 0" />
-                
+                <StackLayout>
+                    
+                    <Frame CornerRadius="5" HasShadow="True">
+                        <StackLayout>
+                            <Label Text="How ready did you feel to train today?" TextColor="Black" FontSize="Small" VerticalTextAlignment="Center"/>
+                        <microcharts:ChartView Chart="{Binding Chart}" HeightRequest="300" Margin="-80, 0, -80, 0"/>
+                        </StackLayout>
+                    </Frame>
+
+                    <Frame CornerRadius="5" HasShadow="True">
+                        <StackLayout>
+                            <Label Text="How was your effort today taking into account how ready you felt?" TextColor="Black" FontSize="Small" VerticalTextAlignment="Center"/>
+                            <microcharts:ChartView Chart="{Binding Chart1}" HeightRequest="300" Margin="-80, 0, -80, 0"/>
+                        </StackLayout>
+                    </Frame>
+                    
+                    <Frame CornerRadius="5" HasShadow="True">
+                        <StackLayout>
+                            <Label Text="How were you challenged today in relation to the exercises?" TextColor="Black" FontSize="Small" VerticalTextAlignment="Center"/>
+                            <microcharts:ChartView Chart="{Binding Chart2}" HeightRequest="300" Margin="-80, 0, -80, 0"/>
+                        </StackLayout>
+                    </Frame>
+                    
+                    <Frame CornerRadius="5" HasShadow="True">
+                        <StackLayout>
+                            <Label Text="To what extent were you absorbed by the training today?" TextColor="Black" FontSize="Small" VerticalTextAlignment="Center"/>
+                            <microcharts:ChartView Chart="{Binding Chart3}" HeightRequest="300" Margin="-80, 0, -80, 0"/>
+                        </StackLayout>
+                    </Frame>
+                </StackLayout>
+
+
+
             </ScrollView>
         </StackLayout>
+
     </ContentPage.Content>
 </ContentPage>
