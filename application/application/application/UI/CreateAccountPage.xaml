@@ -14,14 +14,13 @@
     </NavigationPage.TitleView>
 
     <ScrollView>
-        <StackLayout Margin="10,10,10,10">
+        <StackLayout Margin="15,15,15,10">
             <Label Text="Username" />
             <Entry x:Name="username" Placeholder="Enter an username" Text="{Binding UserName}"/>
             <Label Text="Password"/>
             <Entry x:Name="password" Placeholder="Enter a password" IsPassword="True" Text="{Binding PassWord}"/>
-            <Label Text="E-mail" />
-            <Entry x:Name="email" Placeholder="Enter your e-mail" Text="{Binding Email}"/>
             <Button Text="Continue" Margin="0,10,0,10" Command="{Binding CreateAccountContinueClickCommand}"/>
+            <Label Text="{Binding CantContinueText}" TextColor="Red" FontSize="Micro" HorizontalTextAlignment="Center"/>
         </StackLayout>
     </ScrollView>
 </ContentPage>
