@@ -107,7 +107,9 @@
     <Reference Include="Renci.SshNet, Version=2016.1.0.0, Culture=neutral, PublicKeyToken=1cee9f8bde3db106, processorArchitecture=MSIL">
       <HintPath>..\packages\SSH.NET.2016.1.0\lib\net40\Renci.SshNet.dll</HintPath>
     </Reference>
-    <Reference Include="System" />
+    <Reference Include="System">
+      <HintPath>..\..\..\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.7.2\System.dll</HintPath>
+    </Reference>
     <Reference Include="System.Buffers, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.4.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
     </Reference>
@@ -190,14 +192,16 @@
     <Compile Include="DAL\feedback.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\FeedbackCast.cs" />
     <Compile Include="DAL\focuspoint.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\FocusPointDescriptorCast.cs" />
+    <Compile Include="DAL\MemberCast.cs" />
     <Compile Include="DAL\LineupCast.cs" />
     <Compile Include="DAL\member.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\MemberCast.cs" />
     <Compile Include="DAL\playsession.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
@@ -245,6 +249,9 @@
     <Compile Include="SystemInterface\Network\SslTcpServer.cs" />
     <Compile Include="SystemInterface\Requests\ClientRequests.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\CreateAccountHandler.cs" />
+    <Compile Include="SystemInterface\Requests\Handlers\GetAllFocusPointDescriptorsHandler.cs" />
+    <Compile Include="SystemInterface\Requests\Handlers\GetFeedbackListFromMemberIdHandler.cs" />
+    <Compile Include="SystemInterface\Requests\Handlers\GetFeedbackListFromPlaySessionIdHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetPracticeTeamHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetScheduleHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\LoginHandler.cs" />
