@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Security.Cryptography;
 using System.Data;
 using System.Data.Entity;
+using Common.Model;
+using NLog.LayoutRenderers;
 using Server.DAL;
 
 namespace Server.Controller
@@ -16,20 +18,6 @@ namespace Server.Controller
         public const int HashSize = 32;
         public const int SaltSize = 128;
         public const int TokenSize = 64;
-
-        struct UserInfo
-        {
-            public readonly string Username;
-            public readonly byte[] PasswordHash;
-            public readonly byte[] Salt;
-
-            public UserInfo(string username, byte[] passwordHash, byte[] salt)
-            {
-                Username = username;
-                PasswordHash = passwordHash;
-                Salt = salt;
-            }
-        }
 
         #region Login
         public byte[] Login(string username, string password)
@@ -90,6 +78,13 @@ namespace Server.Controller
         }
         #endregion
 
+        public string GetUsernameFromToken(byte[] token)
+        {
+            var db = new DatabaseEntities();
+            var user = db.tokens.SingleOrDefault(t => t.AccessToken.SequenceEqual(token));
+
+            return user?.AccountUsername;
+        }
 
         private (byte[] password, byte[] salt) GenerateHashedPasswordAndSalt(string password)
         {

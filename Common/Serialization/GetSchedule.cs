@@ -9,7 +9,7 @@ namespace Common.Serialization
     [DataContract]
     public class GetScheduleRequest
     {
-        [DataMember] public DateTime StartData;
+        [DataMember] public DateTime StartDate;
         [DataMember] public DateTime EndDate;
     }
 

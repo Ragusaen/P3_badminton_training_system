@@ -250,6 +250,7 @@
     <Compile Include="SystemInterface\Requests\ClientRequests.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\CreateAccountHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetAllFocusPointDescriptorsHandler.cs" />
+    <Compile Include="SystemInterface\Requests\Handlers\GetAllPlayersHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetFeedbackListFromMemberIdHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetFeedbackListFromPlaySessionIdHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetPracticeTeamHandler.cs" />

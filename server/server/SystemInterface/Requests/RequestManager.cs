@@ -27,7 +27,7 @@ namespace Server.SystemInterface.Requests
                 {RequestType.Login, new LoginHandler() },
                 {RequestType.CreateAccount, new CreateAccountHandler() },
                 {RequestType.GetPracticeTeam, new GetPracticeTeamHandler() },
-                //{RequestType., new  }
+                {RequestType.GetAllPlayers, new GetAllPlayersHandler()}
             };
 
         public void Parse(byte[] request)
@@ -37,21 +37,9 @@ namespace Server.SystemInterface.Requests
 
             byte[] data = new byte[request.Length - 1];
             Array.Copy(request, 1, data, 0, data.Length);
+            
+            //_requestDictionary[(RequestType) type];
 
-
-            switch ((RequestType)type)
-            {
-                case RequestType.ConnectionTest:
-                    ConnectionTestRequest(data);
-                    break;
-                case RequestType.Login:
-                    LoginRequest(data);
-                    break;
-                case RequestType.CreateAccount:
-                    break;
-                default:
-                    throw new InvalidRequestException("Request type was invalid!");
-            }
         }
 
         private void ConnectionTestRequest(byte[] data)

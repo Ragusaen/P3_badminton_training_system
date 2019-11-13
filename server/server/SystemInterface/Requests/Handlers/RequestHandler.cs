@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
+using Common.Model;
 using Common.Serialization;
 using Server.Controller;
 
@@ -17,10 +18,21 @@ namespace Server.SystemInterface.Requests.Handlers
 
             TRequest request = serializer.Deserialize<TRequest>(data);
 
+            if (request is PermissionRequest pr)
+                GetPermissionLevel(pr);
+
             TResponse response = innerHandle(request);
 
             return serializer.Serialize(response);
         }
+
+        private MemberRole.Type GetPermissionLevel(PermissionRequest pr)
+        {
+            var um = new UserManager();
+            throw new NotImplementedException();
+        }
+
+        public abstract byte[] Handle(byte[] data);
 
     }
 
@@ -28,7 +40,7 @@ namespace Server.SystemInterface.Requests.Handlers
     {
         protected abstract TResponse InnerHandle(TRequest request);
 
-        public byte[] Handle(byte[] data)
+        public override byte[] Handle(byte[] data)
         {
             return OuterHandle<TRequest, TResponse>(data, InnerHandle);
         }
