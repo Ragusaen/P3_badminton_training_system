@@ -14,21 +14,26 @@ namespace Server.Controller
     {
         private static Logger _log = LogManager.GetCurrentClassLogger();
 
+        public const string RankingListElementClassName = "RankingListGrid";
+
+        public enum Rankings { Level = 0, MS, WS, MD, WD, MXD, WXD }
+        public static int RankingsCount = 7;
+        public static string RankingRootUrl = "https://www.badmintonplayer.dk/DBF/Ranglister/#287,2019,,0,,,1492,0,,,,15,,,,0,,,,,,";
+        public static string[] Categories = { "Level", "MS", "WS", "MD", "WD", "MXD", "WXD" };
+
         public void UpdatePlayers()
         {
             _log.Debug("UpdatePlayers startup");
-            List<Player> players = null;// pdao.ReadAll().ToList();
-
             var chromeOptions = new ChromeOptions();
             // chromeOptions.AddArguments("--headless"); 
             chromeOptions.AddUserProfilePreference("profile.default_content_setting_values.images", 2);
             IWebDriver browser = new ChromeDriver(chromeOptions);
-
             FindRootRankList(browser);
 
-            for (int i = 0; i < Constants.RankingsCount; i++)
+            var players = new List<Player>();
+            for (int i = 0; i < 1/*Constants.RankingsCount*/; i++)
             {
-                _log.Debug("Scraping category: {category}", Constants.Categories[i]);
+                _log.Debug("Scraping category: {category}", Categories[i]);
                 string nextCategoryXPath = $"/html/body/form/div[4]/div[1]/div[5]/div/div[{i + 1}]/a";
                 browser.FindElement(By.XPath(nextCategoryXPath)).Click();
                 WaitForPageLoad();
@@ -43,29 +48,30 @@ namespace Server.Controller
                     nextPage.Click();
                     WaitForPageLoad();
 
-                    _log.Debug("Scraping page 2 for category: {category}", Constants.Categories[i]);
+                    _log.Debug("Scraping page 2 for category: {category}", Categories[i]);
                     rawRanking = ScrapeRankingsTable(browser);
                     DistributeRankings(players, rawRanking, i);
                 }
+                // ReSharper disable once EmptyGeneralCatchClause
                 catch (Exception) { }
             }
             browser.Quit();
 
-            //pdao.WriteMany(players);
+            
         }
 
         private void FindRootRankList(IWebDriver browser)
         {
-            browser.Navigate().GoToUrl(Constants.RankingRootUrl);
+            browser.Navigate().GoToUrl(RankingRootUrl);
             WaitForPageLoad();
 
             string xpath = null;
-            bool CorrectVersion = false;
+            bool correctVersion = false;
             int i = 0;
-            while (!CorrectVersion)
+            while (!correctVersion)
             {
                 xpath = $"/html/body/form/div[4]/div[1]/div[2]/div[6]/select/option[{++i}]";
-                CorrectVersion = browser.FindElement(By.XPath(xpath)).Text.Contains("senior");
+                correctVersion = browser.FindElement(By.XPath(xpath)).Text.Contains("senior");
             }
 
             _log.Debug("Using rank list version: {0}", browser.FindElement(By.XPath(xpath)).Text);
@@ -78,7 +84,7 @@ namespace Server.Controller
         private List<IWebElement> ScrapeRankingsTable(IWebDriver driver)
         {
             WaitForPageLoad();
-            return driver.FindElement(By.ClassName(Constants.RankingListElementClassName)).FindElements(By.TagName("tr")).ToList();
+            return driver.FindElement(By.ClassName(RankingListElementClassName)).FindElements(By.TagName("tr")).ToList();
         }
 
         private void DistributeRankings(List<Player> players, List<IWebElement> rawRanking, int category)
@@ -89,24 +95,26 @@ namespace Server.Controller
                 var currentRow = rawRanking[i];
                 
                 // Fetches information from the current row
-                string rawPlayerid = currentRow.FindElement(By.ClassName("playerid")).GetAttribute("innerHTML");
-                int BadmintonPlayerId = RemoveFalseHyphen(rawPlayerid);
+                string rawPlayerId = currentRow.FindElement(By.ClassName("playerid")).GetAttribute("innerHTML");
+                int badmintonPlayerId = RemoveFalseHyphen(rawPlayerId);
                 int points = FetchPointsFromRow(currentRow);
-                string level = FetchSkillLevelFromRow(currentRow);
+                string ageAndLevel = FetchSkillLevelFromRow(currentRow);
 
-                Player p2;
+                Player p2 = new Player();
+                PlayerRanking.AgeGroup ageGroup = FetchAgeGroup(ageAndLevel);
+                PlayerRanking.LevelGroup levelGroup = FetchLevelGroup(ageAndLevel);
 
-                if (players.Exists(p => p.BadmintonPlayerId.Equals(BadmintonPlayerId)))
+                if (players.Exists(p => p.BadmintonPlayerId.Equals(badmintonPlayerId)))
                 {
-                    p2 = players.Find(p => p.BadmintonPlayerId.Equals(BadmintonPlayerId));
-                    UpdateRankingsFromRow(p2.Rankings, points, level, category);
+                    p2 = players.Find(p => p.BadmintonPlayerId.Equals(badmintonPlayerId));
+                    UpdateRankingsFromRow(p2.Rankings, points, ageGroup, levelGroup, category);
                 }
                 else
                 {
                     string name = new string(currentRow.FindElement(By.ClassName("name")).Text.TakeWhile(p => p != ',').ToArray());
                     int sex = 0;
                     var playerRanking = new PlayerRanking();
-                    UpdateRankingsFromRow(playerRanking, points, level, category);
+                    UpdateRankingsFromRow(playerRanking, points, ageGroup, levelGroup, category);
                     
                     if (category == 2 || category == 4 || category == 6)
                     {
@@ -120,30 +128,67 @@ namespace Server.Controller
             }
         }
 
-        private void UpdateRankingsFromRow(PlayerRanking pr, int points, int level, int category)
+        private PlayerRanking.AgeGroup FetchAgeGroup(string a)
+        {
+            var ageDict = new Dictionary<string, PlayerRanking.AgeGroup>
+            {
+                {"U9", PlayerRanking.AgeGroup.U9},
+                {"U11", PlayerRanking.AgeGroup.U11},
+                {"U13", PlayerRanking.AgeGroup.U13},
+                {"U15", PlayerRanking.AgeGroup.U15},
+                {"U17", PlayerRanking.AgeGroup.U17},
+                {"U19", PlayerRanking.AgeGroup.U19},
+                {"SEN", PlayerRanking.AgeGroup.Senior}
+            };
+
+            return ageDict[a.Split(' ').First()];
+        }
+
+        private PlayerRanking.LevelGroup FetchLevelGroup(string a)
+        {
+
+            var levelDict = new Dictionary<string, PlayerRanking.LevelGroup>
+            {
+                {"D", PlayerRanking.LevelGroup.D},
+                {"C", PlayerRanking.LevelGroup.C},
+                {"B", PlayerRanking.LevelGroup.B},
+                {"A", PlayerRanking.LevelGroup.A},
+                {"M", PlayerRanking.LevelGroup.M},
+                {"E", PlayerRanking.LevelGroup.E},
+                {"E-M", PlayerRanking.LevelGroup.EM},
+                {"M-A", PlayerRanking.LevelGroup.MA},
+                {"A-B", PlayerRanking.LevelGroup.AB},
+                {"B-C", PlayerRanking.LevelGroup.BC},
+                {"C-D", PlayerRanking.LevelGroup.CD},
+            };
+
+            return levelDict[a.Split(' ').Skip(1).ToString()];
+        }
+
+        private void UpdateRankingsFromRow(PlayerRanking pr, int points, PlayerRanking.AgeGroup ageGroup, PlayerRanking.LevelGroup levelGroup, int category)
         {
             switch (category)
             {
-                case (int)Constants.EnumRankings.Level:
+                case (int)Rankings.Level:
                     pr.LevelPoints = points;
-                    pr.Level = level;
+                    pr.Level = levelGroup;
                     break;
-                case (int)Constants.EnumRankings.MS:
+                case (int)Rankings.MS:
                     pr.SinglesPoints = points;
                     break;
-                case (int)Constants.EnumRankings.WS:
+                case (int)Rankings.WS:
                     pr.SinglesPoints = points;
                     break;
-                case (int)Constants.EnumRankings.MD:
+                case (int)Rankings.MD:
                     pr.DoublesPoints = points;
                     break;
-                case (int)Constants.EnumRankings.WD:
+                case (int)Rankings.WD:
                     pr.DoublesPoints = points;
                     break;
-                case (int)Constants.EnumRankings.MXD:
+                case (int)Rankings.MXD:
                     pr.MixPoints = points;
                     break;
-                case (int)Constants.EnumRankings.WXD:
+                case (int)Rankings.WXD:
                     pr.MixPoints = points;
                     break;
                 default:
@@ -158,7 +203,7 @@ namespace Server.Controller
 
         private int FetchPointsFromRow(IWebElement elem)
         {
-            return Int32.Parse(elem.FindElement(By.ClassName("points")).GetAttribute("innerHTML"));
+            return int.Parse(elem.FindElement(By.ClassName("points")).GetAttribute("innerHTML"));
         }
 
         private int RemoveFalseHyphen(string s)
