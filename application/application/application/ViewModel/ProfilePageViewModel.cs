@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
+using application.Controller;
 using Common.Model;
 
 namespace application.ViewModel
 {
     class ProfilePageViewModel : BaseViewModel
     {
+        public ObservableCollection<FocusPointItem> FocusPoint;
         public Member CurrentMember { get; set; } = new Member() { Name = "Pernille Pedersen"};
        
         private List<PracticeTeam> _teams;
@@ -17,6 +21,7 @@ namespace application.ViewModel
             set
             {
                 SetProperty(ref _teams, value);
+                            TeamListHeight = Teams.Count * 45;
             }
         }
 
@@ -28,17 +33,22 @@ namespace application.ViewModel
             set
             {
                 SetProperty(ref _searchtext, value);
+                SearchResultFocusPoints = new ObservableCollection<FocusPointItem>(SearchResultFocusPoints.OrderByDescending((x => StringSearch.longestCommonSubsequence(x.Descriptor.Name, SearchText))).ThenBy(x => x.Descriptor.Name.Length).ToList());
             }
         }
 
-        private List<FocusPointItem> _searchResultFocusPoints;
+        private ObservableCollection<FocusPointItem> _searchResultFocusPoints;
 
-        public List<FocusPointItem> SearchResultFocusPoints
+        public ObservableCollection<FocusPointItem> SearchResultFocusPoints
         {
             get { return _searchResultFocusPoints; }
             set
             {
                 SetProperty(ref _searchResultFocusPoints, value);
+                if(SearchResultFocusPoints.Count < 5)
+                    FocusPointListHeight = SearchResultFocusPoints.Count * 45;
+                else
+                    FocusPointListHeight = 5 * 45;
             }
         }
 
@@ -64,13 +74,14 @@ namespace application.ViewModel
             Teams = new List<PracticeTeam>();
             Teams.Add(new PracticeTeam() {Name = "U17"});
             Teams.Add(new PracticeTeam() { Name = "Senior" });
-            List<FocusPointItem> focusPoint = new List<FocusPointItem>();
-            focusPoint.Add(new FocusPointItem() { Descriptor = new FocusPointDescriptor() { Name = "Slag" } });
-            focusPoint.Add(new FocusPointItem() { Descriptor = new FocusPointDescriptor() {Name = "Serv"} });
-            SearchResultFocusPoints = focusPoint;
-
-            TeamListHeight = Teams.Count * 45;
-            FocusPointListHeight = focusPoint.Count * 45;
+            FocusPoint = new ObservableCollection<FocusPointItem>();
+            FocusPoint.Add(new FocusPointItem() { Descriptor = new FocusPointDescriptor() { Name = "Slag" } });
+            FocusPoint.Add(new FocusPointItem() { Descriptor = new FocusPointDescriptor() {Name = "Svip Serv"} });
+            FocusPoint.Add(new FocusPointItem() { Descriptor = new FocusPointDescriptor() { Name = "Slag" } });
+            FocusPoint.Add(new FocusPointItem() { Descriptor = new FocusPointDescriptor() { Name = "Flad Serv" } });
+            FocusPoint.Add(new FocusPointItem() { Descriptor = new FocusPointDescriptor() { Name = "Slag" } });
+            FocusPoint.Add(new FocusPointItem() { Descriptor = new FocusPointDescriptor() { Name = "Serv" } });
+            SearchResultFocusPoints = FocusPoint;
         }
         private RelayCommand _profileSettingCommand;
 

@@ -13,9 +13,6 @@
             <ImageButton Source="" x:Name="Plusicon" HeightRequest="25" VerticalOptions="CenterAndExpand" HorizontalOptions="End" Margin="0,0,15,0" Command="{Binding AddPracticeSessionClickCommand}" BackgroundColor="Red"/>
         </StackLayout>
     </NavigationPage.TitleView>
-
     
-    <ScrollView>
-        <controls:Calendar VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" YearLabelColor="Red" SelectedDateColor="Red" MonthLabelColor="Red" SelectedDayBackgroundColor="Red"/>
-    </ScrollView>
+    <controls:Calendar VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" YearLabelColor="Red" SelectedDateColor="Red" MonthLabelColor="Red" SelectedDayBackgroundColor="Red"/>
 </ContentPage>

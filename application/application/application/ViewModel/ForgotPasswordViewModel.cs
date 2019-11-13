@@ -22,21 +22,5 @@ namespace application.ViewModel
         {
             Navigation.PushAsync(new LoginPage());
         }
-
-        private RelayCommand _sendEmailClickCommand;
-
-        public RelayCommand SendEmailClickCommand
-        {
-            get
-            {
-                return _sendEmailClickCommand ?? (_sendEmailClickCommand = new RelayCommand(param => ExecuteSendEmailClick(param)));
-            }
-        }
-
-        //Check if user is in database. Navigate to main page.
-        private void ExecuteSendEmailClick(object param)
-        {
-            
-        }
     }
 }
