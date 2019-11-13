@@ -4,6 +4,7 @@ using System;
 using System.Data.Entity;
 using System.Linq;
 using Common.Model;
+using Common.Serialization;
 
 namespace Server
 {
@@ -13,6 +14,21 @@ namespace Server
 
         public static void Main(string[] args)
         {
+            Serializer ser = new Serializer();
+
+            Member member = new Member()
+            {
+                Id = 1,
+                Name = "Hans Andersen"
+            };
+
+            var asd = ser.Serialize(member);
+
+            Member n = ser.Deserialize<Member>(asd);
+
+            Console.WriteLine($"Id: {n.Id}, {n.Name}");
+
+
             return;
             try
             {

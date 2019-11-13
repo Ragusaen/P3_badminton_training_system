@@ -16,7 +16,9 @@ namespace Server.DAL
     {
         public int MemberID { get; set; }
         public int TeamMatchPlaySessionID { get; set; }
-        public string Position1 { get; set; }
+        public int Type { get; set; }
+        public int Order { get; set; }
+        public int IsExtra { get; set; }
     
         public virtual member member { get; set; }
         public virtual teammatch teammatch { get; set; }

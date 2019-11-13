@@ -37,11 +37,12 @@ namespace Server.DAL
             {
                 Sex = (Sex)m.Sex,
                 BadmintonPlayerId = m.BadmintonPlayerID.GetValueOrDefault(),
-                Member = (Common.Model.Member)m
+                Member = (Common.Model.Member)m,
+                Rankings = (PlayerRanking)m.ranklist
             };
         }
 
-        public static explicit operator Common.Model.Trainer(member m)
+        public static explicit operator Trainer(member m)
         {
             CheckMemberType(m.MemberType, MemberRole.Type.Trainer);
             return new Trainer()

@@ -120,7 +120,7 @@ namespace Server.Controller
             }
         }
 
-        private void UpdateRankingsFromRow(PlayerRanking pr, int points, string level, int category)
+        private void UpdateRankingsFromRow(PlayerRanking pr, int points, int level, int category)
         {
             switch (category)
             {

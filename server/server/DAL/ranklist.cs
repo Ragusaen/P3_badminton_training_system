@@ -19,6 +19,9 @@ namespace Server.DAL
         public int SinglesPoints { get; set; }
         public int DoublesPoints { get; set; }
         public int LevelPoints { get; set; }
-        public string Level { get; set; }
+        public int Level { get; set; }
+        public int AgeGroup { get; set; }
+    
+        public virtual member member { get; set; }
     }
 }

@@ -14,7 +14,19 @@ namespace Common.Model
             MixDouble
         }
 
-        public Match Match { get; set; }
+        public static bool IsDoublePosition(PositionType type)
+        {
+            switch (type)
+            {
+                case PositionType.MensDouble:
+                case PositionType.WomensDouble:
+                case PositionType.MixDouble:
+                    return true;
+                default:
+                    return false;
+            }
+        }
+
         public Dictionary<Tuple<PositionType, int>, Position> Positions { get; set; }
     }
 }
