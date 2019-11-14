@@ -15,7 +15,6 @@
     </NavigationPage.TitleView>
 
     <ContentPage.Content>
-
         <ScrollView>
             <StackLayout Margin="10,10,10,10">
                 <Label Text="{Binding CurrentMember.Name}" VerticalOptions="Start" HorizontalOptions="CenterAndExpand" FontSize="Large"/>
@@ -30,7 +29,7 @@
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
                                     <Label Text="{Binding Name}" VerticalOptions="Center"/>
-                                    <Switch IsToggled="{Binding OnTeam}" ThumbColor="Red" OnColor="LightPink"/>
+                                    <Switch IsToggled="True" ThumbColor="Red" OnColor="LightPink"/>
                                 </Grid>
                             </ViewCell>
                         </DataTemplate>
@@ -39,10 +38,10 @@
                 <Label Text="Focus Point" FontSize="Medium"/>
 
                 <SearchBar Placeholder="Enter your focus point" Text="{Binding SearchText}"/>
-                <ListView ItemsSource="{Binding SearchResultFocusPoints}" VerticalScrollBarVisibility="Never" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding FocusPointListHeight}">
+                <ListView VerticalScrollBarVisibility="Never" ItemsSource="{Binding SearchResultFocusPoints}" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding FocusPointListHeight}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <TextCell Height="45" Text="{Binding Description}"/>
+                            <TextCell Height="45" Text="{Binding Descriptor.Name}"/>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
@@ -51,9 +50,9 @@
                     <Editor Placeholder="Enter a comment" AutoSize="TextChanges"/>
                 </Frame>
 
-                   <forms:ChartView x:Name="Chart1" HeightRequest="300" Margin="-80, 0, -80, 0" />  
-               
-            </StackLayout>
+                <forms:ChartView x:Name="Chart1" HeightRequest="300" Margin="-80, 0, -80, 0" />
+            <Button Text="View Feedback" Command="{Binding ViewFeedbackCommand}"/>
+        </StackLayout>
         </ScrollView>
     </ContentPage.Content>
 </ContentPage>

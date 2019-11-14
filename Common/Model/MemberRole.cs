@@ -6,6 +6,6 @@ namespace Common.Model
     {
         public enum Type { None, Player, Trainer }
 
-        public Member Member;
+        public Member Member { get; set; }
     }
 }
