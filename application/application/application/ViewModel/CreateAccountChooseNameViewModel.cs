@@ -20,9 +20,7 @@ namespace application.ViewModel
         //Check if user is in database. Navigate to main page.
         private void ExecuteCreateAccountClick(object param)
         {
-            ProfilePageViewModel vm = new ProfilePageViewModel();
-            Navigation.PushAsync(new ProfilePage() { BindingContext = vm });
-            vm.Navigation = Navigation;
+            Navigation.PushAsync(new ProfilePage());
         }
     }
 }

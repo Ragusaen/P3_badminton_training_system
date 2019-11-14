@@ -72,9 +72,7 @@ namespace application.ViewModel
         //Check if username is free in database
         private void ExecuteCreateAccountContinueClick(object param)
         {
-            CreateAccountChooseNameViewModel vm = new CreateAccountChooseNameViewModel();
-            Navigation.PushAsync(new CreateAccountChooseNamePage() { BindingContext = vm });
-            vm.Navigation = Navigation;
+            Navigation.PushAsync(new CreateAccountChooseNamePage());
         }
     }
 }
