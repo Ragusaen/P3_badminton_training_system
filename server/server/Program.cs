@@ -15,8 +15,15 @@ namespace Server
         public static void Main(string[] args)
         {
             var p = new Server.Controller.Parser();
-
-            p.UpdatePlayers();
+            try
+            {
+                p.UpdatePlayers();
+            }
+            catch (Exception e)
+            {
+                _log.Error(e.ToString());
+                throw;
+            }
 
             NLog.LogManager.Shutdown();
         }

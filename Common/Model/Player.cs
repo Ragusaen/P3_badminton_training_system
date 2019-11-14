@@ -13,9 +13,8 @@ namespace Common.Model
 
     public class Player : MemberRole
     {
-        public PlayerRanking Rankings;
-
-        public Sex Sex;
         public int BadmintonPlayerId;
+        public PlayerRanking Rankings;
+        public Sex Sex;
     }
 }
