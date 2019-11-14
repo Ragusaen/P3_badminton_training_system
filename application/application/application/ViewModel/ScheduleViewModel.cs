@@ -21,9 +21,22 @@ namespace application.ViewModel
             }
         }
 
+        private bool _visibility;
+
+        public bool Visibility
+        {
+            get { return _visibility; }
+            set
+            {
+                  if (SetProperty(ref _visibility, value))
+                    AddClickCommand.RaiseCanExecuteChanged();
+            }
+        }
+
         public ScheduleViewModel()
         {
             CurrentMonth = DateTime.Today.ToString("MMMM");
+            Visibility = false;
         }
 
         private RelayCommand _dateClickCommand;
@@ -42,32 +55,76 @@ namespace application.ViewModel
                 return true;
         }
 
-        //Check if user is in database. Navigate to main page.
         private void ExecuteDateClick(object param)
         {
            
         }
 
-        private RelayCommand _addPracticeSessionClickCommand;
+        private RelayCommand _addClickCommand;
 
-        public RelayCommand AddPracticeSessionClickCommand
+        public RelayCommand AddClickCommand
         {
             get
             {
-                return _addPracticeSessionClickCommand ?? (_addPracticeSessionClickCommand = new RelayCommand(param => ExecuteAddPracticeSessionClick(param), param => CanExecuteAddPracticeSessionClick(param)));
+                return _addClickCommand ?? (_addClickCommand = new RelayCommand(param => ExecuteAddClick(param), param => CanExecuteAddClick(param)));
             }
         }
 
-        private bool CanExecuteAddPracticeSessionClick(object param)
+        private bool CanExecuteAddClick(object param)
         {
            return true;
         }
 
-        //Check if username is free in database.
-        private void ExecuteAddPracticeSessionClick(object param)
+      
+        private void ExecuteAddClick(object param)
+        {
+            if (Visibility == true)
+                Visibility = false;
+            else if (Visibility == false)
+                Visibility = true;
+        }
+
+        private RelayCommand _addNewPracticeClickCommand;
+
+        public RelayCommand AddNewPracticeClickCommand
+        {
+            get
+            {
+                return _addNewPracticeClickCommand ?? (_addNewPracticeClickCommand = new RelayCommand(param => ExecuteAddNewPracticeClick(param), param => CanExecuteAddNewPracticeClick(param)));
+            }
+        }
+
+        private bool CanExecuteAddNewPracticeClick(object param)
+        {
+            return true;
+        }
+        
+        private void ExecuteAddNewPracticeClick(object param)
         {
             CreatePracticeViewModel vm = new CreatePracticeViewModel();
             Navigation.PushAsync(new CreatePracticePage() { BindingContext = vm });
+            vm.Navigation = Navigation;
+        }
+
+        private RelayCommand _addNewMatchClickCommand;
+
+        public RelayCommand AddNewMatchClickCommand
+        {
+            get
+            {
+                return _addNewMatchClickCommand ?? (_addNewMatchClickCommand = new RelayCommand(param => ExecuteAddNewMatchClick(param), param => CanExecuteAddNewMatchClick(param)));
+            }
+        }
+
+        private bool CanExecuteAddNewMatchClick(object param)
+        {
+            return true;
+        }
+
+        private void ExecuteAddNewMatchClick(object param)
+        {
+            CreateMatchViewModel vm = new CreateMatchViewModel();
+            Navigation.PushAsync(new CreateMatchPage() { BindingContext = vm });
             vm.Navigation = Navigation;
         }
     }

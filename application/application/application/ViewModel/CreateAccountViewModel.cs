@@ -7,26 +7,26 @@ namespace application.ViewModel
 {
     class CreateAccountViewModel : BaseViewModel
     {
-        private string _userName;
+        private string _username;
 
-        public string UserName
+        public string Username
         {
-            get { return _userName; }
+            get { return _username; }
             set
             {
-                if (SetProperty(ref _userName, value))
+                if (SetProperty(ref _username, value))
                     CreateAccountContinueClickCommand.RaiseCanExecuteChanged();
             }
         }
 
-        private string _passWord;
+        private string _password;
 
-        public string PassWord
+        public string Password
         {
-            get { return _passWord; }
+            get { return _password; }
             set
             {
-                if (SetProperty(ref _passWord, value))
+                if (SetProperty(ref _password, value))
                     CreateAccountContinueClickCommand.RaiseCanExecuteChanged();
             }
         }
@@ -57,7 +57,7 @@ namespace application.ViewModel
 
         private bool CanExecuteCreateAccountContinueClick(object param)
         {
-            if ((PassWord == null || PassWord == "") || (UserName == null || UserName == ""))
+            if ((Password == null || Password == "") || (Username == null || Username == ""))
             {
                 CantContinueText = "You need to enter an username and a password before you can continue";
                 return false;

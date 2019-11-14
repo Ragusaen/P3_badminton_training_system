@@ -7,12 +7,34 @@
              mc:Ignorable="d"
              x:Class="application.UI.SchedulePage" NavigationPage.HasBackButton="False">
 
-    <NavigationPage.TitleView>
-        <StackLayout Orientation="Horizontal" Spacing="10">
-            <Label Text="Schedule" FontAttributes="Bold" FontSize="30" TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
-            <ImageButton Source="" x:Name="Plusicon" HeightRequest="25" VerticalOptions="CenterAndExpand" HorizontalOptions="End" Margin="0,0,15,0" Command="{Binding AddPracticeSessionClickCommand}" BackgroundColor="Red"/>
-        </StackLayout>
-    </NavigationPage.TitleView>
     
-    <controls:Calendar VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" YearLabelColor="Red" SelectedDateColor="Red" MonthLabelColor="Red" SelectedDayBackgroundColor="Red"/>
+        <NavigationPage.TitleView>
+            <StackLayout Orientation="Horizontal" Spacing="10" x:Name="Navigationbar">
+                <Label Text="Schedule" FontAttributes="Bold" FontSize="30" TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                <ImageButton Source="" x:Name="Plusicon" HeightRequest="25" VerticalOptions="CenterAndExpand" HorizontalOptions="End" Margin="0,0,15,0" Command="{Binding AddClickCommand}" BackgroundColor="Red"/>
+            </StackLayout>
+        </NavigationPage.TitleView>
+
+    <ScrollView>
+    <RelativeLayout>
+            <StackLayout>
+                <StackLayout IsVisible="{Binding Visibility}" BackgroundColor="LightSlateGray" Margin="175,0,0,15">
+                    <Label Text="Add New Practice" TextColor="White" FontSize="18" FontAttributes="Bold" Margin="10,10,10,10" HorizontalOptions="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding AddNewPracticeClickCommand}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Label Text="Add new match" TextColor="White" FontSize="18" FontAttributes="Bold" Margin="10,0,10,10" HorizontalOptions="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding AddNewMatchClickCommand}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </StackLayout>
+
+                <controls:Calendar VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" YearLabelColor="Red" SelectedDateColor="Red" MonthLabelColor="Red" SelectedDayBackgroundColor="Red"/>
+            
+        </StackLayout>
+    </RelativeLayout>
+    </ScrollView>
+
 </ContentPage>
