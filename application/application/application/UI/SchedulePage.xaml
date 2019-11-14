@@ -24,7 +24,7 @@
                             <TapGestureRecognizer Command="{Binding AddNewPracticeClickCommand}" />
                         </Label.GestureRecognizers>
                     </Label>
-                    <Label Text="Add new match" TextColor="White" FontSize="18" FontAttributes="Bold" Margin="10,0,10,10" HorizontalOptions="Center">
+                    <Label Text="Add New Match" TextColor="White" FontSize="18" FontAttributes="Bold" Margin="10,0,10,10" HorizontalOptions="Center">
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding AddNewMatchClickCommand}" />
                         </Label.GestureRecognizers>

@@ -101,9 +101,7 @@ namespace application.ViewModel
         
         private void ExecuteAddNewPracticeClick(object param)
         {
-            CreatePracticeViewModel vm = new CreatePracticeViewModel();
-            Navigation.PushAsync(new CreatePracticePage() { BindingContext = vm });
-            vm.Navigation = Navigation;
+            Navigation.PushAsync(new CreatePracticePage());
         }
 
         private RelayCommand _addNewMatchClickCommand;
@@ -123,9 +121,7 @@ namespace application.ViewModel
 
         private void ExecuteAddNewMatchClick(object param)
         {
-            CreateMatchViewModel vm = new CreateMatchViewModel();
-            Navigation.PushAsync(new CreateMatchPage() { BindingContext = vm });
-            vm.Navigation = Navigation;
+            Navigation.PushAsync(new CreateMatchPage());
         }
     }
 }

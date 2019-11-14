@@ -6,6 +6,7 @@ using System.Text;
 using application.Controller;
 using application.UI;
 using Common.Model;
+using Xamarin.Forms;
 
 namespace application.ViewModel
 {
@@ -92,9 +93,11 @@ namespace application.ViewModel
         }
 
         //Check if user is in database. Navigate to main page.
-        private void ExecuteProfileSettingTap(object param)
+        private async void ExecuteProfileSettingTap(object param)
         {
-            CurrentMember.Name = "Hallo";
+            string action = await Application.Current.MainPage.DisplayActionSheet("Choose what you want to edit:", "Cancel", null, "Edit Personal Information", "Edit Rights");
+
+
         }
 
         private RelayCommand _viewFeedbackCommand;
