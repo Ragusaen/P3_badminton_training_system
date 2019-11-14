@@ -16,25 +16,10 @@
         </NavigationPage.TitleView>
 
     <ScrollView>
-    <RelativeLayout>
             <StackLayout>
-                <StackLayout IsVisible="{Binding Visibility}" BackgroundColor="LightSlateGray" Margin="175,0,0,15">
-                    <Label Text="Add New Practice" TextColor="White" FontSize="18" FontAttributes="Bold" Margin="10,10,10,10" HorizontalOptions="Center">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding AddNewPracticeClickCommand}" />
-                        </Label.GestureRecognizers>
-                    </Label>
-                    <Label Text="Add New Match" TextColor="White" FontSize="18" FontAttributes="Bold" Margin="10,0,10,10" HorizontalOptions="Center">
-                        <Label.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding AddNewMatchClickCommand}" />
-                        </Label.GestureRecognizers>
-                    </Label>
-                </StackLayout>
-
                 <controls:Calendar VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" YearLabelColor="Red" SelectedDateColor="Red" MonthLabelColor="Red" SelectedDayBackgroundColor="Red"/>
             
         </StackLayout>
-    </RelativeLayout>
     </ScrollView>
 
 </ContentPage>

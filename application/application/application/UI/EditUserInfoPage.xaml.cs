@@ -11,12 +11,12 @@ using Xamarin.Forms.Xaml;
 namespace application.UI
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class EditPersonalInfoPage : ContentPage
+    public partial class EditUserInfoPage : ContentPage
     {
-        public EditPersonalInfoPage()
+        public EditUserInfoPage()
         {
             InitializeComponent();
-            EditPersonalInfoViewModel vm = new EditPersonalInfoViewModel();
+            EditUserInfoViewModel vm = new EditUserInfoViewModel();
             BindingContext = vm;
             vm.Navigation = Navigation;
         }

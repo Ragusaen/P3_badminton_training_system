@@ -21,22 +21,9 @@ namespace application.ViewModel
             }
         }
 
-        private bool _visibility;
-
-        public bool Visibility
-        {
-            get { return _visibility; }
-            set
-            {
-                  if (SetProperty(ref _visibility, value))
-                    AddClickCommand.RaiseCanExecuteChanged();
-            }
-        }
-
         public ScheduleViewModel()
         {
             CurrentMonth = DateTime.Today.ToString("MMMM");
-            Visibility = false;
         }
 
         private RelayCommand _dateClickCommand;
@@ -76,52 +63,16 @@ namespace application.ViewModel
         }
 
       
-        private void ExecuteAddClick(object param)
+        private async void ExecuteAddClick(object param)
         {
-            if (Visibility == true)
-                Visibility = false;
-            else if (Visibility == false)
-                Visibility = true;
+            string action = await Application.Current.MainPage.DisplayActionSheet("Choose what you want to add:", "Cancel", null, "Add New Practice", "Add New Match");
+
+            if (action == "Add New Practice")
+                await Navigation.PushAsync(new CreatePracticePage());
+            else if (action == "Add New Match")
+                await Navigation.PushAsync(new CreateMatchPage());
         }
 
-        private RelayCommand _addNewPracticeClickCommand;
-
-        public RelayCommand AddNewPracticeClickCommand
-        {
-            get
-            {
-                return _addNewPracticeClickCommand ?? (_addNewPracticeClickCommand = new RelayCommand(param => ExecuteAddNewPracticeClick(param), param => CanExecuteAddNewPracticeClick(param)));
-            }
-        }
-
-        private bool CanExecuteAddNewPracticeClick(object param)
-        {
-            return true;
-        }
         
-        private void ExecuteAddNewPracticeClick(object param)
-        {
-            Navigation.PushAsync(new CreatePracticePage());
-        }
-
-        private RelayCommand _addNewMatchClickCommand;
-
-        public RelayCommand AddNewMatchClickCommand
-        {
-            get
-            {
-                return _addNewMatchClickCommand ?? (_addNewMatchClickCommand = new RelayCommand(param => ExecuteAddNewMatchClick(param), param => CanExecuteAddNewMatchClick(param)));
-            }
-        }
-
-        private bool CanExecuteAddNewMatchClick(object param)
-        {
-            return true;
-        }
-
-        private void ExecuteAddNewMatchClick(object param)
-        {
-            Navigation.PushAsync(new CreateMatchPage());
-        }
     }
 }

@@ -4,7 +4,7 @@ using System.Text;
 
 namespace application.ViewModel
 {
-    class EditPersonalInfoViewModel : BaseViewModel
+    class EditUserInfoViewModel : BaseViewModel
     {
     }
 }
