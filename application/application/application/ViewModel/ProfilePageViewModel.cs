@@ -95,9 +95,14 @@ namespace application.ViewModel
         //Check if user is in database. Navigate to main page.
         private async void ExecuteProfileSettingTap(object param)
         {
-            string action = await Application.Current.MainPage.DisplayActionSheet("Choose what you want to edit:", "Cancel", null, "Edit Personal Information", "Edit Rights");
+            string action = await Application.Current.MainPage.DisplayActionSheet("Choose what you want to edit:", "Cancel", null, "Edit Personal Information", "Edit User's Rights");
 
-
+            if (action == "Edit Personal Information")
+                await Navigation.PushAsync(new EditPersonalInfoPage());
+            else if (action == "Edit User's Rights")
+            {
+                string rights = await Application.Current.MainPage.DisplayActionSheet("Choose user's rights:", "Cancel", null, "Player", "Trainer", "Player and Trainer");
+            }  
         }
 
         private RelayCommand _viewFeedbackCommand;
