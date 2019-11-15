@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Linq;
 using Common.Model;
 using Common.Serialization;
+using Server.Controller;
 
 namespace Server
 {
@@ -14,6 +15,7 @@ namespace Server
 
         public static void Main(string[] args)
         {
+
             try
             {
                 SslTcpServer sslTcpServer = new SslTcpServer("localhost.cer");

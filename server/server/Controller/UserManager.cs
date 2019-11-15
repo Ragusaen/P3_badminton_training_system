@@ -7,6 +7,8 @@ using System.Security.Cryptography;
 using System.Data;
 using System.Data.Entity;
 using Common.Model;
+using Microsoft.Extensions.Logging;
+using NLog;
 using NLog.LayoutRenderers;
 using Server.DAL;
 
@@ -19,11 +21,15 @@ namespace Server.Controller
         public const int SaltSize = 128;
         public const int TokenSize = 64;
 
+        private static Logger _log = LogManager.GetCurrentClassLogger();
+
         #region Login
         public byte[] Login(string username, string password)
         {
             var db = new DatabaseEntities();
             var account = db.accounts.Find(username);
+
+            _log.Debug($"User {username}, {password} : {account != null}");
 
             // Check if account was found
             if (account != null &&
@@ -37,6 +43,7 @@ namespace Server.Controller
                     AccessToken = token
                 });
                 db.SaveChanges();
+                return token;
             }
 
             // On error return empty array

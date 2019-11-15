@@ -8,7 +8,6 @@ namespace Common.Model
         public Member Member;
     }
 
-
     [Flags]
     public enum MemberType { None, Player, Trainer, Both = Player | Trainer }
 }
