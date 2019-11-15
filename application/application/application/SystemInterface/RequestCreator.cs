@@ -56,7 +56,7 @@ namespace application.SystemInterface
         {
             var careq = new CreateAccountRequest()
             {
-                Username = username, BadmintonId = badmintonId, Password = password
+                Username = username, Password = password
             };
 
             var response = SimpleRequest<CreateAccountResponse, CreateAccountRequest>(RequestType.CreateAccount, careq);

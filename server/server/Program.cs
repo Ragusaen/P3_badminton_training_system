@@ -1,8 +1,11 @@
 ﻿using NLog;
 using Server.SystemInterface.Network;
 using System;
+using System.Data.Entity;
+using System.Linq;
 using Common.Model;
-using Server.DAL;
+using Common.Serialization;
+using Server.Controller;
 
 namespace Server
 {
@@ -12,18 +15,13 @@ namespace Server
 
         public static void Main(string[] args)
         {
-            var md = new MemberDAO();
-            var b = md.Create(null, MemberRole.Type.Trainer, "Hans Peter", Sex.Male, null);
 
-            Console.WriteLine(b);
-            Console.ReadKey();
-
-            return;
             try
             {
                 SslTcpServer sslTcpServer = new SslTcpServer("localhost.cer");
                 sslTcpServer.RunServer();
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 if (e.InnerException != null)
                     _log.Error(e.InnerException.Message);

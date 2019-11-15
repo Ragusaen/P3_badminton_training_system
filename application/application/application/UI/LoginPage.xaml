@@ -20,6 +20,7 @@
     <ScrollView>
         <StackLayout HorizontalOptions="Center">
             <Image Source="" x:Name="RedLogo" HeightRequest="222" Margin="20,25,20,25"/>
+            <Label Text="Invalid username or password" TextColor="Red" IsVisible="{Binding InvalidLoginTextVisible}" HeightRequest="{Binding InvalidLoginTextHeight}"/>
             <Label Text="Username" />
             <Entry x:Name="username" Placeholder="Enter username" Text="{Binding Username}"/>
             <Label Text="Password"/>

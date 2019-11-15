@@ -24,7 +24,7 @@ namespace Common.Model
         public int LeagueRound { get; set; }
         public string OpponentName { get; set; }
         public DateTime StartDate { get; set; }
-        public int CaptainID { get; set; }
+        public Member Captain { get; set; }
         public Lineup Lineup { get; set; }
     }
 }

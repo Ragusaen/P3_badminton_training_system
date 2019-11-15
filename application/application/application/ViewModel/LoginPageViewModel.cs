@@ -2,13 +2,33 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
+using application.SystemInterface;
 using Xamarin.Forms;
 using application.UI;
 
 namespace application.ViewModel
 {
     class LoginPageViewModel : BaseViewModel
-    {
+    {   
+        #region InvalidLogin
+        private bool _invalidLoginTextVisible;
+
+        public bool InvalidLoginTextVisible
+        {
+            get { return _invalidLoginTextVisible; }
+            set { SetProperty(ref _invalidLoginTextVisible, value); }
+        }
+
+        private int _invalidLoginTextHeight;
+        private const int TextHeight = 20;
+
+        public int InvalidLoginTextHeight
+        {
+            get { return _invalidLoginTextHeight; }
+            set { SetProperty(ref _invalidLoginTextHeight, value); }
+        }
+        #endregion
+
         private string _username;
 
         public string Username
@@ -38,16 +58,19 @@ namespace application.ViewModel
 
         private bool CanExecuteLoginClick(object param)
         {
-            if((Password == null || Password == "") || (Username == null || Username == ""))
-                return false;
-            else
-                return true;
+            return !(string.IsNullOrEmpty(Password) || string.IsNullOrEmpty(Username));
         }
 
         //Check if user is in database. Navigate to main page.
         private void ExecuteLoginClick(object param)
-        {
-            Application.Current.MainPage = new NavigationPage(new MenuPage());
+        {   
+            if (RequestCreator.LoginRequest(Username, Password))
+                Application.Current.MainPage = new NavigationPage(new MenuPage());
+            else
+            {
+                InvalidLoginTextHeight = TextHeight;
+                InvalidLoginTextVisible = true;
+            }
         }
 
         private RelayCommand _forgotPassWordClickCommand;

@@ -45,17 +45,18 @@ namespace application.ViewModel
             }
         }
 
-        private RelayCommand _createAccountContinueClickCommand;
+        private RelayCommand _createAccountClickCommand;
 
-        public RelayCommand CreateAccountContinueClickCommand
+        public RelayCommand CreateAccountClickCommand
         {
             get
             {
-                return _createAccountContinueClickCommand ?? (_createAccountContinueClickCommand = new RelayCommand(param => ExecuteCreateAccountContinueClick(param), param => CanExecuteCreateAccountContinueClick(param)));
+                return _createAccountClickCommand ?? (_createAccountClickCommand = new RelayCommand(param => ExecuteCreateAccountClick(param)));
             }
         }
 
-        private bool CanExecuteCreateAccountContinueClick(object param)
+        //Check if user is in database. Navigate to main page.
+        private void ExecuteCreateAccountClick(object param)
         {
             if ((Password == null || Password == "") || (Username == null || Username == ""))
             {
