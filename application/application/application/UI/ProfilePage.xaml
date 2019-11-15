@@ -10,16 +10,12 @@
     <NavigationPage.TitleView>
         <StackLayout Orientation="Horizontal" Spacing="10">
             <Label Text="Profile" FontAttributes="Bold" FontSize="30" TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
-            <Image x:Name="Settingsicon" HeightRequest="30" VerticalOptions="CenterAndExpand" HorizontalOptions="End" Margin="0,0,15,0" >
-                <Image.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding ProfileSettingCommand}" />
-                </Image.GestureRecognizers>
-            </Image>
+            <ImageButton Source="" x:Name="Settingsicon" HeightRequest="30" VerticalOptions="CenterAndExpand" HorizontalOptions="End" Margin="0,0,15,0" Command="{Binding ProfileSettingCommand}" BackgroundColor="Red"/>
         </StackLayout>
     </NavigationPage.TitleView>
 
     <ContentPage.Content>
-
+        <ScrollView>
             <StackLayout Margin="10,10,10,10">
                 <Label Text="{Binding User.Name}" VerticalOptions="Start" HorizontalOptions="CenterAndExpand" FontSize="Large"/>
                 <Label Text="Team" VerticalOptions="Start" HorizontalOptions="StartAndExpand" FontSize="Medium"/>
@@ -33,7 +29,7 @@
                                         <ColumnDefinition Width="Auto"/>
                                     </Grid.ColumnDefinitions>
                                     <Label Text="{Binding Name}" VerticalOptions="Center"/>
-                                    <Switch IsToggled="{Binding OnTeam}" ThumbColor="Red" OnColor="LightPink"/>
+                                    <Switch IsToggled="True" ThumbColor="Red" OnColor="LightPink"/>
                                 </Grid>
                             </ViewCell>
                         </DataTemplate>
@@ -56,7 +52,8 @@
                 </Frame>
 
                 <forms:ChartView x:Name="Chart1" HeightRequest="300" Margin="-80, 0, -80, 0" />
-
-            </StackLayout>
+            <Button Text="View Feedback" Command="{Binding ViewFeedbackCommand}"/>
+        </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

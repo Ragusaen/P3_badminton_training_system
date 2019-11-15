@@ -7,6 +7,7 @@ using application.Controller;
 using application.UI;
 using Common.Model;
 using Rg.Plugins.Popup.Services;
+using Xamarin.Forms;
 
 namespace application.ViewModel
 {
@@ -14,15 +15,14 @@ namespace application.ViewModel
     {
         public Member User { get; set; }
        
-        private List<PracticeTeam> _teams;
+        private ObservableCollection<PracticeTeam> _teams;
 
-        public List<PracticeTeam> Teams
+        public ObservableCollection<PracticeTeam> Teams
         {
             get { return _teams; }
             set
             {
                 SetProperty(ref _teams, value);
-                            TeamListHeight = Teams.Count * 45;
             }
         }
 
@@ -98,9 +98,18 @@ namespace application.ViewModel
         }
 
         //Check if user is in database. Navigate to main page.
-        private void ExecuteProfileSettingTap(object param)
+        private async void ExecuteProfileSettingTap(object param)
         {
-            User.Name = "Hallo";
+            //Needs to change depending on user type
+            
+            string action = await Application.Current.MainPage.DisplayActionSheet("Choose what you want to edit:", "Cancel", null, "Edit User's Information", "Edit User's Rights");
+
+            if (action == "Edit User's Information")
+                await Navigation.PushAsync(new EditUserInfoPage());
+            else if (action == "Edit User's Rights")
+            {
+                string rights = await Application.Current.MainPage.DisplayActionSheet("Choose user's rights:", "Cancel", null, "Player", "Trainer", "Player and Trainer");
+            }  
         }
 
         private RelayCommand _viewFeedbackCommand;
@@ -114,7 +123,7 @@ namespace application.ViewModel
         }
         private void ExecuteViewFeedbackClick(object param)
         {
-            
+            Navigation.PushAsync(new ViewFeedbackPage());
         }
     }
 }

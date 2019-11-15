@@ -46,6 +46,8 @@ namespace application.UI
             BindingContext = vm;
             vm.Navigation = Navigation;
 
+            
+
             Settingsicon.Source = ImageSource.FromResource("application.Images.settingsicon.jpg");
         }
        
