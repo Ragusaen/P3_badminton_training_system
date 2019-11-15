@@ -6,7 +6,7 @@ namespace Common.Model
     {
         public enum Type {Practice, Match};
 
-        public int id;
+        public int Id;
         public DateTime Start;
         public DateTime End;
         public string Location;

@@ -23,14 +23,15 @@ namespace Server.Function.Rules
                 foreach (var pos2 in match.Lineup.Positions)
                 {
                     if (pos.Value.Player.Member.Id == pos2.Value.Player.Member.Id) count++;
-                    if (pos2.Value is DoublePosition dp2)
+                    if (pos2.Value.OtherPlayer != null)
                     {
-                        if (pos.Value.Player.Member.Id == dp2.OtherPlayer.Member.Id) count++;
-                        if (pos.Value is DoublePosition dp && dp.OtherPlayer.Member.Id == dp2.OtherPlayer.Member.Id) count2++;
+                        var dp2 = pos2.Value.OtherPlayer;
+                        if (pos.Value.Player.Member.Id == dp2.Member.Id) count++;
+                        if (pos.Value.OtherPlayer != null && pos.Value.OtherPlayer.Member.Id == dp2.Member.Id) count2++;
                     }
                     else
                     {
-                        if (pos.Value is DoublePosition dp && dp.OtherPlayer.Member.Id == pos2.Value.Player.Member.Id) count2++;
+                        if (pos.Value.OtherPlayer != null && pos.Value.OtherPlayer.Member.Id == pos2.Value.Player.Member.Id) count2++;
                     }
                 }
 

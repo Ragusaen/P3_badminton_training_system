@@ -1,5 +1,5 @@
 ﻿
 namespace Common
 {
-    public enum RequestType { ConnectionTest, Login, CreateAccount, GetSchedule };
+    public enum RequestType { ConnectionTest, Login, CreateAccount, GetSchedule, GetPracticeTeam};
 }

@@ -11,7 +11,7 @@ namespace application.SystemInterface.Network
 {
     class ServerConnection
     {
-        private readonly IPAddress _machineName = new IPAddress(new byte[] {172, 25, 18, 156});
+        private readonly IPAddress _machineName = new IPAddress(new byte[] {192, 168, 42, 8});
         private readonly string _serverName = "localhost";
 
         private TcpClient _tcpClient = null;

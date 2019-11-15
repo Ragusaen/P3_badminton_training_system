@@ -16,7 +16,6 @@ namespace application.ViewModel
             set { SetProperty(ref _positions, value); }
         }
 
-
         public LineupViewModel()
         {
             Positions = new Dictionary<Tuple<Lineup.PositionType, int>, Position>();
