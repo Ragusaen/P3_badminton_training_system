@@ -6,6 +6,6 @@ namespace Common.Model
     {
         public DateTime DateAssigned { get; }
 
-        public FocusPointDescriptor Descriptor;
+        public FocusPointDescriptor Descriptor { get; set; }
     }
 }

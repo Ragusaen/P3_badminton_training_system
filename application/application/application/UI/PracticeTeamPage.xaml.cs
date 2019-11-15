@@ -1,4 +1,5 @@
-﻿using System;
+﻿using application.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,13 +11,14 @@ using Xamarin.Forms.Xaml;
 namespace application.UI
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class CreateTeamPage : ContentPage
+    public partial class PracticeTeamPage : ContentPage
     {
-        public CreateTeamPage()
+        public PracticeTeamPage()
         {
             InitializeComponent();
-
-
+            PracticeTeamViewModel vm = new PracticeTeamViewModel();
+            vm.Navigation = Navigation;
+            BindingContext = vm;
         }
     }
 }

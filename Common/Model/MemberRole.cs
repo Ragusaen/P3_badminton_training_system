@@ -5,7 +5,7 @@ namespace Common.Model
 {
     public abstract class MemberRole
     {
-        public Member Member;
+        public Member Member { get; set; }
     }
 
     [Flags]

@@ -4,7 +4,8 @@ namespace Common.Model
 {
     public class Member
     {
-        public int Id;
-        public string Name;
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public List<FocusPointItem> FocusPoints { get; set; }
     }
 }

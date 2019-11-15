@@ -11,15 +11,14 @@ using Xamarin.Forms.Xaml;
 namespace application.UI
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class CreateMatchPage : ContentPage
+    public partial class EditUserInfoPage : ContentPage
     {
-        public CreateMatchPage()
+        public EditUserInfoPage()
         {
             InitializeComponent();
-            CreateMatchViewModel vm = new CreateMatchViewModel();
+            EditUserInfoViewModel vm = new EditUserInfoViewModel();
             BindingContext = vm;
             vm.Navigation = Navigation;
-            SaveIcon.Source = ImageSource.FromResource("application.Images.saveicon.png");
         }
     }
 }

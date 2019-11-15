@@ -14,16 +14,27 @@
     </NavigationPage.TitleView>
 
     <ScrollView>
-        <StackLayout Margin="10,10,10,10">
+        <StackLayout Margin="15,15,15,10">
             <Label Text="Username" />
-            <Entry x:Name="username" Placeholder="Enter an username" Text="{Binding UserName}"/>
+            <Entry x:Name="username" Placeholder="Enter an username" Text="{Binding Username}"/>
             <Label Text="Password"/>
-            <Entry x:Name="password" Placeholder="Enter a password" IsPassword="True" Text="{Binding PassWord}"/>
-            <Label Text="E-mail" />
-            <Entry x:Name="email" Placeholder="Enter your e-mail" Text="{Binding Email}"/>
+            <Entry x:Name="password" Placeholder="Enter a password" IsPassword="True" Text="{Binding Password}"/>
+            <Label Text="{Binding CantContinueText}" TextColor="Red" FontSize="Micro" HorizontalTextAlignment="Center"/>
 
-            <Label Text="Name" />
-            <SearchBar x:Name="Name" Placeholder="Enter your full name and choose yourself from the list" Text="{Binding Name}"/>
+            <Label Text="Please enter your full name and select yourself from the ranking list"/>
+            <SearchBar Placeholder="Enter your full name" Text="{Binding SearchText}"/>
+            <ListView ItemsSource="{Binding Name}" VerticalScrollBarVisibility="Never" VerticalOptions="Fill" SeparatorVisibility="None">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <StackLayout>
+                                <Label Text="{Binding Name}"/>
+                            </StackLayout>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
             <StackLayout Orientation="Horizontal" Margin="0,25,0,25">
                 <CheckBox x:Name="NotOnList"/>
                 <Label Text="Check here if you are not on the list"/>

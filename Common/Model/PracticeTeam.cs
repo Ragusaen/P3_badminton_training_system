@@ -4,7 +4,8 @@ namespace Common.Model
 {
     public class PracticeTeam
     {
-        public string Name;
-        public List<Player> Players { get; set; } = new List<Player>();
+        public string Name { get; set; }
+        public int Id { get; set; }
+        public List<Player> Players { get; set; }
     }
 }

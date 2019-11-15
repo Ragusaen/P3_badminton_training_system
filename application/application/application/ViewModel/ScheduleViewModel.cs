@@ -42,33 +42,37 @@ namespace application.ViewModel
                 return true;
         }
 
-        //Check if user is in database. Navigate to main page.
         private void ExecuteDateClick(object param)
         {
            
         }
 
-        private RelayCommand _addPracticeSessionClickCommand;
+        private RelayCommand _addClickCommand;
 
-        public RelayCommand AddPracticeSessionClickCommand
+        public RelayCommand AddClickCommand
         {
             get
             {
-                return _addPracticeSessionClickCommand ?? (_addPracticeSessionClickCommand = new RelayCommand(param => ExecuteAddPracticeSessionClick(param), param => CanExecuteAddPracticeSessionClick(param)));
+                return _addClickCommand ?? (_addClickCommand = new RelayCommand(param => ExecuteAddClick(param), param => CanExecuteAddClick(param)));
             }
         }
 
-        private bool CanExecuteAddPracticeSessionClick(object param)
+        private bool CanExecuteAddClick(object param)
         {
            return true;
         }
 
-        //Check if username is free in database.
-        private void ExecuteAddPracticeSessionClick(object param)
+      
+        private async void ExecuteAddClick(object param)
         {
-            CreatePracticeViewModel vm = new CreatePracticeViewModel();
-            Navigation.PushAsync(new CreatePracticePage() { BindingContext = vm });
-            vm.Navigation = Navigation;
+            string action = await Application.Current.MainPage.DisplayActionSheet("Choose what you want to add:", "Cancel", null, "Add New Practice", "Add New Match");
+
+            if (action == "Add New Practice")
+                await Navigation.PushAsync(new CreatePracticePage());
+            else if (action == "Add New Match")
+                await Navigation.PushAsync(new CreateMatchPage());
         }
+
+        
     }
 }

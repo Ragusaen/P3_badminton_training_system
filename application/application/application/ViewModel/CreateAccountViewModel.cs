@@ -15,7 +15,7 @@ namespace application.ViewModel
             set
             {
                 if (SetProperty(ref _userName, value))
-                    CreateAccountContinueClickCommand.RaiseCanExecuteChanged();
+                    CreateAccountClickCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -27,21 +27,10 @@ namespace application.ViewModel
             set
             {
                 if (SetProperty(ref _passWord, value))
-                    CreateAccountContinueClickCommand.RaiseCanExecuteChanged();
+                    CreateAccountClickCommand.RaiseCanExecuteChanged();
             }
         }
 
-        private string _email;
-
-        public string Email
-        {
-            get { return _email; }
-            set
-            {
-                if (SetProperty(ref _email, value))
-                    CreateAccountContinueClickCommand.RaiseCanExecuteChanged();
-            }
-        }
 
         private RelayCommand _createAccountClickCommand;
 
@@ -56,8 +45,14 @@ namespace application.ViewModel
         //Check if user is in database. Navigate to main page.
         private void ExecuteCreateAccountClick(object param)
         {
-            ProfilePageViewModel vm = new ProfilePageViewModel();
-            Navigation.PushAsync(new ProfilePage() { BindingContext = vm });
+            Navigation.PushAsync(new ProfilePage());
+        }
+
+        //Check if username is free in database.
+        private void ExecuteCreateAccountContinueClick(object param)
+        {
+            CreateAccountChooseNameViewModel vm = new CreateAccountChooseNameViewModel();
+            Navigation.PushAsync(new CreateAccountChooseNamePage() { BindingContext = vm });
             vm.Navigation = Navigation;
         }
     }

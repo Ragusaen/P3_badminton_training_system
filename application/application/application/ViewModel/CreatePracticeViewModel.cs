@@ -1,8 +1,11 @@
-﻿using application.Model;
-using application.UI;
+﻿using application.UI;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Common.Model;
+using System.Collections.ObjectModel;
+using System.Linq;
+using application.Controller;
 
 namespace application.ViewModel
 {
@@ -124,7 +127,6 @@ namespace application.ViewModel
         }
 
         
-
         private RelayCommand _saveCreatedPracticeClickCommand;
 
         public RelayCommand SaveCreatedPracticeClickCommand
@@ -137,7 +139,7 @@ namespace application.ViewModel
 
         private bool CanExecuteSaveCreatedPracticeClick(object param)
         {
-            if ((PracticeTitle == null || PracticeTitle == "") || (SelectedDateStart == null ) || (SelectedDateEnd == null) || (SelectedTimeStart == null) || (SelectedTimeEnd == null))
+            if (PracticeTitle == null || PracticeTitle == "")
                 return false;
             else
                 return true;
@@ -146,31 +148,30 @@ namespace application.ViewModel
         //Check if username is free in database.
         private void ExecuteSaveCreatedPracticeClick(object param)
         {
-            ScheduleViewModel vm = new ScheduleViewModel();
-            Navigation.PushAsync(new SchedulePage() { BindingContext = vm });
-            vm.Navigation = Navigation;
+            Navigation.PushAsync(new SchedulePage());
         }
 
+        private string _searchtext;
 
-        private string _focusPointsSearchText;
-
-        public string FocusPointsSearchText
+        public string SearchText
         {
-            get { return _focusPointsSearchText; }
+            get { return _searchtext; }
             set
             {
-                SetProperty(ref _focusPointsSearchText, value);
+                SetProperty(ref _searchtext, value);
+                SearchResultFocusPoints = new ObservableCollection<FocusPointItem>(SearchResultFocusPoints.OrderByDescending((x => StringSearch.longestCommonSubsequence(x.Descriptor.Name, SearchText))).ThenBy(x => x.Descriptor.Name.Length).ToList());
             }
         }
 
-        private List<FocusPoint> _focusPointsSearchResult;
+        private ObservableCollection<FocusPointItem> _searchResultFocusPoints;
 
-        public List<FocusPoint> FocusPointsSearchResult
+        public ObservableCollection<FocusPointItem> SearchResultFocusPoints
         {
-            get { return _focusPointsSearchResult; }
+            get { return _searchResultFocusPoints; }
             set
             {
-                SetProperty(ref _focusPointsSearchResult, value);
+                SetProperty(ref _searchResultFocusPoints, value);
+                FocusPointListHeight = SearchResultFocusPoints.Count * 45;
             }
         }
 
@@ -181,6 +182,7 @@ namespace application.ViewModel
             get { return _focusPointListHeight; }
             set { SetProperty(ref _focusPointListHeight, value); }
         }
+        
 
         private RelayCommand _addNewPlanElementClickCommand;
 
@@ -208,7 +210,7 @@ namespace application.ViewModel
             MinDate = DateTime.Today;
             MaxDate = new DateTime(2020, 1, 1);
 
-            List<FocusPoint> focusPoint = new List<FocusPoint>();
+            List<FocusPointItem> focusPoint = new List<FocusPointItem>();
             //FocusPointsSearchText = focusPoint;
 
             PlanElement = new List<string>();

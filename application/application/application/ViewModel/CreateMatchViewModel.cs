@@ -132,9 +132,7 @@ namespace application.ViewModel
         //Check if username is free in database.
         private void ExecuteSaveMatchClick(object param)
         {
-            ScheduleViewModel vm = new ScheduleViewModel();
-            Navigation.PushAsync(new SchedulePage() { BindingContext = vm });
-            vm.Navigation = Navigation;
+            Navigation.PushAsync(new SchedulePage());
         }
     }
 }
