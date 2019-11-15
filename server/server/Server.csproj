@@ -189,6 +189,8 @@
     <Compile Include="DAL\exercise.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\ExerciseCast.cs" />
+    <Compile Include="DAL\ExerciseDescriptorCast.cs" />
     <Compile Include="DAL\feedback.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
@@ -258,6 +260,8 @@
     <Compile Include="SystemInterface\Requests\Handlers\GetPlayerFeedbackHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetPlayerPracticeTeamsHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetPlaySessionFeedback.cs" />
+    <Compile Include="SystemInterface\Requests\Handlers\GetPracticeSessionExercisesHandler.cs" />
+    <Compile Include="SystemInterface\Requests\Handlers\GetPracticeSessionFocusPointsHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetPracticeSessionHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetPracticeTeamHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetScheduleHandler.cs" />
