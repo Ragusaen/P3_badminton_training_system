@@ -14,32 +14,42 @@
     </NavigationPage.TitleView>
 
     <ScrollView>
-        <StackLayout Margin="15,15,15,10">
-            <Label Text="Username" />
-            <Entry x:Name="username" Placeholder="Enter an username" Text="{Binding Username}"/>
-            <Label Text="Password"/>
-            <Entry x:Name="password" Placeholder="Enter a password" IsPassword="True" Text="{Binding Password}"/>
-            <Label Text="{Binding CantContinueText}" TextColor="Red" FontSize="Micro" HorizontalTextAlignment="Center"/>
+        <StackLayout>
+            <Frame Margin="15,15,15,10" CornerRadius="5" HasShadow="True">
+                <StackLayout>
+                    <Label Text="Username" FontSize="18"/>
+                    <Entry x:Name="username" Placeholder="Enter an username" Text="{Binding Username}"/>
+                    <Label Text="Password" FontSize="18"/>
+                    <Entry x:Name="password" Placeholder="Enter a password" IsPassword="True" Text="{Binding Password}"/>
+                    <Label Text="Confirm password" FontSize="18"/>
+                    <Entry x:Name="ConfirmPassword" Placeholder="Enter password again" IsPassword="True" Text="{Binding ConfirmPassword}"/>
+                    <Label Text="{Binding ConfirmationOfPasswordText}" TextColor="Red" FontSize="Small" IsVisible="False"/>
+                </StackLayout>
+            </Frame>
+        <BoxView HeightRequest="10" HorizontalOptions="Fill" BackgroundColor="LightGray"/>
+            <Frame Margin="15,10,15,10" CornerRadius="5" HasShadow="True">
+                <StackLayout>
+                    <Label Text="Please enter your full name and select yourself from the ranking list" FontSize="18" Margin="0,0,0,25"/>
+                    <SearchBar Placeholder="Enter your full name" Text="{Binding SearchText}"/>
+                        <ListView ItemsSource="{Binding ShownPlayerList}" VerticalScrollBarVisibility="Never" VerticalOptions="Fill" SeparatorVisibility="None">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <StackLayout>
+                                            <Label Text="{Binding Member.Name}"/>
+                                        </StackLayout>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
 
-            
-            <Label Text="Please enter your full name and select yourself from the ranking list"/>
-            <StackLayout Orientation="Horizontal" Margin="0,0,0,0">
-                <CheckBox x:Name="NotOnList"/>
-                <Label Text="Check here if you are not on the list"/>
-            </StackLayout>
-            <SearchBar Placeholder="Enter your full name" Text="{Binding SearchText}"/>
-            <ListView ItemsSource="{Binding ShownPlayerList}" VerticalScrollBarVisibility="Never" VerticalOptions="Fill" SeparatorVisibility="None">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <StackLayout>
-                                <Label Text="{Binding Member.Name}"/>
-                            </StackLayout>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-            <Button Text="Create account" Margin="0,25,0,25" Command="{Binding CreateAccountClickCommand}"/>
+                    <StackLayout Orientation="Horizontal" Margin="0,15,0,15">
+                        <CheckBox x:Name="NotOnList"/>
+                        <Label Text="Check here if you are not on the list" VerticalOptions="Center"/>
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
+            <Button Text="Create account" Margin="15,15,15,25" Command="{Binding CreateAccountClickCommand}"/>
         </StackLayout>
     </ScrollView>
 </ContentPage>
