@@ -58,7 +58,7 @@ namespace application.ViewModel
             FocusPointListHeight = FocusPoints.Count * 45;
 
             Teams = new ObservableCollection<PracticeTeam>();
-            Teams.Add(new PracticeTeam() {Name = "U17"});
+            Teams.Add(new PracticeTeam() { Name = "U17" });
             Teams.Add(new PracticeTeam() { Name = "Senior" });
         }
 
@@ -102,7 +102,7 @@ namespace application.ViewModel
         private async void ExecuteProfileSettingTap(object param)
         {
             //Needs to change depending on user type
-            
+
             string action = await Application.Current.MainPage.DisplayActionSheet("Choose what you want to edit:", "Cancel", null, "Edit User's Information", "Edit User's Rights");
 
             if (action == "Edit User's Information")
@@ -110,7 +110,7 @@ namespace application.ViewModel
             else if (action == "Edit User's Rights")
             {
                 string rights = await Application.Current.MainPage.DisplayActionSheet("Choose user's rights:", "Cancel", null, "Player", "Trainer", "Player and Trainer");
-            }  
+            }
         }
 
         private RelayCommand _viewFeedbackCommand;
@@ -125,6 +125,36 @@ namespace application.ViewModel
         private void ExecuteViewFeedbackClick(object param)
         {
             Navigation.PushAsync(new ViewFeedbackPage());
+        }
+        private RelayCommand _deleteListTeamItemCommand;
+
+        public RelayCommand DeleteListTeamItemCommand
+        {
+            get
+            {
+                return _deleteListTeamItemCommand ?? (_deleteListTeamItemCommand = new RelayCommand(param => DeleteListTeamItemClick(param)));
+            }
+        }
+        private void DeleteListTeamItemClick(object param)
+        {
+            PracticeTeam team = param as PracticeTeam;
+            Teams.Remove(team);
+            TeamListHeight = Teams.Count * 45; 
+        }
+        private RelayCommand _deleteListFocusItemCommand;
+
+        public RelayCommand DeleteListFocusItemCommand
+        {
+            get
+            {
+                return _deleteListFocusItemCommand ?? (_deleteListFocusItemCommand = new RelayCommand(param => DeleteListFocusItemClick(param)));
+            }
+        }
+        private void DeleteListFocusItemClick(object param)
+        {
+            FocusPointItem focuspoint = param as FocusPointItem;
+            FocusPoints.Remove(focuspoint);
+            FocusPointListHeight = FocusPoints.Count * 45;
         }
     }
 }

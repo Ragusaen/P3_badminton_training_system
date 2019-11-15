@@ -20,7 +20,7 @@ namespace application.ViewModel
             get { return _userName; }
             set
             {
-                if (SetProperty(ref _userName, value))
+                if (SetProperty(ref _username, value))
                     CreateAccountClickCommand.RaiseCanExecuteChanged();
             }
         }
@@ -32,11 +32,40 @@ namespace application.ViewModel
             get { return _passWord; }
             set
             {
-                if (SetProperty(ref _passWord, value))
+                if (SetProperty(ref _password, value))
                     CreateAccountClickCommand.RaiseCanExecuteChanged();
             }
         }
 
+        private string _confirmPassword;
+
+        public string ConfirmPassword
+        {
+            get { return _confirmPassword; }
+            set
+            {
+                if (SetProperty(ref _confirmPassword, value))
+                    CreateAccountClickCommand.RaiseCanExecuteChanged();
+            }
+        }
+
+        private string _confirmationOfPasswordText;
+
+        public string ConfirmationOfPasswordText
+        {
+            get { return _confirmationOfPasswordText; }
+            set
+            {
+                if (SetProperty(ref _confirmationOfPasswordText, value))
+                {
+                    if (Password == ConfirmPassword)
+                        _confirmationOfPasswordText = " ";
+                    else if (Password != ConfirmPassword)
+                        _confirmationOfPasswordText = "The two password you have enter are not identical";
+                }
+                    
+            }
+        }
 
         private RelayCommand _createAccountClickCommand;
 
@@ -44,12 +73,11 @@ namespace application.ViewModel
         {
             get
             {
-                return _createAccountClickCommand ?? (_createAccountClickCommand = new RelayCommand(param => ExecuteCreateAccountClick(param)));
+                return _createAccountClickCommand ?? (_createAccountClickCommand = new RelayCommand(param => ExecuteCreateAccountClick(param), param => CanExecuteCreateAccountClick(param)));
             }
         }
 
-        //Check if user is in database. Navigate to main page.
-        private void ExecuteCreateAccountClick(object param)
+        private bool CanExecuteCreateAccountClick(object param)
         {
             Navigation.PushAsync(new ProfilePage());
         }
@@ -67,6 +95,20 @@ namespace application.ViewModel
             {
                 SetProperty(ref _searchText, value);
                 UpdatePlayerList();
+            if ((Password == null || Password == "") || (Username == null || Username == "") || (ConfirmPassword != Password))
+            {
+                /*if (Password == null || Password == "")
+                    PasswordErrorText = "Please enter a password";
+                else if (Username == null || Username == "")
+                    UsernameErrorText = "Please enter a valid username";
+                else if (Username == null || Username == "")
+                    ConfirmationOfPasswordText = "The two password you have enter are not identical";*/
+                return false;
+            }
+            else 
+            {
+                
+                return true;
             }
         }
 
@@ -84,6 +126,9 @@ namespace application.ViewModel
                     .Take(5)
                     .ToList()
             );
+        private void ExecuteCreateAccountClick(object param)
+        {
+            Navigation.PushAsync(new ProfilePage());
         }
 
     }
