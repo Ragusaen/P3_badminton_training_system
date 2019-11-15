@@ -12,6 +12,7 @@ namespace Common
         GetPlayerFeedback,
         GetPlaySessionFeedback,
         GetPracticeSession,
-        GetAllFocusPoints
+        GetAllFocusPoints,
+        GetPlayerPracticeTeams
     };
 }
