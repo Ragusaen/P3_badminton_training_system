@@ -1,25 +1,32 @@
-﻿using application.ViewModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using application.ViewModel;
+using Microcharts;
+using SkiaSharp;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Entry = Microcharts.Entry;
 
 namespace application.UI
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class CreateMatchPage : ContentPage
+    public partial class ViewFeedbackPage : ContentPage
     {
-        public CreateMatchPage()
+
+
+        public ViewFeedbackPage()
         {
             InitializeComponent();
-            CreateMatchViewModel vm = new CreateMatchViewModel();
+
+
+
+            ViewFeedbackViewModel vm = new ViewFeedbackViewModel();
             BindingContext = vm;
             vm.Navigation = Navigation;
-            SaveIcon.Source = ImageSource.FromResource("application.Images.saveicon.png");
         }
+
     }
 }

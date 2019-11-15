@@ -7,39 +7,41 @@ namespace application.ViewModel
 {
     class CreateAccountViewModel : BaseViewModel
     {
-        private string _userName;
+        private string _username;
 
-        public string UserName
+        public string Username
         {
-            get { return _userName; }
+            get { return _username; }
             set
             {
-                if (SetProperty(ref _userName, value))
+                if (SetProperty(ref _username, value))
                     CreateAccountContinueClickCommand.RaiseCanExecuteChanged();
             }
         }
 
-        private string _passWord;
+        private string _password;
 
-        public string PassWord
+        public string Password
         {
-            get { return _passWord; }
+            get { return _password; }
             set
             {
-                if (SetProperty(ref _passWord, value))
+                if (SetProperty(ref _password, value))
                     CreateAccountContinueClickCommand.RaiseCanExecuteChanged();
             }
         }
 
-        private string _email;
+        private string _cantContinueText;
 
-        public string Email
+        public string CantContinueText
         {
-            get { return _email; }
+            get { return _cantContinueText; }
             set
             {
-                if (SetProperty(ref _email, value))
+                
+                if (SetProperty( ref _cantContinueText, value))
                     CreateAccountContinueClickCommand.RaiseCanExecuteChanged();
+
             }
         }
 
@@ -56,9 +58,22 @@ namespace application.ViewModel
         //Check if user is in database. Navigate to main page.
         private void ExecuteCreateAccountClick(object param)
         {
-            ProfilePageViewModel vm = new ProfilePageViewModel();
-            Navigation.PushAsync(new ProfilePage() { BindingContext = vm });
-            vm.Navigation = Navigation;
+            if ((Password == null || Password == "") || (Username == null || Username == ""))
+            {
+                CantContinueText = "You need to enter an username and a password before you can continue";
+                return false;
+            }
+            else 
+            {
+                CantContinueText = " ";
+                return true;
+            }
+        }
+
+        //Check if username is free in database
+        private void ExecuteCreateAccountContinueClick(object param)
+        {
+            Navigation.PushAsync(new CreateAccountChooseNamePage());
         }
     }
 }

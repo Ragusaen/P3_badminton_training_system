@@ -3,13 +3,40 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:cvtr="clr-namespace:application.UI.Converter"
              mc:Ignorable="d"
              x:Class="application.UI.LineupPage">
+
+    <ContentPage.Resources>
+        <cvtr:LineupPositionToStringConverter x:Key="LineupPositionConverter"/>
+    </ContentPage.Resources>
+        
     <ContentPage.Content>
         <StackLayout>
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+            <ListView RowHeight="50" HeightRequest="{Binding LineupHeight}" ItemsSource="{Binding Positions}" BackgroundColor="FloralWhite">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="20"/>
+                                    <RowDefinition Height="20"/>
+                                </Grid.RowDefinitions>
+                                <Label Grid.Column="0" Grid.RowSpan="2" FontSize="Medium" Text="{Binding Key, Converter={StaticResource LineupPositionConverter}}"/>
+                                <Label Grid.Column="1" Grid.Row="0" FontSize="Medium" Text="{Binding Value.Player.BadmintonPlayerId}"/>
+                                <Label Grid.Column="2" Grid.Row="0" FontSize="Medium" Text="{Binding Value.Player.Member.Name}"/>
+                                <Label Grid.Column="1" Grid.Row="1" FontSize="Medium" Text="{Binding Value.OtherPlayer.BadmintonPlayerId}"/>
+                                <Label Grid.Column="2" Grid.Row="1" FontSize="Medium" Text="{Binding Value.OtherPlayer.Member.Name}"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

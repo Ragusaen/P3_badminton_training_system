@@ -9,7 +9,7 @@ using application.UI;
 namespace application.ViewModel
 {
     class LoginPageViewModel : BaseViewModel
-    {
+    {   
         #region InvalidLogin
         private bool _invalidLoginTextVisible;
 
@@ -63,8 +63,7 @@ namespace application.ViewModel
 
         //Check if user is in database. Navigate to main page.
         private void ExecuteLoginClick(object param)
-        {
-            
+        {   
             if (RequestCreator.LoginRequest(Username, Password))
                 Application.Current.MainPage = new NavigationPage(new MenuPage());
             else
@@ -73,6 +72,7 @@ namespace application.ViewModel
                 InvalidLoginTextVisible = true;
             }
         }
+
         private RelayCommand _forgotPassWordClickCommand;
 
         public RelayCommand ForgotPassWordClickCommand
@@ -86,10 +86,9 @@ namespace application.ViewModel
         //Check if user is in database. Navigate to main page.
         private void ExecuteForgotPassWordClick(object param)
         {
-            ForgotPasswordViewModel vm = new ForgotPasswordViewModel();
-            Navigation.PushAsync(new ForgotPasswordPage() { BindingContext = vm });
-            vm.Navigation = Navigation;
+            Navigation.PushAsync(new ForgotPasswordPage());
         }
+
         private RelayCommand _createAccountClickCommand;
 
         public RelayCommand CreateAccountClickCommand

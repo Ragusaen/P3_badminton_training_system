@@ -2,10 +2,10 @@
 {
     public class FocusPointDescriptor
     {
-        public int ID;
-        public string Name;
-        public bool IsPrivate;
-        public string Description;
-        public string VideoURL;
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public bool IsPrivate { get; set; }
+        public string Description { get; set; }
+        public string VideoURL { get; set; }
     }
 }

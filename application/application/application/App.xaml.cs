@@ -5,6 +5,7 @@ using application.UI;
 using application.SystemInterface.Network;
 using application.SystemInterface;
 using System.Diagnostics;
+using application.ViewModel;
 
 namespace application
 {
@@ -18,7 +19,7 @@ namespace application
 
         protected override void OnStart()
         {
-            RequestCreator.Connect();
+            //RequestCreator.Connect();
         }
 
         protected override void OnSleep()

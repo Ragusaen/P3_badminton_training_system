@@ -1,17 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
-using application.Model;
+using application.Controller;
+using application.UI;
+using Common.Model;
+using Rg.Plugins.Popup.Services;
+using Xamarin.Forms;
 
 namespace application.ViewModel
 {
     class ProfilePageViewModel : BaseViewModel
     {
-        public Member CurrentMember { get; set; } = new Member("Pernille Pedersen");
+        public Member User { get; set; }
        
-        private List<PracticeTeam> _teams;
+        private ObservableCollection<PracticeTeam> _teams;
 
-        public List<PracticeTeam> Teams
+        public ObservableCollection<PracticeTeam> Teams
         {
             get { return _teams; }
             set
@@ -20,26 +26,12 @@ namespace application.ViewModel
             }
         }
 
-        private string _searchtext;
+        private ObservableCollection<FocusPointItem> _focusPoints;
 
-        public string SearchText
+        public ObservableCollection<FocusPointItem> FocusPoints
         {
-            get { return _searchtext; }
-            set
-            {
-                SetProperty(ref _searchtext, value);
-            }
-        }
-
-        private List<FocusPoint> _searchResultFocusPoints;
-
-        public List<FocusPoint> SearchResultFocusPoints
-        {
-            get { return _searchResultFocusPoints; }
-            set
-            {
-                SetProperty(ref _searchResultFocusPoints, value);
-            }
+            get { return _focusPoints; }
+            set { SetProperty(ref _focusPoints, value); }
         }
 
         private int _teamListHeight;
@@ -58,20 +50,44 @@ namespace application.ViewModel
             set { SetProperty(ref _focusPointListHeight, value); }
         }
 
-
         public ProfilePageViewModel() 
         {
-            Teams = new List<PracticeTeam>();
-            Teams.Add(new PracticeTeam("U17", true));
-            Teams.Add(new PracticeTeam("Senior", false));
-            List<FocusPoint> focusPoint = new List<FocusPoint>();
-            focusPoint.Add(new FocusPoint("Serv"));
-            focusPoint.Add(new FocusPoint("Slag"));
-            SearchResultFocusPoints = focusPoint;
+            User = new Member() { Name = "Pernille Pedersen" };
+            User.FocusPoints = new List<FocusPointItem>() { new FocusPointItem() { Descriptor = new FocusPointDescriptor() { Name = "Slag 1", Id = 1 } } };
+            FocusPoints = new ObservableCollection<FocusPointItem>(User.FocusPoints);
+            FocusPointListHeight = FocusPoints.Count * 45;
 
-            TeamListHeight = Teams.Count * 45;
-            FocusPointListHeight = focusPoint.Count * 45;
+            Teams = new ObservableCollection<PracticeTeam>();
+            Teams.Add(new PracticeTeam() {Name = "U17"});
+            Teams.Add(new PracticeTeam() { Name = "Senior" });
         }
+
+
+        private RelayCommand _addFocusPointCommand;
+
+        public RelayCommand AddFocusPointCommand
+        {
+            get 
+            { 
+                return _addFocusPointCommand ?? (_addFocusPointCommand = new RelayCommand(param => ExecuteAddFocusPoint(param))); 
+            }
+        }
+
+        private void ExecuteAddFocusPoint(object param)
+        {
+            FocusPointPopupPage page = new FocusPointPopupPage(User);
+            page.CallBackEvent += FocusPointPopupPageCallback;
+            PopupNavigation.Instance.PushAsync(page);
+        }
+
+        private void FocusPointPopupPageCallback(object sender, FocusPointItem e)
+        {
+            //TODO: UPDATE MODEL
+            User.FocusPoints.Add(e);
+            FocusPoints.Add(e);
+            FocusPointListHeight = FocusPoints.Count * 45;
+        }
+
         private RelayCommand _profileSettingCommand;
 
         public RelayCommand ProfileSettingCommand
@@ -83,9 +99,18 @@ namespace application.ViewModel
         }
 
         //Check if user is in database. Navigate to main page.
-        private void ExecuteProfileSettingTap(object param)
+        private async void ExecuteProfileSettingTap(object param)
         {
-            CurrentMember.Name = "Hallo";
+            //Needs to change depending on user type
+            
+            string action = await Application.Current.MainPage.DisplayActionSheet("Choose what you want to edit:", "Cancel", null, "Edit User's Information", "Edit User's Rights");
+
+            if (action == "Edit User's Information")
+                await Navigation.PushAsync(new EditUserInfoPage());
+            else if (action == "Edit User's Rights")
+            {
+                string rights = await Application.Current.MainPage.DisplayActionSheet("Choose user's rights:", "Cancel", null, "Player", "Trainer", "Player and Trainer");
+            }  
         }
 
         private RelayCommand _viewFeedbackCommand;
@@ -99,7 +124,7 @@ namespace application.ViewModel
         }
         private void ExecuteViewFeedbackClick(object param)
         {
-            
+            Navigation.PushAsync(new ViewFeedbackPage());
         }
     }
 }
