@@ -10,7 +10,6 @@ namespace Common.Serialization
     {
         [DataMember] public string Username;
         [DataMember] public string Password;
-        [DataMember] public int BadmintonId;
     }
 
     [DataContract]

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
+using application.SystemInterface;
 using Xamarin.Forms;
 using application.UI;
 
@@ -9,20 +10,39 @@ namespace application.ViewModel
 {
     class LoginPageViewModel : BaseViewModel
     {
-        private string _userName;
+        #region InvalidLogin
+        private bool _invalidLoginTextVisible;
 
-        public string UserName
+        public bool InvalidLoginTextVisible
         {
-            get { return _userName; }
-            set { if (SetProperty(ref _userName, value))
+            get { return _invalidLoginTextVisible; }
+            set { SetProperty(ref _invalidLoginTextVisible, value); }
+        }
+
+        private int _invalidLoginTextHeight;
+        private const int TextHeight = 20;
+
+        public int InvalidLoginTextHeight
+        {
+            get { return _invalidLoginTextHeight; }
+            set { SetProperty(ref _invalidLoginTextHeight, value); }
+        }
+        #endregion
+
+        private string _username;
+
+        public string Username
+        {
+            get { return _username; }
+            set { if (SetProperty(ref _username, value))
                     LoginClickCommand.RaiseCanExecuteChanged(); }
         }
-        private string _passWord;
+        private string _password;
 
-        public string PassWord
+        public string Password
         {
-            get { return _passWord; }
-            set { if (SetProperty(ref _passWord, value))
+            get { return _password; }
+            set { if (SetProperty(ref _password, value))
                     LoginClickCommand.RaiseCanExecuteChanged(); }
         }
 
@@ -38,20 +58,20 @@ namespace application.ViewModel
 
         private bool CanExecuteLoginClick(object param)
         {
-            if((PassWord == null || PassWord == "") || (UserName == null || UserName == ""))
-                return false;
-            else
-                return true;
+            return !(string.IsNullOrEmpty(Password) || string.IsNullOrEmpty(Username));
         }
 
         //Check if user is in database. Navigate to main page.
         private void ExecuteLoginClick(object param)
         {
-            MenuViewModel vm = new MenuViewModel();
-           /* Navigation.PushAsync( new MenuPage() {BindingContext = vm});
-            vm.Navigation = Navigation;*/
-
-            Application.Current.MainPage = new NavigationPage(new MenuPage() { BindingContext = vm });
+            
+            if (RequestCreator.LoginRequest(Username, Password))
+                Application.Current.MainPage = new NavigationPage(new MenuPage());
+            else
+            {
+                InvalidLoginTextHeight = TextHeight;
+                InvalidLoginTextVisible = true;
+            }
         }
         private RelayCommand _forgotPassWordClickCommand;
 

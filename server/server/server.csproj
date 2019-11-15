@@ -197,11 +197,11 @@
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\FocusPointDescriptorCast.cs" />
-    <Compile Include="DAL\MemberCast.cs" />
-    <Compile Include="DAL\LineupCast.cs" />
     <Compile Include="DAL\member.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\MemberCast.cs" />
+    <Compile Include="DAL\LineupCast.cs" />
     <Compile Include="DAL\playsession.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
@@ -249,11 +249,12 @@
     <Compile Include="SystemInterface\Network\SslTcpClient.cs" />
     <Compile Include="SystemInterface\Network\SslTcpServer.cs" />
     <Compile Include="SystemInterface\Requests\ClientRequests.cs" />
+    <Compile Include="SystemInterface\Requests\Handlers\BindAccountToMemberHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\CreateAccountHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetAllFocusPointDescriptorsHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetAllPlayersHandler.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\GetFeedbackListFromMemberIdHandler.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\GetFeedbackListFromPlaySessionIdHandler.cs" />
+    <Compile Include="SystemInterface\Requests\Handlers\GetPlayerFeedbackHandler.cs" />
+    <Compile Include="SystemInterface\Requests\Handlers\GetPlaySessionFeedback.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetPracticeSessionHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetPracticeTeamHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetScheduleHandler.cs" />

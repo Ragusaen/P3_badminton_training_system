@@ -23,7 +23,7 @@ namespace Server.Controller
         public byte[] Login(string username, string password)
         {
             var db = new DatabaseEntities();
-            var account = db.accounts.First(p => p.Username == username);
+            var account = db.accounts.Find(username);
 
             // Check if account was found
             if (account != null &&
@@ -59,7 +59,7 @@ namespace Server.Controller
             var db = new DatabaseEntities();
 
             // Check if username is already taken
-            if (db.accounts.Count(p => p.Username == username) > 0)
+            if (db.accounts.Find(username) != null)
                 return false;
             
             // Generate a hash and salt for the new user
@@ -78,12 +78,12 @@ namespace Server.Controller
         }
         #endregion
 
-        public string GetUsernameFromToken(byte[] token)
+        public member GetMemberFromToken(byte[] token)
         {
             var db = new DatabaseEntities();
-            var user = db.tokens.SingleOrDefault(t => t.AccessToken.SequenceEqual(token));
+            var tokenLocation = db.tokens.SingleOrDefault(t => t.AccessToken.SequenceEqual(token));
 
-            return user?.AccountUsername;
+            return tokenLocation?.account.members.SingleOrDefault(m => m.Username == tokenLocation.AccountUsername);
         }
 
         private (byte[] password, byte[] salt) GenerateHashedPasswordAndSalt(string password)

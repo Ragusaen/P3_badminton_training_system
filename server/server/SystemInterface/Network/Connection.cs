@@ -32,13 +32,12 @@ namespace Server.SystemInterface.Network
 
                     try
                     {
-                        reqman.Parse(request);
+                        var response = reqman.Parse(request);
+                        Respond(response);
                     } catch (InvalidRequestException e)
                     {
                         _nlog.Error(e, $"Client send a request with an invalid request type: {request[0]}");
-                        reqman.Response = new byte[] { 0 };
                     }
-                    Respond(reqman.Response);
                 }
                 catch (InvalidRequestException)
                 {

@@ -4,8 +4,8 @@ namespace Common.Model
 {
     public abstract class MemberRole
     {
-        public enum Type { None, Player, Trainer, Both }
-
         public Member Member;
     }
+
+    public enum MemberType { None, Player, Trainer, Both }
 }

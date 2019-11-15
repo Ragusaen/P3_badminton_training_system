@@ -15,7 +15,7 @@ namespace Server.DAL
         /// <param name="dbType"></param>
         /// <param name="modelType"></param>
         /// <returns></returns>
-        public static void CheckMemberType(int dbType, Common.Model.MemberRole.Type modelType)
+        public static void CheckMemberType(int dbType, MemberType modelType)
         {
             if ((dbType & (int) modelType) == 0)
                 throw new InvalidCastException($"The member was not of type {modelType.ToString()}");
@@ -32,7 +32,7 @@ namespace Server.DAL
 
         public static explicit operator Common.Model.Player(member m)
         {
-            CheckMemberType(m.MemberType, MemberRole.Type.Player);
+            CheckMemberType(m.MemberType, Common.Model.MemberType.Player);
             return new Player()
             {
                 Sex = (Sex)m.Sex,
@@ -44,7 +44,7 @@ namespace Server.DAL
 
         public static explicit operator Trainer(member m)
         {
-            CheckMemberType(m.MemberType, MemberRole.Type.Trainer);
+            CheckMemberType(m.MemberType, Common.Model.MemberType.Trainer);
             return new Trainer()
             {
                 Member = (Common.Model.Member)m

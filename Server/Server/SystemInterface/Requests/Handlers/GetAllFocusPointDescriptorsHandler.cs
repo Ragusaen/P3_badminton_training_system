@@ -11,7 +11,7 @@ namespace Server.SystemInterface.Requests.Handlers
 {
     class GetAllFocusPointDescriptorsHandler : MiddleRequestHandler<GetAllFocusPointsRequest, GetAllFocusPointsResponse>
     {
-        protected override GetAllFocusPointsResponse InnerHandle(GetAllFocusPointsRequest request)
+        protected override GetAllFocusPointsResponse InnerHandle(GetAllFocusPointsRequest request, member requester)
         {
             var db = new DatabaseEntities();
             return new GetAllFocusPointsResponse

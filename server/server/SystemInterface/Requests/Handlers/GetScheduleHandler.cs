@@ -12,7 +12,7 @@ namespace Server.SystemInterface.Requests.Handlers
 {
     class GetScheduleHandler : MiddleRequestHandler<GetScheduleRequest, GetScheduleResponse>
     {
-        protected override GetScheduleResponse InnerHandle(GetScheduleRequest request)
+        protected override GetScheduleResponse InnerHandle(GetScheduleRequest request, member requester)
         {
             var db = new DatabaseEntities();
 

@@ -11,7 +11,7 @@ namespace Server.SystemInterface.Requests.Handlers
 {
     class GetPracticeTeamHandler : MiddleRequestHandler<GetPracticeTeamRequest, GetPracticeTeamResponse>
     {
-        protected override GetPracticeTeamResponse InnerHandle(GetPracticeTeamRequest request)
+        protected override GetPracticeTeamResponse InnerHandle(GetPracticeTeamRequest request, member requester)
         {
             var db = new DatabaseEntities();
 
