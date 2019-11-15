@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Common;
+using Common.Model;
 using Common.Serialization;
 
 namespace application.SystemInterface
@@ -64,5 +65,9 @@ namespace application.SystemInterface
             return response.WasSuccessful;
         }
 
+        public static List<Player> GetAllUnassignedPlayers()
+        {
+
+        }
     }
 }

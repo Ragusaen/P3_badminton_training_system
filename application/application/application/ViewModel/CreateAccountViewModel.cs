@@ -1,7 +1,10 @@
 ﻿using application.UI;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Text;
+using application.SystemInterface;
+using Common.Model;
 
 namespace application.ViewModel
 {
@@ -48,12 +51,29 @@ namespace application.ViewModel
             Navigation.PushAsync(new ProfilePage());
         }
 
-        //Check if username is free in database.
-        private void ExecuteCreateAccountContinueClick(object param)
+
+        private List<Player> _availablePlayers;
+        public ObservableCollection<string> ShownPlayerList { get; set; }
+
+        private string _searchText;
+
+        public string SearchText
         {
-            CreateAccountChooseNameViewModel vm = new CreateAccountChooseNameViewModel();
-            Navigation.PushAsync(new CreateAccountChooseNamePage() { BindingContext = vm });
-            vm.Navigation = Navigation;
+            get => _searchText;
+            set
+            {
+                SetProperty(ref _searchText, value);
+                UpdatePlayerList();
+            }
         }
+
+        private void UpdatePlayerList()
+        {
+            if (_availablePlayers == null)
+            {
+                RequestCreator.
+            }
+        }
+
     }
 }
