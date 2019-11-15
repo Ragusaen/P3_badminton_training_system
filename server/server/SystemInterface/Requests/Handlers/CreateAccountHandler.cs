@@ -37,7 +37,13 @@ namespace Server.SystemInterface.Requests.Handlers
                     account = db.accounts.Find(request.Username),
                     MemberType = (int)MemberType.None
                 };
+                db.members.Add(member);
             }
+
+            return new CreateAccountResponse()
+            {
+                WasSuccessful = true
+            };
         }
     }
 }
