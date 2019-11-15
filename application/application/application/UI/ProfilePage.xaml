@@ -5,7 +5,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:forms="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
              mc:Ignorable="d"
-             x:Class="application.UI.ProfilePage" BackgroundColor="White" NavigationPage.HasBackButton="False">
+             x:Class="application.UI.ProfilePage" BackgroundColor="White" NavigationPage.HasBackButton="False"
+             x:Name="rootpage">
 
     <NavigationPage.TitleView>
         <StackLayout Orientation="Horizontal" Spacing="10">
@@ -23,36 +24,50 @@
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <Grid>
+                                <Grid Padding="0" Margin="0" RowSpacing="0">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="9*"/>
+                                        <ColumnDefinition Width="1*"/>
                                     </Grid.ColumnDefinitions>
-                                    <Label Text="{Binding Name}" VerticalOptions="Center"/>
-                                    <Switch IsToggled="True" ThumbColor="Red" OnColor="LightPink"/>
+                                    <Label Grid.Column="0" Text="{Binding Name}" VerticalOptions="Center"/>
+                                    <Button Grid.Column="1" Text="❌" BackgroundColor="White" WidthRequest="50" VerticalOptions="End" Command="{Binding BindingContext.DeleteListTeamItemCommand, Source={x:Reference rootpage}}" CommandParameter="{Binding}"/>
                                 </Grid>
                             </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
+
+                <Button Text="Add Team"/>
                 <Label Text="Focus Point" FontSize="Medium"/>
 
                 <SearchBar Placeholder="Enter your focus point" Text="{Binding SearchText}"/>
                 <ListView VerticalScrollBarVisibility="Never" ItemsSource="{Binding SearchResultFocusPoints}" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding FocusPointListHeight}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
-                            <TextCell Height="45" Text="{Binding Descriptor.Name}"/>
+                            <ViewCell>
+                                <Grid Padding="0" Margin="0" RowSpacing="0">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="9*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Column="0" Text="{Binding Descriptor.Name}" VerticalOptions="Center"/>
+                                    <Button Grid.Column="1" Text="❌" BackgroundColor="White" WidthRequest="50" VerticalOptions="End" Command="{Binding BindingContext.DeleteListFocusItemCommand, Source={x:Reference rootpage}}" CommandParameter="{Binding}"/>
+                                </Grid>
+                            </ViewCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
+                <Button Text="Add focuspoint"/>
                 <Label Text="Comments" FontSize="Medium"/>
                 <Frame  CornerRadius="5" HasShadow="True">
                     <Editor Placeholder="Enter a comment" AutoSize="TextChanges"/>
                 </Frame>
 
+                <Label Text="Focuspoint graph" FontSize="Medium"/>
                 <forms:ChartView x:Name="Chart1" HeightRequest="300" Margin="-80, 0, -80, 0" />
             <Button Text="View Feedback" Command="{Binding ViewFeedbackCommand}"/>
-        </StackLayout>
+            <Button Text="View all Feedback graph" Command="{Binding ViewFeedbackCommand}"/>
+            </StackLayout>
         </ScrollView>
     </ContentPage.Content>
 </ContentPage>

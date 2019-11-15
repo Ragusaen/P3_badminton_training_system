@@ -13,8 +13,8 @@ namespace application.ViewModel
     class ProfilePageViewModel : BaseViewModel
     {
         public ObservableCollection<FocusPointItem> FocusPoint;
-        public Member CurrentMember { get; set; } = new Member() { Name = "Pernille Pedersen"};
-       
+        public Member CurrentMember { get; set; } = new Member() { Name = "Pernille Pedersen" };
+
         private ObservableCollection<PracticeTeam> _teams;
 
         public ObservableCollection<PracticeTeam> Teams
@@ -46,7 +46,7 @@ namespace application.ViewModel
             set
             {
                 SetProperty(ref _searchResultFocusPoints, value);
-                    FocusPointListHeight = SearchResultFocusPoints.Count * 45;
+                FocusPointListHeight = SearchResultFocusPoints.Count * 45;
             }
         }
 
@@ -67,14 +67,14 @@ namespace application.ViewModel
         }
 
 
-        public ProfilePageViewModel() 
+        public ProfilePageViewModel()
         {
             Teams = new ObservableCollection<PracticeTeam>();
-            Teams.Add(new PracticeTeam() {Name = "U17"});
+            Teams.Add(new PracticeTeam() { Name = "U17" });
             Teams.Add(new PracticeTeam() { Name = "Senior" });
             FocusPoint = new ObservableCollection<FocusPointItem>();
             FocusPoint.Add(new FocusPointItem() { Descriptor = new FocusPointDescriptor() { Name = "Slag" } });
-            FocusPoint.Add(new FocusPointItem() { Descriptor = new FocusPointDescriptor() { Name = "Svip Serv"} });
+            FocusPoint.Add(new FocusPointItem() { Descriptor = new FocusPointDescriptor() { Name = "Svip Serv" } });
             FocusPoint.Add(new FocusPointItem() { Descriptor = new FocusPointDescriptor() { Name = "Slag" } });
             FocusPoint.Add(new FocusPointItem() { Descriptor = new FocusPointDescriptor() { Name = "Flad Serv" } });
             FocusPoint.Add(new FocusPointItem() { Descriptor = new FocusPointDescriptor() { Name = "Slag" } });
@@ -96,7 +96,7 @@ namespace application.ViewModel
         private async void ExecuteProfileSettingTap(object param)
         {
             //Needs to change depending on user type
-            
+
             string action = await Application.Current.MainPage.DisplayActionSheet("Choose what you want to edit:", "Cancel", null, "Edit User's Information", "Edit User's Rights");
 
             if (action == "Edit User's Information")
@@ -104,7 +104,7 @@ namespace application.ViewModel
             else if (action == "Edit User's Rights")
             {
                 string rights = await Application.Current.MainPage.DisplayActionSheet("Choose user's rights:", "Cancel", null, "Player", "Trainer", "Player and Trainer");
-            }  
+            }
         }
 
         private RelayCommand _viewFeedbackCommand;
@@ -119,6 +119,36 @@ namespace application.ViewModel
         private void ExecuteViewFeedbackClick(object param)
         {
             Navigation.PushAsync(new ViewFeedbackPage());
+        }
+        private RelayCommand _deleteListTeamItemCommand;
+
+        public RelayCommand DeleteListTeamItemCommand
+        {
+            get
+            {
+                return _deleteListTeamItemCommand ?? (_deleteListTeamItemCommand = new RelayCommand(param => DeleteListTeamItemClick(param)));
+            }
+        }
+        private void DeleteListTeamItemClick(object param)
+        {
+            PracticeTeam team = param as PracticeTeam;
+            Teams.Remove(team);
+            TeamListHeight = Teams.Count * 45; 
+        }
+        private RelayCommand _deleteListFocusItemCommand;
+
+        public RelayCommand DeleteListFocusItemCommand
+        {
+            get
+            {
+                return _deleteListFocusItemCommand ?? (_deleteListFocusItemCommand = new RelayCommand(param => DeleteListFocusItemClick(param)));
+            }
+        }
+        private void DeleteListFocusItemClick(object param)
+        {
+            FocusPointItem focuspoint = param as FocusPointItem;
+            SearchResultFocusPoints.Remove(focuspoint);
+            FocusPointListHeight = SearchResultFocusPoints.Count * 45;
         }
     }
 }
