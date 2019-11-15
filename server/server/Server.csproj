@@ -189,7 +189,7 @@
     <Compile Include="DAL\exercise.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\ExerciseCast.cs" />
+    <Compile Include="DAL\PracticeSessionExerciseCast.cs" />
     <Compile Include="DAL\ExerciseDescriptorCast.cs" />
     <Compile Include="DAL\feedback.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
@@ -230,6 +230,7 @@
     <Compile Include="DAL\yearplansection.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\YearPlanSectionCast.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetPlayerFocusPointsHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetPlayersWithNoAccountHandler.cs" />
     <Compile Include="DAL\MemberCast.cs" />
@@ -264,6 +265,7 @@
     <Compile Include="SystemInterface\Requests\Handlers\GetPracticeSessionFocusPointsHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetPracticeSessionHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetPracticeTeamHandler.cs" />
+    <Compile Include="SystemInterface\Requests\Handlers\GetPracticeTeamYearPlanHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetScheduleHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetTeamMatchHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetTeamMatchPositionsHandler.cs" />

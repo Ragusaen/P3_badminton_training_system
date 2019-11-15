@@ -19,6 +19,6 @@ namespace Common
         GetTeamMatchPositions,
         GetPracticeSessionFocusPoints,
         GetPracticeSessionExercises,
-        GetPracticeSessionYearPlan
+        GetPracticeTeamYearPlan
     };
 }
