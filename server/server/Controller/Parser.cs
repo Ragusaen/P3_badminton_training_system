@@ -87,7 +87,7 @@ namespace Server.Controller
                 {
                     currentRow.FindElement(By.ClassName("playerid")).GetAttribute("innerHTML");
                 }
-                catch (Exception e) { continue;}
+                catch (Exception) { continue;}
                 
                 // Fetches information from the current row
                 string rawPlayerId = currentRow.FindElement(By.ClassName("playerid")).GetAttribute("innerHTML");

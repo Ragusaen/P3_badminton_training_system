@@ -22,7 +22,7 @@ namespace Server.SystemInterface.Requests.Handlers
             var db = new DatabaseEntities();
             var response = new GetPlayerFeedbackResponse { Feedback = new List<Feedback>() };
 
-            response.FeedbackList = db.feedbacks.Where(p => p.MemberID == request.Id).Select(p => (Common.Model.Feedback)p).ToList();
+            response.Feedback = db.feedbacks.Where(p => p.MemberID == request.MemberId).Select(p => (Common.Model.Feedback)p).ToList();
 
             return response;
         }

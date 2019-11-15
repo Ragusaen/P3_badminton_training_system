@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 
 namespace Common.Model
 {
@@ -7,5 +8,7 @@ namespace Common.Model
         public Member Member;
     }
 
-    public enum MemberType { None, Player, Trainer, Both }
+
+    [Flags]
+    public enum MemberType { None, Player, Trainer, Both = Player | Trainer }
 }
