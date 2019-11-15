@@ -7,6 +7,6 @@ namespace Server.Function.Rules
     {
         int Priority { get; set; }
 
-        List<RuleBreak> Rule(Match match);
+        List<RuleBreak> Rule(TeamMatch match);
     }
 }

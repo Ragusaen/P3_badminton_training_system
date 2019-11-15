@@ -20,14 +20,14 @@ namespace Server.SystemInterface.Requests.Handlers
             
             GetScheduleResponse response = new GetScheduleResponse()
             {
-                Matches = new List<Match>(),
+                Matches = new List<TeamMatch>(),
                 PracticeSessions = new List<PracticeSession>()
             };
 
             foreach (var DBps in s)
             {
                 var ps = (PlaySession) DBps;
-                if (ps is Match m)
+                if (ps is TeamMatch m)
                     response.Matches.Add(m);
                 else if (ps is PracticeSession q)
                     response.PracticeSessions.Add(q);

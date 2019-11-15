@@ -7,7 +7,7 @@ namespace Server.Function.Rules
     {
         public int Priority { get; set; }
 
-        public List<RuleBreak> Rule(Match match)
+        public List<RuleBreak> Rule(TeamMatch match)
         {
             List<RuleBreak> ruleBreaks = new List<RuleBreak>();
             foreach (var position in match.Lineup.Positions)

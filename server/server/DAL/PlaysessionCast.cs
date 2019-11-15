@@ -24,10 +24,10 @@ namespace Server.DAL
             else
             {
                 var match = p.teammatch;
-                playSession = new Match()
+                playSession = new TeamMatch()
                 {
                     Captain = (Member)match.member,
-                    League =  (Match.Leagues)match.League,
+                    League =  (TeamMatch.Leagues)match.League,
                     LeagueRound = match.LeagueRound,
                     Lineup = (new LineUpCast()).CreateLineup(match.positions)
                 };

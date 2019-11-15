@@ -13,7 +13,7 @@ namespace Server.Function.Rules
             _minAge = minAge;
         }
 
-        public List<RuleBreak> Rule(Match match)
+        public List<RuleBreak> Rule(TeamMatch match)
         {
             List<RuleBreak> ruleBreaks = new List<RuleBreak>();
             foreach (var position in match.Lineup.Positions)

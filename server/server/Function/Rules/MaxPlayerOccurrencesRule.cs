@@ -13,7 +13,7 @@ namespace Server.Function.Rules
             _max = maxOccurrences;
         }
 
-        public List<RuleBreak> Rule(Match match) //Clean up
+        public List<RuleBreak> Rule(TeamMatch match) //Clean up
         {
             List<RuleBreak> ruleBreaks = new List<RuleBreak>();
             int count, count2 = 0;

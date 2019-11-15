@@ -17,6 +17,6 @@ namespace Common.Serialization
     public class GetScheduleResponse : Response
     {
         [DataMember] public List<PracticeSession> PracticeSessions;
-        [DataMember] public List<Match> Matches;
+        [DataMember] public List<TeamMatch> Matches;
     }
 }

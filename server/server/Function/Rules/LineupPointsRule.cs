@@ -16,7 +16,7 @@ namespace Server.Function.Rules
             _maxDoubleDiff = maxDoubleDiff;
         }
 
-        public List<RuleBreak> Rule(Match match)
+        public List<RuleBreak> Rule(TeamMatch match)
         {
             List<RuleBreak> ruleBreaks = new List<RuleBreak>();
 
