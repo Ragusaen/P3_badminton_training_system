@@ -15,7 +15,7 @@ namespace application.ViewModel
             set
             {
                 if (SetProperty(ref _username, value))
-                    CreateAccountContinueClickCommand.RaiseCanExecuteChanged();
+                    CreateAccountClickCommand.RaiseCanExecuteChanged();
             }
         }
 
@@ -27,52 +27,73 @@ namespace application.ViewModel
             set
             {
                 if (SetProperty(ref _password, value))
-                    CreateAccountContinueClickCommand.RaiseCanExecuteChanged();
+                    CreateAccountClickCommand.RaiseCanExecuteChanged();
             }
         }
 
-        private string _cantContinueText;
+        private string _confirmPassword;
 
-        public string CantContinueText
+        public string ConfirmPassword
         {
-            get { return _cantContinueText; }
+            get { return _confirmPassword; }
             set
             {
-                
-                if (SetProperty( ref _cantContinueText, value))
-                    CreateAccountContinueClickCommand.RaiseCanExecuteChanged();
-
+                if (SetProperty(ref _confirmPassword, value))
+                    CreateAccountClickCommand.RaiseCanExecuteChanged();
             }
         }
 
-        private RelayCommand _createAccountContinueClickCommand;
+        private string _confirmationOfPasswordText;
 
-        public RelayCommand CreateAccountContinueClickCommand
+        public string ConfirmationOfPasswordText
+        {
+            get { return _confirmationOfPasswordText; }
+            set
+            {
+                if (SetProperty(ref _confirmationOfPasswordText, value))
+                {
+                    if (Password == ConfirmPassword)
+                        _confirmationOfPasswordText = " ";
+                    else if (Password != ConfirmPassword)
+                        _confirmationOfPasswordText = "The two password you have enter are not identical";
+                }
+                    
+            }
+        }
+
+        private RelayCommand _createAccountClickCommand;
+
+        public RelayCommand CreateAccountClickCommand
         {
             get
             {
-                return _createAccountContinueClickCommand ?? (_createAccountContinueClickCommand = new RelayCommand(param => ExecuteCreateAccountContinueClick(param), param => CanExecuteCreateAccountContinueClick(param)));
+                return _createAccountClickCommand ?? (_createAccountClickCommand = new RelayCommand(param => ExecuteCreateAccountClick(param), param => CanExecuteCreateAccountClick(param)));
             }
         }
 
-        private bool CanExecuteCreateAccountContinueClick(object param)
+        private bool CanExecuteCreateAccountClick(object param)
         {
-            if ((Password == null || Password == "") || (Username == null || Username == ""))
+            if ((Password == null || Password == "") || (Username == null || Username == "") || (ConfirmPassword != Password))
             {
-                CantContinueText = "You need to enter an username and a password before you can continue";
+                /*if (Password == null || Password == "")
+                    PasswordErrorText = "Please enter a password";
+                else if (Username == null || Username == "")
+                    UsernameErrorText = "Please enter a valid username";
+                else if (Username == null || Username == "")
+                    ConfirmationOfPasswordText = "The two password you have enter are not identical";*/
                 return false;
             }
             else 
             {
-                CantContinueText = " ";
+                
                 return true;
             }
         }
 
-        //Check if username is free in database
-        private void ExecuteCreateAccountContinueClick(object param)
+        private void ExecuteCreateAccountClick(object param)
         {
-            Navigation.PushAsync(new CreateAccountChooseNamePage());
+            Navigation.PushAsync(new ProfilePage());
         }
+
     }
 }

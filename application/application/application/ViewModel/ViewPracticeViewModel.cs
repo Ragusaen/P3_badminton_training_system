@@ -4,7 +4,8 @@ using System.Text;
 
 namespace application.ViewModel
 {
-    class PracticeSessionViewModel : BaseViewModel
+    class ViewPracticeViewModel : BaseViewModel
     {
+        
     }
 }

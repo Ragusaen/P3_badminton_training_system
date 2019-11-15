@@ -163,6 +163,8 @@ namespace application.ViewModel
             }
         }
 
+        public ObservableCollection<FocusPointItem> FocusPoint;
+
         private ObservableCollection<FocusPointItem> _searchResultFocusPoints;
 
         public ObservableCollection<FocusPointItem> SearchResultFocusPoints
@@ -202,7 +204,7 @@ namespace application.ViewModel
         //Check if username is free in database.
         private void ExecuteAddNewPlanElementClick(object param)
         {
-            
+            PlanElement.Add("");
         }
 
         public CreatePracticeViewModel()
@@ -210,13 +212,13 @@ namespace application.ViewModel
             MinDate = DateTime.Today;
             MaxDate = new DateTime(2020, 1, 1);
 
-            List<FocusPointItem> focusPoint = new List<FocusPointItem>();
+            FocusPoint = new ObservableCollection<FocusPointItem>();
+            SearchResultFocusPoints = FocusPoint;
             //FocusPointsSearchText = focusPoint;
 
             PlanElement = new List<string>();
             PlanElement.Add("");
-            PlanElement.Add("");
-            PlanElement.Add("");
+            
         }
     }
 }
