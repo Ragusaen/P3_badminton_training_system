@@ -249,7 +249,6 @@
     <Compile Include="SystemInterface\Network\SslTcpClient.cs" />
     <Compile Include="SystemInterface\Network\SslTcpServer.cs" />
     <Compile Include="SystemInterface\Requests\ClientRequests.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\BindAccountToMemberHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\CreateAccountHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetAllFocusPointDescriptorsHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetAllPlayersHandler.cs" />

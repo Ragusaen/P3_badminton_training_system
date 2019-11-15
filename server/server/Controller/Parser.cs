@@ -75,7 +75,7 @@ namespace Server.Controller
                 {
                     currentRow.FindElement(By.ClassName("playerid")).GetAttribute("innerHTML");
                 }
-                catch (Exception e) { continue;}
+                catch (Exception) { continue;}
                 
                 // Fetches information from the current row
                 string rawPlayerId = currentRow.FindElement(By.ClassName("playerid")).GetAttribute("innerHTML");
@@ -170,7 +170,7 @@ namespace Server.Controller
                     dbMember = _db.members.Add(new member());
                     dbRankList = dbMember.ranklist = new ranklist();
                     dbMember.BadmintonPlayerID = p.BadmintonPlayerId;
-                    dbMember.MemberType = (int)MemberRole.Type.Player;
+                    dbMember.MemberType = (int)MemberType.Player;
                     dbMember.Name = p.Member.Name;
                 }
                 dbMember.Sex = (int)p.Sex;
