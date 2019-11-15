@@ -5,6 +5,7 @@ using System.Data.Entity;
 using System.Linq;
 using Common.Model;
 using Common.Serialization;
+using Server.Controller;
 
 namespace Server
 {
@@ -16,8 +17,9 @@ namespace Server
         {
             try
             {
-                SslTcpServer sslTcpServer = new SslTcpServer("localhost.cer");
-                sslTcpServer.RunServer();
+                var parser = new Parser();
+
+                parser.UpdatePlayers();
             }
             catch (Exception e)
             {

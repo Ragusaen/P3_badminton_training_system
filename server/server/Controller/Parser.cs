@@ -18,6 +18,7 @@ namespace Server.Controller
 
         public const string RankingListElementClassName = "RankingListGrid";
 
+        [Flags]
         public enum Category { 
             Level = 1, 
             MS = 2, 
@@ -64,7 +65,7 @@ namespace Server.Controller
                     _log.Debug("Scraping page 2 for category: {category}", Categories[i]);
 
                     rawRanking = ScrapeRankingsTable(browser);
-                    DistributeRankings(players, rawRanking, i);
+                    DistributeRankings(players, rawRanking, 1 << i);
                 }
                 // ReSharper disable once EmptyGeneralCatchClause
                 catch (Exception) { }
@@ -101,9 +102,9 @@ namespace Server.Controller
                 {
                     player = players.Single(p => p.BadmintonPlayerId == badmintonPlayerId);
 
-                    if (category == Category.Womens)
+                    if ((category & Category.Womens) > 0)
                         player.Sex = Sex.Female;
-                    else if(category == Category.Mens)
+                    else if((category & Category.Mens) > 0)
                         player.Sex = Sex.Male;
                     else
                         player.Sex = Sex.Unknown;
