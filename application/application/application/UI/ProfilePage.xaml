@@ -21,7 +21,7 @@
     <ContentPage.Content>
 
             <StackLayout Margin="10,10,10,10">
-                <Label Text="{Binding CurrentMember.Name}" VerticalOptions="Start" HorizontalOptions="CenterAndExpand" FontSize="Large"/>
+                <Label Text="{Binding User.Name}" VerticalOptions="Start" HorizontalOptions="CenterAndExpand" FontSize="Large"/>
                 <Label Text="Team" VerticalOptions="Start" HorizontalOptions="StartAndExpand" FontSize="Medium"/>
                 <ListView ItemsSource="{Binding Teams}" VerticalScrollBarVisibility="Never" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding TeamListHeight}">
                     <ListView.ItemTemplate>
@@ -39,17 +39,18 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
+                
                 <Label Text="Focus Point" FontSize="Medium"/>
-
-                <SearchBar Placeholder="Enter your focus point" Text="{Binding SearchText}"/>
-                <ListView VerticalScrollBarVisibility="Always" ItemsSource="{Binding SearchResultFocusPoints}" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding FocusPointListHeight}">
+                <ListView VerticalScrollBarVisibility="Never" ItemsSource="{Binding FocusPoints}" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding FocusPointListHeight}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <TextCell Height="45" Text="{Binding Descriptor.Name}"/>
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <Label Text="Comments" FontSize="Medium"/>
+            <Button Text="Add Focus Point" Command="{Binding AddFocusPointCommand}" HeightRequest="50"/>
+
+            <Label Text="Comments" FontSize="Medium"/>
                 <Frame  CornerRadius="5" HasShadow="True">
                     <Editor Placeholder="Enter a comment" AutoSize="TextChanges"/>
                 </Frame>

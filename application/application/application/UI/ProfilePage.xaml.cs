@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using application.ViewModel;
 using Microcharts;
+using Rg.Plugins.Popup.Services;
 using SkiaSharp;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -47,5 +48,6 @@ namespace application.UI
 
             Settingsicon.Source = ImageSource.FromResource("application.Images.settingsicon.jpg");
         }
+       
     }
 }

@@ -21,9 +21,9 @@
         <StackLayout HorizontalOptions="Center">
             <Image Source="" x:Name="RedLogo" HeightRequest="222" Margin="20,25,20,25"/>
             <Label Text="Username" />
-            <Entry x:Name="username" Placeholder="Enter username" Text="{Binding UserName}"/>
+            <Entry x:Name="username" Placeholder="Enter username" Text="{Binding Username}"/>
             <Label Text="Password"/>
-            <Entry x:Name="password" Placeholder="Enter password" IsPassword="True" Text="{Binding PassWord}"/>
+            <Entry x:Name="password" Placeholder="Enter password" IsPassword="True" Text="{Binding Password}"/>
             <Button Text="Log In" Command="{Binding LoginClickCommand}"/>
             <StackLayout Orientation="Horizontal" >
                 <Button Text="Forgot password?" FontSize="Micro" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Command="{Binding ForgotPassWordClickCommand}"/>
