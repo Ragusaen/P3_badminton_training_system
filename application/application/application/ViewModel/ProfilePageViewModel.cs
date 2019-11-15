@@ -57,7 +57,7 @@ namespace application.ViewModel
             FocusPoints = new ObservableCollection<FocusPointItem>(User.FocusPoints);
             FocusPointListHeight = FocusPoints.Count * 45;
 
-            Teams = new List<PracticeTeam>();
+            Teams = new ObservableCollection<PracticeTeam>();
             Teams.Add(new PracticeTeam() {Name = "U17"});
             Teams.Add(new PracticeTeam() { Name = "Senior" });
         }
@@ -83,6 +83,7 @@ namespace application.ViewModel
         private void FocusPointPopupPageCallback(object sender, FocusPointItem e)
         {
             //TODO: UPDATE MODEL
+            User.FocusPoints.Add(e);
             FocusPoints.Add(e);
             FocusPointListHeight = FocusPoints.Count * 45;
         }
