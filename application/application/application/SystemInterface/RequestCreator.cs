@@ -5,6 +5,7 @@ using System.Text;
 using Common;
 using Common.Model;
 using Common.Serialization;
+using Common.Model;
 
 namespace application.SystemInterface
 {
@@ -69,10 +70,21 @@ namespace application.SystemInterface
         {
             var request = new GetPlayersWithNoAccountRequest();
 
-            var response = SimpleRequest<GetPlayersWithNoAccountRequest, GetPlayersWithNoAccountResponse>(RequestType.GetPlayersWithNoAccount,
+            var response = SimpleRequest<GetPlayersWithNoAccountRequest, GetPlayersWithNoAccountResponse>(
+                RequestType.GetPlayersWithNoAccount,
                 request);
 
             return response.Players;
+
+        }
+
+        public static List<FocusPointDescriptor> GetFocusPoints()
+        {
+            var request = new GetAllFocusPointsRequest();
+
+            var response = SimpleRequest<GetAllFocusPointsRequest, GetAllFocusPointsResponse>(RequestType.GetAllFocusPoints, request);
+
+            return response.FocusPointDescriptors;
         }
     }
 }

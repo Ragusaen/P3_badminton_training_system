@@ -15,7 +15,7 @@
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <Label FontSize="Medium" HorizontalOptions="Center" Text="{Binding Descriptor.Name}"/>
+                        <Label FontSize="Medium" HorizontalOptions="Center" Text="{Binding Name}"/>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
