@@ -6,15 +6,15 @@ using System.Text;
 using application.Controller;
 using application.UI;
 using Common.Model;
+using Rg.Plugins.Popup.Services;
 using Xamarin.Forms;
 
 namespace application.ViewModel
 {
     class ProfilePageViewModel : BaseViewModel
     {
-        public ObservableCollection<FocusPointItem> FocusPoint;
-        public Member CurrentMember { get; set; } = new Member() { Name = "Pernille Pedersen" };
-
+        public Member User { get; set; }
+       
         private ObservableCollection<PracticeTeam> _teams;
 
         public ObservableCollection<PracticeTeam> Teams
@@ -26,28 +26,12 @@ namespace application.ViewModel
             }
         }
 
-        private string _searchtext;
+        private ObservableCollection<FocusPointItem> _focusPoints;
 
-        public string SearchText
+        public ObservableCollection<FocusPointItem> FocusPoints
         {
-            get { return _searchtext; }
-            set
-            {
-                SetProperty(ref _searchtext, value);
-                SearchResultFocusPoints = new ObservableCollection<FocusPointItem>(SearchResultFocusPoints.OrderByDescending((x => StringSearch.longestCommonSubsequence(x.Descriptor.Name, SearchText))).ThenBy(x => x.Descriptor.Name.Length).ToList());
-            }
-        }
-
-        private ObservableCollection<FocusPointItem> _searchResultFocusPoints;
-
-        public ObservableCollection<FocusPointItem> SearchResultFocusPoints
-        {
-            get { return _searchResultFocusPoints; }
-            set
-            {
-                SetProperty(ref _searchResultFocusPoints, value);
-                FocusPointListHeight = SearchResultFocusPoints.Count * 45;
-            }
+            get { return _focusPoints; }
+            set { SetProperty(ref _focusPoints, value); }
         }
 
         private int _teamListHeight;
@@ -66,22 +50,44 @@ namespace application.ViewModel
             set { SetProperty(ref _focusPointListHeight, value); }
         }
 
-
-        public ProfilePageViewModel()
+        public ProfilePageViewModel() 
         {
+            User = new Member() { Name = "Pernille Pedersen" };
+            User.FocusPoints = new List<FocusPointItem>() { new FocusPointItem() { Descriptor = new FocusPointDescriptor() { Name = "Slag 1", Id = 1 } } };
+            FocusPoints = new ObservableCollection<FocusPointItem>(User.FocusPoints);
+            FocusPointListHeight = FocusPoints.Count * 45;
+
             Teams = new ObservableCollection<PracticeTeam>();
             Teams.Add(new PracticeTeam() { Name = "U17" });
             Teams.Add(new PracticeTeam() { Name = "Senior" });
-            FocusPoint = new ObservableCollection<FocusPointItem>();
-            FocusPoint.Add(new FocusPointItem() { Descriptor = new FocusPointDescriptor() { Name = "Slag" } });
-            FocusPoint.Add(new FocusPointItem() { Descriptor = new FocusPointDescriptor() { Name = "Svip Serv" } });
-            FocusPoint.Add(new FocusPointItem() { Descriptor = new FocusPointDescriptor() { Name = "Slag" } });
-            FocusPoint.Add(new FocusPointItem() { Descriptor = new FocusPointDescriptor() { Name = "Flad Serv" } });
-            FocusPoint.Add(new FocusPointItem() { Descriptor = new FocusPointDescriptor() { Name = "Slag" } });
-            FocusPoint.Add(new FocusPointItem() { Descriptor = new FocusPointDescriptor() { Name = "Serv" } });
-            SearchResultFocusPoints = FocusPoint;
-            TeamListHeight = Teams.Count * 45;
         }
+
+
+        private RelayCommand _addFocusPointCommand;
+
+        public RelayCommand AddFocusPointCommand
+        {
+            get 
+            { 
+                return _addFocusPointCommand ?? (_addFocusPointCommand = new RelayCommand(param => ExecuteAddFocusPoint(param))); 
+            }
+        }
+
+        private void ExecuteAddFocusPoint(object param)
+        {
+            FocusPointPopupPage page = new FocusPointPopupPage(User);
+            page.CallBackEvent += FocusPointPopupPageCallback;
+            PopupNavigation.Instance.PushAsync(page);
+        }
+
+        private void FocusPointPopupPageCallback(object sender, FocusPointItem e)
+        {
+            //TODO: UPDATE MODEL
+            User.FocusPoints.Add(e);
+            FocusPoints.Add(e);
+            FocusPointListHeight = FocusPoints.Count * 45;
+        }
+
         private RelayCommand _profileSettingCommand;
 
         public RelayCommand ProfileSettingCommand

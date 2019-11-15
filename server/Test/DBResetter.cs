@@ -14,7 +14,7 @@ namespace Test
         [TestInitialize()]
         public void ResetDatabase()
         {
-            (new DBConnection()).ExecuteInsertUpdateDeleteQuery("CALL SP_UNIT_TEST_READY;", new MySql.Data.MySqlClient.MySqlParameter[0]);
+
         } 
     }
 }

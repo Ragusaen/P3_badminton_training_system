@@ -18,6 +18,10 @@ namespace application.UI
         public MenuPage()
         {
             InitializeComponent();
+            MenuViewModel vm = new MenuViewModel();
+            BindingContext = vm;
+            vm.Navigation = Navigation;
+
             MenuList = new List<MasterPageItem>();
 
             MenuList.Add(new MasterPageItem() { Title = "Schedule", TargetType = typeof(SchedulePage) }); //Set icons

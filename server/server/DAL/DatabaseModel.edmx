@@ -1,0 +1,1248 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="DatabaseModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="8.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="account">
+          <Key>
+            <PropertyRef Name="Username" />
+          </Key>
+          <Property Name="Username" Type="varchar" MaxLength="32" Nullable="false" />
+          <Property Name="PasswordHash" Type="binary" MaxLength="32" Nullable="false" />
+          <Property Name="PasswordSalt" Type="binary" MaxLength="128" Nullable="false" />
+        </EntityType>
+        <EntityType Name="exercise">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="64" />
+          <Property Name="Description" Type="varchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="feedback">
+          <Key>
+            <PropertyRef Name="MemberID" />
+            <PropertyRef Name="PlaySessionID" />
+          </Key>
+          <Property Name="MemberID" Type="int" Nullable="false" />
+          <Property Name="PlaySessionID" Type="int" Nullable="false" />
+          <Property Name="Ready" Type="int" />
+          <Property Name="Effort" Type="int" />
+          <Property Name="Challenge" Type="int" />
+          <Property Name="Absorb" Type="int" />
+          <Property Name="Good" Type="varchar" MaxLength="1024" />
+          <Property Name="Bad" Type="varchar" MaxLength="1024" />
+          <Property Name="FocusPoint" Type="varchar" MaxLength="1024" />
+          <Property Name="Day" Type="varchar" MaxLength="1024" />
+        </EntityType>
+        <EntityType Name="focuspoint">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="IsPrivate" Type="bit" Nullable="false" />
+          <Property Name="Description" Type="varchar" MaxLength="1024" />
+          <Property Name="VideoURL" Type="varchar" MaxLength="256" />
+        </EntityType>
+        <EntityType Name="member">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MemberType" Type="int" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="32" />
+          <Property Name="Name" Type="varchar" MaxLength="256" Nullable="false" />
+          <Property Name="OnRanklist" Type="bit" Nullable="false" />
+          <Property Name="Sex" Type="int" Nullable="false" />
+          <Property Name="BadmintonPlayerID" Type="int" />
+        </EntityType>
+        <EntityType Name="memberfocuspoint">
+          <Key>
+            <PropertyRef Name="MemberID" />
+            <PropertyRef Name="FocusPointID" />
+          </Key>
+          <Property Name="MemberID" Type="int" Nullable="false" />
+          <Property Name="FocusPointID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="playsession">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Type" Type="int" Nullable="false" />
+          <Property Name="Location" Type="varchar" MaxLength="256" Nullable="false" />
+          <Property Name="StartDate" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="EndDate" Type="datetime" Precision="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="position">
+          <Key>
+            <PropertyRef Name="MemberID" />
+            <PropertyRef Name="TeamMatchPlaySessionID" />
+            <PropertyRef Name="Type" />
+            <PropertyRef Name="Order" />
+          </Key>
+          <Property Name="MemberID" Type="int" Nullable="false" />
+          <Property Name="TeamMatchPlaySessionID" Type="int" Nullable="false" />
+          <Property Name="Type" Type="int" Nullable="false" />
+          <Property Name="Order" Type="int" Nullable="false" />
+          <Property Name="IsExtra" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="practicesession">
+          <Key>
+            <PropertyRef Name="PlaySessionID" />
+          </Key>
+          <Property Name="PlaySessionID" Type="int" Nullable="false" />
+          <Property Name="YearPlanSectionID" Type="int" Nullable="false" />
+          <Property Name="TrainerID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="practicesessionexercise">
+          <Key>
+            <PropertyRef Name="ExerciseID" />
+            <PropertyRef Name="PracticeSessionPlaySessionID" />
+          </Key>
+          <Property Name="ExerciseID" Type="int" Nullable="false" />
+          <Property Name="PracticeSessionPlaySessionID" Type="int" Nullable="false" />
+          <Property Name="ExerciseIndex" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="practicesessionfocuspoint">
+          <Key>
+            <PropertyRef Name="FocusPointID" />
+            <PropertyRef Name="PracticeSessionPlaySessionID" />
+          </Key>
+          <Property Name="FocusPointID" Type="int" Nullable="false" />
+          <Property Name="PracticeSessionPlaySessionID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="practiceteam">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="64" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ranklist">
+          <Key>
+            <PropertyRef Name="MemberID" />
+          </Key>
+          <Property Name="MemberID" Type="int" Nullable="false" />
+          <Property Name="MixPoints" Type="int" Nullable="false" />
+          <Property Name="SinglesPoints" Type="int" Nullable="false" />
+          <Property Name="DoublesPoints" Type="int" Nullable="false" />
+          <Property Name="LevelPoints" Type="int" Nullable="false" />
+          <Property Name="Level" Type="int" Nullable="false" />
+          <Property Name="AgeGroup" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="teammatch">
+          <Key>
+            <PropertyRef Name="PlaySessionID" />
+          </Key>
+          <Property Name="PlaySessionID" Type="int" Nullable="false" />
+          <Property Name="CaptainID" Type="int" Nullable="false" />
+          <Property Name="OpponentName" Type="varchar" MaxLength="64" Nullable="false" />
+          <Property Name="League" Type="int" Nullable="false" />
+          <Property Name="LeagueRound" Type="int" Nullable="false" />
+          <Property Name="Season" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="teammember">
+          <Key>
+            <PropertyRef Name="TeamID" />
+            <PropertyRef Name="MemberID" />
+          </Key>
+          <Property Name="TeamID" Type="int" Nullable="false" />
+          <Property Name="MemberID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="token">
+          <Key>
+            <PropertyRef Name="AccessToken" />
+          </Key>
+          <Property Name="AccessToken" Type="binary" MaxLength="64" Nullable="false" />
+          <Property Name="AccountUsername" Type="varchar" MaxLength="32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="yearplansection">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TeamID" Type="int" Nullable="false" />
+          <Property Name="StartDate" Type="datetime" Precision="0" Nullable="false" />
+          <Property Name="EndDate" Type="datetime" Precision="0" Nullable="false" />
+        </EntityType>
+        <EntityType Name="yearplansectionfocuspoint">
+          <Key>
+            <PropertyRef Name="YearPlanSectionID" />
+            <PropertyRef Name="FocusPointID" />
+          </Key>
+          <Property Name="YearPlanSectionID" Type="int" Nullable="false" />
+          <Property Name="FocusPointID" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="feedback_ibfk_1">
+          <End Role="member" Type="Self.member" Multiplicity="1" />
+          <End Role="feedback" Type="Self.feedback" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="member">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="feedback">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="feedback_ibfk_2">
+          <End Role="playsession" Type="Self.playsession" Multiplicity="1" />
+          <End Role="feedback" Type="Self.feedback" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="playsession">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="feedback">
+              <PropertyRef Name="PlaySessionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="member_ibfk_1">
+          <End Role="account" Type="Self.account" Multiplicity="0..1" />
+          <End Role="member" Type="Self.member" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="account">
+              <PropertyRef Name="Username" />
+            </Principal>
+            <Dependent Role="member">
+              <PropertyRef Name="Username" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="memberfocuspoint_ibfk_1">
+          <End Role="member" Type="Self.member" Multiplicity="1" />
+          <End Role="memberfocuspoint" Type="Self.memberfocuspoint" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="member">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="memberfocuspoint">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="memberfocuspoint_ibfk_2">
+          <End Role="focuspoint" Type="Self.focuspoint" Multiplicity="1" />
+          <End Role="memberfocuspoint" Type="Self.memberfocuspoint" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="focuspoint">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="memberfocuspoint">
+              <PropertyRef Name="FocusPointID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="position_ibfk_1">
+          <End Role="member" Type="Self.member" Multiplicity="1" />
+          <End Role="position" Type="Self.position" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="member">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="position">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="position_ibfk_2">
+          <End Role="teammatch" Type="Self.teammatch" Multiplicity="1" />
+          <End Role="position" Type="Self.position" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="teammatch">
+              <PropertyRef Name="PlaySessionID" />
+            </Principal>
+            <Dependent Role="position">
+              <PropertyRef Name="TeamMatchPlaySessionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="practicesession_ibfk_1">
+          <End Role="playsession" Type="Self.playsession" Multiplicity="1" />
+          <End Role="practicesession" Type="Self.practicesession" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="playsession">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="practicesession">
+              <PropertyRef Name="PlaySessionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="practicesession_ibfk_2">
+          <End Role="yearplansection" Type="Self.yearplansection" Multiplicity="1" />
+          <End Role="practicesession" Type="Self.practicesession" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="yearplansection">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="practicesession">
+              <PropertyRef Name="YearPlanSectionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="practicesession_ibfk_3">
+          <End Role="member" Type="Self.member" Multiplicity="1" />
+          <End Role="practicesession" Type="Self.practicesession" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="member">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="practicesession">
+              <PropertyRef Name="TrainerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="practicesessionexercise_ibfk_1">
+          <End Role="exercise" Type="Self.exercise" Multiplicity="1" />
+          <End Role="practicesessionexercise" Type="Self.practicesessionexercise" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="exercise">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="practicesessionexercise">
+              <PropertyRef Name="ExerciseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="practicesessionexercise_ibfk_2">
+          <End Role="practicesession" Type="Self.practicesession" Multiplicity="1" />
+          <End Role="practicesessionexercise" Type="Self.practicesessionexercise" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="practicesession">
+              <PropertyRef Name="PlaySessionID" />
+            </Principal>
+            <Dependent Role="practicesessionexercise">
+              <PropertyRef Name="PracticeSessionPlaySessionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="practicesessionfocuspoint_ibfk_1">
+          <End Role="focuspoint" Type="Self.focuspoint" Multiplicity="1" />
+          <End Role="practicesessionfocuspoint" Type="Self.practicesessionfocuspoint" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="focuspoint">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="practicesessionfocuspoint">
+              <PropertyRef Name="FocusPointID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="practicesessionfocuspoint_ibfk_2">
+          <End Role="practicesession" Type="Self.practicesession" Multiplicity="1" />
+          <End Role="practicesessionfocuspoint" Type="Self.practicesessionfocuspoint" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="practicesession">
+              <PropertyRef Name="PlaySessionID" />
+            </Principal>
+            <Dependent Role="practicesessionfocuspoint">
+              <PropertyRef Name="PracticeSessionPlaySessionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ranklist_ibfk_1">
+          <End Role="member" Type="Self.member" Multiplicity="1" />
+          <End Role="ranklist" Type="Self.ranklist" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="member">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ranklist">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="teammatch_ibfk_1">
+          <End Role="playsession" Type="Self.playsession" Multiplicity="1" />
+          <End Role="teammatch" Type="Self.teammatch" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="playsession">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="teammatch">
+              <PropertyRef Name="PlaySessionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="teammatch_ibfk_2">
+          <End Role="member" Type="Self.member" Multiplicity="1" />
+          <End Role="teammatch" Type="Self.teammatch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="member">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="teammatch">
+              <PropertyRef Name="CaptainID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="teammember_ibfk_1">
+          <End Role="practiceteam" Type="Self.practiceteam" Multiplicity="1" />
+          <End Role="teammember" Type="Self.teammember" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="practiceteam">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="teammember">
+              <PropertyRef Name="TeamID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="teammember_ibfk_2">
+          <End Role="member" Type="Self.member" Multiplicity="1" />
+          <End Role="teammember" Type="Self.teammember" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="member">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="teammember">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="token_ibfk_1">
+          <End Role="account" Type="Self.account" Multiplicity="1" />
+          <End Role="token" Type="Self.token" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="account">
+              <PropertyRef Name="Username" />
+            </Principal>
+            <Dependent Role="token">
+              <PropertyRef Name="AccountUsername" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="yearplansection_ibfk_1">
+          <End Role="practiceteam" Type="Self.practiceteam" Multiplicity="1" />
+          <End Role="yearplansection" Type="Self.yearplansection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="practiceteam">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="yearplansection">
+              <PropertyRef Name="TeamID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="yearplansectionfocuspoint_ibfk_1">
+          <End Role="yearplansection" Type="Self.yearplansection" Multiplicity="1" />
+          <End Role="yearplansectionfocuspoint" Type="Self.yearplansectionfocuspoint" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="yearplansection">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="yearplansectionfocuspoint">
+              <PropertyRef Name="YearPlanSectionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="yearplansectionfocuspoint_ibfk_2">
+          <End Role="focuspoint" Type="Self.focuspoint" Multiplicity="1" />
+          <End Role="yearplansectionfocuspoint" Type="Self.yearplansectionfocuspoint" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="focuspoint">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="yearplansectionfocuspoint">
+              <PropertyRef Name="FocusPointID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="DatabaseModelStoreContainer">
+          <EntitySet Name="account" EntityType="Self.account" Schema="p3_db" store:Type="Tables" />
+          <EntitySet Name="exercise" EntityType="Self.exercise" Schema="p3_db" store:Type="Tables" />
+          <EntitySet Name="feedback" EntityType="Self.feedback" Schema="p3_db" store:Type="Tables" />
+          <EntitySet Name="focuspoint" EntityType="Self.focuspoint" Schema="p3_db" store:Type="Tables" />
+          <EntitySet Name="member" EntityType="Self.member" Schema="p3_db" store:Type="Tables" />
+          <EntitySet Name="memberfocuspoint" EntityType="Self.memberfocuspoint" Schema="p3_db" store:Type="Tables" />
+          <EntitySet Name="playsession" EntityType="Self.playsession" Schema="p3_db" store:Type="Tables" />
+          <EntitySet Name="position" EntityType="Self.position" Schema="p3_db" store:Type="Tables" />
+          <EntitySet Name="practicesession" EntityType="Self.practicesession" Schema="p3_db" store:Type="Tables" />
+          <EntitySet Name="practicesessionexercise" EntityType="Self.practicesessionexercise" Schema="p3_db" store:Type="Tables" />
+          <EntitySet Name="practicesessionfocuspoint" EntityType="Self.practicesessionfocuspoint" Schema="p3_db" store:Type="Tables" />
+          <EntitySet Name="practiceteam" EntityType="Self.practiceteam" Schema="p3_db" store:Type="Tables" />
+          <EntitySet Name="ranklist" EntityType="Self.ranklist" Schema="p3_db" store:Type="Tables" />
+          <EntitySet Name="teammatch" EntityType="Self.teammatch" Schema="p3_db" store:Type="Tables" />
+          <EntitySet Name="teammember" EntityType="Self.teammember" Schema="p3_db" store:Type="Tables" />
+          <EntitySet Name="token" EntityType="Self.token" Schema="p3_db" store:Type="Tables" />
+          <EntitySet Name="yearplansection" EntityType="Self.yearplansection" Schema="p3_db" store:Type="Tables" />
+          <EntitySet Name="yearplansectionfocuspoint" EntityType="Self.yearplansectionfocuspoint" Schema="p3_db" store:Type="Tables" />
+          <AssociationSet Name="feedback_ibfk_1" Association="Self.feedback_ibfk_1">
+            <End Role="member" EntitySet="member" />
+            <End Role="feedback" EntitySet="feedback" />
+          </AssociationSet>
+          <AssociationSet Name="feedback_ibfk_2" Association="Self.feedback_ibfk_2">
+            <End Role="playsession" EntitySet="playsession" />
+            <End Role="feedback" EntitySet="feedback" />
+          </AssociationSet>
+          <AssociationSet Name="member_ibfk_1" Association="Self.member_ibfk_1">
+            <End Role="account" EntitySet="account" />
+            <End Role="member" EntitySet="member" />
+          </AssociationSet>
+          <AssociationSet Name="memberfocuspoint_ibfk_1" Association="Self.memberfocuspoint_ibfk_1">
+            <End Role="member" EntitySet="member" />
+            <End Role="memberfocuspoint" EntitySet="memberfocuspoint" />
+          </AssociationSet>
+          <AssociationSet Name="memberfocuspoint_ibfk_2" Association="Self.memberfocuspoint_ibfk_2">
+            <End Role="focuspoint" EntitySet="focuspoint" />
+            <End Role="memberfocuspoint" EntitySet="memberfocuspoint" />
+          </AssociationSet>
+          <AssociationSet Name="position_ibfk_1" Association="Self.position_ibfk_1">
+            <End Role="member" EntitySet="member" />
+            <End Role="position" EntitySet="position" />
+          </AssociationSet>
+          <AssociationSet Name="position_ibfk_2" Association="Self.position_ibfk_2">
+            <End Role="teammatch" EntitySet="teammatch" />
+            <End Role="position" EntitySet="position" />
+          </AssociationSet>
+          <AssociationSet Name="practicesession_ibfk_1" Association="Self.practicesession_ibfk_1">
+            <End Role="playsession" EntitySet="playsession" />
+            <End Role="practicesession" EntitySet="practicesession" />
+          </AssociationSet>
+          <AssociationSet Name="practicesession_ibfk_2" Association="Self.practicesession_ibfk_2">
+            <End Role="yearplansection" EntitySet="yearplansection" />
+            <End Role="practicesession" EntitySet="practicesession" />
+          </AssociationSet>
+          <AssociationSet Name="practicesession_ibfk_3" Association="Self.practicesession_ibfk_3">
+            <End Role="member" EntitySet="member" />
+            <End Role="practicesession" EntitySet="practicesession" />
+          </AssociationSet>
+          <AssociationSet Name="practicesessionexercise_ibfk_1" Association="Self.practicesessionexercise_ibfk_1">
+            <End Role="exercise" EntitySet="exercise" />
+            <End Role="practicesessionexercise" EntitySet="practicesessionexercise" />
+          </AssociationSet>
+          <AssociationSet Name="practicesessionexercise_ibfk_2" Association="Self.practicesessionexercise_ibfk_2">
+            <End Role="practicesession" EntitySet="practicesession" />
+            <End Role="practicesessionexercise" EntitySet="practicesessionexercise" />
+          </AssociationSet>
+          <AssociationSet Name="practicesessionfocuspoint_ibfk_1" Association="Self.practicesessionfocuspoint_ibfk_1">
+            <End Role="focuspoint" EntitySet="focuspoint" />
+            <End Role="practicesessionfocuspoint" EntitySet="practicesessionfocuspoint" />
+          </AssociationSet>
+          <AssociationSet Name="practicesessionfocuspoint_ibfk_2" Association="Self.practicesessionfocuspoint_ibfk_2">
+            <End Role="practicesession" EntitySet="practicesession" />
+            <End Role="practicesessionfocuspoint" EntitySet="practicesessionfocuspoint" />
+          </AssociationSet>
+          <AssociationSet Name="ranklist_ibfk_1" Association="Self.ranklist_ibfk_1">
+            <End Role="member" EntitySet="member" />
+            <End Role="ranklist" EntitySet="ranklist" />
+          </AssociationSet>
+          <AssociationSet Name="teammatch_ibfk_1" Association="Self.teammatch_ibfk_1">
+            <End Role="playsession" EntitySet="playsession" />
+            <End Role="teammatch" EntitySet="teammatch" />
+          </AssociationSet>
+          <AssociationSet Name="teammatch_ibfk_2" Association="Self.teammatch_ibfk_2">
+            <End Role="member" EntitySet="member" />
+            <End Role="teammatch" EntitySet="teammatch" />
+          </AssociationSet>
+          <AssociationSet Name="teammember_ibfk_1" Association="Self.teammember_ibfk_1">
+            <End Role="practiceteam" EntitySet="practiceteam" />
+            <End Role="teammember" EntitySet="teammember" />
+          </AssociationSet>
+          <AssociationSet Name="teammember_ibfk_2" Association="Self.teammember_ibfk_2">
+            <End Role="member" EntitySet="member" />
+            <End Role="teammember" EntitySet="teammember" />
+          </AssociationSet>
+          <AssociationSet Name="token_ibfk_1" Association="Self.token_ibfk_1">
+            <End Role="account" EntitySet="account" />
+            <End Role="token" EntitySet="token" />
+          </AssociationSet>
+          <AssociationSet Name="yearplansection_ibfk_1" Association="Self.yearplansection_ibfk_1">
+            <End Role="practiceteam" EntitySet="practiceteam" />
+            <End Role="yearplansection" EntitySet="yearplansection" />
+          </AssociationSet>
+          <AssociationSet Name="yearplansectionfocuspoint_ibfk_1" Association="Self.yearplansectionfocuspoint_ibfk_1">
+            <End Role="yearplansection" EntitySet="yearplansection" />
+            <End Role="yearplansectionfocuspoint" EntitySet="yearplansectionfocuspoint" />
+          </AssociationSet>
+          <AssociationSet Name="yearplansectionfocuspoint_ibfk_2" Association="Self.yearplansectionfocuspoint_ibfk_2">
+            <End Role="focuspoint" EntitySet="focuspoint" />
+            <End Role="yearplansectionfocuspoint" EntitySet="yearplansectionfocuspoint" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="DatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="account">
+          <Key>
+            <PropertyRef Name="Username" />
+          </Key>
+          <Property Name="Username" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="PasswordHash" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="PasswordSalt" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <NavigationProperty Name="members" Relationship="Self.member_ibfk_1" FromRole="account" ToRole="member" />
+          <NavigationProperty Name="tokens" Relationship="Self.token_ibfk_1" FromRole="account" ToRole="token" />
+        </EntityType>
+        <EntityType Name="exercise">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="64" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="practicesessionexercises" Relationship="Self.practicesessionexercise_ibfk_1" FromRole="exercise" ToRole="practicesessionexercise" />
+        </EntityType>
+        <EntityType Name="feedback">
+          <Key>
+            <PropertyRef Name="MemberID" />
+            <PropertyRef Name="PlaySessionID" />
+          </Key>
+          <Property Name="MemberID" Type="Int32" Nullable="false" />
+          <Property Name="PlaySessionID" Type="Int32" Nullable="false" />
+          <Property Name="Ready" Type="Int32" />
+          <Property Name="Effort" Type="Int32" />
+          <Property Name="Challenge" Type="Int32" />
+          <Property Name="Absorb" Type="Int32" />
+          <Property Name="Good" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
+          <Property Name="Bad" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
+          <Property Name="FocusPoint" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
+          <Property Name="Day" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="member" Relationship="Self.feedback_ibfk_1" FromRole="feedback" ToRole="member" />
+          <NavigationProperty Name="playsession" Relationship="Self.feedback_ibfk_2" FromRole="feedback" ToRole="playsession" />
+        </EntityType>
+        <EntityType Name="focuspoint">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="IsPrivate" Type="Boolean" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
+          <Property Name="VideoURL" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="members" Relationship="Self.memberfocuspoint" FromRole="focuspoint" ToRole="member" />
+          <NavigationProperty Name="practicesessions" Relationship="Self.practicesessionfocuspoint" FromRole="focuspoint" ToRole="practicesession" />
+          <NavigationProperty Name="yearplansections" Relationship="Self.yearplansectionfocuspoint" FromRole="focuspoint" ToRole="yearplansection" />
+        </EntityType>
+        <EntityType Name="member">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MemberType" Type="Int32" Nullable="false" />
+          <Property Name="Username" Type="String" MaxLength="32" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Sex" Type="Int32" Nullable="false" />
+          <Property Name="BadmintonPlayerID" Type="Int32" />
+          <NavigationProperty Name="account" Relationship="Self.member_ibfk_1" FromRole="member" ToRole="account" />
+          <NavigationProperty Name="feedbacks" Relationship="Self.feedback_ibfk_1" FromRole="member" ToRole="feedback" />
+          <NavigationProperty Name="positions" Relationship="Self.position_ibfk_1" FromRole="member" ToRole="position" />
+          <NavigationProperty Name="practicesessions" Relationship="Self.practicesession_ibfk_3" FromRole="member" ToRole="practicesession" />
+          <NavigationProperty Name="ranklist" Relationship="Self.ranklist_ibfk_1" FromRole="member" ToRole="ranklist" />
+          <NavigationProperty Name="teammatches" Relationship="Self.teammatch_ibfk_2" FromRole="member" ToRole="teammatch" />
+          <NavigationProperty Name="focuspoints" Relationship="Self.memberfocuspoint" FromRole="member" ToRole="focuspoint" />
+          <NavigationProperty Name="practiceteams" Relationship="Self.teammember" FromRole="member" ToRole="practiceteam" />
+          <Property Name="OnRanklist" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="playsession">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Type" Type="Int32" Nullable="false" />
+          <Property Name="Location" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="feedbacks" Relationship="Self.feedback_ibfk_2" FromRole="playsession" ToRole="feedback" />
+          <NavigationProperty Name="practicesession" Relationship="Self.practicesession_ibfk_1" FromRole="playsession" ToRole="practicesession" />
+          <NavigationProperty Name="teammatch" Relationship="Self.teammatch_ibfk_1" FromRole="playsession" ToRole="teammatch" />
+        </EntityType>
+        <EntityType Name="position">
+          <Key>
+            <PropertyRef Name="MemberID" />
+            <PropertyRef Name="TeamMatchPlaySessionID" />
+            <PropertyRef Name="Type" />
+            <PropertyRef Name="Order" />
+          </Key>
+          <Property Name="MemberID" Type="Int32" Nullable="false" />
+          <Property Name="TeamMatchPlaySessionID" Type="Int32" Nullable="false" />
+          <Property Name="Type" Type="Int32" Nullable="false" />
+          <Property Name="Order" Type="Int32" Nullable="false" />
+          <Property Name="IsExtra" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="member" Relationship="Self.position_ibfk_1" FromRole="position" ToRole="member" />
+          <NavigationProperty Name="teammatch" Relationship="Self.position_ibfk_2" FromRole="position" ToRole="teammatch" />
+        </EntityType>
+        <EntityType Name="practicesession">
+          <Key>
+            <PropertyRef Name="PlaySessionID" />
+          </Key>
+          <Property Name="PlaySessionID" Type="Int32" Nullable="false" />
+          <Property Name="YearPlanSectionID" Type="Int32" Nullable="false" />
+          <Property Name="TrainerID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="member" Relationship="Self.practicesession_ibfk_3" FromRole="practicesession" ToRole="member" />
+          <NavigationProperty Name="playsession" Relationship="Self.practicesession_ibfk_1" FromRole="practicesession" ToRole="playsession" />
+          <NavigationProperty Name="yearplansection" Relationship="Self.practicesession_ibfk_2" FromRole="practicesession" ToRole="yearplansection" />
+          <NavigationProperty Name="practicesessionexercises" Relationship="Self.practicesessionexercise_ibfk_2" FromRole="practicesession" ToRole="practicesessionexercise" />
+          <NavigationProperty Name="focuspoints" Relationship="Self.practicesessionfocuspoint" FromRole="practicesession" ToRole="focuspoint" />
+        </EntityType>
+        <EntityType Name="practicesessionexercise">
+          <Key>
+            <PropertyRef Name="ExerciseID" />
+            <PropertyRef Name="PracticeSessionPlaySessionID" />
+          </Key>
+          <Property Name="ExerciseID" Type="Int32" Nullable="false" />
+          <Property Name="PracticeSessionPlaySessionID" Type="Int32" Nullable="false" />
+          <Property Name="ExerciseIndex" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="exercise" Relationship="Self.practicesessionexercise_ibfk_1" FromRole="practicesessionexercise" ToRole="exercise" />
+          <NavigationProperty Name="practicesession" Relationship="Self.practicesessionexercise_ibfk_2" FromRole="practicesessionexercise" ToRole="practicesession" />
+        </EntityType>
+        <EntityType Name="practiceteam">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="yearplansections" Relationship="Self.yearplansection_ibfk_1" FromRole="practiceteam" ToRole="yearplansection" />
+          <NavigationProperty Name="members" Relationship="Self.teammember" FromRole="practiceteam" ToRole="member" />
+        </EntityType>
+        <EntityType Name="ranklist">
+          <Key>
+            <PropertyRef Name="MemberID" />
+          </Key>
+          <Property Name="MemberID" Type="Int32" Nullable="false" />
+          <Property Name="MixPoints" Type="Int32" Nullable="false" />
+          <Property Name="SinglesPoints" Type="Int32" Nullable="false" />
+          <Property Name="DoublesPoints" Type="Int32" Nullable="false" />
+          <Property Name="LevelPoints" Type="Int32" Nullable="false" />
+          <Property Name="Level" Type="Int32" Nullable="false" />
+          <Property Name="AgeGroup" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="member" Relationship="Self.ranklist_ibfk_1" FromRole="ranklist" ToRole="member" />
+        </EntityType>
+        <EntityType Name="teammatch">
+          <Key>
+            <PropertyRef Name="PlaySessionID" />
+          </Key>
+          <Property Name="PlaySessionID" Type="Int32" Nullable="false" />
+          <Property Name="CaptainID" Type="Int32" Nullable="false" />
+          <Property Name="OpponentName" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="League" Type="Int32" Nullable="false" />
+          <Property Name="LeagueRound" Type="Int32" Nullable="false" />
+          <Property Name="Season" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="member" Relationship="Self.teammatch_ibfk_2" FromRole="teammatch" ToRole="member" />
+          <NavigationProperty Name="playsession" Relationship="Self.teammatch_ibfk_1" FromRole="teammatch" ToRole="playsession" />
+          <NavigationProperty Name="positions" Relationship="Self.position_ibfk_2" FromRole="teammatch" ToRole="position" />
+        </EntityType>
+        <EntityType Name="token">
+          <Key>
+            <PropertyRef Name="AccessToken" />
+          </Key>
+          <Property Name="AccessToken" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
+          <Property Name="AccountUsername" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="account" Relationship="Self.token_ibfk_1" FromRole="token" ToRole="account" />
+        </EntityType>
+        <EntityType Name="yearplansection">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TeamID" Type="Int32" Nullable="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" />
+          <Property Name="EndDate" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="practicesessions" Relationship="Self.practicesession_ibfk_2" FromRole="yearplansection" ToRole="practicesession" />
+          <NavigationProperty Name="practiceteam" Relationship="Self.yearplansection_ibfk_1" FromRole="yearplansection" ToRole="practiceteam" />
+          <NavigationProperty Name="focuspoints" Relationship="Self.yearplansectionfocuspoint" FromRole="yearplansection" ToRole="focuspoint" />
+        </EntityType>
+        <Association Name="member_ibfk_1">
+          <End Role="account" Type="Self.account" Multiplicity="0..1" />
+          <End Role="member" Type="Self.member" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="account">
+              <PropertyRef Name="Username" />
+            </Principal>
+            <Dependent Role="member">
+              <PropertyRef Name="Username" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="token_ibfk_1">
+          <End Role="account" Type="Self.account" Multiplicity="1" />
+          <End Role="token" Type="Self.token" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="account">
+              <PropertyRef Name="Username" />
+            </Principal>
+            <Dependent Role="token">
+              <PropertyRef Name="AccountUsername" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="practicesessionexercise_ibfk_1">
+          <End Role="exercise" Type="Self.exercise" Multiplicity="1" />
+          <End Role="practicesessionexercise" Type="Self.practicesessionexercise" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="exercise">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="practicesessionexercise">
+              <PropertyRef Name="ExerciseID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="feedback_ibfk_1">
+          <End Role="member" Type="Self.member" Multiplicity="1" />
+          <End Role="feedback" Type="Self.feedback" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="member">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="feedback">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="feedback_ibfk_2">
+          <End Role="playsession" Type="Self.playsession" Multiplicity="1" />
+          <End Role="feedback" Type="Self.feedback" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="playsession">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="feedback">
+              <PropertyRef Name="PlaySessionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="position_ibfk_1">
+          <End Role="member" Type="Self.member" Multiplicity="1" />
+          <End Role="position" Type="Self.position" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="member">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="position">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="practicesession_ibfk_3">
+          <End Role="member" Type="Self.member" Multiplicity="1" />
+          <End Role="practicesession" Type="Self.practicesession" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="member">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="practicesession">
+              <PropertyRef Name="TrainerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ranklist_ibfk_1">
+          <End Role="member" Type="Self.member" Multiplicity="1" />
+          <End Role="ranklist" Type="Self.ranklist" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="member">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ranklist">
+              <PropertyRef Name="MemberID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="teammatch_ibfk_2">
+          <End Role="member" Type="Self.member" Multiplicity="1" />
+          <End Role="teammatch" Type="Self.teammatch" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="member">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="teammatch">
+              <PropertyRef Name="CaptainID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="practicesession_ibfk_1">
+          <End Role="playsession" Type="Self.playsession" Multiplicity="1" />
+          <End Role="practicesession" Type="Self.practicesession" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="playsession">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="practicesession">
+              <PropertyRef Name="PlaySessionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="teammatch_ibfk_1">
+          <End Role="playsession" Type="Self.playsession" Multiplicity="1" />
+          <End Role="teammatch" Type="Self.teammatch" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="playsession">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="teammatch">
+              <PropertyRef Name="PlaySessionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="position_ibfk_2">
+          <End Role="teammatch" Type="Self.teammatch" Multiplicity="1" />
+          <End Role="position" Type="Self.position" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="teammatch">
+              <PropertyRef Name="PlaySessionID" />
+            </Principal>
+            <Dependent Role="position">
+              <PropertyRef Name="TeamMatchPlaySessionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="practicesession_ibfk_2">
+          <End Role="yearplansection" Type="Self.yearplansection" Multiplicity="1" />
+          <End Role="practicesession" Type="Self.practicesession" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="yearplansection">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="practicesession">
+              <PropertyRef Name="YearPlanSectionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="practicesessionexercise_ibfk_2">
+          <End Role="practicesession" Type="Self.practicesession" Multiplicity="1" />
+          <End Role="practicesessionexercise" Type="Self.practicesessionexercise" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="practicesession">
+              <PropertyRef Name="PlaySessionID" />
+            </Principal>
+            <Dependent Role="practicesessionexercise">
+              <PropertyRef Name="PracticeSessionPlaySessionID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="yearplansection_ibfk_1">
+          <End Role="practiceteam" Type="Self.practiceteam" Multiplicity="1" />
+          <End Role="yearplansection" Type="Self.yearplansection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="practiceteam">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="yearplansection">
+              <PropertyRef Name="TeamID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="memberfocuspoint">
+          <End Role="member" Type="Self.member" Multiplicity="*" />
+          <End Role="focuspoint" Type="Self.focuspoint" Multiplicity="*" />
+        </Association>
+        <Association Name="practicesessionfocuspoint">
+          <End Role="focuspoint" Type="Self.focuspoint" Multiplicity="*" />
+          <End Role="practicesession" Type="Self.practicesession" Multiplicity="*" />
+        </Association>
+        <Association Name="teammember">
+          <End Role="practiceteam" Type="Self.practiceteam" Multiplicity="*" />
+          <End Role="member" Type="Self.member" Multiplicity="*" />
+        </Association>
+        <Association Name="yearplansectionfocuspoint">
+          <End Role="yearplansection" Type="Self.yearplansection" Multiplicity="*" />
+          <End Role="focuspoint" Type="Self.focuspoint" Multiplicity="*" />
+        </Association>
+        <EntityContainer Name="DatabaseEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="accounts" EntityType="Self.account" />
+          <EntitySet Name="exercises" EntityType="Self.exercise" />
+          <EntitySet Name="feedbacks" EntityType="Self.feedback" />
+          <EntitySet Name="focuspoints" EntityType="Self.focuspoint" />
+          <EntitySet Name="members" EntityType="Self.member" />
+          <EntitySet Name="playsessions" EntityType="Self.playsession" />
+          <EntitySet Name="positions" EntityType="Self.position" />
+          <EntitySet Name="practicesessions" EntityType="Self.practicesession" />
+          <EntitySet Name="practicesessionexercises" EntityType="Self.practicesessionexercise" />
+          <EntitySet Name="practiceteams" EntityType="Self.practiceteam" />
+          <EntitySet Name="ranklists" EntityType="Self.ranklist" />
+          <EntitySet Name="teammatches" EntityType="Self.teammatch" />
+          <EntitySet Name="tokens" EntityType="Self.token" />
+          <EntitySet Name="yearplansections" EntityType="Self.yearplansection" />
+          <AssociationSet Name="member_ibfk_1" Association="Self.member_ibfk_1">
+            <End Role="account" EntitySet="accounts" />
+            <End Role="member" EntitySet="members" />
+          </AssociationSet>
+          <AssociationSet Name="token_ibfk_1" Association="Self.token_ibfk_1">
+            <End Role="account" EntitySet="accounts" />
+            <End Role="token" EntitySet="tokens" />
+          </AssociationSet>
+          <AssociationSet Name="practicesessionexercise_ibfk_1" Association="Self.practicesessionexercise_ibfk_1">
+            <End Role="exercise" EntitySet="exercises" />
+            <End Role="practicesessionexercise" EntitySet="practicesessionexercises" />
+          </AssociationSet>
+          <AssociationSet Name="feedback_ibfk_1" Association="Self.feedback_ibfk_1">
+            <End Role="member" EntitySet="members" />
+            <End Role="feedback" EntitySet="feedbacks" />
+          </AssociationSet>
+          <AssociationSet Name="feedback_ibfk_2" Association="Self.feedback_ibfk_2">
+            <End Role="playsession" EntitySet="playsessions" />
+            <End Role="feedback" EntitySet="feedbacks" />
+          </AssociationSet>
+          <AssociationSet Name="position_ibfk_1" Association="Self.position_ibfk_1">
+            <End Role="member" EntitySet="members" />
+            <End Role="position" EntitySet="positions" />
+          </AssociationSet>
+          <AssociationSet Name="practicesession_ibfk_3" Association="Self.practicesession_ibfk_3">
+            <End Role="member" EntitySet="members" />
+            <End Role="practicesession" EntitySet="practicesessions" />
+          </AssociationSet>
+          <AssociationSet Name="ranklist_ibfk_1" Association="Self.ranklist_ibfk_1">
+            <End Role="member" EntitySet="members" />
+            <End Role="ranklist" EntitySet="ranklists" />
+          </AssociationSet>
+          <AssociationSet Name="teammatch_ibfk_2" Association="Self.teammatch_ibfk_2">
+            <End Role="member" EntitySet="members" />
+            <End Role="teammatch" EntitySet="teammatches" />
+          </AssociationSet>
+          <AssociationSet Name="practicesession_ibfk_1" Association="Self.practicesession_ibfk_1">
+            <End Role="playsession" EntitySet="playsessions" />
+            <End Role="practicesession" EntitySet="practicesessions" />
+          </AssociationSet>
+          <AssociationSet Name="teammatch_ibfk_1" Association="Self.teammatch_ibfk_1">
+            <End Role="playsession" EntitySet="playsessions" />
+            <End Role="teammatch" EntitySet="teammatches" />
+          </AssociationSet>
+          <AssociationSet Name="position_ibfk_2" Association="Self.position_ibfk_2">
+            <End Role="teammatch" EntitySet="teammatches" />
+            <End Role="position" EntitySet="positions" />
+          </AssociationSet>
+          <AssociationSet Name="practicesession_ibfk_2" Association="Self.practicesession_ibfk_2">
+            <End Role="yearplansection" EntitySet="yearplansections" />
+            <End Role="practicesession" EntitySet="practicesessions" />
+          </AssociationSet>
+          <AssociationSet Name="practicesessionexercise_ibfk_2" Association="Self.practicesessionexercise_ibfk_2">
+            <End Role="practicesession" EntitySet="practicesessions" />
+            <End Role="practicesessionexercise" EntitySet="practicesessionexercises" />
+          </AssociationSet>
+          <AssociationSet Name="yearplansection_ibfk_1" Association="Self.yearplansection_ibfk_1">
+            <End Role="practiceteam" EntitySet="practiceteams" />
+            <End Role="yearplansection" EntitySet="yearplansections" />
+          </AssociationSet>
+          <AssociationSet Name="memberfocuspoint" Association="Self.memberfocuspoint">
+            <End Role="member" EntitySet="members" />
+            <End Role="focuspoint" EntitySet="focuspoints" />
+          </AssociationSet>
+          <AssociationSet Name="practicesessionfocuspoint" Association="Self.practicesessionfocuspoint">
+            <End Role="focuspoint" EntitySet="focuspoints" />
+            <End Role="practicesession" EntitySet="practicesessions" />
+          </AssociationSet>
+          <AssociationSet Name="teammember" Association="Self.teammember">
+            <End Role="practiceteam" EntitySet="practiceteams" />
+            <End Role="member" EntitySet="members" />
+          </AssociationSet>
+          <AssociationSet Name="yearplansectionfocuspoint" Association="Self.yearplansectionfocuspoint">
+            <End Role="yearplansection" EntitySet="yearplansections" />
+            <End Role="focuspoint" EntitySet="focuspoints" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="DatabaseModelStoreContainer" CdmEntityContainer="DatabaseEntities">
+          <EntitySetMapping Name="accounts">
+            <EntityTypeMapping TypeName="DatabaseModel.account">
+              <MappingFragment StoreEntitySet="account">
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="PasswordSalt" ColumnName="PasswordSalt" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="exercises">
+            <EntityTypeMapping TypeName="DatabaseModel.exercise">
+              <MappingFragment StoreEntitySet="exercise">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="feedbacks">
+            <EntityTypeMapping TypeName="DatabaseModel.feedback">
+              <MappingFragment StoreEntitySet="feedback">
+                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+                <ScalarProperty Name="PlaySessionID" ColumnName="PlaySessionID" />
+                <ScalarProperty Name="Ready" ColumnName="Ready" />
+                <ScalarProperty Name="Effort" ColumnName="Effort" />
+                <ScalarProperty Name="Challenge" ColumnName="Challenge" />
+                <ScalarProperty Name="Absorb" ColumnName="Absorb" />
+                <ScalarProperty Name="Good" ColumnName="Good" />
+                <ScalarProperty Name="Bad" ColumnName="Bad" />
+                <ScalarProperty Name="FocusPoint" ColumnName="FocusPoint" />
+                <ScalarProperty Name="Day" ColumnName="Day" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="focuspoints">
+            <EntityTypeMapping TypeName="DatabaseModel.focuspoint">
+              <MappingFragment StoreEntitySet="focuspoint">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="IsPrivate" ColumnName="IsPrivate" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="VideoURL" ColumnName="VideoURL" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="members">
+            <EntityTypeMapping TypeName="DatabaseModel.member">
+              <MappingFragment StoreEntitySet="member">
+                <ScalarProperty Name="OnRanklist" ColumnName="OnRanklist" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="MemberType" ColumnName="MemberType" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Sex" ColumnName="Sex" />
+                <ScalarProperty Name="BadmintonPlayerID" ColumnName="BadmintonPlayerID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="playsessions">
+            <EntityTypeMapping TypeName="DatabaseModel.playsession">
+              <MappingFragment StoreEntitySet="playsession">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Location" ColumnName="Location" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="positions">
+            <EntityTypeMapping TypeName="DatabaseModel.position">
+              <MappingFragment StoreEntitySet="position">
+                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+                <ScalarProperty Name="TeamMatchPlaySessionID" ColumnName="TeamMatchPlaySessionID" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Order" ColumnName="Order" />
+                <ScalarProperty Name="IsExtra" ColumnName="IsExtra" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="practicesessions">
+            <EntityTypeMapping TypeName="DatabaseModel.practicesession">
+              <MappingFragment StoreEntitySet="practicesession">
+                <ScalarProperty Name="PlaySessionID" ColumnName="PlaySessionID" />
+                <ScalarProperty Name="YearPlanSectionID" ColumnName="YearPlanSectionID" />
+                <ScalarProperty Name="TrainerID" ColumnName="TrainerID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="practicesessionexercises">
+            <EntityTypeMapping TypeName="DatabaseModel.practicesessionexercise">
+              <MappingFragment StoreEntitySet="practicesessionexercise">
+                <ScalarProperty Name="ExerciseID" ColumnName="ExerciseID" />
+                <ScalarProperty Name="PracticeSessionPlaySessionID" ColumnName="PracticeSessionPlaySessionID" />
+                <ScalarProperty Name="ExerciseIndex" ColumnName="ExerciseIndex" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="practiceteams">
+            <EntityTypeMapping TypeName="DatabaseModel.practiceteam">
+              <MappingFragment StoreEntitySet="practiceteam">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ranklists">
+            <EntityTypeMapping TypeName="DatabaseModel.ranklist">
+              <MappingFragment StoreEntitySet="ranklist">
+                <ScalarProperty Name="MemberID" ColumnName="MemberID" />
+                <ScalarProperty Name="MixPoints" ColumnName="MixPoints" />
+                <ScalarProperty Name="SinglesPoints" ColumnName="SinglesPoints" />
+                <ScalarProperty Name="DoublesPoints" ColumnName="DoublesPoints" />
+                <ScalarProperty Name="LevelPoints" ColumnName="LevelPoints" />
+                <ScalarProperty Name="Level" ColumnName="Level" />
+                <ScalarProperty Name="AgeGroup" ColumnName="AgeGroup" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="teammatches">
+            <EntityTypeMapping TypeName="DatabaseModel.teammatch">
+              <MappingFragment StoreEntitySet="teammatch">
+                <ScalarProperty Name="PlaySessionID" ColumnName="PlaySessionID" />
+                <ScalarProperty Name="CaptainID" ColumnName="CaptainID" />
+                <ScalarProperty Name="OpponentName" ColumnName="OpponentName" />
+                <ScalarProperty Name="League" ColumnName="League" />
+                <ScalarProperty Name="LeagueRound" ColumnName="LeagueRound" />
+                <ScalarProperty Name="Season" ColumnName="Season" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tokens">
+            <EntityTypeMapping TypeName="DatabaseModel.token">
+              <MappingFragment StoreEntitySet="token">
+                <ScalarProperty Name="AccessToken" ColumnName="AccessToken" />
+                <ScalarProperty Name="AccountUsername" ColumnName="AccountUsername" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="yearplansections">
+            <EntityTypeMapping TypeName="DatabaseModel.yearplansection">
+              <MappingFragment StoreEntitySet="yearplansection">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="TeamID" ColumnName="TeamID" />
+                <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+                <ScalarProperty Name="EndDate" ColumnName="EndDate" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <AssociationSetMapping Name="memberfocuspoint" TypeName="DatabaseModel.memberfocuspoint" StoreEntitySet="memberfocuspoint">
+            <EndProperty Name="member">
+              <ScalarProperty Name="ID" ColumnName="MemberID" />
+            </EndProperty>
+            <EndProperty Name="focuspoint">
+              <ScalarProperty Name="ID" ColumnName="FocusPointID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="practicesessionfocuspoint" TypeName="DatabaseModel.practicesessionfocuspoint" StoreEntitySet="practicesessionfocuspoint">
+            <EndProperty Name="focuspoint">
+              <ScalarProperty Name="ID" ColumnName="FocusPointID" />
+            </EndProperty>
+            <EndProperty Name="practicesession">
+              <ScalarProperty Name="PlaySessionID" ColumnName="PracticeSessionPlaySessionID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="teammember" TypeName="DatabaseModel.teammember" StoreEntitySet="teammember">
+            <EndProperty Name="practiceteam">
+              <ScalarProperty Name="ID" ColumnName="TeamID" />
+            </EndProperty>
+            <EndProperty Name="member">
+              <ScalarProperty Name="ID" ColumnName="MemberID" />
+            </EndProperty>
+          </AssociationSetMapping>
+          <AssociationSetMapping Name="yearplansectionfocuspoint" TypeName="DatabaseModel.yearplansectionfocuspoint" StoreEntitySet="yearplansectionfocuspoint">
+            <EndProperty Name="yearplansection">
+              <ScalarProperty Name="ID" ColumnName="YearPlanSectionID" />
+            </EndProperty>
+            <EndProperty Name="focuspoint">
+              <ScalarProperty Name="ID" ColumnName="FocusPointID" />
+            </EndProperty>
+          </AssociationSetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

@@ -18,14 +18,14 @@ namespace Server.Function.Rules
                     ruleBreaks.Add(new RuleBreak(position.Key, 0, "Wrong gender"));
                 }
 
-                if (position.Value is DoublePosition dp)
+                if (position.Value.OtherPlayer != null)
                 {
-                    if (type == Lineup.PositionType.MixDouble && position.Value.Player.Sex == dp.OtherPlayer.Sex)
+                    if (type == Lineup.PositionType.MixDouble && position.Value.Player.Sex == position.Value.OtherPlayer.Sex)
                     {
-                        ruleBreaks.Add(new RuleBreak(position.Key, 0, "Wrong gender"));
-                        ruleBreaks.Add(new RuleBreak(position.Key, 1, "Wrong gender"));
+                        ruleBreaks.Add(new RuleBreak(position.Key, 0, "Mix cannot be same gender"));
+                        ruleBreaks.Add(new RuleBreak(position.Key, 1, "Mix cannot be same gender"));
                     }
-                    else if (!SexGood(type, dp.OtherPlayer.Sex))
+                    else if (!SexGood(type, position.Value.OtherPlayer.Sex))
                     {
                         ruleBreaks.Add(new RuleBreak(position.Key, 1, "Wrong gender"));
                     }
