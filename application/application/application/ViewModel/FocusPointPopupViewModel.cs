@@ -52,7 +52,7 @@ namespace application.ViewModel
             list.Add(new FocusPointItem() { Descriptor = new FocusPointDescriptor() { Name = "Slag 3", Id=5 } });
             list.Add(new FocusPointItem() { Descriptor = new FocusPointDescriptor() { Name = "Serv", Id=6 } });
 
-            list = list.Where(p => !user.FocusPoints.Any(q => q.Descriptor.Id == p.Descriptor.Id)).ToList();
+            list = list.Where(p => user.FocusPoints.All(q => q.Descriptor.Id != p.Descriptor.Id)).ToList();
             FocusPoints = new ObservableCollection<FocusPointItem>(list);
         }
     }

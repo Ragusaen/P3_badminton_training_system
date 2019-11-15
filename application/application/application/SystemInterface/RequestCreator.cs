@@ -52,7 +52,7 @@ namespace application.SystemInterface
             return true;
         }
 
-        public static bool CreateAccountRequest(string username, string password, int badmintonId)
+        public static bool CreateAccountRequest(string username, string password, int badmintonId, string name)
         {
             var careq = new CreateAccountRequest()
             {
