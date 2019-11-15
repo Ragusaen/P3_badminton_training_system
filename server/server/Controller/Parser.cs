@@ -18,7 +18,17 @@ namespace Server.Controller
 
         public const string RankingListElementClassName = "RankingListGrid";
 
-        public enum Rankings { Level = 0, MS, WS, MD, WD, MXD, WXD }
+        public enum Category { 
+            Level = 1, 
+            MS = 2, 
+            WS = 4, 
+            MD = 8, 
+            WD = 16, 
+            MXD = 32, 
+            WXD = 64,
+            Mens = MS | MD | MXD,
+            Womens = WS | WD | WXD,
+        }
         public static int RankingsCount = 7;
         public static string RankingRootUrl = "https://www.badmintonplayer.dk/DBF/Ranglister/#287,2019,,0,,,1492,0,,,,15,,,,0,,,,,,";
         public static string[] Categories = { "Level", "MS", "WS", "MD", "WD", "MXD", "WXD" };
@@ -44,7 +54,7 @@ namespace Server.Controller
 
                 List<IWebElement> rawRanking = ScrapeRankingsTable(browser);
 
-                DistributeRankings(players, rawRanking, i);
+                DistributeRankings(players, rawRanking, 1 << i);
 
                 try // Checking for next page
                 {
@@ -65,12 +75,14 @@ namespace Server.Controller
             _log.Debug("UpdatePlayers finished");
         }
 
-        private void DistributeRankings(List<Player> players, List<IWebElement> rawRanking, int category)
+        private void DistributeRankings(List<Player> players, List<IWebElement> rawRanking, int i)
         {
+            Category category = (Category) i;
+
             // skips first row to avoid the title
-            for (int i = 1; i < rawRanking.Count; i++)
+            for (int j = 1; j < rawRanking.Count; j++)
             {
-                var currentRow = rawRanking[i];
+                var currentRow = rawRanking[j];
                 try
                 {
                     currentRow.FindElement(By.ClassName("playerid")).GetAttribute("innerHTML");
@@ -89,9 +101,9 @@ namespace Server.Controller
                 {
                     player = players.Single(p => p.BadmintonPlayerId == badmintonPlayerId);
 
-                    if (category == 2 || category == 4 || category == 6)
+                    if (category == Category.Womens)
                         player.Sex = Sex.Female;
-                    else if(category == 1 || category == 3 || category == 5)
+                    else if(category == Category.Mens)
                         player.Sex = Sex.Male;
                     else
                         player.Sex = Sex.Unknown;
@@ -121,7 +133,7 @@ namespace Server.Controller
                 }
 
                 UpdateRankingsFromRow(player.Rankings, points, category);
-                if (category == 0)
+                if (category == Category.Level)
                 {
                     player.Rankings.Age = FetchAgeGroup(ageAndLevel);
                     player.Rankings.Level = FetchLevelGroup(ageAndLevel);
@@ -129,23 +141,23 @@ namespace Server.Controller
             }
         }
 
-        private void UpdateRankingsFromRow(PlayerRanking pr, int points, int category)
+        private void UpdateRankingsFromRow(PlayerRanking pr, int points, Category category)
         {
             switch (category)
             {
-                case (int)Rankings.Level:
+                case Category.Level:
                     pr.LevelPoints = points;
                     break;
-                case (int)Rankings.MS:
-                case (int)Rankings.WS:
+                case Category.MS:
+                case Category.WS:
                     pr.SinglesPoints = points;
                     break;
-                case (int)Rankings.MD:
-                case (int)Rankings.WD:
+                case Category.MD:
+                case Category.WD:
                     pr.DoublesPoints = points;
                     break;
-                case (int)Rankings.MXD:
-                case (int)Rankings.WXD:
+                case Category.MXD:
+                case Category.WXD:
                     pr.MixPoints = points;
                     break;
                 default:
@@ -170,7 +182,7 @@ namespace Server.Controller
                     dbMember = _db.members.Add(new member());
                     dbRankList = dbMember.ranklist = new ranklist();
                     dbMember.BadmintonPlayerID = p.BadmintonPlayerId;
-                    dbMember.MemberType = (int)MemberRole.Type.Player;
+                    dbMember.MemberType = (int)MemberType.Player;
                     dbMember.Name = p.Member.Name;
                 }
                 dbMember.Sex = (int)p.Sex;
