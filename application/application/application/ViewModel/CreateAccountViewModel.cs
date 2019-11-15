@@ -72,6 +72,8 @@ namespace application.ViewModel
 
         private void UpdatePlayerList()
         {
+
+            Debug.WriteLine("GETTING PLAYERS!");
             if (_availablePlayers == null)
             {
                 _availablePlayers = RequestCreator.GetPlayersWithNoAccount();

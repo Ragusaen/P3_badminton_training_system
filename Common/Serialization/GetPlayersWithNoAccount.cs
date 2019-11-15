@@ -8,7 +8,9 @@ namespace Common.Serialization
 {
     [DataContract]
     public class GetPlayersWithNoAccountRequest : Request
-    { }
+    {
+        [DataMember] public int SomeData = 1;
+    }
 
     [DataContract]
     public class GetPlayersWithNoAccountResponse : Response
