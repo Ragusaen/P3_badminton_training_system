@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:application.ViewModel"
+             mc:Ignorable="d"
+             x:Class="application.UI.ViewDetailedFeedbackPage">
+
+    <NavigationPage.TitleView>
+        <StackLayout Orientation="Horizontal" Spacing="10">
+            <Label Text="View Feedback" FontAttributes="Bold" FontSize="30" TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+        </StackLayout>
+    </NavigationPage.TitleView>
+
+    <ContentPage.BindingContext>
+        <local:ViewDetailedFeedbackViewModel />
+    </ContentPage.BindingContext>
+
+    <ListView ItemsSource="{Binding Feedbacks}"
+              HasUnevenRows="True"
+              ItemTapped="ListView_OnItemTapped"
+              BackgroundColor="LightGray">
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <ViewCell>
+                    <StackLayout Padding="10">
+                        <Label Text="{Binding .Name}" TextColor="Black" FontSize="Medium"/>
+                        <StackLayout IsVisible="{Binding IsVisible}" Margin="0,10,0,0">
+                            
+                        </StackLayout>
+                    </StackLayout>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>
+    </ListView>
+    
+   
+</ContentPage>
