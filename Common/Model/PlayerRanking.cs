@@ -4,18 +4,12 @@
     {
         public enum AgeGroup
         {
-            U9,
-            U11,
-            U13,
-            U15,
-            U17,
-            U19,
-            Senior
+            Unknown, U09, U11, U13, U15, U17, U19, Senior
         }
 
         public enum LevelGroup
         {
-            D, C, B, A, M, E, EM, MA, AB, BC, CD
+            Unknown, D, CD, C, BC, B, AB, A, MA, M, EM, E
         }
 
         public AgeGroup Age;
@@ -27,7 +21,7 @@
 
         public override string ToString()
         {
-            return $"LVL: {Level}, Level: {LevelPoints}, Singles: {SinglesPoints}, Doubles: {DoublesPoints} , Mixed: {MixPoints}";
+            return $"LVL: {Age} {Level}, Level: {LevelPoints}, Singles: {SinglesPoints}, Doubles: {DoublesPoints} , Mixed: {MixPoints}";
         }
     }
 }
