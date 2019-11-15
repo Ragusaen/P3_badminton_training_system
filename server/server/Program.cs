@@ -18,8 +18,9 @@ namespace Server
 
             try
             {
-                SslTcpServer sslTcpServer = new SslTcpServer("localhost.cer");
-                sslTcpServer.RunServer();
+                var parser = new Parser();
+
+                parser.UpdatePlayers();
             }
             catch (Exception e)
             {
