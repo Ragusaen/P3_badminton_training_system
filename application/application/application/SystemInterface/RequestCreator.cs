@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using Common;
 using Common.Serialization;
+using Common.Model;
 
 namespace application.SystemInterface
 {
@@ -64,5 +65,13 @@ namespace application.SystemInterface
             return response.WasSuccessful;
         }
 
+        public static List<FocusPointDescriptor> GetFocusPoints()
+        {
+            var request = new GetAllFocusPointsRequest();
+
+            var response = SimpleRequest<GetAllFocusPointsResponse, GetAllFocusPointsRequest>(RequestType.GetAllFocusPoints, request);
+
+            return response.FocusPointDescriptors;
+        }
     }
 }
