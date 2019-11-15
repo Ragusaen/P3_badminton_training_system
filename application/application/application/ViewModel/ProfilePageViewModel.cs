@@ -153,8 +153,8 @@ namespace application.ViewModel
         private void DeleteListFocusItemClick(object param)
         {
             FocusPointItem focuspoint = param as FocusPointItem;
-            SearchResultFocusPoints.Remove(focuspoint);
-            FocusPointListHeight = SearchResultFocusPoints.Count * 45;
+            FocusPoints.Remove(focuspoint);
+            FocusPointListHeight = FocusPoints.Count * 45;
         }
     }
 }
