@@ -12,7 +12,7 @@ using Server.DAL;
 
 namespace Server.Controller
 {
-    class Parser
+    class RankListScraper
     {
         private static Logger _log = LogManager.GetCurrentClassLogger();
 
@@ -44,6 +44,11 @@ namespace Server.Controller
             chromeOptions.AddUserProfilePreference("profile.default_content_setting_values.images", 2);
             IWebDriver browser = new ChromeDriver(chromeOptions);
             FindRootRankList(browser);
+
+            foreach (var dbMember in _db.members)
+            {
+                dbMember.OnRanklist = false;
+            }
 
             var players = new List<Player>();
             for (int i = 0; i < RankingsCount; i++)
@@ -170,7 +175,7 @@ namespace Server.Controller
         {
             foreach (var p in players)
             {
-                member dbMember;
+                Server.DAL.member dbMember;
                 ranklist dbRankList;
 
                 if (p.Member.Id > 0)
@@ -180,12 +185,14 @@ namespace Server.Controller
                 }
                 else
                 {
-                    dbMember = _db.members.Add(new member());
+                    dbMember = _db.members.Add(new Server.DAL.member());
                     dbRankList = dbMember.ranklist = new ranklist();
                     dbMember.BadmintonPlayerID = p.BadmintonPlayerId;
                     dbMember.MemberType = (int)MemberType.Player;
                     dbMember.Name = p.Member.Name;
                 }
+
+                dbMember.OnRanklist = true;
                 dbMember.Sex = (int)p.Sex;
                 dbRankList.AgeGroup = (int)p.Rankings.Age;
                 dbRankList.Level = (int)p.Rankings.Level;
