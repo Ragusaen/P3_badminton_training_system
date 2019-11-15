@@ -4,12 +4,12 @@ using System.Text;
 
 namespace Common.Serialization
 {
-    public class PermissionRequest
+    public class PermissionRequest : Request
     {
         public byte[] Token;
     }
 
-    public class PermissionResponse
+    public class PermissionResponse : Response
     {
         public bool AccessDenied = true;
     }

@@ -6,7 +6,7 @@ namespace application.Controller
 {
     static class StringSearch
     {
-        public static int longestCommonSubsequence(string listText, string searchText)
+        public static int LongestCommonSubsequence(string listText, string searchText)
         {
             int n = listText.Length, m = searchText.Length;
             int[,] M = new int[n + 1, m + 1];

@@ -23,7 +23,7 @@ namespace application.ViewModel
                 /*if (string.IsNullOrEmpty(_searchtext))
                     FocusPoints.OrderByDescending(p => p.Descriptor.Name);
                 else*/
-                FocusPoints.OrderByDescending((x => StringSearch.longestCommonSubsequence(x.Descriptor.Name.ToLower(), SearchText.ToLower()))).ThenBy(x => x.Descriptor.Name.Length).ToList();
+                FocusPoints.OrderByDescending((x => StringSearch.LongestCommonSubsequence(x.Descriptor.Name.ToLower(), SearchText.ToLower()))).ThenBy(x => x.Descriptor.Name.Length).ToList();
             }
         }
 

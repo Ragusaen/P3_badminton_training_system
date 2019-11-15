@@ -5,13 +5,13 @@ using Common.Model;
 namespace Common.Serialization
 {
     [DataContract]
-    public class GetPracticeSessionRequest
+    public class GetPracticeSessionRequest : Request
     {
         [DataMember] public int Id;
     }
 
     [DataContract]
-    public class GetPracticeSessionResponse
+    public class GetPracticeSessionResponse : Response
     {
         [DataMember] public PracticeSession PracticeSession;
     }

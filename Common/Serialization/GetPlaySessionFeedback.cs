@@ -7,13 +7,13 @@ using Common.Model;
 namespace Common.Serialization
 {
     [DataContract]
-    public class GetPlaySessionFeedbackRequest
+    public class GetPlaySessionFeedbackRequest : Request
     {
         [DataMember] public int PlaySessionId;
     }
 
     [DataContract]
-    public class GetPlaySessionFeedbackResponse
+    public class GetPlaySessionFeedbackResponse : Response
     {
         [DataMember] public List<Feedback> Feedback;
     }

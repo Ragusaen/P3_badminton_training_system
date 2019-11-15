@@ -13,7 +13,7 @@ namespace Server.DAL
         {
             return new FocusPointDescriptor
             {
-                ID = fp.ID,
+                Id = fp.ID,
                 Name = fp.Name,
                 IsPrivate = fp.IsPrivate,
                 Description = fp.Description,

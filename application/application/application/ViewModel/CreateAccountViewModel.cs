@@ -2,9 +2,12 @@
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using application.SystemInterface;
 using Common.Model;
+using application.Controller;
 
 namespace application.ViewModel
 {
@@ -53,7 +56,7 @@ namespace application.ViewModel
 
 
         private List<Player> _availablePlayers;
-        public ObservableCollection<string> ShownPlayerList { get; set; }
+        public ObservableCollection<Player> ShownPlayerList { get; set; }
 
         private string _searchText;
 
@@ -71,8 +74,16 @@ namespace application.ViewModel
         {
             if (_availablePlayers == null)
             {
-                RequestCreator.
+                _availablePlayers = RequestCreator.GetPlayersWithNoAccount();
             }
+            Debug.WriteLine("GOT PLAYERS!");
+
+            ShownPlayerList = new ObservableCollection<Player>(
+                _availablePlayers
+                    .OrderByDescending(p => StringSearch.LongestCommonSubsequence(p.Member.Name, SearchText))
+                    .Take(5)
+                    .ToList()
+            );
         }
 
     }
