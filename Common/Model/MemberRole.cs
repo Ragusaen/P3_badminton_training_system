@@ -1,11 +1,13 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 
 namespace Common.Model
 {
     public abstract class MemberRole
     {
-        public enum Type { None, Player, Trainer }
-
         public Member Member { get; set; }
     }
+
+    [Flags]
+    public enum MemberType { None, Player, Trainer, Both = Player | Trainer }
 }

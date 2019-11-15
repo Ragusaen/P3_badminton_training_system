@@ -16,8 +16,9 @@ namespace application.UI
         public CreateMatchPage()
         {
             InitializeComponent();
-            BindingContext = new CreateMatchViewModel();
-
+            CreateMatchViewModel vm = new CreateMatchViewModel();
+            BindingContext = vm;
+            vm.Navigation = Navigation;
             SaveIcon.Source = ImageSource.FromResource("application.Images.saveicon.png");
         }
     }

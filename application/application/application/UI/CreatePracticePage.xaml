@@ -57,25 +57,25 @@
             <Label Grid.Row="7" Grid.Column="0" Text="Main" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
             <Label Grid.Row="7" Grid.Column="1" Text="{Binding MainFocusPoint}" FontSize="18" HorizontalTextAlignment="Center" VerticalOptions="Center"/>
             <Label Grid.Row="8" Grid.Column="0" Text="Today" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
-            <SearchBar Grid.Row="8" Grid.Column="1" Placeholder="Enter focus point" Text="{Binding FocusPointsSearchText}"/>
-            <ListView ItemsSource="{Binding FocusPointsSearchResult}" VerticalScrollBarVisibility="Never" VerticalOptions="Fill" SeparatorVisibility="None">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <TextCell Height="45" Text="{Binding Description}"/>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
-        </Grid>
+            <SearchBar Grid.Row="8" Grid.Column="1" Placeholder="Enter the practice's focus point" Text="{Binding SearchText}"/>
+                <ListView VerticalScrollBarVisibility="Never" ItemsSource="{Binding SearchResultFocusPoints}" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding FocusPointListHeight}">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <TextCell Height="45" Text="{Binding Descriptor.Name}"/>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
         <Label Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" Text="Practice Plan" TextColor="White" FontSize="Title" FontAttributes="Bold" HorizontalTextAlignment="Center" BackgroundColor="Red" HorizontalOptions="FillAndExpand" Margin="0,10,0,0"/>
 
-        <ListView ItemsSource="{Binding PlanElement}">
+        <ListView ItemsSource="{Binding PlanElement}" RowHeight="235">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
                         <Grid Margin="15,10,15,0">
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="40"/>
-                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="40"/>
                                 <RowDefinition Height="125"/>
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>

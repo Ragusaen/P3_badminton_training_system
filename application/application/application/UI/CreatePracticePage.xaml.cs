@@ -16,8 +16,10 @@ namespace application.UI
         public CreatePracticePage()
         {
             InitializeComponent();
-            BindingContext = new ScheduleViewModel();
-            
+            CreatePracticeViewModel vm = new CreatePracticeViewModel();
+            BindingContext = vm;
+            vm.Navigation = Navigation;
+
             SaveIcon.Source = ImageSource.FromResource("application.Images.saveicon.png");
             BullsEyeIcon.Source = ImageSource.FromResource("application.Images.bullseyeicon.png");
             //DeleteIcon.Source = ImageSource.FromResource("application.Images.deleteicon.png");

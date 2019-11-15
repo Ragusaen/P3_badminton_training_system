@@ -17,9 +17,10 @@ namespace application.UI
         {
             InitializeComponent();
             ScheduleViewModel vm = new ScheduleViewModel();
-            vm.Navigation = Navigation;
             BindingContext = vm;
+            vm.Navigation = Navigation;
             Plusicon.Source = ImageSource.FromResource("application.Images.plusicon.jpg");
+
         }
     }
 }

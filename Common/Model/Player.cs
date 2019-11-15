@@ -23,7 +23,7 @@ namespace Common.Model
             Senior,
             Veteran
         }
-        public List<PracticeTeam> PracticeTeams { get; set; }
+        
         public PlayerRanking Rankings { get; set; }
         public AgeGroup Age { get; set; }
         public Sex Sex { get; set; }
