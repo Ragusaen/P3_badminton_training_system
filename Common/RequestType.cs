@@ -16,7 +16,7 @@ namespace Common
         GetPlayerPracticeTeams,
         GetPlayerFocusPoints,
         GetTeamMatch,
-        GetPositions,
+        GetTeamMatchPositions,
         GetPracticeSessionFocusPoints,
         GetPracticeSessionExercises,
         GetPracticeSessionYearPlan
