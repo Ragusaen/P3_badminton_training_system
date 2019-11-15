@@ -7,13 +7,13 @@ using Common.Model;
 namespace Common.Serialization
 {
     [DataContract]
-    public class GetAllFocusPointsRequest
+    public class GetAllFocusPointsRequest : Request
     {
         
     }
 
     [DataContract]
-    public class GetAllFocusPointsResponse
+    public class GetAllFocusPointsResponse : Response
     {
         [DataMember] public List<FocusPointDescriptor> FocusPointDescriptors;
     }

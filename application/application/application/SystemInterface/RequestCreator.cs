@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Common;
+using Common.Model;
 using Common.Serialization;
 using Common.Model;
 
@@ -20,7 +21,7 @@ namespace application.SystemInterface
             _connection.Connect();
         }
 
-        private static T SimpleRequest<T, U>(RequestType requestType, U request) where T : class
+        private static TResponse SimpleRequest<TRequest, TResponse>(RequestType requestType, TRequest request) where TRequest : Request where TResponse : Response
         {
             // Serialize request
             Serializer serializer = new Serializer();
@@ -35,7 +36,7 @@ namespace application.SystemInterface
             byte[] responseBytes = _connection.SendRequest(messageBytes);
 
             // Deserialize response
-            T response = serializer.Deserialize<T>(responseBytes);
+            TResponse response = serializer.Deserialize<TResponse>(responseBytes);
 
             return response;
         }
@@ -44,7 +45,7 @@ namespace application.SystemInterface
         {
             LoginRequest request = new LoginRequest() { Username = username, Password = password };
 
-            LoginResponse response = SimpleRequest<LoginResponse, LoginRequest>(RequestType.Login, request);
+            LoginResponse response = SimpleRequest<LoginRequest, LoginResponse>(RequestType.Login, request);
 
             if (!response.LoginSuccessful)
                 return false;
@@ -60,16 +61,28 @@ namespace application.SystemInterface
                 Username = username, Password = password
             };
 
-            var response = SimpleRequest<CreateAccountResponse, CreateAccountRequest>(RequestType.CreateAccount, careq);
+            var response = SimpleRequest<CreateAccountRequest, CreateAccountResponse>(RequestType.CreateAccount, careq);
 
             return response.WasSuccessful;
+        }
+
+        public static List<Player> GetPlayersWithNoAccount()
+        {
+            var request = new GetPlayersWithNoAccountRequest();
+
+            var response = SimpleRequest<GetPlayersWithNoAccountRequest, GetPlayersWithNoAccountResponse>(
+                RequestType.GetPlayersWithNoAccount,
+                request);
+
+            return response.Players;
+
         }
 
         public static List<FocusPointDescriptor> GetFocusPoints()
         {
             var request = new GetAllFocusPointsRequest();
 
-            var response = SimpleRequest<GetAllFocusPointsResponse, GetAllFocusPointsRequest>(RequestType.GetAllFocusPoints, request);
+            var response = SimpleRequest<GetAllFocusPointsRequest, GetAllFocusPointsResponse>(RequestType.GetAllFocusPoints, request);
 
             return response.FocusPointDescriptors;
         }

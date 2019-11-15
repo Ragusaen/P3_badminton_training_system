@@ -197,7 +197,7 @@
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\FocusPointDescriptorCast.cs" />
-    <Compile Include="DAL\GetPlayersWithNoAccountHandler.cs" />
+    <Compile Include="SystemInterface\Requests\Handlers\GetPlayersWithNoAccountHandler.cs" />
     <Compile Include="DAL\member.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>

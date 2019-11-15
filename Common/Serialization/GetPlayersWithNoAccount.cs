@@ -7,11 +7,11 @@ using Common.Model;
 namespace Common.Serialization
 {
     [DataContract]
-    public class GetPlayersWithNoAccountRequest
+    public class GetPlayersWithNoAccountRequest : Request
     { }
 
     [DataContract]
-    public class GetPlayersWithNoAccountResponse
+    public class GetPlayersWithNoAccountResponse : Response
     {
         [DataMember] public List<Player> Players;
     }

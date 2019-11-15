@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Common;
 using Common.Serialization;
 using Server.Controller;
+using Server.DAL;
 using Server.SystemInterface.Requests.Handlers;
 
 namespace Server.SystemInterface.Requests
@@ -27,8 +28,12 @@ namespace Server.SystemInterface.Requests
                 {RequestType.CreateAccount, new CreateAccountHandler() },
                 {RequestType.GetPracticeTeam, new GetPracticeTeamHandler() },
                 {RequestType.GetSchedule, new GetScheduleHandler() },
-                {RequestType.GetPlayerPracticeTeams, new GetPlayerPracticeTeamsHandler() }
-                //{RequestType.GetAllPlayers, new GetAllPlayersHandler()}
+                {RequestType.GetPlayerPracticeTeams, new GetPlayerPracticeTeamsHandler() },
+                {RequestType.GetPlayersWithNoAccount, new GetPlayersWithNoAccountHandler() },
+                {RequestType.GetAllPlayers, new GetAllPlayersHandler()},
+                {RequestType.GetPracticeSession, new GetPracticeSessionHandler() },
+                {RequestType.GetPlayerFeedback, new GetPlayerFeedbackHandler() },
+                {RequestType.GetPlaySessionFeedback, new GetPlaySessionFeedback() }
             };
 
         public byte[] Parse(byte[] request)

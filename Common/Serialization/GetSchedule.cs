@@ -7,14 +7,14 @@ using Common.Model;
 namespace Common.Serialization
 {
     [DataContract]
-    public class GetScheduleRequest
+    public class GetScheduleRequest : Request
     {
         [DataMember] public DateTime StartDate;
         [DataMember] public DateTime EndDate;
     }
 
     [DataContract]
-    public class GetScheduleResponse
+    public class GetScheduleResponse : Response
     {
         [DataMember] public List<PracticeSession> PracticeSessions;
         [DataMember] public List<Match> Matches;

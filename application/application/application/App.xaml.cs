@@ -19,7 +19,7 @@ namespace application
 
         protected override void OnStart()
         {
-            //RequestCreator.Connect();
+            RequestCreator.Connect();
         }
 
         protected override void OnSleep()

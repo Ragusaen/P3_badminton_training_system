@@ -8,13 +8,13 @@ using Common.Model;
 namespace Common.Serialization
 {
     [DataContract]
-    public class GetPracticeTeamRequest
+    public class GetPracticeTeamRequest : Request
     {
         [DataMember] public int Id;
     }
 
     [DataContract]
-    public class GetPracticeTeamResponse
+    public class GetPracticeTeamResponse : Response
     {
         [DataMember] public PracticeTeam Team;
     }

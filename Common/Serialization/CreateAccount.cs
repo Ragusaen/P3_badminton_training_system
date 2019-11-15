@@ -6,7 +6,7 @@ using System.Text;
 namespace Common.Serialization
 {
     [DataContract]
-    public class CreateAccountRequest
+    public class CreateAccountRequest : Request
     {
         [DataMember] public string Username;
         [DataMember] public string Password;
@@ -16,7 +16,7 @@ namespace Common.Serialization
     }
 
     [DataContract]
-    public class CreateAccountResponse
+    public class CreateAccountResponse : Response
     {
         [DataMember] public bool WasSuccessful;
     }

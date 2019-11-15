@@ -13,7 +13,7 @@ namespace Server.SystemInterface.Requests.Handlers
 {
     abstract class RequestHandler
     {
-        protected byte[] OuterHandle<TRequest, TResponse>(byte[] data, Func<TRequest, member, TResponse> innerHandle) where TRequest : class where TResponse : class
+        protected byte[] OuterHandle<TRequest, TResponse>(byte[] data, Func<TRequest, member, TResponse> innerHandle) where TRequest : Request where TResponse : Response
         {
             var serializer = new Serializer();
 
@@ -36,7 +36,7 @@ namespace Server.SystemInterface.Requests.Handlers
         public abstract byte[] Handle(byte[] data);
     }
 
-    abstract class MiddleRequestHandler<TRequest, TResponse> : RequestHandler where TRequest : class where TResponse : class
+    abstract class MiddleRequestHandler<TRequest, TResponse> : RequestHandler where TRequest : Request where TResponse : Response
     {
         protected abstract TResponse InnerHandle(TRequest request, member requester);
 
