@@ -43,29 +43,21 @@ namespace application.ViewModel
             }
         }
 
-        private RelayCommand _createAccountContinueClickCommand;
+        private RelayCommand _createAccountClickCommand;
 
-        public RelayCommand CreateAccountContinueClickCommand
+        public RelayCommand CreateAccountClickCommand
         {
             get
             {
-                return _createAccountContinueClickCommand ?? (_createAccountContinueClickCommand = new RelayCommand(param => ExecuteCreateAccountContinueClick(param), param => CanExecuteCreateAccountContinueClick(param)));
+                return _createAccountClickCommand ?? (_createAccountClickCommand = new RelayCommand(param => ExecuteCreateAccountClick(param)));
             }
         }
 
-        private bool CanExecuteCreateAccountContinueClick(object param)
+        //Check if user is in database. Navigate to main page.
+        private void ExecuteCreateAccountClick(object param)
         {
-            if ((PassWord == null || PassWord == "") || (UserName == null || UserName == "") || (Email == null || Email == ""))
-                return false;
-            else
-                return true;
-        }
-
-        //Check if username is free in database.
-        private void ExecuteCreateAccountContinueClick(object param)
-        {
-            CreateAccountChooseNameViewModel vm = new CreateAccountChooseNameViewModel();
-            Navigation.PushAsync(new CreateAccountChooseNamePage() { BindingContext = vm });
+            ProfilePageViewModel vm = new ProfilePageViewModel();
+            Navigation.PushAsync(new ProfilePage() { BindingContext = vm });
             vm.Navigation = Navigation;
         }
     }
