@@ -66,9 +66,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="UI\CreateAccountChooseNamePage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
     <EmbeddedResource Update="UI\CreateAccountPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>

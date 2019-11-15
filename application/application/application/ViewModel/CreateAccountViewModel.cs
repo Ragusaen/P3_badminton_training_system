@@ -13,11 +13,11 @@ namespace application.ViewModel
 {
     class CreateAccountViewModel : BaseViewModel
     {
-        private string _userName;
+        private string _username;
 
-        public string UserName
+        public string Username
         {
-            get { return _userName; }
+            get { return _username; }
             set
             {
                 if (SetProperty(ref _username, value))
@@ -25,11 +25,11 @@ namespace application.ViewModel
             }
         }
 
-        private string _passWord;
+        private string _password;
 
-        public string PassWord
+        public string Password
         {
-            get { return _passWord; }
+            get { return _password; }
             set
             {
                 if (SetProperty(ref _password, value))
@@ -63,7 +63,7 @@ namespace application.ViewModel
                     else if (Password != ConfirmPassword)
                         _confirmationOfPasswordText = "The two password you have enter are not identical";
                 }
-                    
+
             }
         }
 
@@ -79,9 +79,27 @@ namespace application.ViewModel
 
         private bool CanExecuteCreateAccountClick(object param)
         {
-            Navigation.PushAsync(new ProfilePage());
+            if ((Password == null || Password == "") || (Username == null || Username == "") || (ConfirmPassword != Password))
+            {
+                /*if (Password == null || Password == "")
+                    PasswordErrorText = "Please enter a password";
+                else if (Username == null || Username == "")
+                    UsernameErrorText = "Please enter a valid username";
+                else if (Username == null || Username == "")
+                    ConfirmationOfPasswordText = "The two password you have enter are not identical";*/
+                return false;
+            }
+            else
+            {
+
+                return true;
+            }
         }
 
+        private void ExecuteCreateAccountClick(object param)
+        {
+            Navigation.PushAsync(new ProfilePage());
+        }
 
         private List<Player> _availablePlayers;
         public ObservableCollection<Player> ShownPlayerList { get; set; }
@@ -95,20 +113,7 @@ namespace application.ViewModel
             {
                 SetProperty(ref _searchText, value);
                 UpdatePlayerList();
-            if ((Password == null || Password == "") || (Username == null || Username == "") || (ConfirmPassword != Password))
-            {
-                /*if (Password == null || Password == "")
-                    PasswordErrorText = "Please enter a password";
-                else if (Username == null || Username == "")
-                    UsernameErrorText = "Please enter a valid username";
-                else if (Username == null || Username == "")
-                    ConfirmationOfPasswordText = "The two password you have enter are not identical";*/
-                return false;
-            }
-            else 
-            {
-                
-                return true;
+
             }
         }
 
@@ -126,10 +131,8 @@ namespace application.ViewModel
                     .Take(5)
                     .ToList()
             );
-        private void ExecuteCreateAccountClick(object param)
-        {
-            Navigation.PushAsync(new ProfilePage());
-        }
 
+
+        }
     }
 }
