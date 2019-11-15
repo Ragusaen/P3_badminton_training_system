@@ -9,6 +9,7 @@
     <None Remove="Images\bullseyeicon.png" />
     <None Remove="Images\deleteicon.png" />
     <None Remove="Images\editicon.png" />
+    <None Remove="Images\editicon2.png" />
     <None Remove="Images\logo.gif" />
     <None Remove="Images\menuicon.jpg" />
     <None Remove="Images\plusicon.jpg" />
@@ -21,6 +22,7 @@
     <EmbeddedResource Include="Images\bullseyeicon.png" />
     <EmbeddedResource Include="Images\deleteicon.png" />
     <EmbeddedResource Include="Images\editicon.png" />
+    <EmbeddedResource Include="Images\editicon2.png" />
     <EmbeddedResource Include="Images\logo.gif" />
     <EmbeddedResource Include="Images\menuicon.jpg" />
     <EmbeddedResource Include="Images\plusicon.jpg" />
@@ -55,15 +57,15 @@
     <Compile Update="UI\MenuPage.xaml.cs">
       <DependentUpon>MenuPage.xaml</DependentUpon>
     </Compile>
+    <Compile Update="UI\ViewPracticePage.xaml.cs">
+      <DependentUpon>ViewPracticePage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="UI\SchedulePage.xaml.cs">
       <DependentUpon>SchedulePage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="UI\CreateAccountChooseNamePage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
     <EmbeddedResource Update="UI\CreateAccountPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -100,7 +102,7 @@
     <EmbeddedResource Update="UI\MenuPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="UI\PracticeSessionPage.xaml">
+    <EmbeddedResource Update="UI\ViewPracticePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="UI\ProfilePage.xaml">
@@ -110,6 +112,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="UI\SubmitFeedbackPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="UI\ViewDetailedFeedbackPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="UI\ViewFeedbackPage.xaml">

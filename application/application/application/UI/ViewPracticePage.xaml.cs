@@ -11,14 +11,17 @@ using Xamarin.Forms.Xaml;
 namespace application.UI
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class CreateAccountChooseNamePage : ContentPage
+    public partial class ViewPracticePage : ContentPage
     {
-        public CreateAccountChooseNamePage()
+        public ViewPracticePage()
         {
             InitializeComponent();
-            CreateAccountChooseNameViewModel vm = new CreateAccountChooseNameViewModel();
+            CreatePracticeViewModel vm = new CreatePracticeViewModel();
             BindingContext = vm;
             vm.Navigation = Navigation;
+
+            EditIcon.Source = ImageSource.FromResource("application.Images.editicon2.png");
+            BullsEyeIcon.Source = ImageSource.FromResource("application.Images.bullseyeicon.png");
         }
     }
 }
