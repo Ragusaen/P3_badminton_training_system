@@ -28,5 +28,6 @@ namespace Common.Model
         public AgeGroup Age { get; set; }
         public Sex Sex { get; set; }
         public int BadmintonPlayerId { get; set; }
+        public List<Feedback> Feedbacks { get; set; }
     }
 }
