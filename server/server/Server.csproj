@@ -192,39 +192,35 @@
     <Compile Include="DAL\feedback.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\FeedbackCast.cs" />
     <Compile Include="DAL\focuspoint.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\FocusPointDescriptorCast.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\GetPlayersWithNoAccountHandler.cs" />
     <Compile Include="DAL\member.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\MemberCast.cs" />
-    <Compile Include="DAL\LineupCast.cs" />
     <Compile Include="DAL\playsession.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\PlaysessionCast.cs" />
     <Compile Include="DAL\position.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\practicesession.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\PracticeSessionCast.cs" />
     <Compile Include="DAL\practicesessionexercise.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\PracticeSessionExerciseCast.cs" />
+    <Compile Include="DAL\ExerciseDescriptorCast.cs" />
+    <Compile Include="DAL\FeedbackCast.cs" />
+    <Compile Include="DAL\FocusPointDescriptorCast.cs" />
+    <Compile Include="DAL\PositionCast.cs" />
     <Compile Include="DAL\practiceteam.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\PracticeTeamCast.cs" />
     <Compile Include="DAL\ranklist.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\RankListCast.cs" />
     <Compile Include="DAL\teammatch.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
@@ -234,6 +230,15 @@
     <Compile Include="DAL\yearplansection.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\YearPlanSectionCast.cs" />
+    <Compile Include="SystemInterface\Requests\Handlers\GetPlayerFocusPointsHandler.cs" />
+    <Compile Include="SystemInterface\Requests\Handlers\GetPlayersWithNoAccountHandler.cs" />
+    <Compile Include="DAL\MemberCast.cs" />
+    <Compile Include="DAL\LineupCast.cs" />
+    <Compile Include="DAL\PlaySessionCast.cs" />
+    <Compile Include="DAL\PracticeSessionCast.cs" />
+    <Compile Include="DAL\PracticeTeamCast.cs" />
+    <Compile Include="DAL\RankListCast.cs" />
     <Compile Include="Function\LineupVerification.cs" />
     <Compile Include="Function\Rules\IRule.cs" />
     <Compile Include="Function\Rules\LeagueRules.cs" />
@@ -256,9 +261,14 @@
     <Compile Include="SystemInterface\Requests\Handlers\GetPlayerFeedbackHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetPlayerPracticeTeamsHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetPlaySessionFeedback.cs" />
+    <Compile Include="SystemInterface\Requests\Handlers\GetPracticeSessionExercisesHandler.cs" />
+    <Compile Include="SystemInterface\Requests\Handlers\GetPracticeSessionFocusPointsHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetPracticeSessionHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetPracticeTeamHandler.cs" />
+    <Compile Include="SystemInterface\Requests\Handlers\GetPracticeTeamYearPlanHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetScheduleHandler.cs" />
+    <Compile Include="SystemInterface\Requests\Handlers\GetTeamMatchHandler.cs" />
+    <Compile Include="SystemInterface\Requests\Handlers\GetTeamMatchPositionsHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\LoginHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\RequestHandler.cs" />
     <Compile Include="SystemInterface\Requests\RequestManager.cs" />
@@ -277,6 +287,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="cert.pfx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <EntityDeploy Include="DAL\DatabaseModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>DatabaseModel.Designer.cs</LastGenOutput>
@@ -331,6 +344,11 @@
       <DependentUpon>DatabaseModel.edmx</DependentUpon>
       <LastGenOutput>DatabaseModel.cs</LastGenOutput>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="EntityFramework">
+      <Version>6.2.0</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Selenium.WebDriver.PhantomJS.CrossPlatform.2.1.1\build\Selenium.WebDriver.PhantomJS.CrossPlatform.targets" Condition="Exists('..\packages\Selenium.WebDriver.PhantomJS.CrossPlatform.2.1.1\build\Selenium.WebDriver.PhantomJS.CrossPlatform.targets')" />

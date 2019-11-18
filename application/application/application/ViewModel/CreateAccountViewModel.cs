@@ -119,13 +119,12 @@ namespace application.ViewModel
 
         private void UpdatePlayerList()
         {
-
-            Debug.WriteLine("GETTING PLAYERS!");
             if (_availablePlayers == null)
             {
                 _availablePlayers = RequestCreator.GetPlayersWithNoAccount();
             }
-            Debug.WriteLine("GOT PLAYERS!");
+
+            Debug.WriteLine($"{_availablePlayers.Count}");
 
             ShownPlayerList = new ObservableCollection<Player>(
                 _availablePlayers

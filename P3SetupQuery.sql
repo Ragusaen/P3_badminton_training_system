@@ -20,7 +20,7 @@ MemberType int not null,
 Username varchar(32),
 foreign key(Username) references `Account`(Username),
 `Name` varchar(256) not null,
-OnRanklist bit not null,
+OnRankList bit not null,
 Sex int not null,
 BadmintonPlayerID int
 );
@@ -141,7 +141,7 @@ TeamMatchPlaySessionID int,
 foreign key(TeamMatchPlaySessionID) references TeamMatch(PlaySessionID),
 `Type` int not null,
 `Order` int not null,
-`IsExtra` int not null,
+`IsExtra` bit not null,
 primary key(MemberID, TeamMatchPlaySessionID, `Type`, `Order`)
 );
 

@@ -33,8 +33,15 @@ namespace Server.SystemInterface.Requests
                 {RequestType.GetAllPlayers, new GetAllPlayersHandler()},
                 {RequestType.GetPracticeSession, new GetPracticeSessionHandler() },
                 {RequestType.GetPlayerFeedback, new GetPlayerFeedbackHandler() },
-                {RequestType.GetPlaySessionFeedback, new GetPlaySessionFeedback() }
-            };
+                {RequestType.GetPlaySessionFeedback, new GetPlaySessionFeedback() },
+                {RequestType.GetPlayerFocusPoints, new GetPlayerFocusPointsHandler() },
+                {RequestType.GetTeamMatch, new GetTeamMatchHandler() },
+                {RequestType.GetTeamMatchPositions, new GetTeamMatchPositionsHandler()  },
+                {RequestType.GetPracticeSessionFocusPoints, new GetPracticeSessionFocusPointsHandler() },
+                {RequestType.GetPracticeSessionExercises, new GetPracticeSessionExercisesHandler() },
+                {RequestType.GetAllFocusPoints, new GetAllFocusPointDescriptorsHandler() },
+                {RequestType.GetPracticeTeamYearPlan, new GetPracticeTeamYearPlanHandler() },
+            }; 
 
         public byte[] Parse(byte[] request)
         {

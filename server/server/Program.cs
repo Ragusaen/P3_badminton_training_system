@@ -17,15 +17,10 @@ namespace Server
         public static void Main(string[] args)
         {
 
-            var req = new GetPlayersWithNoAccountRequest();
-            var ser = new Serializer();
-            byte[] a = ser.Serialize(req);
-
-            ser.Deserialize<GetPlayersWithNoAccountRequest>(a);
-
             try
             {
-                SslTcpServer sslTcpServer = new SslTcpServer("localhost.cer");
+                _log.Debug("Server started");
+                SslTcpServer sslTcpServer = new SslTcpServer("cert.pfx");
                 sslTcpServer.RunServer();
             }
             catch (Exception e)

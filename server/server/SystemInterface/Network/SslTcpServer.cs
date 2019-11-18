@@ -22,7 +22,7 @@ namespace Server.SystemInterface.Network
         private List<Thread> _threads = new List<Thread>();
 
         // The certificate for SSL/TSL communication
-        private X509Certificate _serverCertificate = null;
+        private X509Certificate2 _serverCertificate = null;
         private string _certificatePath;
 
         private TcpListener listener = null;
@@ -38,7 +38,7 @@ namespace Server.SystemInterface.Network
         public void RunServer()
         {
             // Create the server certificate
-            _serverCertificate = new X509Certificate(_certificatePath);
+            _serverCertificate = new X509Certificate2(_certificatePath, "johnBob174!ba_");
 
             // Create the socket and listen to it, this accepts any IP
             listener = new TcpListener(IPAddress.Any, 8080);

@@ -20,5 +20,4 @@ namespace Common.Serialization
     {
         [DataMember] public bool WasSuccessful;
     }
- 
 }

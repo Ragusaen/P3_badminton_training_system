@@ -10,7 +10,7 @@ namespace Server.Function
 {
     class LineupVerification
     {
-        public List<RuleBreak> VerifyLineup(Match match)
+        public List<RuleBreak> VerifyLineup(TeamMatch match)
         {
             List<IRule> rules = LeagueRules.Dict[match.League];
             rules.Sort((p, q) => p.Priority.CompareTo(q.Priority));

@@ -7,5 +7,6 @@ namespace Common.Model
         public string Name { get; set; }
         public int Id { get; set; }
         public List<Player> Players { get; set; }
+        public List<YearPlanSection> YearPlan { get; set; }
     }
 }

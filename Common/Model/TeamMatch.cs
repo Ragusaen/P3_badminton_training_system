@@ -2,7 +2,7 @@
 
 namespace Common.Model
 {
-    public class Match : PlaySession
+    public class TeamMatch : PlaySession
     {
         public enum Leagues
         {

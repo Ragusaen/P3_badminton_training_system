@@ -12,7 +12,7 @@ namespace Server.Function.Rules
     {
         public int Priority { get; set; }
 
-        public List<RuleBreak> Rule(Match match) //TODO: Check if rules are correct + Make an extra method to clean up code
+        public List<RuleBreak> Rule(TeamMatch match) //TODO: Check if rules are correct + Make an extra method to clean up code
         {
             List<RuleBreak> ruleBreaks = new List<RuleBreak>();
 
