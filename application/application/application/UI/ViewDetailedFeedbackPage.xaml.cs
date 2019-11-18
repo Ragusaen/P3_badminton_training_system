@@ -17,14 +17,9 @@ namespace application.UI
         public ViewDetailedFeedbackPage()
         {
             InitializeComponent();
+            ViewDetailedViewModel vm = new ViewDetailedViewModel();
+            BindingContext = vm;
+            vm.Navigation = Navigation;
         }
-
-        private void ListView_OnItemTapped(object sender, ItemTappedEventArgs e)
-        {
-            var feedback = e.Item as Feedback;
-            var vm = BindingContext as ViewDetailedFeedbackViewModel;
-            vm?.ShowOrHideFeedback(feedback);
-        }
-
      }
 }

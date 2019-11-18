@@ -2,14 +2,23 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Collections.ObjectModel;
+using Common.Model;
+using Xamarin.Forms;
 
 namespace application.ViewModel
 {
     class ViewDetailedFeedbackViewModel : BaseViewModel
-    { 
-        private Feedback _oldFeedback;
+    {
+        private ObservableCollection<Feedback> _feedbacks;
 
-        public ObservableCollection<Feedback> Feedbacks { get; set; }
+        public ObservableCollection<Feedback> Feedbacks
+        {
+            get { return _feedbacks; }
+            set 
+            {
+                SetProperty(ref _feedbacks, value);
+            }
+        }
 
         public ViewDetailedFeedbackViewModel()
         {
@@ -17,56 +26,46 @@ namespace application.ViewModel
             {
                 new Feedback
                 {
-                    Name = "Feedback from ",
-                    IsVisible = false,
+                    PlaySession = new PracticeSession{ Start = DateTime.Now },
+                    ReadyQuestion = 2,
+                    EffortQuestion = -1,
+                    ChallengeQuestion = 0,
+                    AbsorbQuestion = 1,
+                    GoodQuestion = "",
+                    BadQuestion = "",
+                    FocusPointQuestion = "",
+                    DayQuestion = "",
                 },
                 new Feedback
                 {
-                    Name = "Feedback from ",
-                    IsVisible = false,
+                    PlaySession = new PracticeSession{ Start = DateTime.Now },
                 },
                 new Feedback
                 {
-                    Name = "Feedback from ",
-                    IsVisible = false,
+                    PlaySession = new PracticeSession{ Start = DateTime.Now },
                 },
                 new Feedback
                 {
-                    Name = "Feedback from ",
-                    IsVisible = false,
+                    PlaySession = new PracticeSession{ Start = DateTime.Now },
                 },
             };
         }
+        private RelayCommand _expandCommand;
 
-        public void ShowOrHideFeedback(Feedback feedback)
+        public RelayCommand ExpandCommand
         {
-            if (_oldFeedback == feedback)
+            get
             {
-                // click twice on the same item will hide it
-                feedback.IsVisible = !feedback.IsVisible;
-                UpdateFeedbacks(feedback);
+                return _expandCommand ?? (_expandCommand = new RelayCommand(param => ExpandClick(param)));
             }
-            else
-            {
-                if (_oldFeedback != null)
-                {
-                    // hide previous selected item
-                    _oldFeedback.IsVisible = false;
-                    UpdateFeedbacks(_oldFeedback);
-                }
-                // show selected item
-                feedback.IsVisible = true;
-                UpdateFeedbacks(feedback);
-            }
-
-            _oldFeedback = feedback;
         }
-
-        private void UpdateFeedbacks(Feedback feedback)
+        private void ExpandClick(object param)
         {
-            var index = Feedbacks.IndexOf(feedback);
-            Feedbacks.Remove(feedback);
-            Feedbacks.Insert(index, feedback);
+            var Layout = param as StackLayout;
+            if (Layout.IsVisible == true)
+                Layout.IsVisible = false;
+            else
+                Layout.IsVisible = true;
         }
     }
 }

@@ -42,7 +42,7 @@ namespace application.UI
 
             Chart1.Chart = new LineChart { Entries = entries, LineMode = LineMode.Straight, PointMode = PointMode.Square, LabelTextSize = 25, PointSize = 12};
             
-            ProfilePageViewModel vm = new ProfilePageViewModel();
+            ViewDetailedViewModel vm = new ViewDetailedViewModel();
             BindingContext = vm;
             vm.Navigation = Navigation;
 
