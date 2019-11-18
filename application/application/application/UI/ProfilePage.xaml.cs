@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using application.ViewModel;
+using Common.Model;
 using Microcharts;
 using Rg.Plugins.Popup.Services;
 using SkiaSharp;
@@ -15,6 +16,8 @@ namespace application.UI
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ProfilePage : ContentPage
     {
+        private ProfilePageViewModel _profilePageViewModel;
+
         List<Microcharts.Entry> entries = new List<Microcharts.Entry>
         {
             new Microcharts.Entry (2)
@@ -42,14 +45,19 @@ namespace application.UI
 
             Chart1.Chart = new LineChart { Entries = entries, LineMode = LineMode.Straight, PointMode = PointMode.Square, LabelTextSize = 25, PointSize = 12};
             
-            ViewDetailedViewModel vm = new ViewDetailedViewModel();
-            BindingContext = vm;
-            vm.Navigation = Navigation;
-
-            
+            _profilePageViewModel = new ProfilePageViewModel();
+            BindingContext = _profilePageViewModel;
+            _profilePageViewModel.Navigation = Navigation;
 
             Settingsicon.Source = ImageSource.FromResource("application.Images.settingsicon.jpg");
         }
-       
+
+        private void ListView_OnItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            var focusPoint = (FocusPointItem) e.SelectedItem;
+            if (focusPoint != null)
+                _profilePageViewModel.PopupFocusPoint(focusPoint);
+            FocusPointList.SelectedItem = null;
+        }
     }
 }
