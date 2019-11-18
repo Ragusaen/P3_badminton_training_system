@@ -17,7 +17,7 @@ namespace application.UI
         public ViewDetailedFeedbackPage()
         {
             InitializeComponent();
-            ViewDetailedViewModel vm = new ViewDetailedViewModel();
+            ViewDetailedFeedbackViewModel vm = new ViewDetailedFeedbackViewModel();
             BindingContext = vm;
             vm.Navigation = Navigation;
         }

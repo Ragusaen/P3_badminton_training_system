@@ -49,7 +49,7 @@ namespace application.SystemInterface
 
             if (!response.LoginSuccessful)
                 return false;
-            
+
             _accessToken = response.Token;
             return true;
         }
@@ -85,6 +85,14 @@ namespace application.SystemInterface
             var response = SimpleRequest<GetAllFocusPointsRequest, GetAllFocusPointsResponse>(RequestType.GetAllFocusPoints, request);
 
             return response.FocusPointDescriptors;
+        }
+        public static List<Feedback> GetPlayerFeedback()
+        {
+            var request = new GetPlayerFeedbackRequest();
+
+            var response = SimpleRequest<GetPlayerFeedbackRequest, GetPlayerFeedbackResponse>(RequestType.GetPlayerFeedback, request);
+
+            return response.Feedback;
         }
     }
 }
