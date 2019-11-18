@@ -189,16 +189,12 @@
     <Compile Include="DAL\exercise.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\PracticeSessionExerciseCast.cs" />
-    <Compile Include="DAL\ExerciseDescriptorCast.cs" />
     <Compile Include="DAL\feedback.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\FeedbackCast.cs" />
     <Compile Include="DAL\focuspoint.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\FocusPointDescriptorCast.cs" />
     <Compile Include="DAL\member.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
@@ -208,13 +204,17 @@
     <Compile Include="DAL\position.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\PositionCast.cs" />
     <Compile Include="DAL\practicesession.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\practicesessionexercise.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\PracticeSessionExerciseCast.cs" />
+    <Compile Include="DAL\ExerciseDescriptorCast.cs" />
+    <Compile Include="DAL\FeedbackCast.cs" />
+    <Compile Include="DAL\FocusPointDescriptorCast.cs" />
+    <Compile Include="DAL\PositionCast.cs" />
     <Compile Include="DAL\practiceteam.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
@@ -287,6 +287,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="cert.pfx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <EntityDeploy Include="DAL\DatabaseModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>DatabaseModel.Designer.cs</LastGenOutput>

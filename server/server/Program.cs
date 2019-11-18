@@ -18,7 +18,7 @@ namespace Server
 
             try
             {
-                SslTcpServer sslTcpServer = new SslTcpServer("localhost.cer");
+                SslTcpServer sslTcpServer = new SslTcpServer(@"cert.pfx");
                 sslTcpServer.RunServer();
             }
             catch (Exception e)

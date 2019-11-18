@@ -29,7 +29,7 @@ namespace Server.DAL
         public int MemberType { get; set; }
         public string Username { get; set; }
         public string Name { get; set; }
-        public bool OnRanklist { get; set; }
+        public bool OnRankList { get; set; }
         public int Sex { get; set; }
         public Nullable<int> BadmintonPlayerID { get; set; }
     
