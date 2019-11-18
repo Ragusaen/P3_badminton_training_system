@@ -7,13 +7,13 @@ namespace Common.Model
     {
         public Player Player { get; set; }
         public PlaySession PlaySession { get; set; }
-        public int? ReadyQuestion;
-        public int? EffortQuestion;
-        public int? ChallengeQuestion;
-        public int? AbsorbQuestion;
-        public string GoodQuestion;
-        public string BadQuestion;
-        public string FocusPointQuestion;
-        public string DayQuestion;
+        public int? ReadyQuestion { get; set; }
+        public int? EffortQuestion { get; set; }
+        public int? ChallengeQuestion { get; set; }
+        public int? AbsorbQuestion { get; set; }
+        public string GoodQuestion { get; set; }
+        public string BadQuestion { get; set; }
+        public string FocusPointQuestion { get; set; }
+        public string DayQuestion { get; set; }
     }
 }

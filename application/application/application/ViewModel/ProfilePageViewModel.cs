@@ -11,7 +11,7 @@ using Xamarin.Forms;
 
 namespace application.ViewModel
 {
-    class ProfilePageViewModel : BaseViewModel
+    class ViewDetailedViewModel : BaseViewModel
     {
         public Member User { get; set; }
        
@@ -50,7 +50,7 @@ namespace application.ViewModel
             set { SetProperty(ref _focusPointListHeight, value); }
         }
 
-        public ProfilePageViewModel() 
+        public ViewDetailedViewModel() 
         {
             User = new Member() { Name = "Pernille Pedersen" };
             User.FocusPoints = new List<FocusPointItem>() { new FocusPointItem() { Descriptor = new FocusPointDescriptor() { Name = "Slag 1", Id = 1 } } };
