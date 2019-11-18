@@ -23,7 +23,7 @@ namespace Server.DAL
                 Position dicPos = new Position()
                 {
                     Player = (Player)dbPos.member,
-                    IsExtra = dbPos.IsExtra != 0
+                    IsExtra = dbPos.IsExtra
                 };
                 if (Lineup.IsDoublePosition((Lineup.PositionType) dbPos.Type))
                 {
@@ -33,7 +33,7 @@ namespace Server.DAL
                     positions.RemoveAt(index);
 
                     dicPos.OtherPlayer = (Player) otherDbPos.member;
-                    dicPos.OtherIsExtra = otherDbPos.IsExtra != 0;
+                    dicPos.OtherIsExtra = otherDbPos.IsExtra;
                 }
                 lineup.Positions.Add(
                     new Tuple<Lineup.PositionType, int>((Lineup.PositionType)dbPos.Type, dbPos.Order),
