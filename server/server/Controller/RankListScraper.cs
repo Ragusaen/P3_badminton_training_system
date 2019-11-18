@@ -47,7 +47,7 @@ namespace Server.Controller
 
             foreach (var dbMember in _db.members)
             {
-                dbMember.OnRanklist = false;
+                dbMember.OnRankList = false;
             }
 
             var players = new List<Player>();
@@ -192,7 +192,7 @@ namespace Server.Controller
                     dbMember.Name = p.Member.Name;
                 }
 
-                dbMember.OnRanklist = true;
+                dbMember.OnRankList = true;
                 dbMember.Sex = (int)p.Sex;
                 dbRankList.AgeGroup = (int)p.Rankings.Age;
                 dbRankList.Level = (int)p.Rankings.Level;
