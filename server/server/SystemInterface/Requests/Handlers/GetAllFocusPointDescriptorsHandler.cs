@@ -16,7 +16,7 @@ namespace Server.SystemInterface.Requests.Handlers
             var db = new DatabaseEntities();
             return new GetAllFocusPointsResponse
             {
-                FocusPointDescriptors = db.focuspoints.Select(p => (Common.Model.FocusPointDescriptor) p).ToList()
+                FocusPointDescriptors = db.focuspoints.ToList().Select(p => (Common.Model.FocusPointDescriptor) p).ToList()
             };
         }
     }
