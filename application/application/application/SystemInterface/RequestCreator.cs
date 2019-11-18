@@ -1,6 +1,7 @@
 ﻿using application.SystemInterface.Network;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using Common;
 using Common.Model;
@@ -23,17 +24,28 @@ namespace application.SystemInterface
 
         private static TResponse SimpleRequest<TRequest, TResponse>(RequestType requestType, TRequest request) where TRequest : Request where TResponse : Response
         {
+
+            Debug.WriteLine("HERE 1");
             // Serialize request
             Serializer serializer = new Serializer();
+            Debug.WriteLine("HERE 1.0.1");
             byte[] requestBytes = serializer.Serialize(request);
+
+            Debug.WriteLine("HERE 2");
 
             // Add request type
             byte[] messageBytes = new byte[requestBytes.Length + 1];
             messageBytes[0] = (byte)requestType;
             Array.Copy(requestBytes, 0, messageBytes, 1, requestBytes.Length);
 
+
+            Debug.WriteLine("HERE 3");
+
             // Send request and get response
             byte[] responseBytes = _connection.SendRequest(messageBytes);
+
+
+            Debug.WriteLine("HERE 4");
 
             // Deserialize response
             TResponse response = serializer.Deserialize<TResponse>(responseBytes);
@@ -43,15 +55,18 @@ namespace application.SystemInterface
 
         public static bool LoginRequest(string username, string password)
         {
-            LoginRequest request = new LoginRequest() { Username = username, Password = password };
+            LoginRequest request = new LoginRequest()
+            {
+                Username = username,
+                Password = password
+            };
 
             LoginResponse response = SimpleRequest<LoginRequest, LoginResponse>(RequestType.Login, request);
 
-            if (!response.LoginSuccessful)
-                return false;
-            
-            _accessToken = response.Token;
-            return true;
+            if (response.LoginSuccessful)
+                _accessToken = response.Token;
+
+            return response.LoginSuccessful;
         }
 
         public static bool CreateAccountRequest(string username, string password, int badmintonId, string name)
@@ -70,9 +85,9 @@ namespace application.SystemInterface
         {
             var request = new GetPlayersWithNoAccountRequest();
 
-            var response = SimpleRequest<GetPlayersWithNoAccountRequest, GetPlayersWithNoAccountResponse>(
-                RequestType.GetPlayersWithNoAccount,
-                request);
+            var response =
+                SimpleRequest<GetPlayersWithNoAccountRequest, GetPlayersWithNoAccountResponse>(
+                    RequestType.GetPlayersWithNoAccount, request);
 
             return response.Players;
         }
@@ -80,7 +95,7 @@ namespace application.SystemInterface
         public static List<FocusPointDescriptor> GetFocusPoints()
         {
             var request = new GetAllFocusPointsRequest();
-
+            
             var response = SimpleRequest<GetAllFocusPointsRequest, GetAllFocusPointsResponse>(RequestType.GetAllFocusPoints, request);
 
             return response.FocusPointDescriptors;

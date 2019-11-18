@@ -30,11 +30,8 @@ namespace application.ViewModel
 
         public ObservableCollection<FocusPointDescriptor> FocusPoints
         {
-            get { return _focusPoints; }
-            set
-            {
-                SetProperty(ref _focusPoints, value);
-            }
+            get => _focusPoints;
+            set => SetProperty(ref _focusPoints, value);
         }
 
 

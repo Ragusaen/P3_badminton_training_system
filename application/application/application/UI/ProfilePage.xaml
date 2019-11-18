@@ -64,7 +64,7 @@
                 <Label Text="Focuspoint graph" FontSize="Medium"/>
                 <forms:ChartView x:Name="Chart1" HeightRequest="300" Margin="-80, 0, -80, 0" />
             <Button Text="View Feedback" Command="{Binding ViewFeedbackCommand}"/>
-            <Button Text="View all Feedback graph" Command="{Binding ViewFeedbackCommand}"/>
+            <Button Text="View all Feedback graph" Command="{Binding ViewFeedbackGraphCommand}"/>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

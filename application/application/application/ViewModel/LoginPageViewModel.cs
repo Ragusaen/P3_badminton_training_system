@@ -63,14 +63,15 @@ namespace application.ViewModel
 
         //Check if user is in database. Navigate to main page.
         private void ExecuteLoginClick(object param)
-        {   
-            if (RequestCreator.LoginRequest(Username, Password))
+        {
+            /*if (RequestCreator.LoginRequest(Username, Password))
                 Application.Current.MainPage = new NavigationPage(new MenuPage());
             else
             {
                 InvalidLoginTextHeight = TextHeight;
                 InvalidLoginTextVisible = true;
-            }
+            }*/
+            Application.Current.MainPage = new NavigationPage(new MenuPage());
         }
 
         private RelayCommand _forgotPassWordClickCommand;

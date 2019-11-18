@@ -3,6 +3,7 @@ using Server.SystemInterface.Network;
 using System;
 using System.Data.Entity;
 using System.Linq;
+using System.Runtime.InteropServices;
 using Common.Model;
 using Common.Serialization;
 using Server.Controller;
@@ -18,6 +19,7 @@ namespace Server
 
             try
             {
+                _log.Debug("Server started");
                 SslTcpServer sslTcpServer = new SslTcpServer("cert.pfx");
                 sslTcpServer.RunServer();
             }

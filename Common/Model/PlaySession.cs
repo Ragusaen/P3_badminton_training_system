@@ -6,9 +6,9 @@ namespace Common.Model
     {
         public enum Type {Practice, Match};
 
-        public int Id;
-        public DateTime Start;
-        public DateTime End;
-        public string Location;
+        public int Id { get; set; }
+        public DateTime Start { get; set; }
+        public DateTime End { get; set; }
+        public string Location { get; set; }
     }
 }
