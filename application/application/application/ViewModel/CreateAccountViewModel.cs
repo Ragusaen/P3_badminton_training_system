@@ -102,7 +102,13 @@ namespace application.ViewModel
         }
 
         private List<Player> _availablePlayers;
-        public ObservableCollection<Player> ShownPlayerList { get; set; }
+
+        private ObservableCollection<Player> _shownPlayerList;
+        public ObservableCollection<Player> ShownPlayerList
+        {
+            get => _shownPlayerList;
+            set => SetProperty(ref _shownPlayerList, value);
+        }
 
         private string _searchText;
 
@@ -113,7 +119,6 @@ namespace application.ViewModel
             {
                 SetProperty(ref _searchText, value);
                 UpdatePlayerList();
-
             }
         }
 
@@ -132,8 +137,7 @@ namespace application.ViewModel
                     .Take(5)
                     .ToList()
             );
-
-
+            Debug.WriteLine(ShownPlayerList.Count);
         }
     }
 }
