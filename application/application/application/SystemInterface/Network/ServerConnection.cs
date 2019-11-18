@@ -41,7 +41,7 @@ namespace application.SystemInterface.Network
                 _tcpClient.GetStream(),
                 false,
                 new RemoteCertificateValidationCallback(ValidateServerCertificate),
-                null
+                null 
                 );
 
             // The server name must match the name on the server certificate.
