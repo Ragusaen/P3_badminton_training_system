@@ -3,6 +3,7 @@ using Server.SystemInterface.Network;
 using System;
 using System.Data.Entity;
 using System.Linq;
+using System.Runtime.InteropServices;
 using Common.Model;
 using Common.Serialization;
 using Server.Controller;
@@ -15,6 +16,12 @@ namespace Server
 
         public static void Main(string[] args)
         {
+
+            var req = new GetPlayersWithNoAccountRequest();
+            var ser = new Serializer();
+            byte[] a = ser.Serialize(req);
+
+            ser.Deserialize<GetPlayersWithNoAccountRequest>(a);
 
             try
             {

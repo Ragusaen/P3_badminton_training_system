@@ -28,8 +28,8 @@ namespace application.SystemInterface
             Debug.WriteLine("HERE 1");
             // Serialize request
             Serializer serializer = new Serializer();
+            Debug.WriteLine("HERE 1.0.1");
             byte[] requestBytes = serializer.Serialize(request);
-
 
             Debug.WriteLine("HERE 2");
 
@@ -87,7 +87,6 @@ namespace application.SystemInterface
                 request);
 
             return response.Players;
-
         }
 
         public static List<FocusPointDescriptor> GetFocusPoints()
