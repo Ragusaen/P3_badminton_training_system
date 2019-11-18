@@ -11,7 +11,7 @@ using Xamarin.Forms;
 
 namespace application.ViewModel
 {
-    class ViewDetailedViewModel : BaseViewModel
+    class ProfilePageViewModel : BaseViewModel
     {
         public Member User { get; set; }
        
@@ -50,10 +50,10 @@ namespace application.ViewModel
             set { SetProperty(ref _focusPointListHeight, value); }
         }
 
-        public ViewDetailedViewModel() 
+        public ProfilePageViewModel() 
         {
             User = new Member() { Name = "Pernille Pedersen" };
-            User.FocusPoints = new List<FocusPointItem>() { new FocusPointItem() { Descriptor = new FocusPointDescriptor() { Name = "Slag 1", Id = 1 } } };
+            User.FocusPoints = new List<FocusPointItem>() { new FocusPointItem() { Descriptor = new FocusPointDescriptor() { Name = "Slag 1", Id = 9999 } } };
             FocusPoints = new ObservableCollection<FocusPointItem>(User.FocusPoints);
             FocusPointListHeight = FocusPoints.Count * 45;
 
@@ -80,11 +80,23 @@ namespace application.ViewModel
             PopupNavigation.Instance.PushAsync(page);
         }
 
-        private void FocusPointPopupPageCallback(object sender, FocusPointItem e)
+        public void PopupFocusPoint(FocusPointItem focusPoint)
+        {
+            StringAndHeaderPopup popup = new StringAndHeaderPopup(focusPoint.Descriptor);
+            PopupNavigation.Instance.PushAsync(popup);
+        }
+
+
+        private void FocusPointPopupPageCallback(object sender, FocusPointDescriptor e)
         {
             //TODO: UPDATE MODEL
-            User.FocusPoints.Add(e);
-            FocusPoints.Add(e);
+            var item = new FocusPointItem
+            {
+                Descriptor = e,
+                DateAssigned = DateTime.Now
+            };
+            User.FocusPoints.Add(item);
+            FocusPoints.Add(item);
             FocusPointListHeight = FocusPoints.Count * 45;
         }
 
