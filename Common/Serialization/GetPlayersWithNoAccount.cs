@@ -1,18 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
-using System.Text;
 using Common.Model;
 
 namespace Common.Serialization
 {
     [DataContract]
     public class GetPlayersWithNoAccountRequest : Request
-    { }
+    {
+    }
 
     [DataContract]
     public class GetPlayersWithNoAccountResponse : Response
     {
-        [DataMember] public List<Player> Players;
+        [DataMember]
+        public List<Player> Players;
     }
 }

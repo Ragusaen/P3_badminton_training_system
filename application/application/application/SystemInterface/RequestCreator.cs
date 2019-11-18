@@ -1,6 +1,7 @@
 ﻿using application.SystemInterface.Network;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Text;
 using Common;
 using Common.Model;
@@ -43,15 +44,18 @@ namespace application.SystemInterface
 
         public static bool LoginRequest(string username, string password)
         {
-            LoginRequest request = new LoginRequest() { Username = username, Password = password };
+            LoginRequest request = new LoginRequest()
+            {
+                Username = username,
+                Password = password
+            };
 
             LoginResponse response = SimpleRequest<LoginRequest, LoginResponse>(RequestType.Login, request);
 
-            if (!response.LoginSuccessful)
-                return false;
+            if (response.LoginSuccessful)
+                _accessToken = response.Token;
 
-            _accessToken = response.Token;
-            return true;
+            return response.LoginSuccessful;
         }
 
         public static bool CreateAccountRequest(string username, string password, int badmintonId, string name)
@@ -70,18 +74,17 @@ namespace application.SystemInterface
         {
             var request = new GetPlayersWithNoAccountRequest();
 
-            var response = SimpleRequest<GetPlayersWithNoAccountRequest, GetPlayersWithNoAccountResponse>(
-                RequestType.GetPlayersWithNoAccount,
-                request);
+            var response =
+                SimpleRequest<GetPlayersWithNoAccountRequest, GetPlayersWithNoAccountResponse>(
+                    RequestType.GetPlayersWithNoAccount, request);
 
             return response.Players;
-
         }
 
         public static List<FocusPointDescriptor> GetFocusPoints()
         {
             var request = new GetAllFocusPointsRequest();
-
+            
             var response = SimpleRequest<GetAllFocusPointsRequest, GetAllFocusPointsResponse>(RequestType.GetAllFocusPoints, request);
 
             return response.FocusPointDescriptors;

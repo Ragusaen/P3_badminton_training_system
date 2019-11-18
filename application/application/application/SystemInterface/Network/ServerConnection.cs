@@ -11,8 +11,8 @@ namespace application.SystemInterface.Network
 {
     class ServerConnection
     {
-        private readonly IPAddress _machineName = new IPAddress(new byte[] {192, 168, 42, 43});
-        private readonly string _serverName = "cert";
+        private readonly IPAddress _machineName = new IPAddress(new byte[] {192, 168, 42, 7});
+        private readonly string _serverName = "Triton";
 
         private TcpClient _tcpClient = null;
         private SslStream _sslStream = null;
@@ -41,7 +41,7 @@ namespace application.SystemInterface.Network
                 _tcpClient.GetStream(),
                 false,
                 new RemoteCertificateValidationCallback(ValidateServerCertificate),
-                null
+                null 
                 );
 
             // The server name must match the name on the server certificate.
@@ -109,7 +109,36 @@ namespace application.SystemInterface.Network
               X509Chain chain,
               SslPolicyErrors sslPolicyErrors)
         {
-            return true; // Accepts anything
+            // If the certificate is a valid, signed certificate, return true.
+            if (sslPolicyErrors == SslPolicyErrors.None) return true;
+
+            // If there are errors in the certificate chain, look at each error to determine the cause.
+            if ((sslPolicyErrors & SslPolicyErrors.RemoteCertificateChainErrors) != 0)
+            {
+                if (chain != null)
+                {
+                    foreach (X509ChainStatus status in chain.ChainStatus)
+                    {
+                        if ((certificate.Subject == certificate.Issuer) &&
+                            (status.Status == X509ChainStatusFlags.UntrustedRoot))
+                        {
+                            // Self-signed certificates with an untrusted root are OK.
+                            continue;
+                        }
+                        else
+                        {
+                            if (status.Status != X509ChainStatusFlags.NoError)
+                            {
+                                // If there are any other errors in the certificate chain, the certificate is invalid,
+                                return false;
+                            }
+                        }
+                    }
+                }
+                return true;
+            }
+            else
+                return false;
         }
     }
 }

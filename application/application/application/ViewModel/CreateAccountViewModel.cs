@@ -123,7 +123,8 @@ namespace application.ViewModel
             {
                 _availablePlayers = RequestCreator.GetPlayersWithNoAccount();
             }
-            Debug.WriteLine("GOT PLAYERS!");
+
+            Debug.WriteLine($"{_availablePlayers.Count}");
 
             ShownPlayerList = new ObservableCollection<Player>(
                 _availablePlayers
