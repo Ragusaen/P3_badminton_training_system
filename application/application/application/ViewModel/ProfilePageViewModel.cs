@@ -124,6 +124,20 @@ namespace application.ViewModel
         }
         private void ExecuteViewFeedbackClick(object param)
         {
+            Navigation.PushAsync(new ViewDetailedFeedbackPage());
+        }
+
+        private RelayCommand _viewFeedbackGraphCommand;
+
+        public RelayCommand ViewFeedbackGraphCommand
+        {
+            get
+            {
+                return _viewFeedbackGraphCommand ?? (_viewFeedbackGraphCommand = new RelayCommand(param => ExecuteViewFeedbackGraphClick(param)));
+            }
+        }
+        private void ExecuteViewFeedbackGraphClick(object param)
+        {
             Navigation.PushAsync(new ViewFeedbackPage());
         }
         private RelayCommand _deleteListTeamItemCommand;

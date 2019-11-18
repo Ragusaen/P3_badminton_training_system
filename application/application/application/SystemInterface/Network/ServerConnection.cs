@@ -11,7 +11,7 @@ namespace application.SystemInterface.Network
 {
     class ServerConnection
     {
-        private readonly IPAddress _machineName = new IPAddress(new byte[] {192, 168, 42, 72});
+        private readonly IPAddress _machineName = new IPAddress(new byte[] {192, 168, 42, 23});
         private readonly string _serverName = "cert";
 
         private TcpClient _tcpClient = null;
