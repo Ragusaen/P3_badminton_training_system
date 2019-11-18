@@ -75,7 +75,6 @@ namespace application.SystemInterface
                 request);
 
             return response.Players;
-
         }
 
         public static List<FocusPointDescriptor> GetFocusPoints()
