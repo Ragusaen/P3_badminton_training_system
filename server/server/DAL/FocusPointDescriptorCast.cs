@@ -20,5 +20,16 @@ namespace Server.DAL
                 VideoURL = fp.VideoURL
             };
         }
+
+        public static explicit operator Server.DAL.focuspoint(Common.Model.FocusPointDescriptor fp)
+        {
+            return new focuspoint
+            {
+                Name = fp.Name,
+                IsPrivate = fp.IsPrivate,
+                Description = fp.Description,
+                VideoURL = fp.VideoURL
+            };
+        }
     }
 }

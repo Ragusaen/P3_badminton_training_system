@@ -41,6 +41,9 @@ namespace Server.SystemInterface.Requests
                 {RequestType.GetPracticeSessionExercises, new GetPracticeSessionExercisesHandler() },
                 {RequestType.GetAllFocusPoints, new GetAllFocusPointDescriptorsHandler() },
                 {RequestType.GetPracticeTeamYearPlan, new GetPracticeTeamYearPlanHandler() },
+                {RequestType.GetPlayer, new GetPlayerHandler() },
+                //Setters below
+                {RequestType.SetPlayerFocusPoints, new SetPlayerFocusPointsHandler() },
             }; 
 
         public byte[] Parse(byte[] request)

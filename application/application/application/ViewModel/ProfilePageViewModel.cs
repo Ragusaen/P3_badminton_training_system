@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using application.Controller;
+using application.SystemInterface;
 using application.UI;
 using Common.Model;
 using Rg.Plugins.Popup.Services;
@@ -14,6 +15,7 @@ namespace application.ViewModel
     class ProfilePageViewModel : BaseViewModel
     {
         public Member User { get; set; }
+        public Player Player { get; set; }
        
         private ObservableCollection<PracticeTeam> _teams;
 
@@ -53,15 +55,15 @@ namespace application.ViewModel
         public ProfilePageViewModel() 
         {
             User = new Member() { Name = "Pernille Pedersen" };
-            User.FocusPoints = new List<FocusPointItem>() { new FocusPointItem() { Descriptor = new FocusPointDescriptor() { Name = "Slag 1", Id = 9999 } } };
-            FocusPoints = new ObservableCollection<FocusPointItem>(User.FocusPoints);
+            this.Player = RequestCreator.GetPlayer();
+            Player.FocusPointItems = new List<FocusPointItem>() { new FocusPointItem() { Descriptor = new FocusPointDescriptor() { Name = "Slag 1", Id = 9999 } } };
+            FocusPoints = new ObservableCollection<FocusPointItem>(Player.FocusPointItems);
             FocusPointListHeight = FocusPoints.Count * 45;
 
             Teams = new ObservableCollection<PracticeTeam>();
             Teams.Add(new PracticeTeam() { Name = "U17" });
             Teams.Add(new PracticeTeam() { Name = "Senior" });
         }
-
 
         private RelayCommand _addFocusPointCommand;
 
@@ -89,7 +91,6 @@ namespace application.ViewModel
 
         private void FocusPointPopupPageCallback(object sender, FocusPointDescriptor e)
         {
-            //TODO: UPDATE MODEL
             var item = new FocusPointItem
             {
                 Descriptor = e,
@@ -97,6 +98,9 @@ namespace application.ViewModel
             };
             User.FocusPoints.Add(item);
             FocusPoints.Add(item);
+
+            RequestCreator.SetPlayerFocusPoints(User. FocusPoints);
+
             FocusPointListHeight = FocusPoints.Count * 45;
         }
 
