@@ -16,9 +16,6 @@ namespace Server.SystemInterface.Requests.Handlers
         protected override GetAllFocusPointsResponse InnerHandle(GetAllFocusPointsRequest request, member requester)
         {
             var db = new DatabaseEntities();
-
-            _log.Debug("Focus Point Description" + db.focuspoints.ToList().Select(p => (Common.Model.FocusPointDescriptor)p).ToList().FirstOrDefault().Description);
-
             return new GetAllFocusPointsResponse
             {
                 FocusPointDescriptors = db.focuspoints.ToList().Select(p => (Common.Model.FocusPointDescriptor) p).ToList()
