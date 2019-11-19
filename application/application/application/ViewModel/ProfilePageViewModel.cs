@@ -136,7 +136,7 @@ namespace application.ViewModel
         }
         private void ExecuteViewFeedbackClick(object param)
         {
-            Navigation.PushAsync(new ViewDetailedFeedbackPage());
+            Navigation.PushAsync(new ViewDetailedFeedbackPage(User));
         }
 
         private RelayCommand _viewFeedbackGraphCommand;
