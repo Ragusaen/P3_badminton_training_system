@@ -2,22 +2,23 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Xml.Serialization;
 
 namespace Common.Serialization
 {
-    [DataContract]
+    [Serializable, XmlRoot]
     public class CreateAccountRequest : Request
     {
-        [DataMember] public string Username;
-        [DataMember] public string Password;
-        [DataMember] public bool AddAsPlayer; // Decides if they should be added as player
-        [DataMember] public int BadmintonPlayerId; // Only used if AddAsPlayer
-        [DataMember] public string Name; // Only used if !AddAsPlayer
+        public string Username;
+        public string Password;
+        public bool AddAsPlayer; // Decides if they should be added as player
+        public int BadmintonPlayerId; // Only used if AddAsPlayer
+        public string Name; // Only used if !AddAsPlayer
     }
 
     [DataContract]
     public class CreateAccountResponse : Response
     {
-        [DataMember] public bool WasSuccessful;
+        public bool WasSuccessful;
     }
 }

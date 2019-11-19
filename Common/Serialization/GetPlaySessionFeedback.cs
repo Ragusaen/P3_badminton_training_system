@@ -2,19 +2,20 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Xml.Serialization;
 using Common.Model;
 
 namespace Common.Serialization
 {
-    [DataContract]
+    [Serializable, XmlRoot]
     public class GetPlaySessionFeedbackRequest : Request
     {
-        [DataMember] public int PlaySessionId;
+        public int PlaySessionId;
     }
 
-    [DataContract]
+    [Serializable, XmlRoot]
     public class GetPlaySessionFeedbackResponse : Response
     {
-        [DataMember] public List<Feedback> Feedback;
+        public List<Feedback> Feedback;
     }
 }

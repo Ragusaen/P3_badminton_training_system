@@ -2,19 +2,20 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Xml.Serialization;
 using Common.Model;
 
 namespace Common.Serialization
 {
-    [DataContract]
+    [Serializable, XmlRoot]
     public class GetPlayerPracticeTeamRequest : Request
     {
-        [DataMember] public int MemberId;
+        public int MemberId;
     }
 
-    [DataContract]
+    [Serializable, XmlRoot]
     public class GetPlayerPracticeTeamResponse : Response
     {
-        [DataMember] public List<PracticeTeam> PracticeTeams;
+        public List<PracticeTeam> PracticeTeams;
     }
 }

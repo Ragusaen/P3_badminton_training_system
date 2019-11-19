@@ -5,16 +5,15 @@ using System.Text;
 
 namespace Common.Serialization
 {
-    [DataContract]
-    [KnownType(typeof(GetTokenMemberRequest))]
+    [Serializable]
     public class PermissionRequest : Request
     {
-        [DataMember] public byte[] Token;
+        public byte[] Token;
     }
 
-    [DataContract]
+    [Serializable]
     public class PermissionResponse : Response
     {
-        [DataMember] public bool AccessDenied = true;
+        public bool AccessDenied = true;
     }
 }

@@ -2,15 +2,16 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Xml.Serialization;
 using Common.Model;
 
 namespace Common.Serialization
 {
-    [DataContract]
+    [Serializable, XmlRoot]
     public class GetTokenMemberRequest : PermissionRequest
     { }
 
-    [DataContract]
+    [Serializable, XmlRoot]
     public class GetTokenMemberResponse : PermissionResponse
     {
         public Member Member;

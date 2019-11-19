@@ -2,21 +2,22 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Xml.Serialization;
 using Common.Model;
 
 namespace Common.Serialization
 {
-    [DataContract]
+    [Serializable, XmlRoot]
     public class GetScheduleRequest : Request
     {
-        [DataMember] public DateTime StartDate;
-        [DataMember] public DateTime EndDate;
+        public DateTime StartDate;
+        public DateTime EndDate;
     }
 
-    [DataContract]
+    [Serializable, XmlRoot]
     public class GetScheduleResponse : Response
     {
-        [DataMember] public List<PracticeSession> PracticeSessions;
-        [DataMember] public List<TeamMatch> Matches;
+        public List<PracticeSession> PracticeSessions;
+        public List<TeamMatch> Matches;
     }
 }

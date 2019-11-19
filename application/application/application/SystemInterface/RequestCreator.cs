@@ -41,7 +41,6 @@ namespace application.SystemInterface
             messageBytes[0] = (byte)requestType;
             Array.Copy(requestBytes, 0, messageBytes, 1, requestBytes.Length);
 
-            Debug.WriteLine("SENDING REQUEST");
             // Send request and get response
             byte[] responseBytes = _connection.SendRequest(messageBytes);
 
