@@ -19,8 +19,8 @@ namespace Server
 
             try
             {
-                var scraper = new RankListScraper();
-                scraper.UpdatePlayers();
+                // var scraper = new RankListScraper();
+                // scraper.UpdatePlayers();
 
                 _log.Debug("Server started");
                 SslTcpServer sslTcpServer = new SslTcpServer("cert.pfx");

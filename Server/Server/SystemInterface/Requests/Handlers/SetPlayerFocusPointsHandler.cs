@@ -40,6 +40,7 @@ namespace Server.SystemInterface.Requests.Handlers
                 }
             }
 
+            db.SaveChanges();
             return new SetPlayerFocusPointsResponse {WasSuccessful = true};
         }
 
