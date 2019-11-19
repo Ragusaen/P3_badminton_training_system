@@ -99,9 +99,12 @@ namespace application.SystemInterface
             return response.Feedback;
         }
 
-        public static Player GetPlayer()
+        public static Player GetPlayer(int id)
         {
-            var request = new GetPlayerRequest();
+            var request = new GetPlayerRequest
+            {
+                Id = id
+            };
 
             var response = SimpleRequest<GetPlayerRequest, GetPlayerResponse>(RequestType.GetPlayer, request);
 

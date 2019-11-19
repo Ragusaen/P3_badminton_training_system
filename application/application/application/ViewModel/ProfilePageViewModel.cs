@@ -54,10 +54,10 @@ namespace application.ViewModel
 
         public ProfilePageViewModel(Member member) 
         {
-            Member = new Member() { Name = "Pernille Pedersen" };
-            Member.FocusPoints = new List<FocusPointItem>() { new FocusPointItem() { Descriptor = new FocusPointDescriptor() { Name = "Slag 1", Id = 9999 } } };
-            this.Player = RequestCreator.GetPlayer();
-            FocusPoints = new ObservableCollection<FocusPointItem>(Member.FocusPoints);
+            Member = new Member { Name = "Pernille Pedersen" }; 
+            Player = RequestCreator.GetPlayer(Member.Id);
+            Player.FocusPointItems = new List<FocusPointItem>() { new FocusPointItem() { Descriptor = new FocusPointDescriptor() { Name = "Slag 1", Id = 9999 } } };
+            FocusPoints = new ObservableCollection<FocusPointItem>(Player.FocusPointItems);
             FocusPointListHeight = FocusPoints.Count * 45;
 
             Teams = new ObservableCollection<PracticeTeam>();
@@ -96,10 +96,10 @@ namespace application.ViewModel
                 Descriptor = e,
                 DateAssigned = DateTime.Now
             };
-            Member.FocusPoints.Add(item); //TODO: FIX
+            Player.FocusPointItems.Add(item); //TODO: FIX
             FocusPoints.Add(item);
 
-            RequestCreator.SetPlayerFocusPoints(User. FocusPoints);
+            RequestCreator.SetPlayerFocusPoints(Player, Player.FocusPointItems);
 
             FocusPointListHeight = FocusPoints.Count * 45;
         }
@@ -193,7 +193,7 @@ namespace application.ViewModel
         {
             FocusPointItem focuspoint = param as FocusPointItem;
             FocusPoints.Remove(focuspoint); //TODO: FIX - Update model
-            Member.FocusPoints.Remove(focuspoint);
+            Player.FocusPointItems.Remove(focuspoint);
             FocusPointListHeight = FocusPoints.Count * 45;
         }
     }
