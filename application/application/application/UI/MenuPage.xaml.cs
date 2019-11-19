@@ -38,9 +38,13 @@ namespace application.UI
 
         private void OnMenuItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            //Creates an instance of the selected page and navigates to it
-            (Detail as NavigationPage).PushAsync((Page)Activator.CreateInstance(((MasterPageItem)e.SelectedItem).TargetType, Member));
-            IsPresented = false;
+            if (e.SelectedItem != null)
+            {
+                //Creates an instance of the selected page and navigates to it
+                (Detail as NavigationPage).PushAsync((Page)Activator.CreateInstance(((MasterPageItem)e.SelectedItem).TargetType, Member));
+                IsPresented = false;
+                NavigationList.SelectedItem = null;
+            }
         }
 
         private void Logout_Clicked(object sender, EventArgs e)

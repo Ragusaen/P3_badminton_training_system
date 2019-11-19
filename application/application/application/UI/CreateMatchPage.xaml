@@ -25,7 +25,7 @@
                     <RowDefinition Height="40"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="70"/>
+                    <ColumnDefinition Width="120"/>
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
@@ -43,8 +43,8 @@
                     <Label Text="-" VerticalOptions="Center"/>
                     <TimePicker Format="HH:mm" Time="{Binding SelectedTimeEnd}"/>
                 </StackLayout>
-                <Label Grid.Row="3" Grid.Column="0" Text="Trainer" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
-                <Entry Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Placeholder="Enter trainer's name" Text="{Binding MatchResponsibleName}" VerticalOptions="Center"/>
+                <Label Grid.Row="3" Grid.Column="0" Text="Captain" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
+                <Entry Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Placeholder="Enter captain's name" Text="{Binding MatchResponsibleName}" VerticalOptions="Center"/>
                 <Label Grid.Row="4" Grid.Column="0" Text="Location" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
                 <Entry Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Location}"  Placeholder="Enter location" VerticalOptions="Center"/>
                 <Label Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Text="Lineup" FontSize="Title" HorizontalOptions="Start" VerticalOptions="Center"/>
