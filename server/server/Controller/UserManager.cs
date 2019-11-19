@@ -6,10 +6,12 @@ using System.Threading.Tasks;
 using System.Security.Cryptography;
 using System.Data;
 using System.Data.Entity;
+using System.Diagnostics;
 using Common.Model;
 using Microsoft.Extensions.Logging;
 using NLog;
 using NLog.LayoutRenderers;
+using Remotion.Linq.Clauses;
 using Server.DAL;
 
 namespace Server.Controller
@@ -88,9 +90,11 @@ namespace Server.Controller
         public member GetMemberFromToken(byte[] token)
         {
             var db = new DatabaseEntities();
-            var tokenLocation = db.tokens.SingleOrDefault(t => t.AccessToken.SequenceEqual(token));
+            var tokenLocation = (from t in db.tokens where t.AccessToken == token select t).FirstOrDefault();
 
-            return tokenLocation?.account.members.SingleOrDefault(m => m.Username == tokenLocation.AccountUsername);
+            var r = tokenLocation?.account.members.SingleOrDefault(m => m.Username == tokenLocation.AccountUsername);
+            Debug.WriteLine($"{r}, {BitConverter.ToString(token)}");
+            return r;
         }
 
         private (byte[] password, byte[] salt) GenerateHashedPasswordAndSalt(string password)

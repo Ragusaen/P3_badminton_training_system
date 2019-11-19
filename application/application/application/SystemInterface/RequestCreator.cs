@@ -17,6 +17,8 @@ namespace application.SystemInterface
         private static byte[] _accessToken = null;
         public static bool IsLoggedIn => _accessToken != null;
 
+        public static Member LoggedInMember;
+
         public static void Connect()
         {
             _connection.Connect();
@@ -24,9 +26,15 @@ namespace application.SystemInterface
 
         private static TResponse SimpleRequest<TRequest, TResponse>(RequestType requestType, TRequest request) where TRequest : Request where TResponse : Response
         {
+            //Add access token
+            if (request is PermissionRequest permissionRequest)
+                permissionRequest.Token = _accessToken;
+
             // Serialize request
             Serializer serializer = new Serializer();
             byte[] requestBytes = serializer.Serialize(request);
+
+            Debug.WriteLine(Encoding.ASCII.GetString(requestBytes));
 
             // Add request type
             byte[] messageBytes = new byte[requestBytes.Length + 1];
@@ -139,6 +147,17 @@ namespace application.SystemInterface
                     RequestType.SetPlayerFocusPoints, request);
 
             return response.WasSuccessful;
+        }
+
+        public static Member GetLoggedInMember()
+        {
+            var request = new GetTokenMemberRequest();
+
+            var response =
+                SimpleRequest<GetTokenMemberRequest, GetTokenMemberResponse>(RequestType.GetTokenMember,
+                    request);
+
+            return response.Member;
         }
     }
 }

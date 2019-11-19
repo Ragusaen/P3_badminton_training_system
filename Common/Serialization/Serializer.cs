@@ -2,6 +2,7 @@
 using System.IO;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Xml.Serialization;
 
 namespace Common.Serialization
 {
@@ -14,12 +15,13 @@ namespace Common.Serialization
             stream.Flush();
             stream.Position = 0;
 
-            var serializer = new DataContractSerializer(typeof(T));
-            T result = null;
+            var serializer = new XmlSerializer(typeof(T));
+            T result;
             try
             {
-                result = serializer.ReadObject(stream) as T;
-            } catch (System.Xml.XmlException)
+                result = serializer.Deserialize(stream) as T;
+            }
+            catch (System.Xml.XmlException)
             {
                 Debug.WriteLine($"Attempted to deserialize to type {typeof(T).FullName}: {Encoding.UTF8.GetString(data)}");
                 throw;
@@ -30,9 +32,11 @@ namespace Common.Serialization
 
         public byte[] Serialize<T>(T obj)
         {
-            var serializer = new DataContractSerializer(typeof(T));
+            var serializer = new XmlSerializer(typeof(T));
             var stream = new MemoryStream();
-            serializer.WriteObject(stream, obj);
+            serializer.Serialize(stream, obj);
+
+            Debug.WriteLine($"{stream.ToArray()}");
 
             return stream.ToArray();
         }

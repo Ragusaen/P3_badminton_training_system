@@ -5,12 +5,12 @@ using System.Text;
 
 namespace Common.Serialization
 {
-    [DataContract, Serializable]
+    [Serializable]
     public class Request
     {
     }
 
-    [DataContract, Serializable]
+    [Serializable]
     public class Response
     {
 

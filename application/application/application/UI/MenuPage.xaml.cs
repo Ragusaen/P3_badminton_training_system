@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using application.SystemInterface;
 using Common.Model;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -40,7 +41,7 @@ namespace application.UI
             if (e.SelectedItem != null)
             {
                 if (((MasterPageItem) e.SelectedItem).TargetType == typeof(ProfilePage))
-                    (Detail as NavigationPage).PushAsync(new ProfilePage(new Member()));
+                    (Detail as NavigationPage).PushAsync(new ProfilePage(RequestCreator.LoggedInMember));
                 else
                     (Detail as NavigationPage).PushAsync((Page)Activator.CreateInstance(((MasterPageItem)e.SelectedItem).TargetType));
 

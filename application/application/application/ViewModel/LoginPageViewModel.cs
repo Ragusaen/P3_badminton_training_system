@@ -6,11 +6,13 @@ using application.SystemInterface;
 using Xamarin.Forms;
 using application.UI;
 using Common.Model;
+using Common.Serialization;
 
 namespace application.ViewModel
 {
     class LoginPageViewModel : BaseViewModel
-    {   
+    {
+
         #region InvalidLogin
         private bool _invalidLoginTextVisible;
 
@@ -66,7 +68,10 @@ namespace application.ViewModel
         private void ExecuteLoginClick(object param)
         {
             if (RequestCreator.LoginRequest(Username, Password))
+            {
+                RequestCreator.LoggedInMember = RequestCreator.GetLoggedInMember();
                 Application.Current.MainPage = new NavigationPage(new MenuPage());
+            }
             else
             {
                 InvalidLoginTextHeight = TextHeight;
