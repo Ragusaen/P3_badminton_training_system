@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="application.UI.CreateFocusPointPopupPage" Padding="40,150,40,150">
+    <StackLayout BackgroundColor="White">
+        <Label Text="Name"/>
+        <Entry Text="{Binding FocusPoint.Name}"/>
+        <Label Text="Description"/>
+        <Entry Text="{Binding FocusPoint.Discription}"/>
+        <Label Text="Video Url"/>
+        <Entry Text="{Binding FocusPoint.VideoUrl}"/>
+        <Button Text="Create New Focus Point" Command="CreateFocusPointCommand"/>
+    </StackLayout>
+</pages:PopupPage>
