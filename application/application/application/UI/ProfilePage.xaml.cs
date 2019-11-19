@@ -39,13 +39,13 @@ namespace application.UI
             }
         };
 
-        public ProfilePage()
+        public ProfilePage(Member member)
         {
             InitializeComponent();
 
             Chart1.Chart = new LineChart { Entries = entries, LineMode = LineMode.Straight, PointMode = PointMode.Square, LabelTextSize = 25, PointSize = 12};
             
-            _profilePageViewModel = new ProfilePageViewModel();
+            _profilePageViewModel = new ProfilePageViewModel(member);
             BindingContext = _profilePageViewModel;
             _profilePageViewModel.Navigation = Navigation;
 

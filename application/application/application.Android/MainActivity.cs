@@ -6,6 +6,7 @@ using Android.Runtime;
 using Android.Views;
 using Android.Widget;
 using Android.OS;
+using Rg.Plugins.Popup.Services;
 
 namespace application.Droid
 {
@@ -31,6 +32,18 @@ namespace application.Droid
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+
+        public override void OnBackPressed()
+        {
+            if (Rg.Plugins.Popup.Popup.SendBackPressed(base.OnBackPressed))
+            {
+                PopupNavigation.Instance.PopAsync();
+            }
+            else
+            {
+                //Do something if there are not any pages in the "PopupStack"
+            }
         }
     }
 }

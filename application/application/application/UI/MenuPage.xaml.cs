@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using Common.Model;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -14,6 +14,7 @@ namespace application.UI
     public partial class MenuPage : MasterDetailPage
     {
         public List<MasterPageItem> MenuList { get; set; }
+        public Member Member { get; set; }
 
         public MenuPage()
         {
@@ -31,15 +32,19 @@ namespace application.UI
             NavigationList.ItemsSource = MenuList;
 
             //Navigate to Homepage
-            Detail = new NavigationPage(new SchedulePage());
+            Detail = new NavigationPage(new SchedulePage(Member));
             IsPresented = false;
         }
 
         private void OnMenuItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            //Creates an instance of the selected page and navigates to it
-            (Detail as NavigationPage).PushAsync((Page)Activator.CreateInstance(((MasterPageItem)e.SelectedItem).TargetType));
-            IsPresented = false;
+            if (e.SelectedItem != null)
+            {
+                //Creates an instance of the selected page and navigates to it
+                (Detail as NavigationPage).PushAsync((Page)Activator.CreateInstance(((MasterPageItem)e.SelectedItem).TargetType, Member));
+                IsPresented = false;
+                NavigationList.SelectedItem = null;
+            }
         }
 
         private void Logout_Clicked(object sender, EventArgs e)
