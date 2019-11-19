@@ -40,7 +40,7 @@ namespace application.UI
             if (e.SelectedItem != null)
             {
                 if (((MasterPageItem) e.SelectedItem).TargetType == typeof(ProfilePage))
-                    (Detail as NavigationPage).PushAsync(new ProfilePage());
+                    (Detail as NavigationPage).PushAsync(new ProfilePage(new Member()));
                 else
                     (Detail as NavigationPage).PushAsync((Page)Activator.CreateInstance(((MasterPageItem)e.SelectedItem).TargetType));
 
