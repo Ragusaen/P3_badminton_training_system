@@ -118,10 +118,19 @@ namespace application.ViewModel
             string action = await Application.Current.MainPage.DisplayActionSheet("Choose what you want to edit:", "Cancel", null, "Edit User's Information", "Edit User's Rights");
 
             if (action == "Edit User's Information")
-                await Navigation.PushAsync(new EditUserInfoPage());
+                await Navigation.PushAsync(new EditUserInfoPage(User));
             else if (action == "Edit User's Rights")
             {
-                string rights = await Application.Current.MainPage.DisplayActionSheet("Choose user's rights:", "Cancel", null, "Player", "Trainer", "Player and Trainer");
+                string rights = await Application.Current.MainPage.DisplayActionSheet("Choose user's rights:", "Cancel", null, "Player", "Trainer", "Player and Trainer", "neither player nor trainor");
+
+                if (rights == "neither player nor trainor")
+                    User.MemberType = MemberType.None;
+                else if (rights == "Player")
+                    User.MemberType = MemberType.Player;
+                else if (rights == "Player")
+                    User.MemberType = MemberType.Trainer;
+                else if (rights == "Player and Trainer")
+                    User.MemberType = MemberType.Both;
             }
         }
 
