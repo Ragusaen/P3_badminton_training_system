@@ -18,6 +18,11 @@ namespace application.ViewModel
         public Member Member { get; set; }
         public Player Player { get; set; }
 
+        public ProfilePageViewModel()
+        {
+            
+        }
+
         private ObservableCollection<PracticeTeam> _teams;
 
         public ObservableCollection<PracticeTeam> Teams
@@ -55,7 +60,7 @@ namespace application.ViewModel
 
         public ProfilePageViewModel(Member member)
         {
-            Member = member;
+            Member = Player.Member;
             Player = RequestCreator.GetPlayer(Member.Id);
             Player.FocusPointItems = RequestCreator.GetPlayerFocusPointItems(Member.Id);
             FocusPoints = new ObservableCollection<FocusPointItem>(Player.FocusPointItems);

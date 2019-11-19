@@ -6,11 +6,13 @@ using application.SystemInterface;
 using Xamarin.Forms;
 using application.UI;
 using Common.Model;
+using Common.Serialization;
 
 namespace application.ViewModel
 {
     class LoginPageViewModel : BaseViewModel
-    {   
+    {
+
         #region InvalidLogin
         private bool _invalidLoginTextVisible;
 
@@ -65,8 +67,10 @@ namespace application.ViewModel
         ////Check if user is in database. Navigate to main page.
         private void ExecuteLoginClick(object param)
         {
-            if (RequestCreator.LoginRequest(Username, Password))
+            if (RequestCreator.LoginRequest(Username, Password)) { 
+                RequestCreator.LoggedInMember = RequestCreator.GetLoggedInMember();
                 Application.Current.MainPage = new NavigationPage(new MenuPage(new Member{Id = 1, Name = "Mikkel Stoffersen",MemberType = MemberType.Player}));
+            }
             else
             {
                 InvalidLoginTextHeight = TextHeight;

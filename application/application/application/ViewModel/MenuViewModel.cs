@@ -8,7 +8,7 @@ namespace application.ViewModel
 {
     class MenuViewModel : BaseViewModel
     {
-        public MenuViewModel(Member member)
+        public MenuViewModel()
         {
 
         }

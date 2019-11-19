@@ -14,7 +14,7 @@ namespace application.UI
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PracticeTeamPage : ContentPage
     {
-        public PracticeTeamPage(Member member)
+        public PracticeTeamPage()
         {
             InitializeComponent();
             PracticeTeamViewModel vm = new PracticeTeamViewModel();
