@@ -20,6 +20,8 @@ namespace application.UI
             EditUserInfoViewModel vm = new EditUserInfoViewModel(member);
             BindingContext = vm;
             vm.Navigation = Navigation;
+
+            SaveIcon.Source = ImageSource.FromResource("application.Images.saveicon.png");
         }
     }
 }

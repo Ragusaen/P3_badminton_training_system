@@ -114,16 +114,15 @@ namespace application.ViewModel
             }
         }
 
-        //Check if user is in database. Navigate to main page.
         private async void ExecuteProfileSettingTap(object param)
         {
             //Needs to change depending on user type
 
             string action = await Application.Current.MainPage.DisplayActionSheet("Choose what you want to edit:", "Cancel", null, "Edit User's Information", "Edit User's Rights");
 
-            if (action == "Edit User's Information")
+            if (action == "Edit User's Password")
                 await Navigation.PushAsync(new EditUserInfoPage(Member));
-            else if (action == "Edit User's Rights")
+            else if (action == "Edit User's Type")
             {
                 string rights = await Application.Current.MainPage.DisplayActionSheet("Choose user's rights:", "Cancel", null, "Player", "Trainer", "Player and Trainer", "neither player nor trainor");
 
