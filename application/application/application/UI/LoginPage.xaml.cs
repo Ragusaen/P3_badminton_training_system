@@ -17,6 +17,10 @@ namespace application.UI
         public LoginPage()
         {
             InitializeComponent();
+
+            Username.Completed += (s,a) => Password.Focus();
+            Password.Completed += (s, a) => LoginButton.SendClicked();
+
             LoginPageViewModel vm = new LoginPageViewModel();
             BindingContext = vm;
             vm.Navigation = Navigation;

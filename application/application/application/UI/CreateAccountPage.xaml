@@ -19,11 +19,11 @@
                 <StackLayout>
                     <Label IsVisible="{Binding UsernameErrorVisibility}" Text="Username already taken" TextColor="Red"></Label>
                     <Label Text="Username" FontSize="18"/>
-                    <Entry x:Name="Username" Placeholder="Enter a username" Text="{Binding Username}"/>
+                    <Entry x:Name="Username" ReturnType="Next" Placeholder="Enter a username" Text="{Binding Username}"/>
                     <Label Text="Password" FontSize="18"/>
-                    <Entry x:Name="Password" Placeholder="Enter a password" IsPassword="True" Text="{Binding Password}"/>
+                    <Entry x:Name="Password" ReturnType="Next" Placeholder="Enter a password" IsPassword="True" Text="{Binding Password}"/>
                     <Label Text="Confirm password" FontSize="18"/>
-                    <Entry x:Name="ConfirmPassword" Placeholder="Enter password again" IsPassword="True" Text="{Binding ConfirmPassword}"/>
+                    <Entry x:Name="ConfirmPassword" ReturnType="Next" Placeholder="Enter password again" IsPassword="True" Text="{Binding ConfirmPassword}"/>
                     <Label x:Name="ConfirmPasswordErrorText" Text="Passwords do not match" IsVisible="False" TextColor="Red" FontSize="Small"/>
                 </StackLayout>
             </Frame>
@@ -35,7 +35,7 @@
                         <Label x:Name="NotOnListLabel" Text="Check here if you are not on the list" VerticalOptions="Center"/>
                     </StackLayout>
                     <Label x:Name="PlayerListLabel" Text="Please enter your full name and select yourself from the ranking list" FontSize="18" Margin="0,0,0,25"/>
-                    <SearchBar x:Name="NameSearch" Placeholder="Enter your full name" Text="{Binding SearchText}"/>
+                    <SearchBar x:Name="NameSearch"  Placeholder="Enter your full name" Text="{Binding SearchText}"/>
                     <ListView HeightRequest="200" x:Name="PlayerList" ItemsSource="{Binding ShownPlayerList}" ItemSelected="ListView_OnItemSelected"  VerticalScrollBarVisibility="Never" VerticalOptions="Fill" SeparatorVisibility="None">
                         <ListView.ItemTemplate>
                             <DataTemplate>
