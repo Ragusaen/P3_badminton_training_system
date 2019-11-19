@@ -52,9 +52,9 @@ namespace application.ViewModel
             set { SetProperty(ref _focusPointListHeight, value); }
         }
 
-        public ProfilePageViewModel(Member member) 
+        public ProfilePageViewModel(Member member)
         {
-            Member = new Member { Name = "Pernille Pedersen" }; 
+            Member = member;
             Player = RequestCreator.GetPlayer(Member.Id);
             Player.FocusPointItems = new List<FocusPointItem>() { new FocusPointItem() { Descriptor = new FocusPointDescriptor() { Name = "Slag 1", Id = 9999 } } };
             FocusPoints = new ObservableCollection<FocusPointItem>(Player.FocusPointItems);

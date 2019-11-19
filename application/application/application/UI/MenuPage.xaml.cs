@@ -16,10 +16,11 @@ namespace application.UI
         public List<MasterPageItem> MenuList { get; set; }
         public Member Member { get; set; }
 
-        public MenuPage()
+        public MenuPage(Member member)
         {
             InitializeComponent();
-            MenuViewModel vm = new MenuViewModel();
+            Member = member;
+            MenuViewModel vm = new MenuViewModel(member);
             BindingContext = vm;
             vm.Navigation = Navigation;
 

@@ -5,6 +5,7 @@ using System.Windows.Input;
 using application.SystemInterface;
 using Xamarin.Forms;
 using application.UI;
+using Common.Model;
 
 namespace application.ViewModel
 {
@@ -71,7 +72,7 @@ namespace application.ViewModel
                 InvalidLoginTextHeight = TextHeight;
                 InvalidLoginTextVisible = true;
             }*/
-            Application.Current.MainPage = new NavigationPage(new MenuPage());
+            Application.Current.MainPage = new NavigationPage(new MenuPage(new Member{Name = "Slorup", MemberType = MemberType.Both, Id = 10001}));
         }
 
         private RelayCommand _forgotPassWordClickCommand;
