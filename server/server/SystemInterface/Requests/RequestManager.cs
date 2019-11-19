@@ -42,6 +42,7 @@ namespace Server.SystemInterface.Requests
                 {RequestType.GetAllFocusPoints, new GetAllFocusPointDescriptorsHandler() },
                 {RequestType.GetPracticeTeamYearPlan, new GetPracticeTeamYearPlanHandler() },
                 {RequestType.GetPlayer, new GetPlayerHandler() },
+                {RequestType.GetTokenMember, new GetTokenMemberHandler() },
                 //Setters below
                 {RequestType.SetPlayerFocusPoints, new SetPlayerFocusPointsHandler() },
             }; 
