@@ -5,6 +5,8 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
+using System.Threading.Tasks;
 using application.SystemInterface;
 using Common.Model;
 using application.Controller;
@@ -13,11 +15,17 @@ namespace application.ViewModel
 {
     class CreateAccountViewModel : BaseViewModel
     {
+
+        public CreateAccountViewModel()
+        {
+            _availablePlayers = RequestCreator.GetPlayersWithNoAccount();
+        }
+
         private string _username;
 
         public string Username
         {
-            get { return _username; }
+            get => _username;
             set
             {
                 if (SetProperty(ref _username, value))
@@ -79,21 +87,7 @@ namespace application.ViewModel
 
         private bool CanExecuteCreateAccountClick(object param)
         {
-            if ((Password == null || Password == "") || (Username == null || Username == "") || (ConfirmPassword != Password))
-            {
-                /*if (Password == null || Password == "")
-                    PasswordErrorText = "Please enter a password";
-                else if (Username == null || Username == "")
-                    UsernameErrorText = "Please enter a valid username";
-                else if (Username == null || Username == "")
-                    ConfirmationOfPasswordText = "The two password you have enter are not identical";*/
-                return false;
-            }
-            else
-            {
-
-                return true;
-            }
+            return !(string.IsNullOrEmpty(Password) || string.IsNullOrEmpty(Username)) && ConfirmPassword == Password;
         }
 
         private void ExecuteCreateAccountClick(object param)
@@ -118,7 +112,8 @@ namespace application.ViewModel
             set
             {
                 SetProperty(ref _searchText, value);
-                UpdatePlayerList();
+                if (!IsOnList)
+                    UpdatePlayerList();
             }
         }
 
@@ -126,10 +121,9 @@ namespace application.ViewModel
         {
             if (_availablePlayers == null)
             {
-                _availablePlayers = RequestCreator.GetPlayersWithNoAccount();
+                Debug.WriteLine("No players loaded");
+                return;
             }
-
-            Debug.WriteLine($"{_availablePlayers.Count}");
 
             ShownPlayerList = new ObservableCollection<Player>(
                 _availablePlayers
@@ -137,7 +131,25 @@ namespace application.ViewModel
                     .Take(5)
                     .ToList()
             );
-            Debug.WriteLine(ShownPlayerList.Count);
+        }
+
+        private bool _isOnList;
+
+        public bool IsOnList
+        {
+            get => _isOnList;
+            set
+            {
+                SetProperty(ref _isOnList, value);
+            }
+        }
+
+
+        private int _selectedBadmintonId;
+
+        public void PlayerSelected(Player player)
+        {
+            _selectedBadmintonId = player.BadmintonPlayerId;
         }
     }
 }

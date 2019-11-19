@@ -16,10 +16,8 @@ namespace Server.DAL
             var db = new DatabaseEntities();
             var result = new GetPlayersWithNoAccountResponse();
 
-            var members = db.members.Where(p => p.account == null).ToList();
-            result.Players = members.Select(p => (Common.Model.Player)p).ToList();
-
-            Console.WriteLine($"InDB: {db.members.Count()}\nmembers: {members.Count}\nplayers: {result.Players}");
+            result.Players = db.members.Where(p => p.account == null).ToList()
+                                    .Select(p => (Common.Model.Player)p).ToList();
 
             return result;
         }
