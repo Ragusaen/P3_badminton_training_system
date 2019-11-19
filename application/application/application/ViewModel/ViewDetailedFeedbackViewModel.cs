@@ -25,8 +25,8 @@ namespace application.ViewModel
 
         public ViewDetailedFeedbackViewModel(Member member)
         {
-            Player.Feedbacks = RequestCreator.GetPlayerFeedback();
-            Player.Member = member;
+            //Player.Feedbacks = RequestCreator.GetPlayerFeedback();
+            //Player.Member = member;
 
             Player = new Player { Member = new Member { Name = "Mig", },
                 Feedbacks = new List<Feedback>
