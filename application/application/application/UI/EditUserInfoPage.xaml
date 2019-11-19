@@ -8,8 +8,8 @@
 
     <NavigationPage.TitleView>
         <StackLayout Orientation="Horizontal" Spacing="10" x:Name="Navigationbar">
-            <Label Text="Edit User's information" FontAttributes="Bold" FontSize="30" TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
-            <ImageButton Source="" x:Name="Plusicon" HeightRequest="25" VerticalOptions="CenterAndExpand" HorizontalOptions="End" Margin="0,0,15,0" Command="{Binding AddClickCommand}" BackgroundColor="Red"/>
+            <Label Text="Edit Info" FontAttributes="Bold" FontSize="30" TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+            <ImageButton Source="" x:Name="Plusicon" HeightRequest="25" VerticalOptions="CenterAndExpand" HorizontalOptions="End" Margin="0,0,15,0" Command="{Binding AddClickCommand}" BackgroundColor="Green"/>
         </StackLayout>
     </NavigationPage.TitleView>
 
