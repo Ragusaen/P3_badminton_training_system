@@ -123,16 +123,18 @@ namespace application.ViewModel
 
         private bool CanExecuteSaveMatchClick(object param)
         {
-            if ((TeamName == null || TeamName == "") || (SelectedDateStart == null) || (SelectedDateEnd == null) || (SelectedTimeStart == null) || (SelectedTimeEnd == null))
+            if (string.IsNullOrEmpty(TeamName) || (SelectedDateStart == null) || (SelectedDateEnd == null) || (SelectedTimeStart == null) || (SelectedTimeEnd == null))
                 return false;
             else
                 return true;
         }
 
-        //Check if username is free in database.
+        
         private void ExecuteSaveMatchClick(object param)
         {
-            Navigation.PushAsync(new SchedulePage());
+            //TODO: Update model
+            //Navigate back
+            Navigation.PopAsync();
         }
     }
 }

@@ -89,5 +89,13 @@ namespace application.SystemInterface
 
             return response.FocusPointDescriptors;
         }
+        public static List<Feedback> GetPlayerFeedback()
+        {
+            var request = new GetPlayerFeedbackRequest();
+
+            var response = SimpleRequest<GetPlayerFeedbackRequest, GetPlayerFeedbackResponse>(RequestType.GetPlayerFeedback, request);
+
+            return response.Feedback;
+        }
     }
 }

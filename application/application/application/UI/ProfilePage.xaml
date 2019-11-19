@@ -38,7 +38,7 @@
                 </ListView>
                 
                 <Label Text="Focus Point" FontSize="Medium"/>
-                <ListView VerticalScrollBarVisibility="Never" ItemsSource="{Binding FocusPoints}" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding FocusPointListHeight}">
+                <ListView x:Name="FocusPointList" VerticalScrollBarVisibility="Never" ItemSelected="ListView_OnItemSelected" ItemsSource="{Binding FocusPoints}" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding FocusPointListHeight}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>

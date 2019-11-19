@@ -4,11 +4,14 @@ using System.Text;
 using System.Collections.ObjectModel;
 using Common.Model;
 using Xamarin.Forms;
+using application.SystemInterface;
 
 namespace application.ViewModel
 {
     class ViewDetailedFeedbackViewModel : BaseViewModel
     {
+        public Player Player { get; set; }
+
         private ObservableCollection<Feedback> _feedbacks;
 
         public ObservableCollection<Feedback> Feedbacks
@@ -20,35 +23,10 @@ namespace application.ViewModel
             }
         }
 
-        public ViewDetailedFeedbackViewModel()
+        public ViewDetailedFeedbackViewModel(Member member)
         {
-            Feedbacks = new ObservableCollection<Feedback>
-            {
-                new Feedback
-                {
-                    PlaySession = new PracticeSession{ Start = DateTime.Now },
-                    ReadyQuestion = 2,
-                    EffortQuestion = -1,
-                    ChallengeQuestion = 0,
-                    AbsorbQuestion = 1,
-                    GoodQuestion = "",
-                    BadQuestion = "",
-                    FocusPointQuestion = "",
-                    DayQuestion = "",
-                },
-                new Feedback
-                {
-                    PlaySession = new PracticeSession{ Start = DateTime.Now },
-                },
-                new Feedback
-                {
-                    PlaySession = new PracticeSession{ Start = DateTime.Now },
-                },
-                new Feedback
-                {
-                    PlaySession = new PracticeSession{ Start = DateTime.Now },
-                },
-            };
+            Player.Feedbacks = RequestCreator.GetPlayerFeedback();
+            Player.Member = member;
         }
         private RelayCommand _expandCommand;
 

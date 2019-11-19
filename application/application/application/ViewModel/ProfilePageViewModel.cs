@@ -11,9 +11,9 @@ using Xamarin.Forms;
 
 namespace application.ViewModel
 {
-    class ViewDetailedViewModel : BaseViewModel
+    class ProfilePageViewModel : BaseViewModel
     {
-        public Member User { get; set; }
+        public Member Member { get; set; }
        
         private ObservableCollection<PracticeTeam> _teams;
 
@@ -50,11 +50,11 @@ namespace application.ViewModel
             set { SetProperty(ref _focusPointListHeight, value); }
         }
 
-        public ViewDetailedViewModel() 
+        public ProfilePageViewModel(Member member) 
         {
-            User = new Member() { Name = "Pernille Pedersen" };
-            User.FocusPoints = new List<FocusPointItem>() { new FocusPointItem() { Descriptor = new FocusPointDescriptor() { Name = "Slag 1", Id = 1 } } };
-            FocusPoints = new ObservableCollection<FocusPointItem>(User.FocusPoints);
+            Member = new Member() { Name = "Pernille Pedersen" };
+            Member.FocusPoints = new List<FocusPointItem>() { new FocusPointItem() { Descriptor = new FocusPointDescriptor() { Name = "Slag 1", Id = 9999 } } };
+            FocusPoints = new ObservableCollection<FocusPointItem>(Member.FocusPoints);
             FocusPointListHeight = FocusPoints.Count * 45;
 
             Teams = new ObservableCollection<PracticeTeam>();
@@ -75,16 +75,28 @@ namespace application.ViewModel
 
         private void ExecuteAddFocusPoint(object param)
         {
-            FocusPointPopupPage page = new FocusPointPopupPage(User);
+            FocusPointPopupPage page = new FocusPointPopupPage(Member);
             page.CallBackEvent += FocusPointPopupPageCallback;
             PopupNavigation.Instance.PushAsync(page);
         }
 
-        private void FocusPointPopupPageCallback(object sender, FocusPointItem e)
+        public void PopupFocusPoint(FocusPointItem focusPoint)
+        {
+            StringAndHeaderPopup popup = new StringAndHeaderPopup(focusPoint.Descriptor);
+            PopupNavigation.Instance.PushAsync(popup);
+        }
+
+
+        private void FocusPointPopupPageCallback(object sender, FocusPointDescriptor e)
         {
             //TODO: UPDATE MODEL
-            User.FocusPoints.Add(e);
-            FocusPoints.Add(e);
+            var item = new FocusPointItem
+            {
+                Descriptor = e,
+                DateAssigned = DateTime.Now
+            };
+            Member.FocusPoints.Add(item); //TODO: FIX
+            FocusPoints.Add(item);
             FocusPointListHeight = FocusPoints.Count * 45;
         }
 
@@ -124,7 +136,7 @@ namespace application.ViewModel
         }
         private void ExecuteViewFeedbackClick(object param)
         {
-            Navigation.PushAsync(new ViewDetailedFeedbackPage());
+            Navigation.PushAsync(new ViewDetailedFeedbackPage(Member));
         }
 
         private RelayCommand _viewFeedbackGraphCommand;
@@ -138,7 +150,7 @@ namespace application.ViewModel
         }
         private void ExecuteViewFeedbackGraphClick(object param)
         {
-            Navigation.PushAsync(new ViewFeedbackPage());
+            Navigation.PushAsync(new ViewFeedbackPage(User));
         }
         private RelayCommand _deleteListTeamItemCommand;
 
@@ -167,7 +179,8 @@ namespace application.ViewModel
         private void DeleteListFocusItemClick(object param)
         {
             FocusPointItem focuspoint = param as FocusPointItem;
-            FocusPoints.Remove(focuspoint);
+            FocusPoints.Remove(focuspoint); //TODO: FIX - Update model
+            Member.FocusPoints.Remove(focuspoint);
             FocusPointListHeight = FocusPoints.Count * 45;
         }
     }

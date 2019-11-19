@@ -1,25 +1,24 @@
-﻿using application.ViewModel;
-using Common.Model;
-using Rg.Plugins.Popup.Pages;
-using Rg.Plugins.Popup.Services;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using application.ViewModel;
+using Common.Model;
+using Rg.Plugins.Popup.Pages;
+using Rg.Plugins.Popup.Services;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace application.UI
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class FocusPointPopupPage : PopupPage
+    public partial class StringAndHeaderPopup : PopupPage
     {
-        public FocusPointPopupPage(Member user)
+        public StringAndHeaderPopup(FocusPointDescriptor focusPoint)
         {
             InitializeComponent();
-            FocusPointPopupViewModel vm = new FocusPointPopupViewModel(user);
+            var vm = new StringAndHeaderViewModel(focusPoint);
             BindingContext = vm;
         }
 

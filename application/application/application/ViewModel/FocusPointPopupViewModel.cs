@@ -11,14 +11,14 @@ namespace application.ViewModel
 {
     class FocusPointPopupViewModel : BaseViewModel
     {
-        private string _searchtext;
+        private string _searchText;
 
         public string SearchText
         {
-            get { return _searchtext; }
+            get => _searchText;
             set
             {
-                SetProperty(ref _searchtext, value);
+                SetProperty(ref _searchText, value);
                 /*if (string.IsNullOrEmpty(_searchtext))
                     FocusPoints.OrderByDescending(p => p.Descriptor.Name);
                 else*/
@@ -33,7 +33,6 @@ namespace application.ViewModel
             get => _focusPoints;
             set => SetProperty(ref _focusPoints, value);
         }
-
 
         public FocusPointPopupViewModel(Member member)
         {

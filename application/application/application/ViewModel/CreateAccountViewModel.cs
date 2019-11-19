@@ -92,7 +92,8 @@ namespace application.ViewModel
 
         private void ExecuteCreateAccountClick(object param)
         {
-            Navigation.PushAsync(new ProfilePage());
+            //Navigate back
+            Navigation.PopAsync();
         }
 
         private List<Player> _availablePlayers;
