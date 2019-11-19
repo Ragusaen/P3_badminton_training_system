@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using application.Controller;
+using application.SystemInterface;
 using application.UI;
 using Common.Model;
 using Rg.Plugins.Popup.Services;
@@ -14,7 +15,8 @@ namespace application.ViewModel
     class ProfilePageViewModel : BaseViewModel
     {
         public Member Member { get; set; }
-       
+        public Player Player { get; set; }
+
         private ObservableCollection<PracticeTeam> _teams;
 
         public ObservableCollection<PracticeTeam> Teams
@@ -54,6 +56,7 @@ namespace application.ViewModel
         {
             Member = new Member() { Name = "Pernille Pedersen" };
             Member.FocusPoints = new List<FocusPointItem>() { new FocusPointItem() { Descriptor = new FocusPointDescriptor() { Name = "Slag 1", Id = 9999 } } };
+            this.Player = RequestCreator.GetPlayer();
             FocusPoints = new ObservableCollection<FocusPointItem>(Member.FocusPoints);
             FocusPointListHeight = FocusPoints.Count * 45;
 
@@ -61,7 +64,6 @@ namespace application.ViewModel
             Teams.Add(new PracticeTeam() { Name = "U17" });
             Teams.Add(new PracticeTeam() { Name = "Senior" });
         }
-
 
         private RelayCommand _addFocusPointCommand;
 
@@ -89,7 +91,6 @@ namespace application.ViewModel
 
         private void FocusPointPopupPageCallback(object sender, FocusPointDescriptor e)
         {
-            //TODO: UPDATE MODEL
             var item = new FocusPointItem
             {
                 Descriptor = e,
@@ -97,6 +98,9 @@ namespace application.ViewModel
             };
             Member.FocusPoints.Add(item); //TODO: FIX
             FocusPoints.Add(item);
+
+            RequestCreator.SetPlayerFocusPoints(User. FocusPoints);
+
             FocusPointListHeight = FocusPoints.Count * 45;
         }
 
