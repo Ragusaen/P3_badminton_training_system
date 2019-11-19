@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using application.ViewModel;
+using Common.Model;
 using Microcharts;
 using SkiaSharp;
 using Xamarin.Forms;
@@ -17,13 +18,13 @@ namespace application.UI
     {
 
 
-        public ViewFeedbackPage()
+        public ViewFeedbackPage(Member member)
         {
             InitializeComponent();
 
 
 
-            ViewFeedbackViewModel vm = new ViewFeedbackViewModel();
+            ViewFeedbackViewModel vm = new ViewFeedbackViewModel(member);
             BindingContext = vm;
             vm.Navigation = Navigation;
         }
