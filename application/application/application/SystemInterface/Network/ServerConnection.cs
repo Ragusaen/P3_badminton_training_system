@@ -11,7 +11,7 @@ namespace application.SystemInterface.Network
 {
     class ServerConnection
     {
-        private readonly IPAddress _machineName = new IPAddress(new byte[] {192, 168, 42, 7});
+        private readonly IPAddress _machineName = new IPAddress(new byte[] {192, 168, 42, 222});
         private readonly string _serverName = "Triton";
 
         private TcpClient _tcpClient = null;
@@ -31,7 +31,7 @@ namespace application.SystemInterface.Network
 
             if (!connectTask.IsCompleted)
             {
-                throw new FailedToConnectToServerException("Failed to connect to server!");
+                    throw new FailedToConnectToServerException("Failed to connect to server!");
             }
 
             Debug.WriteLine("Client connected.");
@@ -93,9 +93,12 @@ namespace application.SystemInterface.Network
             int requestSize = BitConverter.ToInt32(requestSizeBuffer, 0);
 
             byte[] buffer = new byte[requestSize];
-            bytes = _sslStream.Read(buffer, 0, buffer.Length);
+                
+            int bytesRead = 0;
+            while (bytesRead < buffer.Length)
+                bytesRead += _sslStream.Read(buffer, bytesRead, buffer.Length - bytesRead);
 
-            if (bytes != requestSize)
+            if (bytesRead != requestSize)
             {
                 throw new InvalidRequestException("Request was not expected size");
             }

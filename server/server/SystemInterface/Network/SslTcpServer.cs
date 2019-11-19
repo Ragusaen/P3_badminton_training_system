@@ -98,7 +98,7 @@ namespace Server.SystemInterface.Network
 
             Connection connection = new Connection(client, sslStream);
 
-            Thread t = new Thread(new ThreadStart(connection.AcceptRequests)) { IsBackground = true };
+            Thread t = new Thread(connection.AcceptRequests) { IsBackground = true };
             _threads.Add(t);
             t.Start();
 

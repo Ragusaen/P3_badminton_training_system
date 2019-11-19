@@ -23,28 +23,29 @@ namespace Server.SystemInterface.Network
             bool isOpen = true;
             while (isOpen)
             {
-                byte[] request;
+                byte[] request = new byte[1];
                 try
                 {
                     // Wait for request
                     request = ReadRequestData();
                     RequestManager reqman = new RequestManager();
 
-                    try
-                    {
-                        var response = reqman.Parse(request);
-                        Respond(response);
-                    } catch (InvalidRequestException e)
-                    {
-                        _nlog.Error(e, $"Client send a request with an invalid request type: {request[0]}");
-                    }
+                    var response = reqman.Parse(request);
+                    Respond(response);
+
                 }
-                catch (InvalidRequestException)
+                catch (InvalidRequestException e)
                 {
-                    _sslStream.Flush();
-                    continue;
+                    _nlog.Error(e, $"Client send a request with an invalid request type: {request[0]}");
+                    break;
+                }
+                catch (System.IO.IOException e)
+                {
+                    _nlog.Error(e, "Error reading from client");
+                    break;
                 }
             }
+            Close();
         }
 
         private void Respond(byte[] data)
