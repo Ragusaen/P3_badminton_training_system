@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 using Common.Model;
 using Common.Serialization;
 using Server.Controller;
+using Server.DAL;
 
 namespace Server
 {
@@ -16,7 +17,13 @@ namespace Server
 
         public static void Main(string[] args)
         {
+            var db = new DatabaseEntities();
 
+            if (!db.members.Any())
+            {
+                RankListScraper scraper = new RankListScraper();
+                scraper.UpdatePlayers();
+            }
             try
             {
                 _log.Debug("Server started");

@@ -40,7 +40,7 @@ namespace Server.Controller
         {
             _log.Debug("UpdatePlayers started");
             var chromeOptions = new ChromeOptions();
-            // chromeOptions.AddArguments("--headless"); 
+            chromeOptions.AddArguments("--headless"); 
             chromeOptions.AddUserProfilePreference("profile.default_content_setting_values.images", 2);
             IWebDriver browser = new ChromeDriver(chromeOptions);
             FindRootRankList(browser);

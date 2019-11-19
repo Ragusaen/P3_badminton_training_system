@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using application.SystemInterface;
 using Common.Model;
 using application.Controller;
+using Common.Serialization;
 
 namespace application.ViewModel
 {
@@ -18,11 +19,13 @@ namespace application.ViewModel
 
         public CreateAccountViewModel()
         {
+            SearchText = "";
             _availablePlayers = RequestCreator.GetPlayersWithNoAccount();
+            UpdatePlayerList();
         }
 
+        #region Properties
         private string _username;
-
         public string Username
         {
             get => _username;
@@ -33,8 +36,15 @@ namespace application.ViewModel
             }
         }
 
-        private string _password;
+        private bool _usernameErrorVisibility;
+        public bool UsernameErrorVisibility
+        {
+            get => _usernameErrorVisibility;
+            set => SetProperty(ref _usernameErrorVisibility, value);
+        }
 
+
+        private string _password;
         public string Password
         {
             get { return _password; }
@@ -46,7 +56,6 @@ namespace application.ViewModel
         }
 
         private string _confirmPassword;
-
         public string ConfirmPassword
         {
             get { return _confirmPassword; }
@@ -57,23 +66,29 @@ namespace application.ViewModel
             }
         }
 
-        private string _confirmationOfPasswordText;
-
-        public string ConfirmationOfPasswordText
+        private string _searchText;
+        public string SearchText
         {
-            get { return _confirmationOfPasswordText; }
+            get => _searchText;
             set
             {
-                if (SetProperty(ref _confirmationOfPasswordText, value))
-                {
-                    if (Password == ConfirmPassword)
-                        _confirmationOfPasswordText = " ";
-                    else if (Password != ConfirmPassword)
-                        _confirmationOfPasswordText = "The two password you have enter are not identical";
-                }
-
+                SetProperty(ref _searchText, value);
+                if (!NotOnList)
+                    UpdatePlayerList();
             }
         }
+
+        private bool _notOnList;
+        public bool NotOnList
+        {
+            get => _notOnList;
+            set
+            {
+                if (SetProperty(ref _notOnList, value))
+                    CreateAccountClickCommand.RaiseCanExecuteChanged();
+            }
+        }
+        #endregion
 
         private RelayCommand _createAccountClickCommand;
 
@@ -87,13 +102,31 @@ namespace application.ViewModel
 
         private bool CanExecuteCreateAccountClick(object param)
         {
-            return !(string.IsNullOrEmpty(Password) || string.IsNullOrEmpty(Username)) && ConfirmPassword == Password;
+            return !string.IsNullOrEmpty(Password)
+                   && !string.IsNullOrEmpty(Username)
+                   && ConfirmPassword == Password
+                   && (_selectedBadmintonId != null || (NotOnList && !string.IsNullOrEmpty(SearchText)));
         }
 
         private void ExecuteCreateAccountClick(object param)
         {
-            //Navigate back
-            Navigation.PopAsync();
+            bool success;
+            if (NotOnList && _selectedBadmintonId != null)
+            {
+                success = RequestCreator.CreateAccountRequest(Username, Password, _selectedBadmintonId.Value, null);
+            }
+            else
+            {
+                success = RequestCreator.CreateAccountRequest(Username, Password, 0, SearchText);
+            }
+
+            if (success)
+                //Navigate back
+                Navigation.PopAsync();
+            else
+            {
+                UsernameErrorVisibility = true;
+            }
         }
 
         private List<Player> _availablePlayers;
@@ -103,19 +136,6 @@ namespace application.ViewModel
         {
             get => _shownPlayerList;
             set => SetProperty(ref _shownPlayerList, value);
-        }
-
-        private string _searchText;
-
-        public string SearchText
-        {
-            get => _searchText;
-            set
-            {
-                SetProperty(ref _searchText, value);
-                if (!IsOnList)
-                    UpdatePlayerList();
-            }
         }
 
         private void UpdatePlayerList()
@@ -128,29 +148,24 @@ namespace application.ViewModel
 
             ShownPlayerList = new ObservableCollection<Player>(
                 _availablePlayers
-                    .OrderByDescending(p => StringSearch.LongestCommonSubsequence(p.Member.Name, SearchText))
+                    .OrderByDescending(p => StringSearch.LongestCommonSubsequence(p.Member.Name.ToLower(), SearchText.ToLower()))
                     .Take(5)
                     .ToList()
             );
         }
 
-        private bool _isOnList;
-
-        public bool IsOnList
-        {
-            get => _isOnList;
-            set
-            {
-                SetProperty(ref _isOnList, value);
-            }
-        }
-
-
-        private int _selectedBadmintonId;
+        private int? _selectedBadmintonId = null;
 
         public void PlayerSelected(Player player)
         {
             _selectedBadmintonId = player.BadmintonPlayerId;
+            CreateAccountClickCommand.RaiseCanExecuteChanged();
+        }
+
+        public void PlayerUnselect()
+        {
+            _selectedBadmintonId = null;
+            CreateAccountClickCommand.RaiseCanExecuteChanged();
         }
     }
 }

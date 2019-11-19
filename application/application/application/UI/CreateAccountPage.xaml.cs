@@ -22,12 +22,18 @@ namespace application.UI
             Password.Completed += (s, a) => ConfirmPassword.Focus();
             ConfirmPassword.Completed += (s, a) => NameSearch.Focus();
 
+            ConfirmPassword.TextChanged += (s, a) => ConfirmPasswordErrorText.IsVisible = (Password.Text != ConfirmPassword.Text);
+
             NotOnList.CheckedChanged += (s, a) => NotOnListCheckChanged(NotOnList.IsChecked);
-            
+
+            CreateAccountButton.Clicked += (s,a) => Username.Focus();
+
             // Allow user to click on label to tick checkbox
             var notOnListLabelTap = new TapGestureRecognizer();
             notOnListLabelTap.Tapped += (s, a) => NotOnList.IsChecked = !NotOnList.IsChecked;
             NotOnListLabel.GestureRecognizers.Add(notOnListLabelTap);
+
+            NameSearch.TextChanged += (s, a) => _vm.PlayerUnselect();
 
             _vm = new CreateAccountViewModel();
             BindingContext = _vm;
@@ -36,13 +42,14 @@ namespace application.UI
 
         private void ListView_OnItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
+            NameSearch.Text = ((Player) e.SelectedItem).Member.Name;
             _vm.PlayerSelected((Player) e.SelectedItem);
         }
 
         private void NotOnListCheckChanged(bool newState)
         {
-            PlayerList.IsVisible = newState;
-            PlayerListLabel.IsVisible = newState;
+            PlayerList.IsVisible = !newState;
+            PlayerListLabel.IsVisible = !newState;
         }
 
     }
