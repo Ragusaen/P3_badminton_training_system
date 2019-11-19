@@ -62,17 +62,16 @@ namespace application.ViewModel
             return !(string.IsNullOrEmpty(Password) || string.IsNullOrEmpty(Username));
         }
 
-        //Check if user is in database. Navigate to main page.
+        ////Check if user is in database. Navigate to main page.
         private void ExecuteLoginClick(object param)
         {
-            /*if (RequestCreator.LoginRequest(Username, Password))
+            if (RequestCreator.LoginRequest(Username, Password))
                 Application.Current.MainPage = new NavigationPage(new MenuPage());
             else
             {
                 InvalidLoginTextHeight = TextHeight;
                 InvalidLoginTextVisible = true;
-            }*/
-            Application.Current.MainPage = new NavigationPage(new MenuPage(new Member{Name = "Slorup", MemberType = MemberType.Both, Id = 10001}));
+            }
         }
 
         private RelayCommand _forgotPassWordClickCommand;
@@ -104,9 +103,7 @@ namespace application.ViewModel
         //Check if user is in database. Navigate to main page.
         private void ExecuteCreateAccountClick(object param)
         {
-            CreateAccountViewModel vm = new CreateAccountViewModel();
-            Navigation.PushAsync(new CreateAccountPage() { BindingContext = vm });
-            vm.Navigation = Navigation;
+            Navigation.PushAsync(new CreateAccountPage());
         }
     }
 }

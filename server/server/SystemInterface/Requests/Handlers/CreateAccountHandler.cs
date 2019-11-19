@@ -35,10 +35,13 @@ namespace Server.SystemInterface.Requests.Handlers
                 var member = new member()
                 {
                     account = db.accounts.Find(request.Username),
-                    MemberType = (int)MemberType.None
+                    MemberType = (int)MemberType.None,
+                    Name = request.Name
                 };
                 db.members.Add(member);
             }
+
+            db.SaveChanges();
 
             return new CreateAccountResponse()
             {
