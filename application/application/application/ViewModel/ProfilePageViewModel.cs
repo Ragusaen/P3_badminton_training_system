@@ -150,7 +150,7 @@ namespace application.ViewModel
         }
         private void ExecuteViewFeedbackGraphClick(object param)
         {
-            Navigation.PushAsync(new ViewFeedbackPage());
+            Navigation.PushAsync(new ViewFeedbackPage(User));
         }
         private RelayCommand _deleteListTeamItemCommand;
 

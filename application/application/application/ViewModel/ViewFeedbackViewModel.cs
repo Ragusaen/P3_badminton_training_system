@@ -4,6 +4,8 @@ using System.Text;
 using Entry = Microcharts.Entry;
 using Microcharts;
 using SkiaSharp;
+using application.SystemInterface;
+using Common.Model;
 
 namespace application.ViewModel
 {
@@ -50,91 +52,22 @@ namespace application.ViewModel
                 SetProperty(ref _chart3, value);
             }
         }
-        public ViewFeedbackViewModel() 
+        public ViewFeedbackViewModel(Member member) 
         {
-            List<Entry> entries = new List<Entry>
-        {
-            new Entry (2)
-            {
-                Color = SKColor.Parse("#33ccff"),
-                Label = "Dato"
-            },
+            List<Feedback> feedbacks = RequestCreator.GetPlayerFeedback();
+            List<Entry> entries = new List<Entry>();
+            List<Entry> entries1 = new List<Entry>();
+            List<Entry> entries2 = new List<Entry>();
+            List<Entry> entries3 = new List<Entry>();
 
-            new Entry(-1)
+            foreach (Feedback fb in feedbacks) 
             {
-                Color = SKColor.Parse("#ff3399"),
-                Label = "Dato"
-            },
-
-             new Entry(0)
-            {
-                Color = SKColor.Parse("#0099ff"),
-                Label = "Dato"
+                entries.Add(new Entry((float)fb.ReadyQuestion) { Color = SKColor.Parse("#33ccff"), Label = fb.PlaySession.Start.ToString() });
+                entries1.Add(new Entry((float)fb.EffortQuestion) { Color = SKColor.Parse("#33ccff"), Label = fb.PlaySession.Start.ToString() });
+                entries2.Add(new Entry((float)fb.ChallengeQuestion) { Color = SKColor.Parse("#33ccff"), Label = fb.PlaySession.Start.ToString() });
+                entries3.Add(new Entry((float)fb.AbsorbQuestion) { Color = SKColor.Parse("#33ccff"), Label = fb.PlaySession.Start.ToString() });  
             }
-        };
-
-            List<Entry> entries1 = new List<Entry>
-        {
-            new Entry (2)
-            {
-                Color = SKColor.Parse("#33ccff"),
-                Label = "Dato"
-            },
-
-            new Entry(-1)
-            {
-                Color = SKColor.Parse("#ff3399"),
-                Label = "Dato"
-            },
-
-             new Entry(0)
-            {
-                Color = SKColor.Parse("#0099ff"),
-                Label = "Dato"
-            }
-        };
-
-            List<Entry> entries2 = new List<Entry>
-        {
-            new Entry (2)
-            {
-                Color = SKColor.Parse("#33ccff"),
-                Label = "Dato"
-            },
-
-            new Entry(-1)
-            {
-                Color = SKColor.Parse("#ff3399"),
-                Label = "Dato"
-            },
-
-             new Entry(0)
-            {
-                Color = SKColor.Parse("#0099ff"),
-                Label = "Dato"
-            }
-        };
-
-            List<Entry> entries3 = new List<Entry>
-        {
-            new Entry (2)
-            {
-                Color = SKColor.Parse("#33ccff"),
-                Label = "Dato"
-            },
-
-            new Entry(-1)
-            {
-                Color = SKColor.Parse("#ff3399"),
-                Label = "Dato"
-            },
-
-             new Entry(0)
-            {
-                Color = SKColor.Parse("#0099ff"),
-                Label = "Dato"
-            }
-        };
+ 
             Chart = new LineChart(){ Entries = entries, LineMode = LineMode.Straight, PointMode = PointMode.Circle, LabelTextSize = 25, PointSize = 12 };
             Chart1 = new LineChart { Entries = entries1, LineMode = LineMode.Straight, PointMode = PointMode.Square, LabelTextSize = 25, PointSize = 12 };
             Chart2 = new LineChart { Entries = entries2, LineMode = LineMode.Straight, PointMode = PointMode.Square, LabelTextSize = 25, PointSize = 12 };

@@ -27,36 +27,6 @@ namespace application.ViewModel
         {
             Player.Feedbacks = RequestCreator.GetPlayerFeedback();
             Player.Member = member;
-
-            Player = new Player { Member = new Member { Name = "Mig", },
-                Feedbacks = new List<Feedback>
-                {
-                    new Feedback
-                    {
-                        PlaySession = new PracticeSession{ Start = DateTime.Now },
-                        ReadyQuestion = 2,
-                        EffortQuestion = -1,
-                        ChallengeQuestion = 0,
-                        AbsorbQuestion = 1,
-                        GoodQuestion = "hej",
-                        BadQuestion = "med",
-                        FocusPointQuestion = "jer",
-                        DayQuestion = "2",
-                    },
-                    new Feedback
-                    {
-                        PlaySession = new PracticeSession{ Start = DateTime.Now },
-                    },
-                    new Feedback
-                    {
-                        PlaySession = new PracticeSession{ Start = DateTime.Now },
-                    },
-                    new Feedback
-                    {
-                        PlaySession = new PracticeSession{ Start = DateTime.Now },
-                    },
-                } 
-            };
         }
         private RelayCommand _expandCommand;
 
