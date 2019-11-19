@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using Common;
 using Common.Model;
@@ -114,6 +115,22 @@ namespace application.SystemInterface
             var response = SimpleRequest<GetPlayerRequest, GetPlayerResponse>(RequestType.GetPlayer, request);
 
             return response.Player;
+        }
+
+        public static List<FocusPointItem> GetPlayerFocusPointItems(int memberId)
+        {
+            var request = new GetPlayerFocusPointsRequest
+            {
+                MemberId = memberId
+            };
+
+            var response =
+                SimpleRequest<GetPlayerFocusPointsRequest, GetPlayerFocusPointsResponse>(
+                    RequestType.GetPlayerFocusPoints, request);
+
+            var result = response.FocusPoints.Select(p => new FocusPointItem {Descriptor = p}).ToList();
+
+            return result;
         }
 
         // Setters below

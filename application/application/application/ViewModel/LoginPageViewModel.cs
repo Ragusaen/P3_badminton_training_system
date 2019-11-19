@@ -66,7 +66,7 @@ namespace application.ViewModel
         private void ExecuteLoginClick(object param)
         {
             if (RequestCreator.LoginRequest(Username, Password))
-                Application.Current.MainPage = new NavigationPage(new MenuPage());
+                Application.Current.MainPage = new NavigationPage(new MenuPage(new Member{Id = 1, Name = "Mikkel Stoffersen",MemberType = MemberType.Player}));
             else
             {
                 InvalidLoginTextHeight = TextHeight;

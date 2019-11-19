@@ -21,8 +21,8 @@ namespace Server.SystemInterface.Requests.Handlers
             if (dbPlayer == null)
                 return new SetPlayerFocusPointsResponse { WasSuccessful = false };
 
-            if (!AllowedRequest(dbPlayer, requester))
-                return new SetPlayerFocusPointsResponse {WasSuccessful = false};
+            //if (!AllowedRequest(dbPlayer, requester))
+            //    return new SetPlayerFocusPointsResponse {WasSuccessful = false};
 
             foreach (var fp in request.FocusPoints)
             {
