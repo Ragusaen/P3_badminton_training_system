@@ -1,4 +1,5 @@
 ﻿using application.UI;
+using Common.Model;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -21,7 +22,7 @@ namespace application.ViewModel
             }
         }
 
-        public ScheduleViewModel()
+        public ScheduleViewModel(Member member)
         {
             CurrentMonth = DateTime.Today.ToString("MMMM");
         }

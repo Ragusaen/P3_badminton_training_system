@@ -14,9 +14,9 @@ namespace application.ViewModel
 {
     class ProfilePageViewModel : BaseViewModel
     {
-        public Member User { get; set; }
+        public Member Member { get; set; }
         public Player Player { get; set; }
-       
+
         private ObservableCollection<PracticeTeam> _teams;
 
         public ObservableCollection<PracticeTeam> Teams
@@ -52,12 +52,12 @@ namespace application.ViewModel
             set { SetProperty(ref _focusPointListHeight, value); }
         }
 
-        public ProfilePageViewModel() 
+        public ProfilePageViewModel(Member member) 
         {
-            User = new Member() { Name = "Pernille Pedersen" };
+            Member = new Member() { Name = "Pernille Pedersen" };
+            Member.FocusPoints = new List<FocusPointItem>() { new FocusPointItem() { Descriptor = new FocusPointDescriptor() { Name = "Slag 1", Id = 9999 } } };
             this.Player = RequestCreator.GetPlayer();
-            Player.FocusPointItems = new List<FocusPointItem>() { new FocusPointItem() { Descriptor = new FocusPointDescriptor() { Name = "Slag 1", Id = 9999 } } };
-            FocusPoints = new ObservableCollection<FocusPointItem>(Player.FocusPointItems);
+            FocusPoints = new ObservableCollection<FocusPointItem>(Member.FocusPoints);
             FocusPointListHeight = FocusPoints.Count * 45;
 
             Teams = new ObservableCollection<PracticeTeam>();
@@ -77,7 +77,7 @@ namespace application.ViewModel
 
         private void ExecuteAddFocusPoint(object param)
         {
-            FocusPointPopupPage page = new FocusPointPopupPage(User);
+            FocusPointPopupPage page = new FocusPointPopupPage(Member);
             page.CallBackEvent += FocusPointPopupPageCallback;
             PopupNavigation.Instance.PushAsync(page);
         }
@@ -96,7 +96,7 @@ namespace application.ViewModel
                 Descriptor = e,
                 DateAssigned = DateTime.Now
             };
-            User.FocusPoints.Add(item);
+            Member.FocusPoints.Add(item); //TODO: FIX
             FocusPoints.Add(item);
 
             RequestCreator.SetPlayerFocusPoints(User. FocusPoints);
@@ -122,10 +122,19 @@ namespace application.ViewModel
             string action = await Application.Current.MainPage.DisplayActionSheet("Choose what you want to edit:", "Cancel", null, "Edit User's Information", "Edit User's Rights");
 
             if (action == "Edit User's Information")
-                await Navigation.PushAsync(new EditUserInfoPage());
+                await Navigation.PushAsync(new EditUserInfoPage(Member));
             else if (action == "Edit User's Rights")
             {
-                string rights = await Application.Current.MainPage.DisplayActionSheet("Choose user's rights:", "Cancel", null, "Player", "Trainer", "Player and Trainer");
+                string rights = await Application.Current.MainPage.DisplayActionSheet("Choose user's rights:", "Cancel", null, "Player", "Trainer", "Player and Trainer", "neither player nor trainor");
+
+                if (rights == "neither player nor trainor")
+                    Member.MemberType = MemberType.None;
+                else if (rights == "Player")
+                    Member.MemberType = MemberType.Player;
+                else if (rights == "Player")
+                    Member.MemberType = MemberType.Trainer;
+                else if (rights == "Player and Trainer")
+                    Member.MemberType = MemberType.Both;
             }
         }
 
@@ -140,7 +149,7 @@ namespace application.ViewModel
         }
         private void ExecuteViewFeedbackClick(object param)
         {
-            Navigation.PushAsync(new ViewDetailedFeedbackPage(User));
+            Navigation.PushAsync(new ViewDetailedFeedbackPage(Member));
         }
 
         private RelayCommand _viewFeedbackGraphCommand;
@@ -154,7 +163,7 @@ namespace application.ViewModel
         }
         private void ExecuteViewFeedbackGraphClick(object param)
         {
-            Navigation.PushAsync(new ViewFeedbackPage());
+            Navigation.PushAsync(new ViewFeedbackPage(Member));
         }
         private RelayCommand _deleteListTeamItemCommand;
 
@@ -183,7 +192,8 @@ namespace application.ViewModel
         private void DeleteListFocusItemClick(object param)
         {
             FocusPointItem focuspoint = param as FocusPointItem;
-            FocusPoints.Remove(focuspoint);
+            FocusPoints.Remove(focuspoint); //TODO: FIX - Update model
+            Member.FocusPoints.Remove(focuspoint);
             FocusPointListHeight = FocusPoints.Count * 45;
         }
     }
