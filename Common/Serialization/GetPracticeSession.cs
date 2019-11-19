@@ -1,18 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Runtime.Serialization;
+using System.Xml.Serialization;
 using Common.Model;
 
 namespace Common.Serialization
 {
-    [DataContract]
+    [Serializable, XmlRoot]
     public class GetPracticeSessionRequest : Request
     {
-        [DataMember] public int Id;
+        public int Id;
     }
 
-    [DataContract]
+    [Serializable, XmlRoot]
     public class GetPracticeSessionResponse : Response
     {
-        [DataMember] public PracticeSession PracticeSession;
+        public PracticeSession PracticeSession;
     }
 }

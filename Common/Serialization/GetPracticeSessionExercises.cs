@@ -3,19 +3,20 @@ using System.Collections.Generic;
 using System.Net;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Xml.Serialization;
 using Common.Model;
 
 namespace Common.Serialization
 {
-    [DataContract]
+    [Serializable, XmlRoot]
     public class GetPracticeSessionExercisesRequest : Request
     {
-        [DataMember] public int PlaySessionId;
+        public int PlaySessionId;
     }
 
-    [DataContract]
+    [Serializable, XmlRoot]
     public class GetPracticeSessionExercisesResponse : Response
     {
-        [DataMember] public List<ExerciseItem> Exercises;
+        public List<ExerciseItem> Exercises;
     }
 }
