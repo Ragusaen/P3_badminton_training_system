@@ -13,10 +13,10 @@ namespace application.UI
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SchedulePage : ContentPage
     {
-        public SchedulePage(Member member)
+        public SchedulePage()
         {
             InitializeComponent();
-            ScheduleViewModel vm = new ScheduleViewModel(member);
+            ScheduleViewModel vm = new ScheduleViewModel();
             BindingContext = vm;
             vm.Navigation = Navigation;
             Plusicon.Source = ImageSource.FromResource("application.Images.plusicon.jpg");
