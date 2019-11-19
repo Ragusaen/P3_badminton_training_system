@@ -1,4 +1,5 @@
 ﻿using application.ViewModel;
+using Common.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +14,7 @@ namespace application.UI
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PracticeTeamPage : ContentPage
     {
-        public PracticeTeamPage()
+        public PracticeTeamPage(Member member)
         {
             InitializeComponent();
             PracticeTeamViewModel vm = new PracticeTeamViewModel();

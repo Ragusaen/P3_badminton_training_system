@@ -139,7 +139,7 @@ namespace application.ViewModel
 
         private bool CanExecuteSaveCreatedPracticeClick(object param)
         {
-            if (PracticeTitle == null || PracticeTitle == "")
+            if (string.IsNullOrEmpty(PracticeTitle))
                 return false;
             else
                 return true;
@@ -148,7 +148,8 @@ namespace application.ViewModel
         //Check if username is free in database.
         private void ExecuteSaveCreatedPracticeClick(object param)
         {
-            Navigation.PushAsync(new SchedulePage());
+            //Navigate back
+            Navigation.PopAsync();
         }
 
         private string _searchtext;
