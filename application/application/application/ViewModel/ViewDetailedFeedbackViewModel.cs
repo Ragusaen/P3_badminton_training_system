@@ -23,11 +23,12 @@ namespace application.ViewModel
             }
         }
 
-        public ViewDetailedFeedbackViewModel(Member member)
+        public ViewDetailedFeedbackViewModel(Player player)
         {
+            Player = player;
             Player.Feedbacks = RequestCreator.GetPlayerFeedback();
-            Player.Member = member;
         }
+
         private RelayCommand _expandCommand;
 
         public RelayCommand ExpandCommand

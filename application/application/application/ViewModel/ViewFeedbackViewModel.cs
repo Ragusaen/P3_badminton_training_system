@@ -52,7 +52,7 @@ namespace application.ViewModel
                 SetProperty(ref _chart3, value);
             }
         }
-        public ViewFeedbackViewModel(Member member) 
+        public ViewFeedbackViewModel(Player player) 
         {
             List<Feedback> feedbacks = RequestCreator.GetPlayerFeedback();
             List<Entry> entries = new List<Entry>();

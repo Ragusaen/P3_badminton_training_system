@@ -14,7 +14,7 @@ namespace application.ViewModel
 {
     class ProfilePageViewModel : BaseViewModel
     {
-        public Member Member { get; set; }
+        //public Member Member { get; set; }
         public Player Player { get; set; }
 
         public ProfilePageViewModel()
@@ -59,8 +59,7 @@ namespace application.ViewModel
 
         public ProfilePageViewModel(Member member)
         {
-            Member = Player.Member;
-            Player = RequestCreator.GetPlayer(Member.Id);
+            Player = RequestCreator.GetPlayer(member.Id);
             Player.FocusPointItems = new List<FocusPointItem>() { new FocusPointItem() { Descriptor = new FocusPointDescriptor() { Name = "Slag 1", Id = 9999 } } };
             FocusPoints = new ObservableCollection<FocusPointItem>(Player.FocusPointItems);
             FocusPointListHeight = FocusPoints.Count * 45;
@@ -126,19 +125,19 @@ namespace application.ViewModel
             string action = await Application.Current.MainPage.DisplayActionSheet("Choose what you want to edit:", "Cancel", null, "Edit User's Information", "Edit User's Rights");
 
             if (action == "Edit User's Password")
-                await Navigation.PushAsync(new EditUserInfoPage(Member));
+                await Navigation.PushAsync(new EditUserInfoPage(Player.Member));
             else if (action == "Edit User's Type")
             {
                 string rights = await Application.Current.MainPage.DisplayActionSheet("Choose user's rights:", "Cancel", null, "Player", "Trainer", "Player and Trainer", "neither player nor trainor");
 
                 if (rights == "neither player nor trainor")
-                    Member.MemberType = MemberType.None;
+                    Player.Member.MemberType = MemberType.None;
                 else if (rights == "Player")
-                    Member.MemberType = MemberType.Player;
+                    Player.Member.MemberType = MemberType.Player;
                 else if (rights == "Player")
-                    Member.MemberType = MemberType.Trainer;
+                    Player.Member.MemberType = MemberType.Trainer;
                 else if (rights == "Player and Trainer")
-                    Member.MemberType = MemberType.Both;
+                    Player.Member.MemberType = MemberType.Both;
             }
         }
 
@@ -153,7 +152,7 @@ namespace application.ViewModel
         }
         private void ExecuteViewFeedbackClick(object param)
         {
-            Navigation.PushAsync(new ViewDetailedFeedbackPage(Member));
+            Navigation.PushAsync(new ViewDetailedFeedbackPage(Player));
         }
 
         private RelayCommand _viewFeedbackGraphCommand;
@@ -167,7 +166,7 @@ namespace application.ViewModel
         }
         private void ExecuteViewFeedbackGraphClick(object param)
         {
-            Navigation.PushAsync(new ViewFeedbackPage(Member));
+            Navigation.PushAsync(new ViewFeedbackPage(Player));
         }
         private RelayCommand _deleteListTeamItemCommand;
 

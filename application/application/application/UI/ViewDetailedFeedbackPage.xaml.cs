@@ -15,10 +15,10 @@ namespace application.UI
     public partial class ViewDetailedFeedbackPage : ContentPage
     {
       
-        public ViewDetailedFeedbackPage(Member member)
+        public ViewDetailedFeedbackPage(Player player)
         {
             InitializeComponent();
-            ViewDetailedFeedbackViewModel vm = new ViewDetailedFeedbackViewModel(member);
+            ViewDetailedFeedbackViewModel vm = new ViewDetailedFeedbackViewModel(player);
             BindingContext = vm;
             vm.Navigation = Navigation;
         }
