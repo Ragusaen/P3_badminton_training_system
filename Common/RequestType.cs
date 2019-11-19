@@ -19,6 +19,10 @@ namespace Common
         GetTeamMatchPositions,
         GetPracticeSessionFocusPoints,
         GetPracticeSessionExercises,
-        GetPracticeTeamYearPlan
+        GetPracticeTeamYearPlan,
+        GetPlayer,
+        // Setters below
+        SetPlayer,
+        SetPlayerFocusPoints,
     };
 }

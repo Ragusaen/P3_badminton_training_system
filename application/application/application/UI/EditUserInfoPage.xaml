@@ -9,17 +9,27 @@
     <NavigationPage.TitleView>
         <StackLayout Orientation="Horizontal" Spacing="10" x:Name="Navigationbar">
             <Label Text="Edit Info" FontAttributes="Bold" FontSize="30" TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
-            <ImageButton Source="" x:Name="Plusicon" HeightRequest="25" VerticalOptions="CenterAndExpand" HorizontalOptions="End" Margin="0,0,15,0" Command="{Binding AddClickCommand}" BackgroundColor="Green"/>
+            <ImageButton Source="" x:Name="SaveIcon" Command="{Binding SaveCommand}" HeightRequest="25" VerticalOptions="CenterAndExpand" HorizontalOptions="End" Margin="0,0,15,0" BackgroundColor="Red"/>
         </StackLayout>
     </NavigationPage.TitleView>
 
     <StackLayout>
-            <Label Text="Full Name"/>
-            <Entry Text="{Binding FullName}"/>
-            <Label Text="Username"/>
-            <Entry Text="{Binding Username}"/>
-            <Label Text="Password"/>
-            <Entry Text="{Binding Password}"/>
-
-        </StackLayout>
+        <Label Text="Username"/>
+        <Entry Text="{Binding Username}"/>
+        <Label Text="Password"/>
+        <Entry Text="{Binding Password}" IsPassword="True"/>
+        <Label Text="New password"/>
+        <Entry Text="{Binding newPassword}" IsPassword="True"/>
+        <Label Text="Pick member type"/>
+        <Picker SelectedIndex="{Binding Member.MemberType}">
+            <Picker.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>None</x:String>
+                    <x:String>Player</x:String>
+                    <x:String>Trainer</x:String>
+                    <x:String>Both</x:String>
+                </x:Array>
+            </Picker.ItemsSource>
+        </Picker>
+    </StackLayout>
 </ContentPage>

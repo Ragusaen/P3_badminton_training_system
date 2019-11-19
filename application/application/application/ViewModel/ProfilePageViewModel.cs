@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using application.Controller;
+using application.SystemInterface;
 using application.UI;
 using Common.Model;
 using Rg.Plugins.Popup.Services;
@@ -14,7 +15,8 @@ namespace application.ViewModel
     class ProfilePageViewModel : BaseViewModel
     {
         public Member Member { get; set; }
-       
+        public Player Player { get; set; }
+
         private ObservableCollection<PracticeTeam> _teams;
 
         public ObservableCollection<PracticeTeam> Teams
@@ -52,16 +54,16 @@ namespace application.ViewModel
 
         public ProfilePageViewModel(Member member) 
         {
-            Member = new Member() { Name = "Pernille Pedersen" };
-            Member.FocusPoints = new List<FocusPointItem>() { new FocusPointItem() { Descriptor = new FocusPointDescriptor() { Name = "Slag 1", Id = 9999 } } };
-            FocusPoints = new ObservableCollection<FocusPointItem>(Member.FocusPoints);
+            Member = new Member { Name = "Pernille Pedersen" }; 
+            Player = RequestCreator.GetPlayer(Member.Id);
+            Player.FocusPointItems = new List<FocusPointItem>() { new FocusPointItem() { Descriptor = new FocusPointDescriptor() { Name = "Slag 1", Id = 9999 } } };
+            FocusPoints = new ObservableCollection<FocusPointItem>(Player.FocusPointItems);
             FocusPointListHeight = FocusPoints.Count * 45;
 
             Teams = new ObservableCollection<PracticeTeam>();
             Teams.Add(new PracticeTeam() { Name = "U17" });
             Teams.Add(new PracticeTeam() { Name = "Senior" });
         }
-
 
         private RelayCommand _addFocusPointCommand;
 
@@ -75,7 +77,7 @@ namespace application.ViewModel
 
         private void ExecuteAddFocusPoint(object param)
         {
-            FocusPointPopupPage page = new FocusPointPopupPage(Member);
+            FocusPointPopupPage page = new FocusPointPopupPage(Player);
             page.CallBackEvent += FocusPointPopupPageCallback;
             PopupNavigation.Instance.PushAsync(page);
         }
@@ -89,14 +91,16 @@ namespace application.ViewModel
 
         private void FocusPointPopupPageCallback(object sender, FocusPointDescriptor e)
         {
-            //TODO: UPDATE MODEL
             var item = new FocusPointItem
             {
                 Descriptor = e,
                 DateAssigned = DateTime.Now
             };
-            Member.FocusPoints.Add(item); //TODO: FIX
+            Player.FocusPointItems.Add(item); //TODO: FIX
             FocusPoints.Add(item);
+
+            RequestCreator.SetPlayerFocusPoints(Player, Player.FocusPointItems);
+
             FocusPointListHeight = FocusPoints.Count * 45;
         }
 
@@ -110,18 +114,26 @@ namespace application.ViewModel
             }
         }
 
-        //Check if user is in database. Navigate to main page.
         private async void ExecuteProfileSettingTap(object param)
         {
             //Needs to change depending on user type
 
             string action = await Application.Current.MainPage.DisplayActionSheet("Choose what you want to edit:", "Cancel", null, "Edit User's Information", "Edit User's Rights");
 
-            if (action == "Edit User's Information")
-                await Navigation.PushAsync(new EditUserInfoPage());
-            else if (action == "Edit User's Rights")
+            if (action == "Edit User's Password")
+                await Navigation.PushAsync(new EditUserInfoPage(Member));
+            else if (action == "Edit User's Type")
             {
-                string rights = await Application.Current.MainPage.DisplayActionSheet("Choose user's rights:", "Cancel", null, "Player", "Trainer", "Player and Trainer");
+                string rights = await Application.Current.MainPage.DisplayActionSheet("Choose user's rights:", "Cancel", null, "Player", "Trainer", "Player and Trainer", "neither player nor trainor");
+
+                if (rights == "neither player nor trainor")
+                    Member.MemberType = MemberType.None;
+                else if (rights == "Player")
+                    Member.MemberType = MemberType.Player;
+                else if (rights == "Player")
+                    Member.MemberType = MemberType.Trainer;
+                else if (rights == "Player and Trainer")
+                    Member.MemberType = MemberType.Both;
             }
         }
 
@@ -180,7 +192,7 @@ namespace application.ViewModel
         {
             FocusPointItem focuspoint = param as FocusPointItem;
             FocusPoints.Remove(focuspoint); //TODO: FIX - Update model
-            Member.FocusPoints.Remove(focuspoint);
+            Player.FocusPointItems.Remove(focuspoint);
             FocusPointListHeight = FocusPoints.Count * 45;
         }
     }

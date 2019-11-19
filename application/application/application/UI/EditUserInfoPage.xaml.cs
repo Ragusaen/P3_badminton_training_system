@@ -1,4 +1,5 @@
 ﻿using application.ViewModel;
+using Common.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,12 +14,14 @@ namespace application.UI
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class EditUserInfoPage : ContentPage
     {
-        public EditUserInfoPage()
+        public EditUserInfoPage(Member member)
         {
             InitializeComponent();
-            EditUserInfoViewModel vm = new EditUserInfoViewModel();
+            EditUserInfoViewModel vm = new EditUserInfoViewModel(member);
             BindingContext = vm;
             vm.Navigation = Navigation;
+
+            SaveIcon.Source = ImageSource.FromResource("application.Images.saveicon.png");
         }
     }
 }

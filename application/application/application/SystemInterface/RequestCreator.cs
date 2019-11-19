@@ -89,6 +89,7 @@ namespace application.SystemInterface
 
             return response.FocusPointDescriptors;
         }
+
         public static List<Feedback> GetPlayerFeedback()
         {
             var request = new GetPlayerFeedbackRequest();
@@ -96,6 +97,43 @@ namespace application.SystemInterface
             var response = SimpleRequest<GetPlayerFeedbackRequest, GetPlayerFeedbackResponse>(RequestType.GetPlayerFeedback, request);
 
             return response.Feedback;
+        }
+
+        public static Player GetPlayer(int id)
+        {
+            var request = new GetPlayerRequest
+            {
+                Id = id
+            };
+
+            var response = SimpleRequest<GetPlayerRequest, GetPlayerResponse>(RequestType.GetPlayer, request);
+
+            return response.Player;
+        }
+
+        // Setters below
+        public static bool SetPlayer()
+        {
+            var request = new SetPlayerRequest();
+
+            var response = SimpleRequest<SetPlayerRequest, SetPlayerResponse>(RequestType.SetPlayer, request);
+
+            return response.WasSuccessful;
+        }
+
+        public static bool SetPlayerFocusPoints(Player player, List<FocusPointItem> focusPointItems)
+        {
+            var request = new SetPlayerFocusPointsRequest
+            {
+                Player = player,
+                FocusPoints = focusPointItems
+            };
+
+            var response =
+                SimpleRequest<SetPlayerFocusPointsRequest, SetPlayerFocusPointsResponse>(
+                    RequestType.SetPlayerFocusPoints, request);
+
+            return response.WasSuccessful;
         }
     }
 }
