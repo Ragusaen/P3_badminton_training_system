@@ -1,4 +1,5 @@
 ﻿using application.UI;
+using Common.Model;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -111,6 +112,29 @@ namespace application.ViewModel
             }
         }
 
+        private Dictionary<Tuple<Lineup.PositionType, int>, Position> _positions;
+
+        public Dictionary<Tuple<Lineup.PositionType, int>, Position> Positions
+        {
+            get { return _positions; }
+            set { SetProperty(ref _positions, value); }
+        }
+
+        public CreateMatchViewModel()
+        {
+            Positions = new Dictionary<Tuple<Lineup.PositionType, int>, Position>();
+
+            Position p = new Position();
+            p.Player = new Player() { BadmintonPlayerId = 1234, Member = new Member() { Name = "Bob" } };
+            p.OtherPlayer = new Player() { BadmintonPlayerId = 4321, Member = new Member() { Name = "Jens" } };
+
+            Position q = new Position();
+            q.Player = new Player() { BadmintonPlayerId = 1234, Member = new Member() { Name = "Jens" } };
+
+            Positions.Add(new Tuple<Lineup.PositionType, int>(Lineup.PositionType.MensDouble, 1), p);
+            Positions.Add(new Tuple<Lineup.PositionType, int>(Lineup.PositionType.MensSingle, 2), q);
+        }
+
         private RelayCommand _saveMatchClickCommand;
 
         public RelayCommand SaveMatchClickCommand
@@ -123,13 +147,13 @@ namespace application.ViewModel
 
         private bool CanExecuteSaveMatchClick(object param)
         {
-            if (string.IsNullOrEmpty(TeamName) || (SelectedDateStart == null) || (SelectedDateEnd == null) || (SelectedTimeStart == null) || (SelectedTimeEnd == null))
+            if (string.IsNullOrEmpty(TeamName) || (SelectedDateStart == null) || (SelectedDateEnd == null) ||
+                (SelectedTimeStart == null) || (SelectedTimeEnd == null))
                 return false;
             else
                 return true;
         }
 
-        
         private void ExecuteSaveMatchClick(object param)
         {
             //TODO: Update model

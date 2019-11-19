@@ -15,11 +15,8 @@
             </StackLayout>
         </NavigationPage.TitleView>
 
-    <ScrollView>
-            <StackLayout>
-                <controls:Calendar VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" YearLabelColor="Red" SelectedDateColor="Red" MonthLabelColor="Red" SelectedDayBackgroundColor="Red"/>
-            
+        <StackLayout>
+            <controls:Calendar VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" YearLabelColor="Red" SelectedDateColor="Red" MonthLabelColor="Red" SelectedDayBackgroundColor="Red"/>
         </StackLayout>
-    </ScrollView>
 
 </ContentPage>

@@ -14,8 +14,6 @@ namespace Common.Model
             RegionalSeries,
             Series1,
             Series2,
-            Series3,
-            Series4
         }
 
         public int ID { get; set; }

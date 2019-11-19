@@ -11,7 +11,7 @@ namespace application.SystemInterface.Network
 {
     class ServerConnection
     {
-        private readonly IPAddress _machineName = new IPAddress(new byte[] {192, 168, 42, 222});
+        private readonly IPAddress _machineName = new IPAddress(new byte[] {192, 168, 42, 7});
         private readonly string _serverName = "Triton";
 
         private TcpClient _tcpClient = null;
@@ -31,7 +31,7 @@ namespace application.SystemInterface.Network
 
             if (!connectTask.IsCompleted)
             {
-                    throw new FailedToConnectToServerException("Failed to connect to server!");
+                throw new FailedToConnectToServerException("Failed to connect to server!");
             }
 
             Debug.WriteLine("Client connected.");
