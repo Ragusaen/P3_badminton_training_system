@@ -34,10 +34,10 @@ namespace application.ViewModel
             set => SetProperty(ref _focusPoints, value);
         }
 
-        public FocusPointPopupViewModel(Member member)
+        public FocusPointPopupViewModel(Player player)
         {
             var list = RequestCreator.GetFocusPoints();
-            list = list.Where(p => member.FocusPoints.All(q => q.Descriptor.Id != p.Id)).ToList();
+            list = list.Where(p => player.FocusPointItems.All(q => q.Descriptor.Id != p.Id)).ToList();
             FocusPoints = new ObservableCollection<FocusPointDescriptor>(list);
         }
     }

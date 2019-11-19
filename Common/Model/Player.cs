@@ -29,5 +29,6 @@ namespace Common.Model
         public Sex Sex { get; set; }
         public int BadmintonPlayerId { get; set; }
         public List<Feedback> Feedbacks { get; set; }
+        public List<FocusPointItem> FocusPointItems;
     }
 }
