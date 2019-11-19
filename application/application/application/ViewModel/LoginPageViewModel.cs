@@ -61,7 +61,7 @@ namespace application.ViewModel
             return !(string.IsNullOrEmpty(Password) || string.IsNullOrEmpty(Username));
         }
 
-        //Check if user is in database. Navigate to main page.
+        ////Check if user is in database. Navigate to main page.
         private void ExecuteLoginClick(object param)
         {
             if (RequestCreator.LoginRequest(Username, Password))
