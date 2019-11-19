@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Text;
 using Common;
 using Common.Model;
@@ -17,6 +18,8 @@ namespace application.SystemInterface
         private static byte[] _accessToken = null;
         public static bool IsLoggedIn => _accessToken != null;
 
+        public static Member LoggedInMember;
+
         public static void Connect()
         {
             _connection.Connect();
@@ -24,15 +27,22 @@ namespace application.SystemInterface
 
         private static TResponse SimpleRequest<TRequest, TResponse>(RequestType requestType, TRequest request) where TRequest : Request where TResponse : Response
         {
+            //Add access token
+            if (request is PermissionRequest permissionRequest)
+                permissionRequest.Token = _accessToken;
+
             // Serialize request
             Serializer serializer = new Serializer();
             byte[] requestBytes = serializer.Serialize(request);
+
+            Debug.WriteLine(Encoding.ASCII.GetString(requestBytes));
 
             // Add request type
             byte[] messageBytes = new byte[requestBytes.Length + 1];
             messageBytes[0] = (byte)requestType;
             Array.Copy(requestBytes, 0, messageBytes, 1, requestBytes.Length);
 
+            Debug.WriteLine("SENDING REQUEST");
             // Send request and get response
             byte[] responseBytes = _connection.SendRequest(messageBytes);
 
@@ -62,7 +72,11 @@ namespace application.SystemInterface
         {
             var careq = new CreateAccountRequest()
             {
-                Username = username, Password = password
+                Username = username,
+                Password = password,
+                AddAsPlayer = name == null,
+                BadmintonPlayerId = badmintonId,
+                Name = name
             };
 
             var response = SimpleRequest<CreateAccountRequest, CreateAccountResponse>(RequestType.CreateAccount, careq);
@@ -111,6 +125,22 @@ namespace application.SystemInterface
             return response.Player;
         }
 
+        public static List<FocusPointItem> GetPlayerFocusPointItems(int memberId)
+        {
+            var request = new GetPlayerFocusPointsRequest
+            {
+                MemberId = memberId
+            };
+
+            var response =
+                SimpleRequest<GetPlayerFocusPointsRequest, GetPlayerFocusPointsResponse>(
+                    RequestType.GetPlayerFocusPoints, request);
+
+            var result = response.FocusPoints.Select(p => new FocusPointItem {Descriptor = p}).ToList();
+
+            return result;
+        }
+
         // Setters below
         public static bool SetPlayer()
         {
@@ -134,6 +164,17 @@ namespace application.SystemInterface
                     RequestType.SetPlayerFocusPoints, request);
 
             return response.WasSuccessful;
+        }
+
+        public static Member GetLoggedInMember()
+        {
+            var request = new GetTokenMemberRequest();
+
+            var response =
+                SimpleRequest<GetTokenMemberRequest, GetTokenMemberResponse>(RequestType.GetTokenMember,
+                    request);
+
+            return response.Member;
         }
     }
 }

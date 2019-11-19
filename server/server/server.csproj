@@ -270,6 +270,7 @@
     <Compile Include="SystemInterface\Requests\Handlers\GetScheduleHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetTeamMatchHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetTeamMatchPositionsHandler.cs" />
+    <Compile Include="SystemInterface\Requests\Handlers\GetTokenMemberHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\LoginHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\RequestHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\SetPlayerFocusPointsHandler.cs" />

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using application.Controller;
@@ -16,6 +17,11 @@ namespace application.ViewModel
     {
         public Member Member { get; set; }
         public Player Player { get; set; }
+
+        public ProfilePageViewModel()
+        {
+            
+        }
 
         private ObservableCollection<PracticeTeam> _teams;
 
@@ -52,11 +58,11 @@ namespace application.ViewModel
             set { SetProperty(ref _focusPointListHeight, value); }
         }
 
-        public ProfilePageViewModel(Member member) 
+        public ProfilePageViewModel(Member member)
         {
-            Member = new Member { Name = "Pernille Pedersen" }; 
+            Member = Player.Member;
             Player = RequestCreator.GetPlayer(Member.Id);
-            Player.FocusPointItems = new List<FocusPointItem>() { new FocusPointItem() { Descriptor = new FocusPointDescriptor() { Name = "Slag 1", Id = 9999 } } };
+            Player.FocusPointItems = RequestCreator.GetPlayerFocusPointItems(Member.Id);
             FocusPoints = new ObservableCollection<FocusPointItem>(Player.FocusPointItems);
             FocusPointListHeight = FocusPoints.Count * 45;
 
@@ -99,6 +105,7 @@ namespace application.ViewModel
             Player.FocusPointItems.Add(item); //TODO: FIX
             FocusPoints.Add(item);
 
+            Debug.WriteLine("Adding focus points to db.");
             RequestCreator.SetPlayerFocusPoints(Player, Player.FocusPointItems);
 
             FocusPointListHeight = FocusPoints.Count * 45;

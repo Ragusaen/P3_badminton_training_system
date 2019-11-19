@@ -22,7 +22,7 @@ namespace application.ViewModel
             }
         }
 
-        public ScheduleViewModel(Member member)
+        public ScheduleViewModel()
         {
             CurrentMonth = DateTime.Today.ToString("MMMM");
         }

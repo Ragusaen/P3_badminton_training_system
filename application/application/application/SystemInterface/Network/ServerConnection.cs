@@ -93,9 +93,12 @@ namespace application.SystemInterface.Network
             int requestSize = BitConverter.ToInt32(requestSizeBuffer, 0);
 
             byte[] buffer = new byte[requestSize];
-            bytes = _sslStream.Read(buffer, 0, buffer.Length);
+                
+            int bytesRead = 0;
+            while (bytesRead < buffer.Length)
+                bytesRead += _sslStream.Read(buffer, bytesRead, buffer.Length - bytesRead);
 
-            if (bytes != requestSize)
+            if (bytesRead != requestSize)
             {
                 throw new InvalidRequestException("Request was not expected size");
             }

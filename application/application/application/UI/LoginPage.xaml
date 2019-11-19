@@ -22,10 +22,10 @@
             <Image Source="" x:Name="RedLogo" HeightRequest="222" Margin="20,25,20,25"/>
             <Label Text="Invalid username or password" TextColor="Red" IsVisible="{Binding InvalidLoginTextVisible}" HeightRequest="{Binding InvalidLoginTextHeight}"/>
             <Label Text="Username" />
-            <Entry x:Name="username" Placeholder="Enter username" Text="{Binding Username}"/>
+            <Entry x:Name="Username" ReturnType="Next" Placeholder="Enter username" Text="{Binding Username}"/>
             <Label Text="Password"/>
-            <Entry x:Name="password" Placeholder="Enter password" IsPassword="True" Text="{Binding Password}"/>
-            <Button Text="Log In" Command="{Binding LoginClickCommand}"/>
+            <Entry x:Name="Password" Placeholder="Enter password" IsPassword="True" Text="{Binding Password}"/>
+            <Button x:Name="LoginButton" Text="Log In" Command="{Binding LoginClickCommand}"/>
             <StackLayout Orientation="Horizontal" >
                 <Button Text="Forgot password?" FontSize="Micro" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Command="{Binding ForgotPassWordClickCommand}"/>
                 <Button Text="Create a New Account" FontSize="Micro" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" Command="{Binding CreateAccountClickCommand}"/>

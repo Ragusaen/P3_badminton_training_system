@@ -21,6 +21,7 @@ namespace Common
         GetPracticeSessionExercises,
         GetPracticeTeamYearPlan,
         GetPlayer,
+        GetTokenMember,
         // Setters below
         SetPlayer,
         SetPlayerFocusPoints,

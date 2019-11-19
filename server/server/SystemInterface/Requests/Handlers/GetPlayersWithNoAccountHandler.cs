@@ -19,6 +19,8 @@ namespace Server.DAL
             result.Players = db.members.Where(p => p.account == null).ToList()
                                     .Select(p => (Common.Model.Player)p).ToList();
 
+            Console.WriteLine($"Members with no account: {db.members.Count(p => p.account == null)}");
+
             return result;
         }
     }

@@ -6,14 +6,15 @@ using System.Text;
 namespace Common.Serialization
 {
     [DataContract]
+    [KnownType(typeof(GetTokenMemberRequest))]
     public class PermissionRequest : Request
     {
-        public byte[] Token;
+        [DataMember] public byte[] Token;
     }
 
     [DataContract]
     public class PermissionResponse : Response
     {
-        public bool AccessDenied = true;
+        [DataMember] public bool AccessDenied = true;
     }
 }
