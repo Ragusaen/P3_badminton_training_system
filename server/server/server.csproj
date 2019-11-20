@@ -231,6 +231,7 @@
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\YearPlanSectionCast.cs" />
+    <Compile Include="SystemInterface\Requests\Handlers\CreateFocusPointDescriptorHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\DeletePlayerFocusPointsHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetPlayerFocusPointsHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetPlayerHandler.cs" />

@@ -48,6 +48,8 @@ namespace Server.SystemInterface.Requests
                 {RequestType.SetComment, new SetCommentHandler() },
                 //Deleters below
                 {RequestType.DeletePlayerFocusPoints, new DeletePlayerFocusPointsHandler() },
+                //Creators below
+                {RequestType.CreateFocusPointDescriptor, new CreateFocusPointDescriptorHandler() },
             }; 
 
         public byte[] Parse(byte[] request)

@@ -129,7 +129,7 @@ namespace application.ViewModel
         }
         private void NewTeamClick(object param)
         {
-            TeamList.Add(new PracticeTeam() { Name = NewTeam });
+            TeamList.Add(new PracticeTeam { Name = NewTeam });
         }
         private RelayCommand _newFocusPointCommand;
 
@@ -142,7 +142,7 @@ namespace application.ViewModel
         }
         private void NewFocusPointClick(object param)
         {
-            PopupNavigation.Instance.PushAsync(new CreateFocusPointPopupPage());
+            PopupNavigation.Instance.PushAsync(new CreateFocusPointPopupPage(false));
         }
     }
 }

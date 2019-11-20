@@ -203,5 +203,20 @@ namespace application.SystemInterface
 
             return response.WasSuccessful;
         }
+
+        // creators below
+        public static FocusPointDescriptor CreateFocusPointDescriptor(FocusPointDescriptor fp)
+        {
+            var request = new CreateFocusPointDescriptorRequest
+            {
+                FocusPointDescriptor = fp
+            };
+
+            var response =
+                SimpleRequest<CreateFocusPointDescriptorRequest, CreateFocusPointDescriptorResponse>(
+                    RequestType.CreateFocusPointDescriptor, request);
+
+            return response.FocusPointDescriptor;
+        }
     }
 }
