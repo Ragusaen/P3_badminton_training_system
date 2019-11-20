@@ -46,20 +46,24 @@ namespace application.UI
 
             FeedbackChart.Chart = new LineChart { Entries = entries, LineMode = LineMode.Straight, PointMode = PointMode.Square, LabelTextSize = 25, PointSize = 12};
 
-            EditCommentButton.Clicked += (s, a) =>
+            var commentTap = new TapGestureRecognizer();
+            commentTap.Tapped += (s, a) =>
             {
-                if (EditCommentButton.Text == "Edit")
+                Comment.IsVisible = false;
+                CommentEntry.IsVisible = true;
+                _vm.CommentText = Comment.Text;
+            };
+            Comment.GestureRecognizers.Add(commentTap);
+            
+            CommentEntry.Unfocused += (s, a) =>
+            {
+                Comment.IsVisible = true;
+                CommentEntry.IsVisible = false;
+                if (CommentEntry.Text.Length > 0)
                 {
-                    _vm.CommentVis = false;
-                    EditCommentButton.Text = "Done";
-                }
-                else
-                {
-                    _vm.CommentVis = true;
-                    _vm.CommentText = CommentEntry.Text;
+                    Comment.Text = CommentEntry.Text;
                     _vm.SetComment(CommentEntry.Text);
                 }
-
             };
 
             _vm = new ProfilePageViewModel(member);

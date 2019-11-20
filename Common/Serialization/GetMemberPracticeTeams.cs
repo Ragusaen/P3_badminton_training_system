@@ -10,7 +10,7 @@ namespace Common.Serialization
     [Serializable, XmlRoot]
     public class GetMemberPracticeTeamRequest : Request
     {
-        public int MemberId;
+        public Member Member;
     }
 
     [Serializable, XmlRoot]

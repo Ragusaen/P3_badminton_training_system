@@ -65,7 +65,7 @@ namespace application.ViewModel
             {
                 if ((Member.MemberType & MemberType.Player) > 0)
                 {
-                    Player = RequestCreator.GetPlayer(1);
+                    Player = RequestCreator.GetPlayer(Member.Id);
                     Player.FocusPointItems = RequestCreator.GetPlayerFocusPointItems(Player.Member.Id);
                     FocusPoints = new ObservableCollection<FocusPointItem>(Player.FocusPointItems);
                     FocusPointListHeight = FocusPoints.Count * 45;
@@ -82,7 +82,7 @@ namespace application.ViewModel
 
                 TeamListHeight = PracticeTeams.Count * 45;
             }
-            CommentText = member.Comment;
+            CommentText = member?.Comment ?? "Click to add comment";
         }
 
         private RelayCommand _addFocusPointCommand;
@@ -97,7 +97,7 @@ namespace application.ViewModel
 
         private void ExecuteAddFocusPoint(object param)
         {
-            FocusPointPopupPage page = new FocusPointPopupPage(Player);
+            FocusPointPopupPage page = new FocusPointPopupPage(Player.FocusPointItems);
             page.CallBackEvent += FocusPointPopupPageCallback;
             PopupNavigation.Instance.PushAsync(page);
         }
@@ -216,16 +216,6 @@ namespace application.ViewModel
             RequestCreator.DeletePlayerFocusPoints(Player.Member.Id, focusPoint);
             FocusPointListHeight = FocusPoints.Count * 45;
         }
-
-
-        private bool _commentVis;
-        public bool CommentVis
-        {
-            get => _commentVis;
-            set => SetProperty(ref _commentVis, value);
-        }
-
-        public bool EnterCommentVis => !CommentVis;
 
         private string _commentText;    
 

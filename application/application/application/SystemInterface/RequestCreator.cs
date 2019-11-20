@@ -152,7 +152,10 @@ namespace application.SystemInterface
 
         public static List<PracticeTeam> GetMemberPracticeTeams(Member member)
         {
-            var request = new GetMemberPracticeTeamRequest();
+            var request = new GetMemberPracticeTeamRequest
+            {
+                Member = member
+            };
 
             var response =
                 SimpleRequest<GetMemberPracticeTeamRequest, GetMemberPracticeTeamResponse>(

@@ -20,5 +20,6 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <Button Text="Create New" Command="{Binding CreateNewFocusPointDescriptorClick}"/>
     </StackLayout>
 </pages:PopupPage>

@@ -16,7 +16,7 @@ namespace Server.SystemInterface.Requests.Handlers
 
             return new GetMemberPracticeTeamResponse
             {
-                PracticeTeams = db.members.Single(p => p.ID == request.MemberId).practiceteams
+                PracticeTeams = db.members.Single(p => p.ID == request.Member.Id).practiceteams
                     .Select(p => (Common.Model.PracticeTeam) p).ToList()
             };
         }

@@ -16,10 +16,10 @@ namespace application.UI
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class FocusPointPopupPage : PopupPage
     {
-        public FocusPointPopupPage(Player player)
+        public FocusPointPopupPage(List<FocusPointItem> focusPointItems)
         {
             InitializeComponent();
-            FocusPointPopupViewModel vm = new FocusPointPopupViewModel(player);
+            FocusPointPopupViewModel vm = new FocusPointPopupViewModel(focusPointItems);
             BindingContext = vm;
         }
 

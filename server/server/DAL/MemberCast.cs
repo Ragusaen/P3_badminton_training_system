@@ -23,11 +23,12 @@ namespace Server.DAL
 
         public static explicit operator Common.Model.Member(member m)
         {
-            return new Member()
+            return new Member
             {
                 Id = m.ID,
                 Name = m.Name,
-                MemberType = (MemberType)m.MemberType
+                MemberType = (MemberType)m.MemberType,
+                Comment = m.Comment,
             };
         }
 
