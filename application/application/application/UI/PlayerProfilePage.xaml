@@ -36,6 +36,7 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
+                <Button Text="Add Team" Command="{Binding AddTeamCommand}" HeightRequest="50"/>
                 
                 <Label Text="Focus Point" FontSize="Medium"/>
                 <ListView x:Name="FocusPointList" VerticalScrollBarVisibility="Never" ItemSelected="ListView_OnItemSelected" ItemsSource="{Binding FocusPoints}" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding FocusPointListHeight}">

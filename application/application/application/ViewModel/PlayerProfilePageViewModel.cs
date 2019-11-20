@@ -119,17 +119,15 @@ namespace application.ViewModel
 
         private async void ExecuteProfileSettingTap(object param)
         {
-            //Needs to change depending on user type
-
-            string action = await Application.Current.MainPage.DisplayActionSheet("Choose what you want to edit:", "Cancel", null, "Edit User's Information", "Edit User's Rights");
+            string action = await Application.Current.MainPage.DisplayActionSheet("Choose what you want to edit:", "Cancel", null, "Edit User's Password", "Edit User's Type", "Create new FocusPiont");
 
             if (action == "Edit User's Password")
                 await Navigation.PushAsync(new EditUserInfoPage(Player.Member));
             else if (action == "Edit User's Type")
             {
-                string rights = await Application.Current.MainPage.DisplayActionSheet("Choose user's rights:", "Cancel", null, "Player", "Trainer", "Player and Trainer", "neither player nor trainor");
+                string rights = await Application.Current.MainPage.DisplayActionSheet("Choose user's rights:", "Cancel", null, "Player", "Trainer", "Player and Trainer", "neither Player nor Trainor");
 
-                if (rights == "neither player nor trainor")
+                if (rights == "Neither Player nor Trainor")
                     Player.Member.MemberType = MemberType.None;
                 else if (rights == "Player")
                     Player.Member.MemberType = MemberType.Player;
@@ -138,6 +136,8 @@ namespace application.ViewModel
                 else if (rights == "Player and Trainer")
                     Player.Member.MemberType = MemberType.Both;
             }
+            else if (action == "Create new FocusPiont")
+                await PopupNavigation.Instance.PushAsync(new CreateFocusPointPopupPage());
         }
 
         private RelayCommand _viewFeedbackCommand;
