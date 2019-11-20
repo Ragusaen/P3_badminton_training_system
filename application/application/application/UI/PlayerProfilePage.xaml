@@ -5,7 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:forms="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
              mc:Ignorable="d"
-             x:Class="application.UI.ProfilePage" BackgroundColor="White" NavigationPage.HasBackButton="False"
+             x:Class="application.UI.PlayerProfilePage" BackgroundColor="White" NavigationPage.HasBackButton="False"
              x:Name="rootpage">
 
     <NavigationPage.TitleView>
