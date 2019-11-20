@@ -149,6 +149,18 @@ namespace application.SystemInterface
             return response.Member;
         }
 
+
+        public static List<PracticeTeam> GetMemberPracticeTeams(Member member)
+        {
+            var request = new GetMemberPracticeTeamRequest();
+
+            var response =
+                SimpleRequest<GetMemberPracticeTeamRequest, GetMemberPracticeTeamResponse>(
+                    RequestType.GetMemberPracticeTeams, request);
+
+            return response.PracticeTeams;
+        }
+
         public static List<PlaySession> GetSchedule()
         {
             var request = new GetScheduleRequest();
@@ -185,6 +197,17 @@ namespace application.SystemInterface
                     RequestType.SetPlayerFocusPoints, request);
 
             return response.WasSuccessful;
+        }
+
+        public static void SetComment(Member member, string comment)
+        {
+            var request = new SetCommentRequest()
+            {
+                Member = member,
+                NewComment = comment
+            };
+
+            var response = SimpleRequest<SetCommentRequest, SetCommentResponse>(RequestType.SetComment, request);
         }
 
         // Deleters below

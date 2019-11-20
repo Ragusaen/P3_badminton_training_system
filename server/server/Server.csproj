@@ -262,7 +262,7 @@
     <Compile Include="SystemInterface\Requests\Handlers\GetAllFocusPointDescriptorsHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetAllPlayersHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetPlayerFeedbackHandler.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\GetPlayerPracticeTeamsHandler.cs" />
+    <Compile Include="SystemInterface\Requests\Handlers\GetMemberPracticeTeamsHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetPlaySessionFeedback.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetPracticeSessionExercisesHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetPracticeSessionFocusPointsHandler.cs" />

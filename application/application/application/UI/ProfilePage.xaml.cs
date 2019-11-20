@@ -17,7 +17,7 @@ namespace application.UI
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PlayerProfilePage : ContentPage
     {
-        private PlayerProfilePageViewModel _playerProfilePageViewModel;
+        private ProfilePageViewModel _vm;
 
         List<Microcharts.Entry> entries = new List<Microcharts.Entry>
         {
@@ -48,13 +48,23 @@ namespace application.UI
 
             EditCommentButton.Clicked += (s, a) =>
             {
-                _playerProfilePageViewModel.CommentVis = false;
-                EditCommentButton.
+                if (EditCommentButton.Text == "Edit")
+                {
+                    _vm.CommentVis = false;
+                    EditCommentButton.Text = "Done";
+                }
+                else
+                {
+                    _vm.CommentVis = true;
+                    _vm.CommentText = CommentEntry.Text;
+                    _vm.SetComment(CommentEntry.Text);
+                }
+
             };
 
-            _playerProfilePageViewModel = new PlayerProfilePageViewModel(member);
-            BindingContext = _playerProfilePageViewModel;
-            _playerProfilePageViewModel.Navigation = Navigation;
+            _vm = new ProfilePageViewModel(member);
+            BindingContext = _vm;
+            _vm.Navigation = Navigation;
 
             Settingsicon.Source = ImageSource.FromResource("application.Images.settingsicon.jpg");
         }
@@ -63,7 +73,7 @@ namespace application.UI
         {
             var focusPoint = (FocusPointItem) e.SelectedItem;
             if (focusPoint != null)
-                _playerProfilePageViewModel.PopupFocusPoint(focusPoint);
+                _vm.PopupFocusPoint(focusPoint);
             FocusPointList.SelectedItem = null;
         }
     }
