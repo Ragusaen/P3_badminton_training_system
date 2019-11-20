@@ -159,6 +159,34 @@ namespace application.SystemInterface
             return response.Member;
         }
 
+
+        public static List<PracticeTeam> GetMemberPracticeTeams(Member member)
+        {
+            var request = new GetMemberPracticeTeamRequest
+            {
+                Member = member
+            };
+
+            var response =
+                SimpleRequest<GetMemberPracticeTeamRequest, GetMemberPracticeTeamResponse>(
+                    RequestType.GetMemberPracticeTeams, request);
+
+            return response.PracticeTeams;
+        }
+
+        public static List<PlaySession> GetSchedule()
+        {
+            var request = new GetScheduleRequest();
+
+            var response = SimpleRequest<GetScheduleRequest, GetScheduleResponse>(RequestType.GetSchedule, request);
+
+            var list = new List<PlaySession>();
+            list.AddRange(response.Matches);
+            list.AddRange(response.PracticeSessions);
+
+            return list;
+        }
+
         // Setters below
         public static bool SetPlayer()
         {
@@ -184,6 +212,17 @@ namespace application.SystemInterface
             return response.WasSuccessful;
         }
 
+        public static void SetComment(Member member, string comment)
+        {
+            var request = new SetCommentRequest()
+            {
+                Member = member,
+                NewComment = comment
+            };
+
+            var response = SimpleRequest<SetCommentRequest, SetCommentResponse>(RequestType.SetComment, request);
+        }
+
         // Deleters below
 
         public static bool DeletePlayerFocusPoints(int memberId, FocusPointItem focusPointItem)
@@ -199,6 +238,21 @@ namespace application.SystemInterface
                     RequestType.DeletePlayerFocusPoints, request);
 
             return response.WasSuccessful;
+        }
+
+        // creators below
+        public static FocusPointDescriptor CreateFocusPointDescriptor(FocusPointDescriptor fp)
+        {
+            var request = new CreateFocusPointDescriptorRequest
+            {
+                FocusPointDescriptor = fp
+            };
+
+            var response =
+                SimpleRequest<CreateFocusPointDescriptorRequest, CreateFocusPointDescriptorResponse>(
+                    RequestType.CreateFocusPointDescriptor, request);
+
+            return response.FocusPointDescriptor;
         }
     }
 }

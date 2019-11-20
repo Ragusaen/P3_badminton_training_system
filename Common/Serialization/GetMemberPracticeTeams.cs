@@ -8,13 +8,13 @@ using Common.Model;
 namespace Common.Serialization
 {
     [Serializable, XmlRoot]
-    public class GetPlayerPracticeTeamRequest : Request
+    public class GetMemberPracticeTeamRequest : Request
     {
-        public int MemberId;
+        public Member Member;
     }
 
     [Serializable, XmlRoot]
-    public class GetPlayerPracticeTeamResponse : Response
+    public class GetMemberPracticeTeamResponse : Response
     {
         public List<PracticeTeam> PracticeTeams;
     }

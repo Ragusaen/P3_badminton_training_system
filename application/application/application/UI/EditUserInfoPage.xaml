@@ -13,7 +13,7 @@
         </StackLayout>
     </NavigationPage.TitleView>
 
-    <StackLayout>
+    <StackLayout Margin="15,15,15,15">
         <Label Text="Username"/>
         <Entry Text="{Binding Username}"/>
         <Label Text="Password"/>

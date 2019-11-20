@@ -12,23 +12,25 @@ using Xamarin.Forms;
 
 namespace application.ViewModel
 {
-    class PlayerProfilePageViewModel : BaseViewModel
+    class ProfilePageViewModel : BaseViewModel
     {
+        public Member Member { get; set; }
         public Player Player { get; set; }
+        public bool IsPlayer { get; set; }
+        public Trainer Trainer { get; set; }
+        public bool IsTrainer { get; set; }
 
-        public PlayerProfilePageViewModel()
+
+        public ProfilePageViewModel() { }
+
+        private ObservableCollection<PracticeTeam> _practiceTeams;
+
+        public ObservableCollection<PracticeTeam> PracticeTeams
         {
-            
-        }
-
-        private ObservableCollection<PracticeTeam> _teams;
-
-        public ObservableCollection<PracticeTeam> Teams
-        {
-            get { return _teams; }
+            get { return _practiceTeams; }
             set
             {
-                SetProperty(ref _teams, value);
+                SetProperty(ref _practiceTeams, value);
             }
         }
 
@@ -56,16 +58,31 @@ namespace application.ViewModel
             set { SetProperty(ref _focusPointListHeight, value); }
         }
 
-        public PlayerProfilePageViewModel(Member member)
+        public ProfilePageViewModel(Member member)
         {
-            Player = RequestCreator.GetPlayer(1);
-            Player.FocusPointItems = RequestCreator.GetPlayerFocusPointItems(Player.Member.Id);
-            FocusPoints = new ObservableCollection<FocusPointItem>(Player.FocusPointItems);
-            FocusPointListHeight = FocusPoints.Count * 45;
+            Member = member;
+            if (Member.MemberType != MemberType.None)
+            {
+                if ((Member.MemberType & MemberType.Player) > 0)
+                {
+                    Player = RequestCreator.GetPlayer(Member.Id);
+                    Player.FocusPointItems = RequestCreator.GetPlayerFocusPointItems(Player.Member.Id);
+                    FocusPoints = new ObservableCollection<FocusPointItem>(Player.FocusPointItems);
+                    FocusPointListHeight = FocusPoints.Count * 45;
+                }
+                else if ((Member.MemberType & MemberType.Trainer) > 0)
+                {
+                    Trainer = new Trainer();
+                }
 
-            Teams = new ObservableCollection<PracticeTeam>();
-            Teams.Add(new PracticeTeam() { Name = "U17" });
-            Teams.Add(new PracticeTeam() { Name = "Senior" });
+                PracticeTeams = new ObservableCollection<PracticeTeam>(RequestCreator.GetMemberPracticeTeams(Member))
+                {
+                    new PracticeTeam() {Name = "U17"}, new PracticeTeam() {Name = "Senior"}
+                };
+
+                TeamListHeight = PracticeTeams.Count * 45;
+            }
+            CommentText = member?.Comment ?? "Click to add comment";
         }
 
         private RelayCommand _addFocusPointCommand;
@@ -80,7 +97,7 @@ namespace application.ViewModel
 
         private void ExecuteAddFocusPoint(object param)
         {
-            FocusPointPopupPage page = new FocusPointPopupPage(Player);
+            FocusPointPopupPage page = new FocusPointPopupPage(Player.FocusPointItems);
             page.CallBackEvent += FocusPointPopupPageCallback;
             PopupNavigation.Instance.PushAsync(page);
         }
@@ -99,7 +116,7 @@ namespace application.ViewModel
                 Descriptor = e,
                 DateAssigned = DateTime.Now
             };
-            Player.FocusPointItems.Add(item); //TODO: FIX
+            Player.FocusPointItems.Add(item);
             FocusPoints.Add(item);
 
             RequestCreator.SetPlayerFocusPoints(Player, Player.FocusPointItems);
@@ -119,21 +136,19 @@ namespace application.ViewModel
 
         private async void ExecuteProfileSettingTap(object param)
         {
-            //Needs to change depending on user type
+            string action = await Application.Current.MainPage.DisplayActionSheet("Settings", "Cancel", null, "Change Password", "Change Member Type");
 
-            string action = await Application.Current.MainPage.DisplayActionSheet("Choose what you want to edit:", "Cancel", null, "Edit User's Information", "Edit User's Rights");
-
-            if (action == "Edit User's Password")
-                await Navigation.PushAsync(new EditUserInfoPage(Player.Member));
-            else if (action == "Edit User's Type")
+            if (action == "Change Password")
+                await Navigation.PushAsync(new EditUserInfoPage(Member));
+            else if (action == "Change Member Type")
             {
-                string rights = await Application.Current.MainPage.DisplayActionSheet("Choose user's rights:", "Cancel", null, "Player", "Trainer", "Player and Trainer", "neither player nor trainor");
+                string rights = await Application.Current.MainPage.DisplayActionSheet("Choose a Member Type", "Cancel", null, "Player", "Trainer", "Player and Trainer", "Neither Player nor Trainer");
 
-                if (rights == "neither player nor trainor")
+                if (rights == "Neither Player nor Trainer")
                     Player.Member.MemberType = MemberType.None;
                 else if (rights == "Player")
                     Player.Member.MemberType = MemberType.Player;
-                else if (rights == "Player")
+                else if (rights == "Trainer")
                     Player.Member.MemberType = MemberType.Trainer;
                 else if (rights == "Player and Trainer")
                     Player.Member.MemberType = MemberType.Both;
@@ -179,8 +194,8 @@ namespace application.ViewModel
         private void DeleteListTeamItemClick(object param)
         {
             PracticeTeam team = param as PracticeTeam;
-            Teams.Remove(team);
-            TeamListHeight = Teams.Count * 45; 
+            PracticeTeams.Remove(team);
+            TeamListHeight = PracticeTeams.Count * 45; 
         }
         private RelayCommand _deleteListFocusItemCommand;
 
@@ -193,11 +208,24 @@ namespace application.ViewModel
         }
         private void DeleteListFocusItemClick(object param)
         {
-            FocusPointItem focuspoint = param as FocusPointItem;
-            FocusPoints.Remove(focuspoint);
-            Player.FocusPointItems.Remove(focuspoint);
-            RequestCreator.DeletePlayerFocusPoints(Player.Member.Id, focuspoint);
+            FocusPointItem focusPoint = param as FocusPointItem;
+            FocusPoints.Remove(focusPoint);
+            Player.FocusPointItems.Remove(focusPoint);
+            RequestCreator.DeletePlayerFocusPoints(Player.Member.Id, focusPoint);
             FocusPointListHeight = FocusPoints.Count * 45;
+        }
+
+        private string _commentText;    
+
+        public string CommentText
+        {
+            get => _commentText;
+            set => SetProperty(ref _commentText, value);
+        }
+
+        public void SetComment(string comment)
+        {
+            RequestCreator.SetComment(Member, comment);
         }
     }
 }

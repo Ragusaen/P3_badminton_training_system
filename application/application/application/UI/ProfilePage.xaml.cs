@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using application.ViewModel;
 using Common.Model;
+using Common.Serialization;
 using Microcharts;
 using Rg.Plugins.Popup.Services;
 using SkiaSharp;
@@ -16,7 +17,7 @@ namespace application.UI
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PlayerProfilePage : ContentPage
     {
-        private PlayerProfilePageViewModel _playerProfilePageViewModel;
+        private ProfilePageViewModel _vm;
 
         List<Microcharts.Entry> entries = new List<Microcharts.Entry>
         {
@@ -43,11 +44,31 @@ namespace application.UI
         {
             InitializeComponent();
 
-            Chart1.Chart = new LineChart { Entries = entries, LineMode = LineMode.Straight, PointMode = PointMode.Square, LabelTextSize = 25, PointSize = 12};
+            FeedbackChart.Chart = new LineChart { Entries = entries, LineMode = LineMode.Straight, PointMode = PointMode.Square, LabelTextSize = 25, PointSize = 12};
+
+            var commentTap = new TapGestureRecognizer();
+            commentTap.Tapped += (s, a) =>
+            {
+                Comment.IsVisible = false;
+                CommentEntry.IsVisible = true;
+                _vm.CommentText = Comment.Text;
+            };
+            Comment.GestureRecognizers.Add(commentTap);
             
-            _playerProfilePageViewModel = new PlayerProfilePageViewModel(member);
-            BindingContext = _playerProfilePageViewModel;
-            _playerProfilePageViewModel.Navigation = Navigation;
+            CommentEntry.Unfocused += (s, a) =>
+            {
+                Comment.IsVisible = true;
+                CommentEntry.IsVisible = false;
+                if (CommentEntry.Text.Length > 0)
+                {
+                    Comment.Text = CommentEntry.Text;
+                    _vm.SetComment(CommentEntry.Text);
+                }
+            };
+
+            _vm = new ProfilePageViewModel(member);
+            BindingContext = _vm;
+            _vm.Navigation = Navigation;
 
             Settingsicon.Source = ImageSource.FromResource("application.Images.settingsicon.jpg");
         }
@@ -56,7 +77,7 @@ namespace application.UI
         {
             var focusPoint = (FocusPointItem) e.SelectedItem;
             if (focusPoint != null)
-                _playerProfilePageViewModel.PopupFocusPoint(focusPoint);
+                _vm.PopupFocusPoint(focusPoint);
             FocusPointList.SelectedItem = null;
         }
     }

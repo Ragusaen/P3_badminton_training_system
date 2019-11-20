@@ -20,7 +20,7 @@
             <StackLayout Margin="10,10,10,10">
                 <Label Text="{Binding Player.Member.Name}" VerticalOptions="Start" HorizontalOptions="CenterAndExpand" FontSize="Large"/>
                 <Label Text="Team" VerticalOptions="Start" HorizontalOptions="StartAndExpand" FontSize="Medium"/>
-                <ListView ItemsSource="{Binding Teams}" VerticalScrollBarVisibility="Never" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding TeamListHeight}">
+                <ListView ItemsSource="{Binding PracticeTeams}" VerticalScrollBarVisibility="Never" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding TeamListHeight}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
@@ -36,6 +36,7 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
+                <Button Text="Add Team" Command="{Binding AddTeamCommand}" HeightRequest="50"/>
                 
                 <Label Text="Focus Point" FontSize="Medium"/>
                 <ListView x:Name="FocusPointList" VerticalScrollBarVisibility="Never" ItemSelected="ListView_OnItemSelected" ItemsSource="{Binding FocusPoints}" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding FocusPointListHeight}">
@@ -58,11 +59,14 @@
 
             <Label Text="Comments" FontSize="Medium"/>
                 <Frame  CornerRadius="5" HasShadow="True">
-                    <Editor Placeholder="Enter a comment" AutoSize="TextChanges"/>
+                    <StackLayout>
+                        <Label x:Name="Comment" TextColor="Black" Text="{Binding CommentText}" FontSize="Medium" IsVisible="True"></Label>
+                        <Editor x:Name="CommentEntry" IsVisible="False" Placeholder="Enter a comment" AutoSize="TextChanges"/>
+                    </StackLayout>
                 </Frame>
 
-                <Label Text="Focuspoint graph" FontSize="Medium"/>
-                <forms:ChartView x:Name="Chart1" HeightRequest="300" Margin="-80, 0, -80, 0" />
+                <Label Text="Feedback graph" FontSize="Medium"/>
+                <forms:ChartView x:Name="FeedbackChart" HeightRequest="300" Margin="-80, 0, -80, 0" />
             <Button Text="View Feedback" Command="{Binding ViewFeedbackCommand}"/>
             <Button Text="View all Feedback graph" Command="{Binding ViewFeedbackGraphCommand}"/>
             </StackLayout>
