@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Common.Model;
 using Common.Serialization;
+using NLog;
 using Server.Controller;
 using Server.DAL;
 
@@ -12,6 +14,8 @@ namespace Server.SystemInterface.Requests.Handlers
 {
     class CreateAccountHandler : MiddleRequestHandler<CreateAccountRequest, CreateAccountResponse>
     {
+        private static Logger _log = LogManager.GetCurrentClassLogger();
+
         protected override CreateAccountResponse InnerHandle(CreateAccountRequest request, member requester)
         {
             UserManager userManager = new UserManager();
@@ -29,6 +33,7 @@ namespace Server.SystemInterface.Requests.Handlers
             {
                 var player = db.members.Single(m => m.BadmintonPlayerID == request.BadmintonPlayerId);
                 player.account = db.accounts.Find(request.Username);
+                _log.Debug("Added new account as player");
             }
             else
             {
@@ -39,6 +44,7 @@ namespace Server.SystemInterface.Requests.Handlers
                     Name = request.Name
                 };
                 db.members.Add(member);
+                _log.Debug("Added new account as member");
             }
 
             db.SaveChanges();

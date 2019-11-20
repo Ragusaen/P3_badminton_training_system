@@ -1,12 +1,16 @@
-﻿namespace Common.Model
+﻿using System;
+
+namespace Common.Model
 {
     public class PlayerRanking
     {
+        [Flags]
         public enum AgeGroup
         {
             Unknown, U09, U11, U13, U15, U17, U19, Senior
         }
 
+        [Flags]
         public enum LevelGroup
         {
             Unknown, D, CD, C, BC, B, AB, A, MA, M, EM, E
