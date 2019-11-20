@@ -49,6 +49,13 @@ namespace application.SystemInterface
             return response;
         }
 
+        internal static List<ExerciseDescriptor> GetExercises()
+        {
+            var request = new GetExercisesRequest();
+            var response = SimpleRequest<GetExercisesRequest, GetExercisesResponse>(RequestType.GetExercises, request);
+            return response.Exercises;
+        }
+
         public static bool LoginRequest(string username, string password)
         {
             LoginRequest request = new LoginRequest()

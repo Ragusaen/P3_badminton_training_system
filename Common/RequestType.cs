@@ -27,5 +27,6 @@ namespace Common
         SetPlayerFocusPoints,
         //Deleters below
         DeletePlayerFocusPoints,
+        GetExercises,
     };
 }

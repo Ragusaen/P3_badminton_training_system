@@ -16,6 +16,7 @@ namespace Server.DAL
                 Id = e.ID,
                 Name = e.Name,
                 Description = e.Description
+                
             };
         }
     }
