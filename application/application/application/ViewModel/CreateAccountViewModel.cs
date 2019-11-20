@@ -111,7 +111,7 @@ namespace application.ViewModel
         private void ExecuteCreateAccountClick(object param)
         {
             bool success;
-            if (NotOnList && _selectedBadmintonId != null)
+            if (!NotOnList)
             {
                 success = RequestCreator.CreateAccountRequest(Username, Password, _selectedBadmintonId.Value, null);
             }

@@ -35,8 +35,6 @@ namespace application.SystemInterface
             Serializer serializer = new Serializer();
             byte[] requestBytes = serializer.Serialize(request);
 
-            Debug.WriteLine(Encoding.ASCII.GetString(requestBytes));
-
             // Add request type
             byte[] messageBytes = new byte[requestBytes.Length + 1];
             messageBytes[0] = (byte)requestType;
