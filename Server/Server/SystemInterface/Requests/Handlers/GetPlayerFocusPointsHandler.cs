@@ -26,7 +26,7 @@ namespace Server.SystemInterface.Requests.Handlers
             };
 
             output.FocusPoints.ForEach(p => 
-                _log.Debug($"New focus point - Player: {member.Name} received: {p.Name}"));
+                _log.Debug($"Player: {member.Name} has focus point : {p.Name}"));
 
             return output;
         }
