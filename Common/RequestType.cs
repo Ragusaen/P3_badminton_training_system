@@ -25,6 +25,7 @@ namespace Common
         //Setters below
         SetPlayer,
         SetPlayerFocusPoints,
+        SetComment,
         //Deleters below
         DeletePlayerFocusPoints,
     };

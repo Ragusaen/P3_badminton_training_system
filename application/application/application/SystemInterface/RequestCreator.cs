@@ -149,6 +149,19 @@ namespace application.SystemInterface
             return response.Member;
         }
 
+        public static List<PlaySession> GetSchedule()
+        {
+            var request = new GetScheduleRequest();
+
+            var response = SimpleRequest<GetScheduleRequest, GetScheduleResponse>(RequestType.GetSchedule, request);
+
+            var list = new List<PlaySession>();
+            list.AddRange(response.Matches);
+            list.AddRange(response.PracticeSessions);
+
+            return list;
+        }
+
         // Setters below
         public static bool SetPlayer()
         {

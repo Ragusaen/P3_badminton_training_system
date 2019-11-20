@@ -32,6 +32,7 @@ namespace Server.DAL
         public bool OnRankList { get; set; }
         public int Sex { get; set; }
         public Nullable<int> BadmintonPlayerID { get; set; }
+        public string Comment { get; set; }
     
         public virtual account account { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]

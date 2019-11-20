@@ -28,8 +28,7 @@ namespace Server.DAL
                 {
                     Captain = (Member)match.member,
                     League =  (TeamMatch.Leagues)match.League,
-                    LeagueRound = match.LeagueRound,
-                    Lineup = (new LineUpCast()).CreateLineup(match.positions)
+                    LeagueRound = match.LeagueRound
                 };
             }
 

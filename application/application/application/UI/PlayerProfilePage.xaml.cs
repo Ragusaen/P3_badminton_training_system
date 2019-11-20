@@ -43,8 +43,10 @@ namespace application.UI
         {
             InitializeComponent();
 
-            Chart1.Chart = new LineChart { Entries = entries, LineMode = LineMode.Straight, PointMode = PointMode.Square, LabelTextSize = 25, PointSize = 12};
+            FeedbackChart.Chart = new LineChart { Entries = entries, LineMode = LineMode.Straight, PointMode = PointMode.Square, LabelTextSize = 25, PointSize = 12};
             
+
+
             _playerProfilePageViewModel = new PlayerProfilePageViewModel(member);
             BindingContext = _playerProfilePageViewModel;
             _playerProfilePageViewModel.Navigation = Navigation;
