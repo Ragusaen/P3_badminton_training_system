@@ -62,7 +62,7 @@
                     <StackLayout>
                         <Label x:Name="Comment" Text="{Binding CommentText}" IsVisible="{Binding CommentVis}"></Label>
                         <Editor x:Name="CommentEntry" IsVisible="{Binding EnterCommentVis}" Placeholder="Enter a comment" AutoSize="TextChanges"/>
-                        <Button x:Name="EditCommentButton" Text="Edit" Width="45"></Button>
+                        <Button x:Name="EditCommentButton" Text="Edit" WidthRequest="45"></Button>
                     </StackLayout>
                 </Frame>
 
