@@ -59,8 +59,10 @@ namespace application.ViewModel
 
         public ProfilePageViewModel(Member member)
         {
-            Player = RequestCreator.GetPlayer(member.Id);
-            Player.FocusPointItems = new List<FocusPointItem>() { new FocusPointItem() { Descriptor = new FocusPointDescriptor() { Name = "Slag 1", Id = 9999 } } };
+            Member = new Member {Id = 1, Name = "Mikkel Stoffersen", MemberType = MemberType.Player};
+            Player = RequestCreator.GetPlayer(Member.Id);
+            Member = Player.Member;
+            Player.FocusPointItems = RequestCreator.GetPlayerFocusPointItems(Member.Id);
             FocusPoints = new ObservableCollection<FocusPointItem>(Player.FocusPointItems);
             FocusPointListHeight = FocusPoints.Count * 45;
 
@@ -195,8 +197,9 @@ namespace application.ViewModel
         private void DeleteListFocusItemClick(object param)
         {
             FocusPointItem focuspoint = param as FocusPointItem;
-            FocusPoints.Remove(focuspoint); //TODO: FIX - Update model
+            FocusPoints.Remove(focuspoint);
             Player.FocusPointItems.Remove(focuspoint);
+            RequestCreator.DeletePlayerFocusPoints(Member.Id, focuspoint);
             FocusPointListHeight = FocusPoints.Count * 45;
         }
     }
