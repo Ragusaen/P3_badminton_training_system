@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using application.SystemInterface;
 using application.ViewModel;
+using Common.Model;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -14,10 +15,11 @@ namespace application.UI
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CreateFocusPointPopupPage : PopupPage
     {
+        private CreateFocusPointPopupViewModel vm;
         public CreateFocusPointPopupPage(bool canCreatePrivateFocusPoint)
         {
             InitializeComponent();
-            var vm = new CreateFocusPointPopupViewModel(canCreatePrivateFocusPoint);
+            vm = new CreateFocusPointPopupViewModel(canCreatePrivateFocusPoint);
             BindingContext = vm;
         }
     }
