@@ -2,19 +2,20 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 using System.Text;
+using System.Xml.Serialization;
 using Common.Model;
 
 namespace Common.Serialization
 {
-    [DataContract]
+    [Serializable, XmlRoot]
     public class GetPracticeSessionFocusPointsRequest : Request
     {
-        [DataMember] public int PlaySessionId;
+        public int PlaySessionId;
     }
 
-    [DataContract]
+    [Serializable, XmlRoot]
     public class GetPracticeSessionFocusPointsResponse : Response
     {
-        [DataMember] public List<FocusPointDescriptor> FocusPoints;
+        public List<FocusPointDescriptor> FocusPoints;
     }
 }

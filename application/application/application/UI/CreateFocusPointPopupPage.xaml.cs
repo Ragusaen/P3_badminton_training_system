@@ -1,5 +1,4 @@
-﻿using application.ViewModel;
-using Common.Model;
+﻿using Rg.Plugins.Popup.Pages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,14 +11,11 @@ using Xamarin.Forms.Xaml;
 namespace application.UI
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class PracticeTeamPage : ContentPage
+    public partial class CreateFocusPointPopupPage : PopupPage
     {
-        public PracticeTeamPage()
+        public CreateFocusPointPopupPage()
         {
             InitializeComponent();
-            PracticeTeamViewModel vm = new PracticeTeamViewModel();
-            vm.Navigation = Navigation;
-            BindingContext = vm;
         }
     }
 }

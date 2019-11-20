@@ -18,13 +18,10 @@ namespace application.UI
     {
 
 
-        public ViewFeedbackPage(Member member)
+        public ViewFeedbackPage(Player player)
         {
             InitializeComponent();
-
-
-
-            ViewFeedbackViewModel vm = new ViewFeedbackViewModel(member);
+            ViewFeedbackViewModel vm = new ViewFeedbackViewModel(player);
             BindingContext = vm;
             vm.Navigation = Navigation;
         }
