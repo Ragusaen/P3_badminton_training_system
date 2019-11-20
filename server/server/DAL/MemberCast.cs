@@ -26,7 +26,8 @@ namespace Server.DAL
             return new Member()
             {
                 Id = m.ID,
-                Name = m.Name
+                Name = m.Name,
+                MemberType = (MemberType)m.MemberType
             };
         }
 

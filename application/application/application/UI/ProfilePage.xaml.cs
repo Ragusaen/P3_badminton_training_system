@@ -16,7 +16,7 @@ namespace application.UI
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PlayerProfilePage : ContentPage
     {
-        private PlayerProfilePageViewModel _playerProfilePageViewModel;
+        private ProfilePageViewModel _profilePageViewModel;
 
         List<Microcharts.Entry> entries = new List<Microcharts.Entry>
         {
@@ -45,9 +45,9 @@ namespace application.UI
 
             Chart1.Chart = new LineChart { Entries = entries, LineMode = LineMode.Straight, PointMode = PointMode.Square, LabelTextSize = 25, PointSize = 12};
             
-            _playerProfilePageViewModel = new PlayerProfilePageViewModel(member);
-            BindingContext = _playerProfilePageViewModel;
-            _playerProfilePageViewModel.Navigation = Navigation;
+            _profilePageViewModel = new ProfilePageViewModel(member);
+            BindingContext = _profilePageViewModel;
+            _profilePageViewModel.Navigation = Navigation;
 
             Settingsicon.Source = ImageSource.FromResource("application.Images.settingsicon.jpg");
         }
@@ -56,7 +56,7 @@ namespace application.UI
         {
             var focusPoint = (FocusPointItem) e.SelectedItem;
             if (focusPoint != null)
-                _playerProfilePageViewModel.PopupFocusPoint(focusPoint);
+                _profilePageViewModel.PopupFocusPoint(focusPoint);
             FocusPointList.SelectedItem = null;
         }
     }

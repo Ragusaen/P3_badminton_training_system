@@ -12,21 +12,25 @@ using Xamarin.Forms;
 
 namespace application.ViewModel
 {
-    class PlayerProfilePageViewModel : BaseViewModel
+    class ProfilePageViewModel : BaseViewModel
     {
+        public Member Member { get; set; }
         public Player Player { get; set; }
+        public bool IsPlayer { get; set; }
+        public Trainer Trainer { get; set; }
+        public bool IsTrainer { get; set; }
 
-        public PlayerProfilePageViewModel()
-        { }
 
-        private ObservableCollection<PracticeTeam> _teams;
+        public ProfilePageViewModel() { }
 
-        public ObservableCollection<PracticeTeam> Teams
+        private ObservableCollection<PracticeTeam> _practiceTeams;
+
+        public ObservableCollection<PracticeTeam> PracticeTeams
         {
-            get { return _teams; }
+            get { return _practiceTeams; }
             set
             {
-                SetProperty(ref _teams, value);
+                SetProperty(ref _practiceTeams, value);
             }
         }
 
@@ -54,16 +58,30 @@ namespace application.ViewModel
             set { SetProperty(ref _focusPointListHeight, value); }
         }
 
-        public PlayerProfilePageViewModel(Member member)
+        public ProfilePageViewModel(Member member)
         {
-            Player = RequestCreator.GetPlayer(1);
-            Player.FocusPointItems = RequestCreator.GetPlayerFocusPointItems(Player.Member.Id);
-            FocusPoints = new ObservableCollection<FocusPointItem>(Player.FocusPointItems);
-            FocusPointListHeight = FocusPoints.Count * 45;
+            Member = member;
+            if (Member.MemberType != MemberType.None)
+            {
+                if ((Member.MemberType & MemberType.Player) > 0)
+                {
+                    Player = RequestCreator.GetPlayer(1);
+                    Player.FocusPointItems = RequestCreator.GetPlayerFocusPointItems(Player.Member.Id);
+                    FocusPoints = new ObservableCollection<FocusPointItem>(Player.FocusPointItems);
+                    FocusPointListHeight = FocusPoints.Count * 45;
+                }
+                else if ((Member.MemberType & MemberType.Trainer) > 0)
+                {
+                    Trainer = new Trainer();
+                }
 
-            Teams = new ObservableCollection<PracticeTeam>();
-            Teams.Add(new PracticeTeam() { Name = "U17" });
-            Teams.Add(new PracticeTeam() { Name = "Senior" });
+                PracticeTeams = new ObservableCollection<PracticeTeam>(RequestCreator.GetMemberPracticeTeams(Member))
+                {
+                    new PracticeTeam() {Name = "U17"}, new PracticeTeam() {Name = "Senior"}
+                };
+
+                TeamListHeight = PracticeTeams.Count * 45;
+            }
         }
 
         private RelayCommand _addFocusPointCommand;
@@ -177,8 +195,8 @@ namespace application.ViewModel
         private void DeleteListTeamItemClick(object param)
         {
             PracticeTeam team = param as PracticeTeam;
-            Teams.Remove(team);
-            TeamListHeight = Teams.Count * 45; 
+            PracticeTeams.Remove(team);
+            TeamListHeight = PracticeTeams.Count * 45; 
         }
         private RelayCommand _deleteListFocusItemCommand;
 

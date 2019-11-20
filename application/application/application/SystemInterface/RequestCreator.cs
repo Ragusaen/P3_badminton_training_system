@@ -149,7 +149,16 @@ namespace application.SystemInterface
             return response.Member;
         }
 
+        public static List<PracticeTeam> GetMemberPracticeTeams(Member member)
+        {
+            var request = new GetMemberPracticeTeamRequest();
 
+            var response =
+                SimpleRequest<GetMemberPracticeTeamRequest, GetMemberPracticeTeamResponse>(
+                    RequestType.GetMemberPracticeTeams, request);
+
+            return response.PracticeTeams;
+        }
 
         // Setters below
         public static bool SetPlayer()
