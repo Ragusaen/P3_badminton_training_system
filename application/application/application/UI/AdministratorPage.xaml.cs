@@ -14,7 +14,7 @@ namespace application.UI
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class AdministratorPage : ContentPage
     {
-        public AdministratorPage(Member member)
+        public AdministratorPage()
         {
             InitializeComponent();
             AdministratorViewModel vm = new AdministratorViewModel();
