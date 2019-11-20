@@ -122,6 +122,16 @@ namespace application.SystemInterface
             return response.Player;
         }
 
+        public static List<Player> GetAllPlayers()
+        {
+            var request = new GetAllPlayersRequest();
+
+            var response =
+                SimpleRequest<GetAllPlayersRequest, GetAllPlayersResponse>(RequestType.GetAllPlayers, request);
+
+            return response.Players;
+        }
+
         public static List<FocusPointItem> GetPlayerFocusPointItems(int memberId)
         {
             var request = new GetPlayerFocusPointsRequest

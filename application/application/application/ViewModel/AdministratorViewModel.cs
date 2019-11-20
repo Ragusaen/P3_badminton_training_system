@@ -40,7 +40,7 @@ namespace application.ViewModel
         {
             get { return _searchFocusPointText; }
             set { SetProperty(ref _searchFocusPointText, value);
-                FocusPointList = new ObservableCollection<FocusPointDescriptor>(FocusPointList.OrderByDescending((x => StringSearch.LongestCommonSubsequence(x.Name.ToLower(), SearchFocusPointText.ToLower()))).ThenBy(x => x.Name.Length).ToList());
+                FocusPointList = new ObservableCollection<FocusPointDescriptor>(FocusPointList.OrderByDescending((x => StringExtension.LongestCommonSubsequence(x.Name.ToLower(), SearchFocusPointText.ToLower()))).ThenBy(x => x.Name.Length).ToList());
             }
         }
         private string _searchTeamText;
@@ -49,7 +49,7 @@ namespace application.ViewModel
         {
             get { return _searchTeamText; }
             set { SetProperty(ref _searchTeamText, value);
-                TeamList = new ObservableCollection<PracticeTeam>(TeamList.OrderByDescending((x => StringSearch.LongestCommonSubsequence(x.Name.ToLower(), SearchTeamText.ToLower()))).ThenBy(x => x.Name.Length).ToList());
+                TeamList = new ObservableCollection<PracticeTeam>(TeamList.OrderByDescending((x => StringExtension.LongestCommonSubsequence(x.Name.ToLower(), SearchTeamText.ToLower()))).ThenBy(x => x.Name.Length).ToList());
             }
         }
         private string _searchMemberText;
@@ -58,7 +58,7 @@ namespace application.ViewModel
         {
             get { return _searchMemberText; }
             set { SetProperty(ref _searchMemberText, value);
-                MemberList = new ObservableCollection<Member>(MemberList.OrderByDescending((x => StringSearch.LongestCommonSubsequence(x.Name.ToLower(), SearchMemberText.ToLower()))).ThenBy(x => x.Name.Length).ToList());
+                MemberList = new ObservableCollection<Member>(MemberList.OrderByDescending((x => StringExtension.LongestCommonSubsequence(x.Name.ToLower(), SearchMemberText.ToLower()))).ThenBy(x => x.Name.Length).ToList());
             }
         }
         private string _newTeam;
