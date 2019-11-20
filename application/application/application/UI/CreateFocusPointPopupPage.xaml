@@ -13,9 +13,9 @@
         <Entry Text="{Binding FocusPoint.Description}"/>
         <Label Text="Video Url"/>
         <Entry Text="{Binding FocusPoint.VideoURL}"/>
-        <StackLayout HorizontalOptions="Fill" IsVisible="{Binding PrivateCheckBoxIsVisible}">
+        <StackLayout Orientation="Horizontal" IsVisible="{Binding PrivateCheckBoxIsVisible}">
         <CheckBox IsChecked="{Binding FocusPoint.IsPrivate}"/><Label Text="Private"/>
         </StackLayout>
-        <Button Text="Create New Focus Point" Command="{Binding CreateFocusPointCommand}"/>
+        <Button Text="Done" Command="{Binding CreateFocusPointCommand}"/>
     </StackLayout>
 </pages:PopupPage>

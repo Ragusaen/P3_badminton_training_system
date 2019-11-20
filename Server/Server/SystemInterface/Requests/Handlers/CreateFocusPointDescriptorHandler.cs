@@ -26,8 +26,10 @@ namespace Server.SystemInterface.Requests.Handlers
 
             var dbFp = db.focuspoints.Add(newFp);
             _log.Debug($"Received new {request.FocusPointDescriptor.GetType()} request: {request.FocusPointDescriptor.Name}");
-            _log.Debug($"new FocusPointDescriptor {dbFp.Name}: {dbFp.Name}");
-             
+            _log.Debug($"new FocusPointDescriptor {dbFp.Name}: {dbFp.Description}");
+
+            db.SaveChanges();
+
             return new CreateFocusPointDescriptorResponse
             {
                 FocusPointDescriptor = (Common.Model.FocusPointDescriptor) dbFp,

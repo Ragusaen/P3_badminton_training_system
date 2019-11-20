@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using application.SystemInterface;
+using Rg.Plugins.Popup.Services;
 
 namespace application.ViewModel
 {
@@ -15,7 +16,7 @@ namespace application.ViewModel
         {
             if (canCreatePrivateFocusPoint)
             {
-                if (RequestCreator.LoggedInMember.MemberType == MemberType.Player)
+                if (RequestCreator.LoggedInMember.MemberType != MemberType.Trainer)
                 {
                     PrivateCheckBoxIsVisible = false;
                     IsPrivateChecked = true;
@@ -27,8 +28,7 @@ namespace application.ViewModel
                 IsPrivateChecked = false;
             }
 
-            FocusPoint = new FocusPointDescriptor();
-            FocusPoint.IsPrivate = IsPrivateChecked;
+            FocusPoint = new FocusPointDescriptor {IsPrivate = IsPrivateChecked};
         }
         
         private RelayCommand _createFocusPointCommand;
@@ -43,6 +43,7 @@ namespace application.ViewModel
         private void CreateFocusPointClick(object param)
         {
             RequestCreator.CreateFocusPointDescriptor(FocusPoint);
+            PopupNavigation.Instance.PopAsync();
         }
     }
 }

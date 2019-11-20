@@ -17,9 +17,7 @@ namespace application.ViewModel
         public Player Player { get; set; }
 
         public PlayerProfilePageViewModel()
-        {
-            
-        }
+        { }
 
         private ObservableCollection<PracticeTeam> _teams;
 
@@ -119,15 +117,15 @@ namespace application.ViewModel
 
         private async void ExecuteProfileSettingTap(object param)
         {
-            string action = await Application.Current.MainPage.DisplayActionSheet("Choose what you want to edit:", "Cancel", null, "Edit User's Password", "Edit User's Type", "Create new FocusPiont");
+            string action = await Application.Current.MainPage.DisplayActionSheet("Choose what you want to edit:", "Cancel", null, "Edit User's Password", "Edit User's Type", "Create New Focus Point");
 
             if (action == "Edit User's Password")
                 await Navigation.PushAsync(new EditUserInfoPage(Player.Member));
             else if (action == "Edit User's Type")
             {
-                string rights = await Application.Current.MainPage.DisplayActionSheet("Choose user's rights:", "Cancel", null, "Player", "Trainer", "Player and Trainer", "neither Player nor Trainor");
+                string rights = await Application.Current.MainPage.DisplayActionSheet("Choose user's rights:", "Cancel", null, "Player", "Trainer", "Player and Trainer", "neither Player nor Trainer");
 
-                if (rights == "Neither Player nor Trainor")
+                if (rights == "Neither Player nor Trainer")
                     Player.Member.MemberType = MemberType.None;
                 else if (rights == "Player")
                     Player.Member.MemberType = MemberType.Player;
@@ -136,8 +134,8 @@ namespace application.ViewModel
                 else if (rights == "Player and Trainer")
                     Player.Member.MemberType = MemberType.Both;
             }
-            else if (action == "Create new FocusPiont")
-                await PopupNavigation.Instance.PushAsync(new CreateFocusPointPopupPage());
+            else if (action == "Create New Focus Point")
+                await PopupNavigation.Instance.PushAsync(new CreateFocusPointPopupPage(false));
         }
 
         private RelayCommand _viewFeedbackCommand;
@@ -193,10 +191,10 @@ namespace application.ViewModel
         }
         private void DeleteListFocusItemClick(object param)
         {
-            FocusPointItem focuspoint = param as FocusPointItem;
-            FocusPoints.Remove(focuspoint);
-            Player.FocusPointItems.Remove(focuspoint);
-            RequestCreator.DeletePlayerFocusPoints(Player.Member.Id, focuspoint);
+            FocusPointItem focusPoint = param as FocusPointItem;
+            FocusPoints.Remove(focusPoint);
+            Player.FocusPointItems.Remove(focusPoint);
+            RequestCreator.DeletePlayerFocusPoints(Player.Member.Id, focusPoint);
             FocusPointListHeight = FocusPoints.Count * 45;
         }
     }

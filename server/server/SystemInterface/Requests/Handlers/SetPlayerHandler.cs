@@ -25,6 +25,8 @@ namespace Server.SystemInterface.Requests.Handlers
                 throw new NotImplementedException();
             }
 
+            db.SaveChanges();
+
             return response;
         }
     }
