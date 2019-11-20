@@ -141,6 +141,17 @@ namespace application.SystemInterface
             return result;
         }
 
+        public static Member GetLoggedInMember()
+        {
+            var request = new GetTokenMemberRequest();
+
+            var response =
+                SimpleRequest<GetTokenMemberRequest, GetTokenMemberResponse>(RequestType.GetTokenMember,
+                    request);
+
+            return response.Member;
+        }
+
         // Setters below
         public static bool SetPlayer()
         {
@@ -166,15 +177,21 @@ namespace application.SystemInterface
             return response.WasSuccessful;
         }
 
-        public static Member GetLoggedInMember()
+        // Deleters below
+
+        public static bool DeletePlayerFocusPoints(int memberId, FocusPointItem focusPointItem)
         {
-            var request = new GetTokenMemberRequest();
+            var request = new DeletePlayerFocusPointRequest
+            {
+                MemberId = memberId,
+                FocusPointId = focusPointItem.Descriptor.Id
+            };
 
             var response =
-                SimpleRequest<GetTokenMemberRequest, GetTokenMemberResponse>(RequestType.GetTokenMember,
-                    request);
+                SimpleRequest<DeletePlayerFocusPointRequest, DeletePlayerFocusPointResponse>(
+                    RequestType.DeletePlayerFocusPoints, request);
 
-            return response.Member;
+            return response.WasSuccessful;
         }
     }
 }

@@ -45,6 +45,8 @@ namespace Server.SystemInterface.Requests
                 {RequestType.GetTokenMember, new GetTokenMemberHandler() },
                 //Setters below
                 {RequestType.SetPlayerFocusPoints, new SetPlayerFocusPointsHandler() },
+                //Deleters below
+                {RequestType.DeletePlayerFocusPoints, new DeletePlayerFocusPointsHandler() },
             }; 
 
         public byte[] Parse(byte[] request)

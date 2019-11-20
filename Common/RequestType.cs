@@ -22,8 +22,10 @@ namespace Common
         GetPracticeTeamYearPlan,
         GetPlayer,
         GetTokenMember,
-        // Setters below
+        //Setters below
         SetPlayer,
         SetPlayerFocusPoints,
+        //Deleters below
+        DeletePlayerFocusPoints,
     };
 }

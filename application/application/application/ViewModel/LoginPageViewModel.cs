@@ -69,7 +69,7 @@ namespace application.ViewModel
         {
             if (RequestCreator.LoginRequest(Username, Password)) { 
                 RequestCreator.LoggedInMember = RequestCreator.GetLoggedInMember();
-                Application.Current.MainPage = new NavigationPage(new MenuPage(new Member{Id = 1, Name = "Mikkel Stoffersen",MemberType = MemberType.Player}));
+                Application.Current.MainPage = new NavigationPage(new MenuPage());
             }
             else
             {
