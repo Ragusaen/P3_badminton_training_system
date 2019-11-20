@@ -6,13 +6,16 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="application.UI.CreateFocusPointPopupPage" Padding="40,150,40,150">
-    <StackLayout BackgroundColor="White">
+    <StackLayout BackgroundColor="White" Padding="15,15,15,15">
         <Label Text="Name"/>
         <Entry Text="{Binding FocusPoint.Name}"/>
         <Label Text="Description"/>
         <Entry Text="{Binding FocusPoint.Description}"/>
         <Label Text="Video Url"/>
-        <Entry Text="{Binding FocusPoint.VideoUrl}"/>
+        <Entry Text="{Binding FocusPoint.VideoURL}"/>
+        <StackLayout HorizontalOptions="Fill" IsVisible="{Binding PrivateCheckBoxIsVisible}">
+        <CheckBox IsChecked="{Binding FocusPoint.IsPrivate}"/><Label Text="Private"/>
+        </StackLayout>
         <Button Text="Create New Focus Point" Command="{Binding CreateFocusPointCommand}"/>
     </StackLayout>
 </pages:PopupPage>

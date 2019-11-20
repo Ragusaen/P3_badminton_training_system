@@ -142,7 +142,7 @@ namespace application.ViewModel
         }
         private void NewFocusPointClick(object param)
         {
-            PopupNavigation.Instance.PushAsync(new CreateFocusPointPopupPage());
+            PopupNavigation.Instance.PushAsync(new CreateFocusPointPopupPage(false));
         }
     }
 }

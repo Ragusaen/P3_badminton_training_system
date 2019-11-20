@@ -27,5 +27,7 @@ namespace Common
         SetPlayerFocusPoints,
         //Deleters below
         DeletePlayerFocusPoints,
+        //Creators below
+        CreateFocusPointDescriptor,
     };
 }
