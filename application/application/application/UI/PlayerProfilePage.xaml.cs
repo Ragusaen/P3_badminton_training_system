@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using application.ViewModel;
 using Common.Model;
+using Common.Serialization;
 using Microcharts;
 using Rg.Plugins.Popup.Services;
 using SkiaSharp;
@@ -44,8 +45,12 @@ namespace application.UI
             InitializeComponent();
 
             FeedbackChart.Chart = new LineChart { Entries = entries, LineMode = LineMode.Straight, PointMode = PointMode.Square, LabelTextSize = 25, PointSize = 12};
-            
 
+            EditCommentButton.Clicked += (s, a) =>
+            {
+                _playerProfilePageViewModel.CommentVis = false;
+                EditCommentButton.
+            };
 
             _playerProfilePageViewModel = new PlayerProfilePageViewModel(member);
             BindingContext = _playerProfilePageViewModel;

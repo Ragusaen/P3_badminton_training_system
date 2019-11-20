@@ -64,6 +64,8 @@ namespace application.ViewModel
             Teams = new ObservableCollection<PracticeTeam>();
             Teams.Add(new PracticeTeam() { Name = "U17" });
             Teams.Add(new PracticeTeam() { Name = "Senior" });
+
+            CommentText = member.Comment;
         }
 
         private RelayCommand _addFocusPointCommand;
@@ -206,7 +208,19 @@ namespace application.ViewModel
             set => SetProperty(ref _commentVis, value);
         }
 
+        public bool EnterCommentVis => !CommentVis;
 
+        private string _commentText;    
 
+        public string CommentText
+        {
+            get => _commentText;
+            set => SetProperty(ref _commentText, value);
+        }
+
+        public void SetComment()
+        {
+            CommentVis = false;
+        }
     }
 }

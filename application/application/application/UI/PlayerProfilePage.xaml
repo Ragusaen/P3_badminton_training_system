@@ -60,8 +60,9 @@
             <Label Text="Comments" FontSize="Medium"/>
                 <Frame  CornerRadius="5" HasShadow="True">
                     <StackLayout>
-                        <Label Text="" IsVisible="{Binding CommentVis}"></Label>
+                        <Label x:Name="Comment" Text="{Binding CommentText}" IsVisible="{Binding CommentVis}"></Label>
                         <Editor x:Name="CommentEntry" IsVisible="{Binding EnterCommentVis}" Placeholder="Enter a comment" AutoSize="TextChanges"/>
+                        <Button x:Name="EditCommentButton" Text="Edit" Width="45"></Button>
                     </StackLayout>
                 </Frame>
 
