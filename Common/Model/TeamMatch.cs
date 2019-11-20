@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Common.Model
 {
@@ -11,9 +12,9 @@ namespace Common.Model
             Division2,
             Division3,
             DenmarksSeries,
-            RegionalSeries,
-            Series1,
-            Series2,
+            RegionalSeriesNordjylland,
+            Series1Nordjylland,
+            Series2Nordjylland
         }
 
         public int ID { get; set; }

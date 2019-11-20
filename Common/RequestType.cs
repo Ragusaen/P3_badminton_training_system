@@ -13,7 +13,7 @@ namespace Common
         GetPlaySessionFeedback,
         GetPracticeSession,
         GetAllFocusPoints,
-        GetPlayerPracticeTeams,
+        GetMemberPracticeTeams,
         GetPlayerFocusPoints,
         GetTeamMatch,
         GetTeamMatchPositions,
@@ -25,8 +25,11 @@ namespace Common
         //Setters below
         SetPlayer,
         SetPlayerFocusPoints,
+        SetComment,
         //Deleters below
         DeletePlayerFocusPoints,
         GetExercises,
+        //Creators below
+        CreateFocusPointDescriptor,
     };
 }

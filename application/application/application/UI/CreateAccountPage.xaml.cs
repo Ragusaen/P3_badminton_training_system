@@ -26,7 +26,11 @@ namespace application.UI
 
             NotOnList.CheckedChanged += (s, a) => NotOnListCheckChanged(NotOnList.IsChecked);
 
-            CreateAccountButton.Clicked += (s,a) => Username.Focus();
+            CreateAccountButton.Clicked += (s,a) =>
+            {
+                UsernameError.Focus();
+                Username.Focus();
+            };
 
             // Allow user to click on label to tick checkbox
             var notOnListLabelTap = new TapGestureRecognizer();

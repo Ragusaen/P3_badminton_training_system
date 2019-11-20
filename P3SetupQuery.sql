@@ -22,7 +22,8 @@ foreign key(Username) references `Account`(Username),
 `Name` varchar(256) not null,
 OnRankList bit not null,
 Sex int not null,
-BadmintonPlayerID int
+BadmintonPlayerID int,
+`Comment` varchar(512)
 );
 
 create table PracticeTeam(
@@ -85,7 +86,7 @@ PlaySessionID int primary key,
 foreign key(PlaySessionID) references PlaySession(ID),
 YearPlanSectionID int not null,
 foreign key(YearPlanSectionID) references YearPlanSection(ID),
-TrainerID int not null,
+TrainerID int,
 foreign key(TrainerID) references `Member`(ID)
 );
 
@@ -126,7 +127,7 @@ LevelPoints int not null,
 create table TeamMatch(
 PlaySessionID int primary key,
 foreign key(PlaySessionID) references PlaySession(ID),
-CaptainID int not null,
+CaptainID int,
 foreign key(CaptainID) references `Member`(ID),
 OpponentName varchar(64) not null,
 League int not null,

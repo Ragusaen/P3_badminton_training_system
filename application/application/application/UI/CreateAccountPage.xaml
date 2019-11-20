@@ -17,7 +17,7 @@
         <StackLayout>
             <Frame Margin="15,15,15,10" CornerRadius="5" HasShadow="True">
                 <StackLayout>
-                    <Label IsVisible="{Binding UsernameErrorVisibility}" Text="Username already taken" TextColor="Red"></Label>
+                    <Label x:Name="UsernameError" IsVisible="{Binding UsernameErrorVisibility}" Text="Username already taken" TextColor="Red"></Label>
                     <Label Text="Username" FontSize="18"/>
                     <Entry x:Name="Username" ReturnType="Next" Placeholder="Enter a username" Text="{Binding Username}"/>
                     <Label Text="Password" FontSize="18"/>

@@ -13,9 +13,9 @@ namespace Server.Function.Rules
             { TeamMatch.Leagues.Division2, new List<IRule>()},
             { TeamMatch.Leagues.Division3, new List<IRule>()},
             { TeamMatch.Leagues.DenmarksSeries, new List<IRule>()},
-            { TeamMatch.Leagues.RegionalSeries, new List<IRule>()},
-            { TeamMatch.Leagues.Series1, new List<IRule>()},
-            { TeamMatch.Leagues.Series2, new List<IRule>()},
+            { TeamMatch.Leagues.RegionalSeriesNordjylland, new List<IRule>()},
+            { TeamMatch.Leagues.Series1Nordjylland, new List<IRule>()},
+            { TeamMatch.Leagues.Series2Nordjylland, new List<IRule>()},
         };
     }
 }

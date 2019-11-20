@@ -63,8 +63,8 @@
     <Compile Update="UI\AdministratorPage.xaml.cs">
       <DependentUpon>AdministratorPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="UI\PlayerProfilePage.xaml.cs">
-      <DependentUpon>PlayerProfilePage.xaml</DependentUpon>
+    <Compile Update="UI\ProfilePage.xaml.cs">
+      <DependentUpon>ProfilePage.xaml</DependentUpon>
     </Compile>
     <Compile Update="UI\StringAndHeaderPopup.xaml.cs">
       <DependentUpon>StringAndHeaderPopup.xaml</DependentUpon>
@@ -117,7 +117,7 @@
     <EmbeddedResource Update="UI\ViewPracticePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="UI\PlayerProfilePage.xaml">
+    <EmbeddedResource Update="UI\ProfilePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="UI\SchedulePage.xaml">
