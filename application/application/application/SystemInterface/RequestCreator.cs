@@ -149,6 +149,7 @@ namespace application.SystemInterface
             return response.Member;
         }
 
+
         public static List<PracticeTeam> GetMemberPracticeTeams(Member member)
         {
             var request = new GetMemberPracticeTeamRequest();
@@ -158,6 +159,19 @@ namespace application.SystemInterface
                     RequestType.GetMemberPracticeTeams, request);
 
             return response.PracticeTeams;
+        }
+
+        public static List<PlaySession> GetSchedule()
+        {
+            var request = new GetScheduleRequest();
+
+            var response = SimpleRequest<GetScheduleRequest, GetScheduleResponse>(RequestType.GetSchedule, request);
+
+            var list = new List<PlaySession>();
+            list.AddRange(response.Matches);
+            list.AddRange(response.PracticeSessions);
+
+            return list;
         }
 
         // Setters below

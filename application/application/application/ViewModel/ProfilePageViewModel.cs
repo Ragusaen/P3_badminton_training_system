@@ -215,5 +215,16 @@ namespace application.ViewModel
             RequestCreator.DeletePlayerFocusPoints(Player.Member.Id, focusPoint);
             FocusPointListHeight = FocusPoints.Count * 45;
         }
+
+
+        private bool _commentVis;
+        public bool CommentVis
+        {
+            get => _commentVis;
+            set => SetProperty(ref _commentVis, value);
+        }
+
+
+
     }
 }

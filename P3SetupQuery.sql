@@ -22,7 +22,8 @@ foreign key(Username) references `Account`(Username),
 `Name` varchar(256) not null,
 OnRankList bit not null,
 Sex int not null,
-BadmintonPlayerID int
+BadmintonPlayerID int,
+`Comment` varchar(512)
 );
 
 create table PracticeTeam(

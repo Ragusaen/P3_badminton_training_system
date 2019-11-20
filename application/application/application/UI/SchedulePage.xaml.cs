@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Common.Model;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Xamarin.Plugin.Calendar.Controls;
 
 namespace application.UI
 {
@@ -16,6 +17,7 @@ namespace application.UI
         public SchedulePage()
         {
             InitializeComponent();
+
             ScheduleViewModel vm = new ScheduleViewModel();
             BindingContext = vm;
             vm.Navigation = Navigation;

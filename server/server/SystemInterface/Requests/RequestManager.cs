@@ -45,6 +45,7 @@ namespace Server.SystemInterface.Requests
                 {RequestType.GetTokenMember, new GetTokenMemberHandler() },
                 //Setters below
                 {RequestType.SetPlayerFocusPoints, new SetPlayerFocusPointsHandler() },
+                {RequestType.SetComment, new SetCommentHandler() },
                 //Deleters below
                 {RequestType.DeletePlayerFocusPoints, new DeletePlayerFocusPointsHandler() },
                 //Creators below

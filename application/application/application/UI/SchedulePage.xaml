@@ -8,15 +8,24 @@
              x:Class="application.UI.SchedulePage" NavigationPage.HasBackButton="False">
 
     
-        <NavigationPage.TitleView>
-            <StackLayout Orientation="Horizontal" Spacing="10" x:Name="Navigationbar">
-                <Label Text="Schedule" FontAttributes="Bold" FontSize="30" TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
-                <ImageButton Source="" x:Name="Plusicon" HeightRequest="25" VerticalOptions="CenterAndExpand" HorizontalOptions="End" Margin="0,0,15,0" Command="{Binding AddClickCommand}" BackgroundColor="Red"/>
-            </StackLayout>
-        </NavigationPage.TitleView>
-
-        <StackLayout>
-            <controls:Calendar VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" YearLabelColor="Red" SelectedDateColor="Red" MonthLabelColor="Red" SelectedDayBackgroundColor="Red"/>
+    <NavigationPage.TitleView>
+        <StackLayout Orientation="Horizontal" Spacing="10" x:Name="Navigationbar">
+            <Label Text="Schedule" FontAttributes="Bold" FontSize="30" TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+            <ImageButton Source="" x:Name="Plusicon" HeightRequest="25" VerticalOptions="CenterAndExpand" HorizontalOptions="End" Margin="0,0,15,0" Command="{Binding AddClickCommand}" BackgroundColor="Red"/>
         </StackLayout>
+    </NavigationPage.TitleView>
+
+    <StackLayout>
+        <controls:Calendar Events="{Binding Events}" x:Name="Calendar" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" YearLabelColor="Red" SelectedDateColor="Red" MonthLabelColor="Red" SelectedDayBackgroundColor="Red">
+            <controls:Calendar.EventTemplate>
+                <DataTemplate>
+                    <StackLayout Padding="15,0,0,0">
+                        <Label Text="{Binding Name}" FontAttributes="Bold" FontSize="Medium"/>
+                        <Label Text="{Binding Description}" FontSize="Small" LineBreakMode="WordWrap"/>
+                    </StackLayout>
+                </DataTemplate>
+            </controls:Calendar.EventTemplate>
+        </controls:Calendar>
+    </StackLayout>
 
 </ContentPage>

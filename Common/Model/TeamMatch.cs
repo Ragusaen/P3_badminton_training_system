@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Xml.Serialization;
 
 namespace Common.Model
 {
@@ -23,6 +24,7 @@ namespace Common.Model
         public string OpponentName { get; set; }
         public DateTime StartDate { get; set; }
         public Member Captain { get; set; }
-        public Lineup Lineup { get; set; }
+
+        [XmlIgnore] public Lineup Lineup { get; set; }
     }
 }

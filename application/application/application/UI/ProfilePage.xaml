@@ -59,11 +59,14 @@
 
             <Label Text="Comments" FontSize="Medium"/>
                 <Frame  CornerRadius="5" HasShadow="True">
-                    <Editor Placeholder="Enter a comment" AutoSize="TextChanges"/>
+                    <StackLayout>
+                        <Label Text="" IsVisible="{Binding CommentVis}"></Label>
+                        <Editor x:Name="CommentEntry" IsVisible="{Binding EnterCommentVis}" Placeholder="Enter a comment" AutoSize="TextChanges"/>
+                    </StackLayout>
                 </Frame>
 
-                <Label Text="Focuspoint graph" FontSize="Medium"/>
-                <forms:ChartView x:Name="Chart1" HeightRequest="300" Margin="-80, 0, -80, 0" />
+                <Label Text="Feedback graph" FontSize="Medium"/>
+                <forms:ChartView x:Name="FeedbackChart" HeightRequest="300" Margin="-80, 0, -80, 0" />
             <Button Text="View Feedback" Command="{Binding ViewFeedbackCommand}"/>
             <Button Text="View all Feedback graph" Command="{Binding ViewFeedbackGraphCommand}"/>
             </StackLayout>
