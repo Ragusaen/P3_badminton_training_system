@@ -65,7 +65,7 @@ namespace application.ViewModel
             {
                 if ((Member.MemberType & MemberType.Player) > 0)
                 {
-                    Player = RequestCreator.GetPlayer(1);
+                    Player = RequestCreator.GetPlayer(Member.Id);
                     Player.FocusPointItems = RequestCreator.GetPlayerFocusPointItems(Player.Member.Id);
                     FocusPoints = new ObservableCollection<FocusPointItem>(Player.FocusPointItems);
                     FocusPointListHeight = FocusPoints.Count * 45;
@@ -96,7 +96,7 @@ namespace application.ViewModel
 
         private void ExecuteAddFocusPoint(object param)
         {
-            FocusPointPopupPage page = new FocusPointPopupPage(Player);
+            FocusPointPopupPage page = new FocusPointPopupPage(Player.FocusPointItems);
             page.CallBackEvent += FocusPointPopupPageCallback;
             PopupNavigation.Instance.PushAsync(page);
         }

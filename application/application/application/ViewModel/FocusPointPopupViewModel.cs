@@ -26,18 +26,18 @@ namespace application.ViewModel
             }
         }
 
-        private ObservableCollection<FocusPointDescriptor> _focusPoints;
+        private List<FocusPointDescriptor> _focusPoints;
 
         public ObservableCollection<FocusPointDescriptor> FocusPoints
         {
-            get => _focusPoints;
-            set => SetProperty(ref _focusPoints, value);
+            get => new ObservableCollection<FocusPointDescriptor>(_focusPoints);
+            set => SetProperty(ref _focusPoints, value.ToList());
         }
 
-        public FocusPointPopupViewModel(Player player)
+        public FocusPointPopupViewModel(List<FocusPointItem> focusPointItems)
         {
             var list = RequestCreator.GetFocusPoints();
-            list = list.Where(p => player.FocusPointItems.All(q => q.Descriptor.Id != p.Id)).ToList();
+            list = list.Where(p => focusPointItems.All(q => q.Descriptor.Id != p.Id)).ToList();
             FocusPoints = new ObservableCollection<FocusPointDescriptor>(list);
         }
     }

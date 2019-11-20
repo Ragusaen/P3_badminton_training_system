@@ -20,7 +20,7 @@
             <StackLayout Margin="10,10,10,10">
                 <Label Text="{Binding Player.Member.Name}" VerticalOptions="Start" HorizontalOptions="CenterAndExpand" FontSize="Large"/>
                 <Label Text="Team" VerticalOptions="Start" HorizontalOptions="StartAndExpand" FontSize="Medium"/>
-                <ListView ItemsSource="{Binding Teams}" VerticalScrollBarVisibility="Never" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding TeamListHeight}">
+                <ListView ItemsSource="{Binding PracticeTeams}" VerticalScrollBarVisibility="Never" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding TeamListHeight}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
