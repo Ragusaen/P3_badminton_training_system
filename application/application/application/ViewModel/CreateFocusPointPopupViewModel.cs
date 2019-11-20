@@ -11,6 +11,7 @@ namespace application.ViewModel
         public CreateFocusPointPopupViewModel()
         {
             FocusPoint = new FocusPointDescriptor();
+            
         }
         
                     private RelayCommand _createFocusPointCommand;

@@ -60,6 +60,9 @@
     <Compile Update="UI\AdministratorPage.xaml.cs">
       <DependentUpon>AdministratorPage.xaml</DependentUpon>
     </Compile>
+    <Compile Update="UI\PlayerProfilePage.xaml.cs">
+      <DependentUpon>PlayerProfilePage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="UI\StringAndHeaderPopup.xaml.cs">
       <DependentUpon>StringAndHeaderPopup.xaml</DependentUpon>
     </Compile>
@@ -73,9 +76,6 @@
 
   <ItemGroup>
     <EmbeddedResource Update="UI\CreateAccountPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="UI\CreateFocusPointPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="UI\CreateFocusPointPopupPage.xaml">
@@ -99,12 +99,6 @@
     <EmbeddedResource Update="UI\ForgotPasswordPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="UI\ManageFocusPointPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="UI\ManageTeamPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
     <EmbeddedResource Update="UI\MenuPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -117,7 +111,7 @@
     <EmbeddedResource Update="UI\ViewPracticePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="UI\ProfilePage.xaml">
+    <EmbeddedResource Update="UI\PlayerProfilePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="UI\SchedulePage.xaml">

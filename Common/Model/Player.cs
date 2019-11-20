@@ -14,7 +14,6 @@ namespace Common.Model
     public class Player : MemberRole
     {
         public PlayerRanking Rankings { get; set; }
-        public PlayerRanking.AgeGroup Age { get; set; }
         public Sex Sex { get; set; }
         public int BadmintonPlayerId { get; set; }
         public List<Feedback> Feedbacks { get; set; }

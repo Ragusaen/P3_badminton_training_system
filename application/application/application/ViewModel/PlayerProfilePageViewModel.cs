@@ -12,12 +12,11 @@ using Xamarin.Forms;
 
 namespace application.ViewModel
 {
-    class ProfilePageViewModel : BaseViewModel
+    class PlayerProfilePageViewModel : BaseViewModel
     {
-        //public Member Member { get; set; }
         public Player Player { get; set; }
 
-        public ProfilePageViewModel()
+        public PlayerProfilePageViewModel()
         {
             
         }
@@ -57,10 +56,10 @@ namespace application.ViewModel
             set { SetProperty(ref _focusPointListHeight, value); }
         }
 
-        public ProfilePageViewModel(Member member)
+        public PlayerProfilePageViewModel(Member member)
         {
-            Player = RequestCreator.GetPlayer(member.Id);
-            Player.FocusPointItems = new List<FocusPointItem>() { new FocusPointItem() { Descriptor = new FocusPointDescriptor() { Name = "Slag 1", Id = 9999 } } };
+            Player = RequestCreator.GetPlayer(1);
+            Player.FocusPointItems = RequestCreator.GetPlayerFocusPointItems(Player.Member.Id);
             FocusPoints = new ObservableCollection<FocusPointItem>(Player.FocusPointItems);
             FocusPointListHeight = FocusPoints.Count * 45;
 
@@ -195,8 +194,9 @@ namespace application.ViewModel
         private void DeleteListFocusItemClick(object param)
         {
             FocusPointItem focuspoint = param as FocusPointItem;
-            FocusPoints.Remove(focuspoint); //TODO: FIX - Update model
+            FocusPoints.Remove(focuspoint);
             Player.FocusPointItems.Remove(focuspoint);
+            RequestCreator.DeletePlayerFocusPoints(Player.Member.Id, focuspoint);
             FocusPointListHeight = FocusPoints.Count * 45;
         }
     }

@@ -10,7 +10,7 @@
         <Label Text="Name"/>
         <Entry Text="{Binding FocusPoint.Name}"/>
         <Label Text="Description"/>
-        <Entry Text="{Binding FocusPoint.Discription}"/>
+        <Entry Text="{Binding FocusPoint.Description}"/>
         <Label Text="Video Url"/>
         <Entry Text="{Binding FocusPoint.VideoUrl}"/>
         <Button Text="Create New Focus Point" Command="{Binding CreateFocusPointCommand}"/>
