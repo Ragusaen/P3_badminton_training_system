@@ -116,7 +116,7 @@ namespace application.ViewModel
                 Descriptor = e,
                 DateAssigned = DateTime.Now
             };
-            Player.FocusPointItems.Add(item); //TODO: FIX
+            Player.FocusPointItems.Add(item);
             FocusPoints.Add(item);
 
             RequestCreator.SetPlayerFocusPoints(Player, Player.FocusPointItems);
@@ -136,25 +136,23 @@ namespace application.ViewModel
 
         private async void ExecuteProfileSettingTap(object param)
         {
-            string action = await Application.Current.MainPage.DisplayActionSheet("Choose what you want to edit:", "Cancel", null, "Edit User's Password", "Edit User's Type", "Create New Focus Point");
+            string action = await Application.Current.MainPage.DisplayActionSheet("Settings", "Cancel", null, "Change Password", "Change Member Type");
 
-            if (action == "Edit User's Password")
-                await Navigation.PushAsync(new EditUserInfoPage(Player.Member));
-            else if (action == "Edit User's Type")
+            if (action == "Change Password")
+                await Navigation.PushAsync(new EditUserInfoPage(Member));
+            else if (action == "Change Member Type")
             {
-                string rights = await Application.Current.MainPage.DisplayActionSheet("Choose user's rights:", "Cancel", null, "Player", "Trainer", "Player and Trainer", "neither Player nor Trainer");
+                string rights = await Application.Current.MainPage.DisplayActionSheet("Choose a Member Type", "Cancel", null, "Player", "Trainer", "Player and Trainer", "Neither Player nor Trainer");
 
                 if (rights == "Neither Player nor Trainer")
                     Player.Member.MemberType = MemberType.None;
                 else if (rights == "Player")
                     Player.Member.MemberType = MemberType.Player;
-                else if (rights == "Player")
+                else if (rights == "Trainer")
                     Player.Member.MemberType = MemberType.Trainer;
                 else if (rights == "Player and Trainer")
                     Player.Member.MemberType = MemberType.Both;
             }
-            else if (action == "Create New Focus Point")
-                await PopupNavigation.Instance.PushAsync(new CreateFocusPointPopupPage(false));
         }
 
         private RelayCommand _viewFeedbackCommand;

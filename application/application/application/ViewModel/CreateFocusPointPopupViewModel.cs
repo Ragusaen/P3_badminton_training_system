@@ -43,7 +43,10 @@ namespace application.ViewModel
         private void CreateFocusPointClick(object param)
         {
             RequestCreator.CreateFocusPointDescriptor(FocusPoint);
+            CallBackEvent?.Invoke(this, null);
             PopupNavigation.Instance.PopAsync();
         }
+
+        public event EventHandler CallBackEvent;
     }
 }
