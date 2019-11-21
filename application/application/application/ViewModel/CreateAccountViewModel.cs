@@ -148,7 +148,7 @@ namespace application.ViewModel
 
             ShownPlayerList = new ObservableCollection<Player>(
                 _availablePlayers
-                    .OrderByDescending(p => StringSearch.LongestCommonSubsequence(p.Member.Name.ToLower(), SearchText.ToLower()))
+                    .OrderByDescending(p => StringExtension.LongestCommonSubsequence(p.Member.Name.ToLower(), SearchText.ToLower()))
                     .Take(5)
                     .ToList()
             );

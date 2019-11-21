@@ -49,6 +49,13 @@ namespace application.SystemInterface
             return response;
         }
 
+        internal static List<ExerciseDescriptor> GetExercises()
+        {
+            var request = new GetExercisesRequest();
+            var response = SimpleRequest<GetExercisesRequest, GetExercisesResponse>(RequestType.GetExercises, request);
+            return response.Exercises;
+        }
+
         public static bool LoginRequest(string username, string password)
         {
             LoginRequest request = new LoginRequest()
@@ -120,6 +127,16 @@ namespace application.SystemInterface
             var response = SimpleRequest<GetPlayerRequest, GetPlayerResponse>(RequestType.GetPlayer, request);
 
             return response.Player;
+        }
+
+        public static List<Player> GetAllPlayers()
+        {
+            var request = new GetAllPlayersRequest();
+
+            var response =
+                SimpleRequest<GetAllPlayersRequest, GetAllPlayersResponse>(RequestType.GetAllPlayers, request);
+
+            return response.Players;
         }
 
         public static List<FocusPointItem> GetPlayerFocusPointItems(int memberId)
