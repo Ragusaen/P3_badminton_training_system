@@ -45,8 +45,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="UI\ExercisePopupPage.xaml.cs">
-      <DependentUpon>ExercisePopupPage.xaml</DependentUpon>
+    <Compile Update="UI\ConnectionFailedPAge.xaml.cs">
+      <DependentUpon>ConnectionFailedPage.xaml</DependentUpon>
     </Compile>
     <Compile Update="UI\CreatePracticePage.xaml.cs">
       <DependentUpon>CreatePracticePage.xaml</DependentUpon>
@@ -78,10 +78,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Update="UI\CreateAccountPage.xaml">
+    <EmbeddedResource Update="UI\ConnectionFailedPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="UI\ExercisePopupPage.xaml">
+    <EmbeddedResource Update="UI\CreateAccountPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="UI\CreateFocusPointPopupPage.xaml">

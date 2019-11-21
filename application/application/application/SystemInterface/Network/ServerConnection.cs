@@ -11,7 +11,7 @@ namespace application.SystemInterface.Network
 {
     class ServerConnection
     {
-        private readonly IPAddress _machineName = new IPAddress(new byte[] {192, 168, 42, 19});
+        private readonly IPAddress _machineName = new IPAddress(new byte[] {192, 168, 42, 227});
         private readonly string _serverName = "Triton";
 
         private TcpClient _tcpClient = null;
@@ -19,7 +19,7 @@ namespace application.SystemInterface.Network
 
         public bool IsConnected => (_tcpClient != null && _sslStream != null) && (_tcpClient.Connected && _sslStream.IsAuthenticated);
 
-        public void Connect()
+        public bool Connect()
         {
             // Create a TCP/IP client socket.
             // machineName is the host running the server application.
@@ -57,6 +57,7 @@ namespace application.SystemInterface.Network
             }
 
             Debug.WriteLine("Successfully authenticated!");
+            return IsConnected;
         }
 
         public byte[] SendRequest(byte[] data)

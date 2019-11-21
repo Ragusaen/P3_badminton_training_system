@@ -11,6 +11,6 @@ namespace Common.Model
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
 
-        public FocusPointDescriptor FocusPoint { get; set; }
+        public FocusPointItem FocusPoint { get; set; }
     }
 }

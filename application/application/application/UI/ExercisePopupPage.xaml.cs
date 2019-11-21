@@ -21,5 +21,10 @@ namespace application.UI
             ExercisePopupViewModel vm = new ExercisePopupViewModel(practice);
             BindingContext = vm;
         }
+
+        private void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

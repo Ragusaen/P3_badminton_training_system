@@ -17,7 +17,7 @@ namespace application.ViewModel
         private string _practiceTitle;
         public string PracticeTitle
         {
-            get { return _practiceTitle; }
+            get => _practiceTitle;
             set
             {
                 if (SetProperty(ref _practiceTitle, value))
@@ -27,11 +27,8 @@ namespace application.ViewModel
         private int _planHeight;
         public int PlanHeight
         {
-            get { return _planHeight; }
-            set
-            {
-                if (SetProperty(ref _planHeight, value)) ;
-            }
+            get => _planHeight;
+            set => SetProperty(ref _planHeight, value);
         }
 
         public DateTime MinDate { get; set; } = DateTime.Today;
@@ -40,7 +37,7 @@ namespace application.ViewModel
 
         public DateTime SelectedDateStart
         {
-            get { return _selectedDateStart; }
+            get => _selectedDateStart;
             set
             {
                 if (SetProperty(ref _selectedDateStart, value))
@@ -152,7 +149,7 @@ namespace application.ViewModel
             set
             {
                 SetProperty(ref _searchtext, value);
-                FocusPoints = new ObservableCollection<FocusPointDescriptor>(FocusPoints.OrderByDescending((x => StringSearch.LongestCommonSubsequence(x.Name, SearchText))).ThenBy(x => x.Name.Length).ToList());
+                FocusPoints = new ObservableCollection<FocusPointDescriptor>(FocusPoints.OrderByDescending((x => StringExtension.LongestCommonSubsequence(x.Name, SearchText))).ThenBy(x => x.Name.Length).ToList());
             }
         }
 
