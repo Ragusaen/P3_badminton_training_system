@@ -16,17 +16,7 @@ namespace application.ViewModel
     {
         YearPlanSection YearPlan { get; set; } = new YearPlanSection();
         
-        public PracticeSession Practice = new PracticeSession();
-        private string _practiceTitle;
-        public string PracticeTitle
-        {
-            get => _practiceTitle;
-            set
-            {
-                if (SetProperty(ref _practiceTitle, value))
-                    SaveCreatedPracticeClickCommand.RaiseCanExecuteChanged();
-            }
-        }
+        public PracticeSession Practice { get; set; } = new PracticeSession();
         private int _planHeight;
         public int PlanHeight
         {
@@ -84,25 +74,14 @@ namespace application.ViewModel
             }
         }
 
-        private string _trainerName;
+        private List<Trainer> _trainers;
 
-        public string TrainerName
+        public List<Trainer> Trainers
         {
-            get { return _trainerName; }
+            get { return _trainers; }
             set
             {
-                if (SetProperty(ref _trainerName, value))
-                    SaveCreatedPracticeClickCommand.RaiseCanExecuteChanged();
-            }
-        }
-
-        private string _location;
-        public string Location
-        {
-            get { return _location; }
-            set
-            {
-                if (SetProperty(ref _location, value))
+                if (SetProperty(ref _trainers, value))
                     SaveCreatedPracticeClickCommand.RaiseCanExecuteChanged();
             }
         }
@@ -131,9 +110,6 @@ namespace application.ViewModel
 
         private bool CanExecuteSaveCreatedPracticeClick(object param)
         {
-            if (string.IsNullOrEmpty(PracticeTitle))
-                return false;
-            else
                 return true;
         }
 
@@ -259,10 +235,11 @@ namespace application.ViewModel
         public CreatePracticeViewModel()
         {
             SelectedDateStart = DateTime.Today;
+            Practice.PracticeTeam = new PracticeTeam() { Name = "Choose Team" };
             FocusPoints = new ObservableCollection<FocusPointItem>();
-
+            Trainers = RequestCreator.GetAllTrainers();
             PlanElement = new ObservableCollection<ExerciseItem>();
-            PlanHeight = PlanElement.Count * 235;
+            PlanHeight = 0;
         }
         private RelayCommand _addNewFocusPointCommand;
 
@@ -296,9 +273,14 @@ namespace application.ViewModel
         }
         private void TeamClick(object param)
         {
-            FocusPointPopupPage page = new FocusPointPopupPage(FocusPoints.ToList());
-            page.CallBackEvent += FocusPointPage_CallBackEvent; ;
+            PracticeTeamPopupPage page = new PracticeTeamPopupPage(new List<PracticeTeam>());
+            page.CallBackEvent += TeamPage_CallBackEvent; ;
             PopupNavigation.Instance.PushAsync(page);
+        }
+
+        private void TeamPage_CallBackEvent(object sender, PracticeTeam e)
+        {
+            Practice.PracticeTeam = e;
         }
     }
 }

@@ -311,5 +311,14 @@ namespace application.SystemInterface
 
             var response = SimpleRequest<SetExerciseDescriptorRequest, SetExerciseDescriptorResponse>(RequestType.SetExerciseDiscriptor, request);
         }
+        public static List<Trainer> GetAllTrainers()
+        {
+            var request = new GetAllTrainersRequest();
+
+            var response =
+                SimpleRequest<GetAllTrainersRequest, GetAllTrainersResponse>(RequestType.GetAllTrainers, request);
+
+            return response.Trainers;
+        }
     }
 }
