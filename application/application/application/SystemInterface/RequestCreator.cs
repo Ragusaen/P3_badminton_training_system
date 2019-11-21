@@ -255,7 +255,7 @@ namespace application.SystemInterface
 
         // Deleters below
 
-        public static bool DeletePlayerFocusPoints(int memberId, FocusPointItem focusPointItem)
+        public static void DeletePlayerFocusPoints(int memberId, FocusPointItem focusPointItem)
         {
             var request = new DeletePlayerFocusPointRequest
             {
@@ -263,13 +263,20 @@ namespace application.SystemInterface
                 FocusPointId = focusPointItem.Descriptor.Id
             };
 
-            var response =
-                SimpleRequest<DeletePlayerFocusPointRequest, DeletePlayerFocusPointResponse>(
-                    RequestType.DeletePlayerFocusPoints, request);
-
-            return response.WasSuccessful;
+            SimpleRequest<DeletePlayerFocusPointRequest, DeletePlayerFocusPointResponse>(
+                RequestType.DeletePlayerFocusPoint, request);
         }
+        public static void DeletePlayerPracticeTeam(Player player, PracticeTeam practiceTeam)
+        {
+            var request = new DeletePlayerPracticeTeamRequest
+            {
+                Player = player,
+                PracticeTeam = practiceTeam
+            };
 
+            SimpleRequest<DeletePlayerPracticeTeamRequest, DeletePlayerPracticeTeamResponse>(
+                RequestType.DeletePlayerPracticeTeam, request);
+        }
         // creators below
         public static FocusPointDescriptor CreateFocusPointDescriptor(FocusPointDescriptor fp)
         {

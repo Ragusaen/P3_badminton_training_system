@@ -204,21 +204,22 @@ namespace application.ViewModel
         {
             Navigation.PushAsync(new ViewFeedbackPage(Player));
         }
-        private RelayCommand _deleteListTeamItemCommand;
+        private RelayCommand _deleteListPlayerPracticeTeamCommand;
 
-        public RelayCommand DeleteListTeamItemCommand
+        public RelayCommand DeleteListPlayerPracticeTeamCommand
         {
             get
             {
-                return _deleteListTeamItemCommand ?? (_deleteListTeamItemCommand = new RelayCommand(param => DeleteListTeamItemClick(param)));
+                return _deleteListPlayerPracticeTeamCommand ?? (_deleteListPlayerPracticeTeamCommand = new RelayCommand(param => DeleteListPlayerPracticeTeamClick(param)));
             }
         }
-        private void DeleteListTeamItemClick(object param)
+        private void DeleteListPlayerPracticeTeamClick(object param)
         {
             PracticeTeam practiceTeam = param as PracticeTeam;
+            Player.PracticeTeams.Remove(practiceTeam);
             PracticeTeams.Remove(practiceTeam);
+            RequestCreator.DeletePlayerPracticeTeam(Player, practiceTeam);
             PracticeTeamsListHeight = PracticeTeams.Count * 45;
-            //RequestCreator.DeletePlayerPracticeTeam(Member.Id, practiceTeam);
         }
         private RelayCommand _deleteListFocusItemCommand;
 
