@@ -18,9 +18,9 @@
     <ContentPage.Content>
         <ScrollView>
             <StackLayout Margin="10,10,10,10">
-                <Label Text="{Binding Player.Member.Name}" VerticalOptions="Start" HorizontalOptions="CenterAndExpand" FontSize="Large"/>
-                <Label Text="Team" VerticalOptions="Start" HorizontalOptions="StartAndExpand" FontSize="Medium"/>
-                <ListView ItemsSource="{Binding PracticeTeams}" VerticalScrollBarVisibility="Never" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding TeamListHeight}">
+                <Label Text="{Binding Member.Name}" VerticalOptions="Start" HorizontalOptions="CenterAndExpand" FontSize="Large"/>
+                <Label Text="Practice Teams" VerticalOptions="Start" HorizontalOptions="StartAndExpand" FontSize="Medium"/>
+                <ListView ItemsSource="{Binding PracticeTeams}" VerticalScrollBarVisibility="Never" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding PracticeTeamsListHeight}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
@@ -36,10 +36,10 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <Button Text="Add Team" Command="{Binding AddTeamCommand}" HeightRequest="50"/>
+                <Button Text="Add Team" Command="{Binding AddPracticeTeamCommand}" HeightRequest="50"/>
                 
                 <Label Text="Focus Point" FontSize="Medium"/>
-                <ListView x:Name="FocusPointList" VerticalScrollBarVisibility="Never" ItemSelected="ListView_OnItemSelected" ItemsSource="{Binding FocusPoints}" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding FocusPointListHeight}">
+                <ListView x:Name="FocusPointList" VerticalScrollBarVisibility="Never" ItemSelected="ListView_OnItemSelected" ItemsSource="{Binding FocusPoints}" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding FocusPointsListHeight}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>

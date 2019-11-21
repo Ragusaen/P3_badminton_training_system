@@ -16,9 +16,6 @@ namespace application.ViewModel
     class FocusPointPopupViewModel : BaseViewModel
     {
         private string _searchText;
-
-        public List<FocusPointItem> NotShownItems;
-
         public string SearchText
         {
             get => _searchText;
@@ -28,10 +25,13 @@ namespace application.ViewModel
                 /*if (string.IsNullOrEmpty(_searchtext))
                     FocusPoints.OrderByDescending(p => p.Descriptor.Name);
                 else*/
-                FocusPoints.OrderByDescending((x => StringSearch.LongestCommonSubsequence(x.Name.ToLower(), SearchText.ToLower()))).ThenBy(x => x.Name.Length).ToList();
+                FocusPoints = new ObservableCollection<FocusPointDescriptor>(FocusPoints.OrderByDescending(
+                        x => StringSearch.LongestCommonSubsequence(x.Name.ToLower(), SearchText.ToLower()))
+                        .ThenBy(x => x.Name.Length).ToList());
             }
         }
 
+        public List<FocusPointItem> NotShownItems;
         private ObservableCollection<FocusPointDescriptor> _shownFocusPoints;
         public ObservableCollection<FocusPointDescriptor> FocusPoints
         {

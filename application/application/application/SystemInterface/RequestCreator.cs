@@ -150,15 +150,15 @@ namespace application.SystemInterface
         }
 
 
-        public static List<PracticeTeam> GetMemberPracticeTeams(Member member)
+        public static List<PracticeTeam> GetPlayerPracticeTeams(Player player)
         {
-            var request = new GetMemberPracticeTeamRequest
+            var request = new GetPlayerPracticeTeamRequest
             {
-                Member = member
+                Member = player.Member
             };
 
             var response =
-                SimpleRequest<GetMemberPracticeTeamRequest, GetMemberPracticeTeamResponse>(
+                SimpleRequest<GetPlayerPracticeTeamRequest, GetPlayerPracticeTeamResponse>(
                     RequestType.GetMemberPracticeTeams, request);
 
             return response.PracticeTeams;
@@ -175,6 +175,17 @@ namespace application.SystemInterface
             list.AddRange(response.PracticeSessions);
 
             return list;
+        }
+
+        public static List<PracticeTeam> GetAllPracticeTeams()
+        {
+            var request = new GetAllPracticeTeamsRequest();
+
+            var response =
+                SimpleRequest<GetAllPracticeTeamsRequest, GetAllPracticeTeamsResponse>(RequestType.GetAllPracticeTeams,
+                    request);
+
+            return response.PracticeTeams;
         }
 
         // Setters below
@@ -211,6 +222,18 @@ namespace application.SystemInterface
             };
 
             var response = SimpleRequest<SetCommentRequest, SetCommentResponse>(RequestType.SetComment, request);
+        }
+
+        public static void SetPlayerPracticeTeams(Player player, List<PracticeTeam> practiceTeams)
+        {
+            var request = new SetPlayerPracticeTeamsRequest
+            {
+                Player = player,
+                PracticeTeams = practiceTeams
+            };
+
+            SimpleRequest<SetPlayerPracticeTeamsRequest, SetPlayerPracticeTeamsResponse>(
+                RequestType.SetPlayerPracticeTeams, request);
         }
 
         // Deleters below

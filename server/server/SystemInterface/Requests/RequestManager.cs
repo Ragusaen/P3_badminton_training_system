@@ -28,7 +28,7 @@ namespace Server.SystemInterface.Requests
                 {RequestType.CreateAccount, new CreateAccountHandler() },
                 {RequestType.GetPracticeTeam, new GetPracticeTeamHandler() },
                 {RequestType.GetSchedule, new GetScheduleHandler() },
-                {RequestType.GetMemberPracticeTeams, new GetMemberPracticeTeamsHandler() },
+                {RequestType.GetMemberPracticeTeams, new GetPlayerPracticeTeamsHandler() },
                 {RequestType.GetPlayersWithNoAccount, new GetPlayersWithNoAccountHandler() },
                 {RequestType.GetAllPlayers, new GetAllPlayersHandler()},
                 {RequestType.GetPracticeSession, new GetPracticeSessionHandler() },
@@ -43,9 +43,11 @@ namespace Server.SystemInterface.Requests
                 {RequestType.GetPracticeTeamYearPlan, new GetPracticeTeamYearPlanHandler() },
                 {RequestType.GetPlayer, new GetPlayerHandler() },
                 {RequestType.GetTokenMember, new GetTokenMemberHandler() },
+                {RequestType.GetAllPracticeTeams, new GetAllPracticeTeamsHandler() },
                 //Setters below
                 {RequestType.SetPlayerFocusPoints, new SetPlayerFocusPointsHandler() },
                 {RequestType.SetComment, new SetCommentHandler() },
+                {RequestType.SetPlayerPracticeTeams, new SetPlayerPracticeTeamsHandler() },
                 //Deleters below
                 {RequestType.DeletePlayerFocusPoints, new DeletePlayerFocusPointsHandler() },
                 //Creators below
