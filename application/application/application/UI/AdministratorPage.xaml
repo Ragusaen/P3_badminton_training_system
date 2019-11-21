@@ -15,10 +15,11 @@
 
     <ContentPage.Content>
         <ScrollView>
-        <StackLayout>
-            <Frame HasShadow="True" CornerRadius="5">
-                <StackLayout>
-                    <SearchBar Placeholder="Member name" Text="{Binding SearchMemberText}"/>
+            <StackLayout>
+                <Label Text="Members" FontAttributes="Bold" FontSize="Medium" TextColor="#BB0000" Margin="10,0,0,0"/>
+                <Frame HasShadow="True" CornerRadius="5">
+                    <StackLayout>
+                    <SearchBar Placeholder="Member Name" Text="{Binding SearchMemberText}"/>
                     <ListView ItemsSource="{Binding MemberList}" ItemSelected="ListView_OnItemSelected" VerticalScrollBarVisibility="Never" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="225">
                         <ListView.ItemTemplate>
                             <DataTemplate>
@@ -32,9 +33,10 @@
                     </ListView>
                 </StackLayout>
             </Frame>
+                <Label Text="Practice Teams" FontAttributes="Bold" FontSize="Medium" TextColor="#BB0000" Margin="10,0,0,0"/>
             <Frame HasShadow="True" CornerRadius="5">
                 <StackLayout>
-                    <SearchBar Placeholder="Team name" Text="{Binding SearchTeamText}"/>
+                    <SearchBar Placeholder="Practice Team Name" Text="{Binding SearchTeamText}"/>
                         <ListView x:Name="TeamList" ItemsSource="{Binding TeamList}" VerticalScrollBarVisibility="Never" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="225" ItemSelected="TeamListView_ItemSelected">
                             <ListView.ItemTemplate>
                             <DataTemplate>
@@ -57,22 +59,18 @@
                     <Button Text="Add Team" Command="{Binding NewTeamCommand}"/>
                 </StackLayout>
             </Frame>
-            <Frame HasShadow="True" CornerRadius="5">
+                <Label Text="Focus Points" FontAttributes="Bold" FontSize="Medium" TextColor="#BB0000" Margin="10,0,0,0"/>
+                <Frame HasShadow="True" CornerRadius="5">
                 <StackLayout>
                     <SearchBar Placeholder="Focus point name" Text="{Binding SearchFocusPointText}"/>
-                    <ListView ItemsSource="{Binding FocusPointList}" VerticalScrollBarVisibility="Never" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="225">
+                        <ListView x:Name="FocusPointList" ItemsSource="{Binding FocusPointList}" VerticalScrollBarVisibility="Never" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="225" ItemSelected="FocusPointListView_ItemSelected">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <ViewCell>
                                     <StackLayout>
-                                        <Grid Padding="0" Margin="0" RowSpacing="0">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="8*"/>
-                                                <ColumnDefinition Width="1*"/>
-                                            </Grid.ColumnDefinitions>
-                                            <Label Grid.Column="0" Text="{Binding Name}" VerticalOptions="Center"/>
-                                            <Button Grid.Column="1" Text="❌" BackgroundColor="White" WidthRequest="50" VerticalOptions="End" Command="{Binding BindingContext.DeleteFocusPointCommand, Source={x:Reference rootpage}}" CommandParameter="{Binding}"/>
-                                        </Grid>
+                                            <Grid Padding="0" Margin="0" RowSpacing="0">
+                                                <Label Grid.Column="0" Text="{Binding Name}" VerticalOptions="Center"/>
+                                            </Grid>
                                     </StackLayout>
                                 </ViewCell>
                             </DataTemplate>
