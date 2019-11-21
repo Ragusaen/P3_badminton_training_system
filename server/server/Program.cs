@@ -19,6 +19,10 @@ namespace Server
         {
             var db = new DatabaseEntities();
 
+            //db.members.Find(17).practiceteams.Add(new practiceteam { Name = "Tirsdagstræning" });
+            //db.practiceteams.Add(new practiceteam { Name = "Torsdagstræning" });
+            //db.SaveChanges();
+
             if (!db.members.Any())
             {
                 RankListScraper scraper = new RankListScraper();

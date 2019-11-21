@@ -8,13 +8,13 @@ using Server.DAL;
 
 namespace Server.SystemInterface.Requests.Handlers
 {
-    class GetMemberPracticeTeamsHandler : MiddleRequestHandler<GetMemberPracticeTeamRequest, GetMemberPracticeTeamResponse>
+    class GetPlayerPracticeTeamsHandler : MiddleRequestHandler<GetPlayerPracticeTeamRequest, GetPlayerPracticeTeamResponse>
     {
-        protected override GetMemberPracticeTeamResponse InnerHandle(GetMemberPracticeTeamRequest request, member requester)
+        protected override GetPlayerPracticeTeamResponse InnerHandle(GetPlayerPracticeTeamRequest request, member requester)
         {
             var db = new DatabaseEntities();
 
-            return new GetMemberPracticeTeamResponse
+            return new GetPlayerPracticeTeamResponse
             {
                 PracticeTeams = db.members.Single(p => p.ID == request.Member.Id).practiceteams
                     .Select(p => (Common.Model.PracticeTeam) p).ToList()

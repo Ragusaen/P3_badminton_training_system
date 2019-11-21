@@ -12,7 +12,7 @@ namespace application.UI.Converter
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             var position = (Tuple<Lineup.PositionType, int>)value;
-            return Lineup.IsDoublePosition(position.Item1);
+            return Lineup.PositionType.Double.HasFlag(position.Item1);
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

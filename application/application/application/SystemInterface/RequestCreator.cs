@@ -167,15 +167,15 @@ namespace application.SystemInterface
         }
 
 
-        public static List<PracticeTeam> GetMemberPracticeTeams(Member member)
+        public static List<PracticeTeam> GetPlayerPracticeTeams(Player player)
         {
-            var request = new GetMemberPracticeTeamRequest
+            var request = new GetPlayerPracticeTeamRequest
             {
-                Member = member
+                Member = player.Member
             };
 
             var response =
-                SimpleRequest<GetMemberPracticeTeamRequest, GetMemberPracticeTeamResponse>(
+                SimpleRequest<GetPlayerPracticeTeamRequest, GetPlayerPracticeTeamResponse>(
                     RequestType.GetMemberPracticeTeams, request);
 
             return response.PracticeTeams;
@@ -202,6 +202,18 @@ namespace application.SystemInterface
             var response = SimpleRequest<GetAdminPageRequest, GetAdminPageResponse>(RequestType.GetAdminPage, request);
 
             return (response.Members, response.PracticeTeams, response.FocusPoints);
+        }
+
+
+        public static List<PracticeTeam> GetAllPracticeTeams()
+        {
+            var request = new GetAllPracticeTeamsRequest();
+
+            var response =
+                SimpleRequest<GetAllPracticeTeamsRequest, GetAllPracticeTeamsResponse>(RequestType.GetAllPracticeTeams,
+                    request);
+
+            return response.PracticeTeams;
         }
 
         // Setters below
@@ -240,9 +252,21 @@ namespace application.SystemInterface
             var response = SimpleRequest<SetCommentRequest, SetCommentResponse>(RequestType.SetComment, request);
         }
 
+        public static void SetPlayerPracticeTeams(Player player, List<PracticeTeam> practiceTeams)
+        {
+            var request = new SetPlayerPracticeTeamsRequest
+            {
+                Player = player,
+                PracticeTeams = practiceTeams
+            };
+
+            SimpleRequest<SetPlayerPracticeTeamsRequest, SetPlayerPracticeTeamsResponse>(
+                RequestType.SetPlayerPracticeTeams, request);
+        }
+
         // Deleters below
 
-        public static bool DeletePlayerFocusPoints(int memberId, FocusPointItem focusPointItem)
+        public static void DeletePlayerFocusPoints(int memberId, FocusPointItem focusPointItem)
         {
             var request = new DeletePlayerFocusPointRequest
             {
@@ -250,13 +274,20 @@ namespace application.SystemInterface
                 FocusPointId = focusPointItem.Descriptor.Id
             };
 
-            var response =
-                SimpleRequest<DeletePlayerFocusPointRequest, DeletePlayerFocusPointResponse>(
-                    RequestType.DeletePlayerFocusPoints, request);
-
-            return response.WasSuccessful;
+            SimpleRequest<DeletePlayerFocusPointRequest, DeletePlayerFocusPointResponse>(
+                RequestType.DeletePlayerFocusPoint, request);
         }
+        public static void DeletePlayerPracticeTeam(Player player, PracticeTeam practiceTeam)
+        {
+            var request = new DeletePlayerPracticeTeamRequest
+            {
+                Player = player,
+                PracticeTeam = practiceTeam
+            };
 
+            SimpleRequest<DeletePlayerPracticeTeamRequest, DeletePlayerPracticeTeamResponse>(
+                RequestType.DeletePlayerPracticeTeam, request);
+        }
         // creators below
         public static FocusPointDescriptor CreateFocusPointDescriptor(FocusPointDescriptor fp)
         {

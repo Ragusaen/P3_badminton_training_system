@@ -7,6 +7,7 @@ using System.Text;
 using application.Controller;
 using application.SystemInterface;
 using System.Collections.ObjectModel;
+using Rg.Plugins.Popup.Services;
 
 namespace application.ViewModel
 {
@@ -125,7 +126,13 @@ namespace application.ViewModel
         public TeamMatch.Leagues SelectedLeague
         {
             get { return _selectedLeague; }
-            set { SetProperty(ref _selectedLeague, value); }
+            set 
+            {
+                if (SetProperty(ref _selectedLeague, value))
+                {
+                    //TODO:
+                }
+            }
         }
 
 
@@ -148,8 +155,7 @@ namespace application.ViewModel
         public CreateMatchViewModel()
         {
             Players = new ObservableCollection<Player>(RequestCreator.GetAllPlayers());
-
-            Positions = new Dictionary<Tuple<Lineup.PositionType, int>, Position>();
+            Positions = new Dictionary<Tuple<Lineup.PositionType, int>, Position>(); //TODO: Handler + Convert list to dictionary
 
             Position p = new Position();
             p.Player = new Player() { BadmintonPlayerId = 1234, Member = new Member() { Name = "Bob" } };

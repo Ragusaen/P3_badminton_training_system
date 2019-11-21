@@ -13,7 +13,8 @@ namespace Server.DAL
         {
             return new PracticeTeam
             {
-                Name = pt.Name
+                Name = pt.Name,
+                Id = pt.ID,
             };
         }
     }
