@@ -194,6 +194,16 @@ namespace application.SystemInterface
             return list;
         }
 
+        public static (List<Member> members, List<PracticeTeam> practiceTeams, List<FocusPointDescriptor> focusPoints)
+            GetAdminPage()
+        {
+            var request = new GetAdminPageRequest();
+
+            var response = SimpleRequest<GetAdminPageRequest, GetAdminPageResponse>(RequestType.GetAdminPage, request);
+
+            return (response.Members, response.PracticeTeams, response.FocusPoints);
+        }
+
         // Setters below
         public static bool SetPlayer()
         {

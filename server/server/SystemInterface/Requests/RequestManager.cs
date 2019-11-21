@@ -43,6 +43,7 @@ namespace Server.SystemInterface.Requests
                 {RequestType.GetPracticeTeamYearPlan, new GetPracticeTeamYearPlanHandler() },
                 {RequestType.GetPlayer, new GetPlayerHandler() },
                 {RequestType.GetTokenMember, new GetTokenMemberHandler() },
+                {RequestType.GetAdminPage, new GetAdminPageHandler() },
                 //Setters below
                 {RequestType.SetPlayerFocusPoints, new SetPlayerFocusPointsHandler() },
                 {RequestType.SetComment, new SetCommentHandler() },

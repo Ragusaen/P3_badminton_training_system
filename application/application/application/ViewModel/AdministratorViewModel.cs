@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using application.SystemInterface;
 
 namespace application.ViewModel
 {
@@ -72,19 +73,10 @@ namespace application.ViewModel
 
         public AdministratorViewModel()
         {
-            TeamList = new ObservableCollection<PracticeTeam>();
-            TeamList.Add(new PracticeTeam() { Name = "TeamName" });
-            TeamList.Add(new PracticeTeam() { Name = "TeamName2" });
-            TeamList.Add(new PracticeTeam() { Name = "TeamName3" });
-
-            MemberList = new ObservableCollection<Member>();
-            MemberList.Add(new Member() { Name = "Jens" });
-            MemberList.Add(new Member() { Name = "bob ross" });
-            FocusPointList = new ObservableCollection<FocusPointDescriptor>();
-            FocusPointList.Add(new FocusPointDescriptor() { Name = "hej" });
-            FocusPointList.Add(new FocusPointDescriptor() { Name = "hej" });
-            FocusPointList.Add(new FocusPointDescriptor() { Name = "hej" });
-            FocusPointList.Add(new FocusPointDescriptor() { Name = "hej" });
+            var pageInfo = RequestCreator.GetAdminPage();
+            TeamList = new ObservableCollection<PracticeTeam>(pageInfo.practiceTeams);
+            MemberList = new ObservableCollection<Member>(pageInfo.members);
+            FocusPointList = new ObservableCollection<FocusPointDescriptor>(pageInfo.focusPoints);
         }
 
         private RelayCommand _deleteTeamCommand;

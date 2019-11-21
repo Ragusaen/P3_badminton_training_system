@@ -15,9 +15,13 @@ namespace Server.SystemInterface.Requests.Handlers
         {
             var db = new DatabaseEntities();
 
+            var dbPracticeTeam = db.practiceteams.Find(request.Id);
+            var practiceTeam = (PracticeTeam)dbPracticeTeam;
+            practiceTeam.Players = dbPracticeTeam.members.Select(p => (Common.Model.Player) p).ToList();
+
             var response = new GetPracticeTeamResponse
             {
-                Team = (PracticeTeam) db.practiceteams.First(p => p.ID == request.Id)
+                Team = practiceTeam
             };
 
             return response;

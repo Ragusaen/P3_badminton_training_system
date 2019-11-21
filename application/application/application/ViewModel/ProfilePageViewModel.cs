@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using application.Controller;
@@ -14,9 +15,9 @@ namespace application.ViewModel
 {
     class ProfilePageViewModel : BaseViewModel
     {
-        public Member Member;
-        public Player Player;
-        public Trainer Trainer;
+        public Member Member { get; set; }
+        public Player Player { get; set; }
+        public Trainer Trainer { get; set; }
 
         private ObservableCollection<PracticeTeam> _practiceTeams;
 
@@ -219,6 +220,7 @@ namespace application.ViewModel
 
         public void SetComment(string comment)
         {
+            Debug.WriteLine(Member.Name);
             RequestCreator.SetComment(Member, comment);
         }
     }
