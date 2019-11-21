@@ -7,13 +7,13 @@ using Common.Model;
 
 namespace Common.Serialization
 {
-    [Serializable, XmlRoot]
+    [XmlRoot]
     public class GetMemberPracticeTeamRequest : Request
     {
         public Member Member;
     }
 
-    [Serializable, XmlRoot]
+    [XmlRoot]
     public class GetMemberPracticeTeamResponse : Response
     {
         public List<PracticeTeam> PracticeTeams;

@@ -14,14 +14,9 @@ namespace application.ViewModel
 {
     class ProfilePageViewModel : BaseViewModel
     {
-        public Member Member { get; set; }
-        public Player Player { get; set; }
-        public bool IsPlayer { get; set; }
-        public Trainer Trainer { get; set; }
-        public bool IsTrainer { get; set; }
-
-
-        public ProfilePageViewModel() { }
+        public Member Member;
+        public Player Player;
+        public Trainer Trainer;
 
         private ObservableCollection<PracticeTeam> _practiceTeams;
 

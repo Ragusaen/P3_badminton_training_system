@@ -19,7 +19,14 @@ namespace application
 
         protected override void OnStart()
         {
-            RequestCreator.Connect();
+            try
+            {
+                RequestCreator.Connect();
+            }
+            catch (FailedToConnectToServerException)
+            {
+                MainPage = new ConnectionFailedPage();
+            }
         }
 
         protected override void OnSleep()

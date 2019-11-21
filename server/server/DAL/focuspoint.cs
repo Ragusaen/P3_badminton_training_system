@@ -17,22 +17,22 @@ namespace Server.DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public focuspoint()
         {
+            this.yearplansections = new HashSet<yearplansection>();
             this.members = new HashSet<member>();
             this.practicesessions = new HashSet<practicesession>();
-            this.yearplansections = new HashSet<yearplansection>();
         }
     
         public int ID { get; set; }
         public string Name { get; set; }
+        public bool IsPrivate { get; set; }
         public string Description { get; set; }
         public string VideoURL { get; set; }
-        public bool IsPrivate { get; set; }
-
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<yearplansection> yearplansections { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<member> members { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<practicesession> practicesessions { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<yearplansection> yearplansections { get; set; }
     }
 }

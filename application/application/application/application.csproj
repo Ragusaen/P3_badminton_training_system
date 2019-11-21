@@ -45,6 +45,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="UI\ConnectionFailedPAge.xaml.cs">
+      <DependentUpon>ConnectionFailedPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="UI\CreatePracticePage.xaml.cs">
       <DependentUpon>CreatePracticePage.xaml</DependentUpon>
     </Compile>
@@ -75,6 +78,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="UI\ConnectionFailedPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="UI\CreateAccountPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>

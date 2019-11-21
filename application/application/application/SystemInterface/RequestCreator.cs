@@ -20,9 +20,9 @@ namespace application.SystemInterface
 
         public static Member LoggedInMember;
 
-        public static void Connect()
+        public static bool Connect()
         {
-            _connection.Connect();
+            return _connection.Connect();
         }
 
         private static TResponse SimpleRequest<TRequest, TResponse>(RequestType requestType, TRequest request) where TRequest : Request where TResponse : Response
