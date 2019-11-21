@@ -20,9 +20,9 @@ namespace application.SystemInterface
 
         public static Member LoggedInMember;
 
-        public static void Connect()
+        public static bool Connect()
         {
-            _connection.Connect();
+            return _connection.Connect();
         }
 
         private static TResponse SimpleRequest<TRequest, TResponse>(RequestType requestType, TRequest request) where TRequest : Request where TResponse : Response
@@ -47,6 +47,13 @@ namespace application.SystemInterface
             TResponse response = serializer.Deserialize<TResponse>(responseBytes);
 
             return response;
+        }
+
+        internal static List<ExerciseDescriptor> GetExercises()
+        {
+            var request = new GetExercisesRequest();
+            var response = SimpleRequest<GetExercisesRequest, GetExercisesResponse>(RequestType.GetExercises, request);
+            return response.Exercises;
         }
 
         public static bool LoginRequest(string username, string password)
@@ -120,6 +127,16 @@ namespace application.SystemInterface
             var response = SimpleRequest<GetPlayerRequest, GetPlayerResponse>(RequestType.GetPlayer, request);
 
             return response.Player;
+        }
+
+        public static List<Player> GetAllPlayers()
+        {
+            var request = new GetAllPlayersRequest();
+
+            var response =
+                SimpleRequest<GetAllPlayersRequest, GetAllPlayersResponse>(RequestType.GetAllPlayers, request);
+
+            return response.Players;
         }
 
         public static List<FocusPointItem> GetPlayerFocusPointItems(int memberId)

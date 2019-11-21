@@ -22,12 +22,10 @@ namespace application.ViewModel
             set
             {
                 SetProperty(ref _searchText, value);
-                /*if (string.IsNullOrEmpty(_searchtext))
-                    FocusPoints.OrderByDescending(p => p.Descriptor.Name);
-                else*/
                 FocusPoints = new ObservableCollection<FocusPointDescriptor>(FocusPoints.OrderByDescending(
                         x => StringSearch.LongestCommonSubsequence(x.Name.ToLower(), SearchText.ToLower()))
                         .ThenBy(x => x.Name.Length).ToList());
+                FocusPoints.OrderByDescending((x => StringExtension.LongestCommonSubsequence(x.Name.ToLower(), SearchText.ToLower()))).ThenBy(x => x.Name.Length).ToList();
             }
         }
 

@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Xml.Serialization;
+using System.Collections.Generic;
 
 namespace Common.Model
 {
@@ -12,9 +12,9 @@ namespace Common.Model
             Division2,
             Division3,
             DenmarksSeries,
-            RegionalSeries,
-            Series1,
-            Series2,
+            RegionalSeriesNordjylland,
+            Series1Nordjylland,
+            Series2Nordjylland
         }
 
         public int ID { get; set; }
@@ -24,7 +24,6 @@ namespace Common.Model
         public string OpponentName { get; set; }
         public DateTime StartDate { get; set; }
         public Member Captain { get; set; }
-
-        [XmlIgnore] public Lineup Lineup { get; set; }
+        public Lineup Lineup { get; set; }
     }
 }

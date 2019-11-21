@@ -4,7 +4,8 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="application.UI.CreatePracticePage">
+             x:Class="application.UI.CreatePracticePage"
+             x:Name="rootpage">
 
     <NavigationPage.TitleView>
         <StackLayout Orientation="Horizontal" Spacing="10">
@@ -21,23 +22,19 @@
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="15"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-            </Grid.RowDefinitions>
+                    <RowDefinition Height="40"/>
+                </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="70"/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="1.5*"/>
+                <ColumnDefinition Width="5*"/>
             </Grid.ColumnDefinitions>
-            <Label Grid.Row="0" Grid.Column="0" Text="Title" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
-            <Entry Grid.Row="0" Grid.Column="1" Placeholder="Enter title" Text="{Binding PracticeTitle}" VerticalOptions="Center"/>
+            <Label Grid.Row="0" Grid.Column="0" Text="Team" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
+            <Picker Grid.Row="0" Grid.Column="1"  SelectedItem="{Binding Practice.PracticeTeam}" VerticalOptions="Center" ItemsSource="{Binding Teams}"/>
             <Label Grid.Row="1" Grid.Column="0" Text="Date" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
             <StackLayout Orientation="Horizontal" Grid.Row="1" Grid.Column="1">
-                <DatePicker MinimumDate="{Binding MinDate}" MaximumDate="{Binding MaxDate}" Date="{Binding SelectedDateStart}"/>
+                <DatePicker MinimumDate="{Binding MinDate}" Date="{Binding SelectedDateStart}"/>
                 <Label Text="-" VerticalOptions="Center"/>
-                <DatePicker MinimumDate="{Binding MinDate}" MaximumDate="{Binding MaxDate}" Date="{Binding SelectedDateEnd}"/>
+                    <DatePicker MinimumDate="{Binding SelectedDateStart}" Date="{Binding SelectedDateEnd}"/>
             </StackLayout>
             <Label Grid.Row="2" Grid.Column="0" Text="Time" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
             <StackLayout Orientation="Horizontal" Grid.Row="2" Grid.Column="1" VerticalOptions="Center">
@@ -46,56 +43,62 @@
                 <TimePicker Format="HH:mm" Time="{Binding SelectedTimeEnd}"/>
             </StackLayout>
             <Label Grid.Row="3" Grid.Column="0" Text="Trainer" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
-            <Entry Grid.Row="3" Grid.Column="1" Placeholder="Enter trainer's name" Text="{Binding TrainerName}" VerticalOptions="Center"/>
-            <Label Grid.Row="4" Grid.Column="0" Text="Location" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
-            <Entry Grid.Row="4" Grid.Column="1" Text="{Binding Location}"  Placeholder="Stjernevej 5, 9200 Aalborg" VerticalOptions="Center"/>
-            <Frame Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Grid.RowSpan="3" CornerRadius="5" HasShadow="True"/>
-            <StackLayout Orientation="Horizontal" Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" HorizontalOptions="Center" VerticalOptions="Center">
+                <Picker Grid.Row="3" Grid.Column="1" SelectedItem="{Binding Practice.Trainer}"  VerticalOptions="Center" ItemsSource="{Binding Trainers}"/>
+                <Label Grid.Row="4" Grid.Column="0" Text="Location" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
+                <Entry Grid.Row="4" Grid.Column="1" Text="{Binding Practice.Location}"  Placeholder="Stjernevej 5, 9200 Aalborg" VerticalOptions="Center"/>
+            </Grid>
+            <Frame CornerRadius="5" HasShadow="True" Margin="15,0,15,0">
+                    <StackLayout>
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
                 <Image Source="" x:Name="BullsEyeIcon" HeightRequest="40"/>
                 <Label Text="Focus Points" FontSize="Title" VerticalOptions="Center"/>
             </StackLayout>
-            <Label Grid.Row="7" Grid.Column="0" Text="Main" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
-            <Label Grid.Row="7" Grid.Column="1" Text="{Binding MainFocusPoint}" FontSize="18" HorizontalTextAlignment="Center" VerticalOptions="Center"/>
-            <Label Grid.Row="8" Grid.Column="0" Text="Today" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
-            <SearchBar Grid.Row="8" Grid.Column="1" Placeholder="Enter the practice's focus point" Text="{Binding SearchText}"/>
-                <ListView VerticalScrollBarVisibility="Never" ItemsSource="{Binding SearchResultFocusPoints}" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding FocusPointListHeight}">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <TextCell Height="45" Text="{Binding Descriptor.Name}"/>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </Grid>
-        <Label Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" Text="Practice Plan" TextColor="White" FontSize="Title" FontAttributes="Bold" HorizontalTextAlignment="Center" BackgroundColor="Red" HorizontalOptions="FillAndExpand" Margin="0,10,0,0"/>
+            <Label Text="Main" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
+            <Label Text="{Binding YearPlan.FocusPoint}" FontSize="18" HorizontalTextAlignment="Center" VerticalOptions="Center"/>
+            <Label Text="Today" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
+            <SearchBar Placeholder="Enter the practice's focus point" Text="{Binding SearchText}"/>
+                    <ListView VerticalScrollBarVisibility="Never" ItemsSource="{Binding FocusPoints}" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding FocusPointListHeight}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <TextCell Height="45" Text="{Binding Name}"/>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    </StackLayout>
+                </Frame>
 
-        <ListView ItemsSource="{Binding PlanElement}" RowHeight="235">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <Grid Margin="15,10,15,0">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="40"/>
-                                <RowDefinition Height="40"/>
-                                <RowDefinition Height="125"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="70"/>
-                                <ColumnDefinition Width="*"/>
-                                <ColumnDefinition Width="25"/>
-                            </Grid.ColumnDefinitions>
-                            <Frame Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="3" CornerRadius="5" HasShadow="True"/>
-                            <Entry Grid.Row="0" Grid.Column="0" x:Name="Minutes" Placeholder="Minutes" HorizontalOptions="Start"/>
-                            <Entry Grid.Row="0" Grid.Column="1" x:Name="PracticeTheme" Placeholder="Practice Theme   " HorizontalOptions="Fill"/>
-                            <ImageButton Grid.Row="0" Grid.Column="2" Source="" x:Name="DeleteIcon" HeightRequest="25" VerticalOptions="Center" HorizontalOptions="End" BackgroundColor="White"/>
-                            <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Text="Exercises" FontSize="20" TextDecorations="Underline" HorizontalOptions="Center"/>
-                            <Editor Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" x:Name="ExerciseDescriptions" Text="Descibe exercises here..." FontSize="16" AutoSize="TextChanges" VerticalOptions="Fill"/>
-                        </Grid>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
 
-        <Button Text="Add new element to practice plan" Command="{Binding AddNewPlanElementClickCommand}"/>
+
+            <Label Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" Text="Practice Plan" TextColor="White" FontSize="Title" FontAttributes="Bold" HorizontalTextAlignment="Center" BackgroundColor="Red" HorizontalOptions="FillAndExpand" Margin="0,10,0,0"/>
+            <ListView ItemsSource="{Binding PlanElement}" RowHeight="235" Margin="15,0,15,0" HeightRequest="{Binding PlanHeight}" VerticalScrollBarVisibility="Never" SeparatorVisibility="None">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Frame CornerRadius="5" HasShadow="True" Margin="0,10,0,10">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="1.5*"/>
+                                        <RowDefinition Height="1*"/>
+                                        <RowDefinition Height="3*"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1.5*"/>
+                                        <ColumnDefinition Width="4*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Entry Grid.Row="0" Grid.Column="0" Text="{Binding Exercise.Minutes}" Placeholder="Minutes" HorizontalOptions="Start"/>
+                                    <Entry Grid.Row="0" Grid.Column="1" Text="{Binding Exercise.Name}" Placeholder="Practice Theme   " HorizontalOptions="Fill"/>
+                                    <Button Grid.Row="0" Grid.Column="2" Text="❌" VerticalOptions="Center" HorizontalOptions="End" BackgroundColor="White" Command="{Binding BindingContext.DeletePlanItemCommand, Source={x:Reference rootpage}}" CommandParameter="{Binding}"/>
+                                    <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Text="Exercises" FontSize="20" TextDecorations="Underline" HorizontalOptions="Center"/>
+                                    <Editor Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Placeholder="Descibe exercises here..." Text="{Binding Exercise.Description}" FontSize="16" AutoSize="TextChanges" VerticalOptions="Fill"/>
+                                </Grid>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+
+            <Button Text="Add new element to practice plan" Command="{Binding AddNewPlanElementClickCommand}"/>
 
     </StackLayout>
     </ScrollView>

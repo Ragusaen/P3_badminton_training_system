@@ -16,7 +16,10 @@ namespace Server.DAL
                 Id = yps.ID,
                 StartDate = yps.StartDate,
                 EndDate = yps.EndDate,
-                FocusPoints = yps.focuspoints.Select(p => (Common.Model.FocusPointDescriptor) p).ToList(),
+                FocusPoint = new FocusPointItem()
+                {
+                    Descriptor = (FocusPointDescriptor)yps.focuspoint,
+                }
             };
         }
     }

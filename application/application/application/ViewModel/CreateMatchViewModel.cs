@@ -2,7 +2,11 @@
 using Common.Model;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
+using application.Controller;
+using application.SystemInterface;
+using System.Collections.ObjectModel;
 
 namespace application.ViewModel
 {
@@ -112,6 +116,19 @@ namespace application.ViewModel
             }
         }
 
+        public List<string> LeagueNames
+        {
+            get { return Enum.GetNames(typeof(TeamMatch.Leagues)).Select(p => StringExtension.SplitCamelCase(p)).ToList(); }
+        }
+
+        private TeamMatch.Leagues _selectedLeague;
+        public TeamMatch.Leagues SelectedLeague
+        {
+            get { return _selectedLeague; }
+            set { SetProperty(ref _selectedLeague, value); }
+        }
+
+
         private Dictionary<Tuple<Lineup.PositionType, int>, Position> _positions;
 
         public Dictionary<Tuple<Lineup.PositionType, int>, Position> Positions
@@ -120,8 +137,18 @@ namespace application.ViewModel
             set { SetProperty(ref _positions, value); }
         }
 
+        private ObservableCollection<Player> _players;
+
+        public ObservableCollection<Player> Players
+        {
+            get { return _players; }
+            set { SetProperty(ref _players, value); }
+        }
+
         public CreateMatchViewModel()
         {
+            Players = new ObservableCollection<Player>(RequestCreator.GetAllPlayers());
+
             Positions = new Dictionary<Tuple<Lineup.PositionType, int>, Position>();
 
             Position p = new Position();

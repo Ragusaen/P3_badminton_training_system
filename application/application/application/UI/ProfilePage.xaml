@@ -36,7 +36,6 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <Button Text="Add Team" Command="{Binding AddPracticeTeamCommand}" HeightRequest="50"/>
                 
                 <Label Text="Focus Point" FontSize="Medium"/>
                 <ListView x:Name="FocusPointList" VerticalScrollBarVisibility="Never" ItemSelected="ListView_OnItemSelected" ItemsSource="{Binding FocusPoints}" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding FocusPointsListHeight}">
@@ -55,20 +54,41 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-            <Button Text="Add Focus Point" Command="{Binding AddFocusPointCommand}" HeightRequest="50"/>
+                <Button Text="Add Focus Point" Command="{Binding AddFocusPointCommand}" HeightRequest="50"/>
 
-            <Label Text="Comments" FontSize="Medium"/>
-                <Frame  CornerRadius="5" HasShadow="True">
-                    <StackLayout>
-                        <Label x:Name="Comment" TextColor="Black" Text="{Binding CommentText}" FontSize="Medium" IsVisible="True"></Label>
-                        <Editor x:Name="CommentEntry" IsVisible="False" Placeholder="Enter a comment" AutoSize="TextChanges"/>
-                    </StackLayout>
-                </Frame>
+                <StackLayout x:Name="PlayerRelevant">
+                    <Label Text="Focus Point" FontSize="Medium"/>
+                    <ListView x:Name="FocusPointList" VerticalScrollBarVisibility="Never" ItemSelected="ListView_OnItemSelected" ItemsSource="{Binding FocusPoints}" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding FocusPointListHeight}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Grid Padding="0" Margin="0" RowSpacing="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="9*"/>
+                                            <ColumnDefinition Width="1*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Grid.Column="0" Text="{Binding Descriptor.Name}" VerticalOptions="Center"/>
+                                        <Button Grid.Column="1" Text="❌" BackgroundColor="White" WidthRequest="50" VerticalOptions="End" Command="{Binding BindingContext.DeleteListFocusItemCommand, Source={x:Reference rootpage}}" CommandParameter="{Binding}"/>
+                                    </Grid>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <Button Text="Add Focus Point" Command="{Binding AddFocusPointCommand}" HeightRequest="50"/>
 
-                <Label Text="Feedback graph" FontSize="Medium"/>
-                <forms:ChartView x:Name="FeedbackChart" HeightRequest="300" Margin="-80, 0, -80, 0" />
-            <Button Text="View Feedback" Command="{Binding ViewFeedbackCommand}"/>
-            <Button Text="View all Feedback graph" Command="{Binding ViewFeedbackGraphCommand}"/>
+                    <Label Text="Comments" FontSize="Medium"/>
+                    <Frame  CornerRadius="5" HasShadow="True">
+                        <StackLayout>
+                            <Label x:Name="Comment" TextColor="Black" Text="{Binding CommentText}" FontSize="Medium" IsVisible="True"></Label>
+                            <Editor x:Name="CommentEntry" IsVisible="False" Placeholder="Enter a comment" AutoSize="TextChanges"/>
+                        </StackLayout>
+                    </Frame>
+
+                    <Label Text="Feedback graph" FontSize="Medium"/>
+                    <forms:ChartView x:Name="FeedbackChart" HeightRequest="300" Margin="-80, 0, -80, 0" />
+                    <Button Text="View Feedback" Command="{Binding ViewFeedbackCommand}"/>
+                    <Button Text="View all Feedback graph" Command="{Binding ViewFeedbackGraphCommand}"/>
+                </StackLayout>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

@@ -136,8 +136,7 @@ namespace application.ViewModel
         {
             var item = new FocusPointItem
             {
-                Descriptor = e,
-                DateAssigned = DateTime.Now
+                Descriptor = e
             };
             Player.FocusPointItems.Add(item);
             FocusPoints.Add(item);

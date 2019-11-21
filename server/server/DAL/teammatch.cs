@@ -21,7 +21,7 @@ namespace Server.DAL
         }
     
         public int PlaySessionID { get; set; }
-        public int CaptainID { get; set; }
+        public Nullable<int> CaptainID { get; set; }
         public string OpponentName { get; set; }
         public int League { get; set; }
         public int LeagueRound { get; set; }

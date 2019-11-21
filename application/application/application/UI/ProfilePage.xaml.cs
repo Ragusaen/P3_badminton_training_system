@@ -46,6 +46,24 @@ namespace application.UI
 
             FeedbackChart.Chart = new LineChart { Entries = entries, LineMode = LineMode.Straight, PointMode = PointMode.Square, LabelTextSize = 25, PointSize = 12};
 
+            SetupCommentEvents();
+
+            _vm = new ProfilePageViewModel(member);
+            BindingContext = _vm;
+            _vm.Navigation = Navigation;
+
+            ShownOnlyRelevantInfo();
+
+            Settingsicon.Source = ImageSource.FromResource("application.Images.settingsicon.jpg");
+        }
+
+        private void ShownOnlyRelevantInfo()
+        {
+            PlayerRelevant.IsVisible = _vm.Player != null;
+        }
+
+        private void SetupCommentEvents()
+        {
             var commentTap = new TapGestureRecognizer();
             commentTap.Tapped += (s, a) =>
             {
@@ -54,7 +72,7 @@ namespace application.UI
                 _vm.CommentText = Comment.Text;
             };
             Comment.GestureRecognizers.Add(commentTap);
-            
+
             CommentEntry.Unfocused += (s, a) =>
             {
                 Comment.IsVisible = true;
@@ -65,12 +83,6 @@ namespace application.UI
                     _vm.SetComment(CommentEntry.Text);
                 }
             };
-
-            _vm = new ProfilePageViewModel(member);
-            BindingContext = _vm;
-            _vm.Navigation = Navigation;
-
-            Settingsicon.Source = ImageSource.FromResource("application.Images.settingsicon.jpg");
         }
 
         private void ListView_OnItemSelected(object sender, SelectedItemChangedEventArgs e)

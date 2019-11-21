@@ -23,7 +23,7 @@ namespace Server.DAL
     
         public int PlaySessionID { get; set; }
         public int YearPlanSectionID { get; set; }
-        public int TrainerID { get; set; }
+        public Nullable<int> TrainerID { get; set; }
     
         public virtual member member { get; set; }
         public virtual playsession playsession { get; set; }

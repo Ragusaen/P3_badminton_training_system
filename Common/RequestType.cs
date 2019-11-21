@@ -30,6 +30,7 @@ namespace Common
         SetPlayerPracticeTeams,
         //Deleters below
         DeletePlayerFocusPoints,
+        GetExercises,
         //Creators below
         CreateFocusPointDescriptor,
     };

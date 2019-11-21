@@ -18,18 +18,17 @@ namespace Server.DAL
         public yearplansection()
         {
             this.practicesessions = new HashSet<practicesession>();
-            this.focuspoints = new HashSet<focuspoint>();
         }
     
         public int ID { get; set; }
         public int TeamID { get; set; }
         public System.DateTime StartDate { get; set; }
         public System.DateTime EndDate { get; set; }
+        public int FocusPointId { get; set; }
     
+        public virtual focuspoint focuspoint { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<practicesession> practicesessions { get; set; }
         public virtual practiceteam practiceteam { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<focuspoint> focuspoints { get; set; }
     }
 }

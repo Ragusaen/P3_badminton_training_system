@@ -8,8 +8,7 @@ using Common.Model;
 namespace Common.Serialization
 {
     [Serializable, XmlRoot]
-    public class GetPlayerPracticeTeamRequest : Request
-    {
+    public class GetPlayerPracticeTeamRequest : Request { 
         public Member Member;
     }
 

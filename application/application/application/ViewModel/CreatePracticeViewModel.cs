@@ -11,44 +11,33 @@ namespace application.ViewModel
 {
     class CreatePracticeViewModel : BaseViewModel
     {
+        YearPlanSection YearPlan { get; set; } = new YearPlanSection();
+        
+        public PracticeSession Practice = new PracticeSession();
         private string _practiceTitle;
         public string PracticeTitle
         {
-            get { return _practiceTitle; }
+            get => _practiceTitle;
             set
             {
                 if (SetProperty(ref _practiceTitle, value))
                     SaveCreatedPracticeClickCommand.RaiseCanExecuteChanged();
             }
         }
-
-        private DateTime _minDate;
-
-        public DateTime MinDate
+        private int _planHeight;
+        public int PlanHeight
         {
-            get { return _minDate; }
-            set
-            {
-                SetProperty(ref _minDate, value);
-            }
+            get => _planHeight;
+            set => SetProperty(ref _planHeight, value);
         }
 
-        private DateTime _maxDate;
-
-        public DateTime MaxDate
-        {
-            get { return _maxDate; }
-            set
-            {
-                SetProperty(ref _maxDate, value);
-            }
-        }
+        public DateTime MinDate { get; set; } = DateTime.Today;
 
         private DateTime _selectedDateStart;
 
         public DateTime SelectedDateStart
         {
-            get { return _selectedDateStart; }
+            get => _selectedDateStart;
             set
             {
                 if (SetProperty(ref _selectedDateStart, value))
@@ -68,9 +57,9 @@ namespace application.ViewModel
             }
         }
 
-        private string _selectedTimeStart;
+        private TimeSpan _selectedTimeStart;
 
-        public string SelectedTimeStart
+        public TimeSpan SelectedTimeStart
         {
             get { return _selectedTimeStart; }
             set
@@ -80,9 +69,9 @@ namespace application.ViewModel
             }
         }
 
-        private string _selectedTimeEnd;
+        private TimeSpan _selectedTimeEnd;
 
-        public string SelectedTimeEnd
+        public TimeSpan SelectedTimeEnd
         {
             get { return _selectedTimeEnd; }
             set
@@ -115,8 +104,8 @@ namespace application.ViewModel
             }
         }
 
-        private List<string> _planElement;
-        public List<string> PlanElement
+        private ObservableCollection<ExerciseItem> _planElement;
+        public ObservableCollection<ExerciseItem> PlanElement
         {
             get { return _planElement; }
             set
@@ -145,11 +134,11 @@ namespace application.ViewModel
                 return true;
         }
 
-        //Check if username is free in database.
         private void ExecuteSaveCreatedPracticeClick(object param)
         {
-            //Navigate back
-            Navigation.PopAsync();
+            Practice.Start = SelectedDateStart.Date + Convert.ToDateTime(SelectedTimeStart.ToString()).TimeOfDay;
+            Practice.End = SelectedDateEnd.Date + Convert.ToDateTime(SelectedTimeEnd.ToString()).TimeOfDay;
+            //Practice.
         }
 
         private string _searchtext;
@@ -160,21 +149,30 @@ namespace application.ViewModel
             set
             {
                 SetProperty(ref _searchtext, value);
-                SearchResultFocusPoints = new ObservableCollection<FocusPointItem>(SearchResultFocusPoints.OrderByDescending((x => StringSearch.LongestCommonSubsequence(x.Descriptor.Name, SearchText))).ThenBy(x => x.Descriptor.Name.Length).ToList());
+                FocusPoints = new ObservableCollection<FocusPointDescriptor>(FocusPoints.OrderByDescending((x => StringExtension.LongestCommonSubsequence(x.Name, SearchText))).ThenBy(x => x.Name.Length).ToList());
             }
         }
 
-        public ObservableCollection<FocusPointItem> FocusPoint;
+        private ObservableCollection<FocusPointDescriptor> _focusPoints;
 
-        private ObservableCollection<FocusPointItem> _searchResultFocusPoints;
-
-        public ObservableCollection<FocusPointItem> SearchResultFocusPoints
+        public ObservableCollection<FocusPointDescriptor> FocusPoints
         {
-            get { return _searchResultFocusPoints; }
+            get { return _focusPoints; }
             set
             {
-                SetProperty(ref _searchResultFocusPoints, value);
-                FocusPointListHeight = SearchResultFocusPoints.Count * 45;
+                SetProperty(ref _focusPoints, value);
+                FocusPointListHeight = FocusPoints.Count * 45;
+            }
+        }
+        private ObservableCollection<ExerciseDescriptor> _exercise;
+
+        public ObservableCollection<ExerciseDescriptor> Exercise
+        {
+            get { return _exercise; }
+            set
+            {
+                SetProperty(ref _exercise, value);
+                FocusPointListHeight = FocusPoints.Count * 45;
             }
         }
 
@@ -205,21 +203,34 @@ namespace application.ViewModel
         //Check if username is free in database.
         private void ExecuteAddNewPlanElementClick(object param)
         {
-            PlanElement.Add("");
+            PlanElement.Add(new ExerciseItem());
+            PlanHeight = PlanElement.Count * 235;
+        }
+        
+        private RelayCommand _deletePlanItemCommand;
+
+        public RelayCommand DeletePlanItemCommand
+        {
+            get
+            {
+                return _deletePlanItemCommand ?? (_deletePlanItemCommand = new RelayCommand(param => DeletePlanItemClick(param)));
+            }
+        }
+        private void DeletePlanItemClick(object param)
+        {
+            ExerciseItem exercise = param as ExerciseItem;
+            PlanElement.Remove(exercise);
+            PlanHeight = PlanElement.Count * 235;
         }
 
         public CreatePracticeViewModel()
         {
-            MinDate = DateTime.Today;
-            MaxDate = new DateTime(2020, 1, 1);
+            SelectedDateStart = DateTime.Today;
 
-            FocusPoint = new ObservableCollection<FocusPointItem>();
-            SearchResultFocusPoints = FocusPoint;
-            //FocusPointsSearchText = focusPoint;
+            PlanElement = new ObservableCollection<ExerciseItem>();
+            PlanElement.Add(new ExerciseItem());
+            PlanHeight = PlanElement.Count * 235;
 
-            PlanElement = new List<string>();
-            PlanElement.Add("");
-            
         }
     }
 }
