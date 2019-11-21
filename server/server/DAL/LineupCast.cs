@@ -8,37 +8,33 @@ using Common.Model;
 namespace Server.DAL
 {
     class LineUpCast {
-        public Lineup CreateLineup(ICollection<position> p)
+        public Lineup CreateLineup(ICollection<position> positionCollection)
         {
-            List<position> positions = p.ToList();
+            List<position> positions = positionCollection.ToList();
 
-            Lineup lineup = new Lineup()
-            {
-                Positions = new Dictionary<Tuple<Lineup.PositionType, int>, Position>()
-            };
+            Lineup lineup = new Lineup();
 
             foreach (position dbPos in positions)
             {
+                if (lineup.All(l => l.type != (Lineup.PositionType) dbPos.Type))
+                    lineup.Add( ((Lineup.PositionType)dbPos.Type, new List<Position>()) );
 
-                Position dicPos = new Position()
+                var newPosition = new Position()
                 {
                     Player = (Player)dbPos.member,
                     IsExtra = dbPos.IsExtra
                 };
-                if (Lineup.IsDoublePosition((Lineup.PositionType) dbPos.Type))
-                {
-                    int index =
-                        positions.FindIndex(u => u.Type == dbPos.Type && u.Order == dbPos.Order && u != dbPos);
-                    position otherDbPos = positions[index];
-                    positions.RemoveAt(index);
 
-                    dicPos.OtherPlayer = (Player) otherDbPos.member;
-                    dicPos.OtherIsExtra = otherDbPos.IsExtra;
+
+                if (Lineup.PositionType.Double.HasFlag(((Lineup.PositionType)dbPos.Type)))
+                {
+                    var otherPos = positions.Find(s => s.Type == dbPos.Type && s.Order == dbPos.Order && s != dbPos);
+                    newPosition.OtherPlayer = (Player) otherPos.member;
+                    newPosition.OtherIsExtra = otherPos.IsExtra;
                 }
-                lineup.Positions.Add(
-                    new Tuple<Lineup.PositionType, int>((Lineup.PositionType)dbPos.Type, dbPos.Order),
-                    dicPos
-                    );
+
+                var posList = lineup.Find(l => l.type == (Lineup.PositionType) dbPos.Type).positions;
+                posList.Add(newPosition);
             }
 
             return lineup;

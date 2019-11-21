@@ -25,5 +25,6 @@ namespace Common.Model
         public DateTime StartDate { get; set; }
         public Member Captain { get; set; }
         public Lineup Lineup { get; set; }
+        public int TeamIndex { get; set; }
     }
 }
