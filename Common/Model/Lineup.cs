@@ -4,31 +4,19 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace Common.Model
 {
-    public class Lineup
+    public class Lineup : List<(Lineup.PositionType type, List<Position> positions)>
     {
+        [Flags]
         public enum PositionType
         {
-            MensSingle,
-            WomensSingle,
-            MensDouble,
-            WomensDouble,
-            MixDouble
+            MensSingle = 1,
+            WomensSingle = 2,
+            MensDouble = 4,
+            WomensDouble = 8,
+            MixDouble = 16,
+            Single = MensSingle | WomensSingle,
+            Double = MensDouble | WomensDouble | MixDouble,
         }
-
-        public static bool IsDoublePosition(PositionType type)
-        {
-            switch (type)
-            {
-                case PositionType.MensDouble:
-                case PositionType.WomensDouble:
-                case PositionType.MixDouble:
-                    return true;
-                default:
-                    return false;
-            }
-        }
-
-        public Dictionary<Tuple<PositionType, int>, Position> Positions { get; set; }
 
         public static Dictionary<TeamMatch.Leagues, Dictionary<PositionType, int>> LeaguePositions =
             new Dictionary<TeamMatch.Leagues, Dictionary<PositionType, int>>()
