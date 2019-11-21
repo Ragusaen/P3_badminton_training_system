@@ -11,30 +11,31 @@ namespace Server.Function.Rules
     class ReservesRule : IRule
     {
         public int Priority { get; set; }
+        private List<RuleBreak> _ruleBreaks = new List<RuleBreak>();
 
-        public List<RuleBreak> Rule(TeamMatch match) //TODO: Check if rules are correct + Make an extra method to clean up code
+
+        public List<RuleBreak> Rule(TeamMatch match)
         {
-            List<RuleBreak> ruleBreaks = new List<RuleBreak>();
-
-            List<int> memberidsRound = null;//lineupDAO.GetMemberIDsPlayingInLeagueRound(match.LeagueRound, match.Season);
+            throw new NotImplementedException();
+            /*List<int> memberidsRound = null;//TODO: GetMemberIDsPlayingInLeagueRound(match.LeagueRound, match.Season);
             foreach (var position in match.Lineup.Positions)
             {
                 if (memberidsRound.Count(p => p == position.Value.Player.Member.Id) > 2)
-                    ruleBreaks.Add(new RuleBreak(position.Key, 0, "WARNING: Player is already on another lineup this round!"));
+                    _ruleBreaks.Add(new RuleBreak(position.Key, 0, "WARNING: Player is already on another lineup this round!"));
                 if ((position.Value.OtherPlayer != null) && memberidsRound.Count(p => p == position.Value.OtherPlayer.Member.Id) > 2)
-                    ruleBreaks.Add(new RuleBreak(position.Key, 1, "WARNING: Player is already on another lineup this round!"));
+                    _ruleBreaks.Add(new RuleBreak(position.Key, 1, "WARNING: Player is already on another lineup this round!"));
             }
 
-            memberidsRound = null;// lineupDAO.GetMemberIDsPlayingInLeagueRound(match.LeagueRound - 1, match.Season);
+            memberidsRound = null;// TODO: GetMemberIDsPlayingInLeagueRound(match.LeagueRound - 1, match.Season);
             foreach (var position in match.Lineup.Positions)
             {
                 if (memberidsRound.Count(p => p == position.Value.Player.Member.Id) > 4)
-                    ruleBreaks.Add(new RuleBreak(position.Key, 0, "This played played twice last round!"));
+                    _ruleBreaks.Add(new RuleBreak(position.Key, 0, "This played played twice last round!"));
                 if ((position.Value.OtherPlayer != null) && memberidsRound.Count(p => p == position.Value.OtherPlayer.Member.Id) > 4)
-                    ruleBreaks.Add(new RuleBreak(position.Key, 1, "This played played twice last round!"));
+                    _ruleBreaks.Add(new RuleBreak(position.Key, 1, "This played played twice last round!"));
             }
 
-            return ruleBreaks;
+            return _ruleBreaks;*/
         }
     }
 }

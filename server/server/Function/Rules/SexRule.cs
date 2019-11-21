@@ -1,4 +1,5 @@
 ﻿using Common.Model;
+using System;
 using System.Collections.Generic;
 
 namespace Server.Function.Rules
@@ -6,37 +7,38 @@ namespace Server.Function.Rules
     class SexRule : IRule
     {
         public int Priority { get; set; }
+        private List<RuleBreak> _ruleBreaks = new List<RuleBreak>();
 
         public List<RuleBreak> Rule(TeamMatch match)
         {
-            List<RuleBreak> ruleBreaks = new List<RuleBreak>();
-            foreach (var position in match.Lineup.Positions)
+            foreach (var group in match.Lineup)
             {
-                Lineup.PositionType type = position.Key.Item1;
-                if (!SexGood(type, position.Value.Player.Sex))
-                {   
-                    ruleBreaks.Add(new RuleBreak(position.Key, 0, "Wrong gender"));
-                }
-
-                if (position.Value.OtherPlayer != null)
+                for (int i = 0; i < group.positions.Count; i++)
                 {
-                    if (type == Lineup.PositionType.MixDouble && position.Value.Player.Sex == position.Value.OtherPlayer.Sex)
+                    if (group.type == Lineup.PositionType.MixDouble)
                     {
-                        ruleBreaks.Add(new RuleBreak(position.Key, 0, "Mix cannot be same gender"));
-                        ruleBreaks.Add(new RuleBreak(position.Key, 1, "Mix cannot be same gender"));
+                        CheckMixSex();
                     }
-                    else if (!SexGood(type, position.Value.OtherPlayer.Sex))
+                    else
                     {
-                        ruleBreaks.Add(new RuleBreak(position.Key, 1, "Wrong gender"));
+                        if(!SexGood(group.type, group.positions[i].Player.Sex))
+                            _ruleBreaks.Add(new RuleBreak((group.type, i), 0, "Player sex does not match position!"));
+                        if(Lineup.PositionType.Double.HasFlag(group.type) && !SexGood(group.type, group.positions[i].OtherPlayer.Sex))
+                            _ruleBreaks.Add(new RuleBreak((group.type, i), 1, "Player sex does not match position!"));
                     }
                 }
             }
-            return ruleBreaks;
+            return _ruleBreaks;
         }
 
-        private bool SexGood(Lineup.PositionType position, Sex sex)
+        private void CheckMixSex()
         {
-            switch (position)
+            throw new NotImplementedException();
+        }
+
+        private bool SexGood(Lineup.PositionType positionType, Sex sex)
+        {
+            switch (positionType)
             {
                 case Lineup.PositionType.MixDouble:
                     return true;

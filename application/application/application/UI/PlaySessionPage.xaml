@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="application.UI.PlaySessionPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label x:Name="Name" Text="{Binding PlaySession}" FontSize="Large" HorizontalOptions="Center"/>
+            <Label x:Name="Date" Text="{Binding Path=PlaySession.Start, StringFormat='Location: {0}'}" />
+            <Label x:Name="Time" Text="{Binding Time}" />
+            <Label x:Name="Location" Text="{Binding Path=PlaySession.Location, StringFormat='Location: {0}'}" />
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

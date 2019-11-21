@@ -6,13 +6,20 @@
              mc:Ignorable="d"
              x:Class="application.UI.AdministratorPage" NavigationPage.HasBackButton="False"
              x:Name="rootpage">
+
+    <NavigationPage.TitleView>
+        <StackLayout Orientation="Horizontal" Spacing="10">
+            <Label Text="Administration" FontAttributes="Bold" FontSize="30" TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+        </StackLayout>
+    </NavigationPage.TitleView>
+
     <ContentPage.Content>
         <ScrollView>
         <StackLayout>
             <Frame HasShadow="True" CornerRadius="5">
                 <StackLayout>
-                    <SearchBar Placeholder="Enter the name of the member" Text="{Binding SearchMemberText}"/>
-                    <ListView ItemsSource="{Binding MemberList}" VerticalScrollBarVisibility="Never" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="225">
+                    <SearchBar Placeholder="Member name" Text="{Binding SearchMemberText}"/>
+                    <ListView ItemsSource="{Binding MemberList}" ItemSelected="ListView_OnItemSelected" VerticalScrollBarVisibility="Never" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="225">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <ViewCell>
@@ -27,7 +34,7 @@
             </Frame>
             <Frame HasShadow="True" CornerRadius="5">
                 <StackLayout>
-                    <SearchBar Placeholder="Enter the name of the member" Text="{Binding SearchTeamText}"/>
+                    <SearchBar Placeholder="Team name" Text="{Binding SearchTeamText}"/>
                         <ListView x:Name="TeamList" ItemsSource="{Binding TeamList}" VerticalScrollBarVisibility="Never" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="225" ItemSelected="TeamListView_ItemSelected">
                             <ListView.ItemTemplate>
                             <DataTemplate>
@@ -52,7 +59,7 @@
             </Frame>
             <Frame HasShadow="True" CornerRadius="5">
                 <StackLayout>
-                    <SearchBar Placeholder="Enter the name of the member" Text="{Binding SearchFocusPointText}"/>
+                    <SearchBar Placeholder="Focus point name" Text="{Binding SearchFocusPointText}"/>
                     <ListView ItemsSource="{Binding FocusPointList}" VerticalScrollBarVisibility="Never" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="225">
                         <ListView.ItemTemplate>
                             <DataTemplate>

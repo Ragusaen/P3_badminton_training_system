@@ -124,6 +124,7 @@ foreign key(CaptainID) references `Member`(ID),
 OpponentName varchar(64) not null,
 League int not null,
 LeagueRound int not null,
+TeamIndex int not null,
 Season int not null
 );
 

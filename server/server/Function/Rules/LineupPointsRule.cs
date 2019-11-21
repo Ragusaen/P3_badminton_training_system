@@ -9,6 +9,8 @@ namespace Server.Function.Rules
         public int Priority { get; set; }
         private int _maxSingleDiff;
         private int _maxDoubleDiff;
+        private List<RuleBreak> _ruleBreaks = new List<RuleBreak>();
+
 
         public LineupPointsRule(int maxSingleDiff, int maxDoubleDiff)
         {
@@ -18,49 +20,51 @@ namespace Server.Function.Rules
 
         public List<RuleBreak> Rule(TeamMatch match)
         {
-            List<RuleBreak> ruleBreaks = new List<RuleBreak>();
 
-            foreach (var position in match.Lineup.Positions)
+            foreach (var group in match.Lineup)
             {
-                if (position.Value is Position dp)
+                CheckPositions(group.positions, group.type);
+            }
+
+            return _ruleBreaks;
+        }
+
+        private bool CheckPositions(List<Position> positions, Lineup.PositionType type)
+        {
+            bool success = true;
+            for (int i = 1; i < positions.Count; i++)
+            {
+                for (int j = 0; j < i; j++)
                 {
-                    for (int i = position.Key.Item2 - 1; i >= 1; i--)
+                    if (!ComparePositions(positions[i], positions[j], type))
                     {
-                        if (!CheckDouble(position.Value, match.Lineup.Positions[new Tuple<Lineup.PositionType, int>(position.Key.Item1, i)], position.Key.Item1))
+                        success = false;
+                        if (Lineup.PositionType.Double.HasFlag(type))
                         {
-                            ruleBreaks.Add(new RuleBreak(position.Key, 0, $"Double has too many points compared to double at position {i}!"));
-                            ruleBreaks.Add(new RuleBreak(position.Key, 1, $"Double has too many points compared to double at position {i}!"));
-                            ruleBreaks.Add(new RuleBreak(new Tuple<Lineup.PositionType, int>(position.Key.Item1, i), 0, $"Double has too few points compared to double at position {i}!"));
-                            ruleBreaks.Add(new RuleBreak(new Tuple<Lineup.PositionType, int>(position.Key.Item1, i), 1, $"Double has too few points compared to double at position {i}!"));
+                            _ruleBreaks.Add(new RuleBreak((type, i), 0, $"Double has too many points compared to position {j}"));
+                            _ruleBreaks.Add(new RuleBreak((type, i), 1, $"Double has too many points compared to position {j}"));
                         }
-                    }
-                }
-                else
-                {
-                    for (int i = position.Key.Item2 - 1; i >= 1; i--)
-                    {
-                        if (!CheckSingle(position.Value.Player, match.Lineup.Positions[new Tuple<Lineup.PositionType, int>(position.Key.Item1, i)].Player))
-                        {
-                            ruleBreaks.Add(new RuleBreak(position.Key, 0, $"Player has too many points compared to the player at position {i}!"));
-                            ruleBreaks.Add(new RuleBreak(new Tuple<Lineup.PositionType, int>(position.Key.Item1, i), 0, $"Player has too many points compared to the player at position {i}!"));
-                        }
+                        else
+                            _ruleBreaks.Add(new RuleBreak((type, i), 0, $"Player has too many points compared to position {j}"));
+                        break;
                     }
                 }
             }
-            return ruleBreaks;
+
+            return success;
         }
 
-        private bool CheckSingle(Player lowerPlayer, Player upperPlayer)
+        private bool ComparePositions(Position lower, Position upper, Lineup.PositionType type)
         {
-            return (lowerPlayer.Rankings.SinglesPoints - upperPlayer.Rankings.SinglesPoints) <= _maxSingleDiff;
-        }
-
-        private bool CheckDouble(Position lowerDouble, Position upperDouble, Lineup.PositionType positionType)
-        {
-            if (positionType == Lineup.PositionType.MixDouble)
-                return ((lowerDouble.Player.Rankings.MixPoints + lowerDouble.OtherPlayer.Rankings.MixPoints) - (upperDouble.Player.Rankings.MixPoints + upperDouble.OtherPlayer.Rankings.MixPoints)) <= _maxDoubleDiff;
+            if (Lineup.PositionType.Single.HasFlag(type))
+                return (lower.Player.Rankings.SinglesPoints - upper.Player.Rankings.SinglesPoints) <= _maxSingleDiff;
+            if (type == Lineup.PositionType.MixDouble)
+                return ((lower.Player.Rankings.MixPoints + lower.OtherPlayer.Rankings.MixPoints) 
+                        - (upper.Player.Rankings.MixPoints + upper.OtherPlayer.Rankings.MixPoints))
+                       <= _maxDoubleDiff;
             else
-                return ((lowerDouble.Player.Rankings.DoublesPoints + lowerDouble.OtherPlayer.Rankings.DoublesPoints) - (upperDouble.Player.Rankings.DoublesPoints + upperDouble.OtherPlayer.Rankings.DoublesPoints)) <= _maxDoubleDiff;
+                return ((lower.Player.Rankings.DoublesPoints + lower.OtherPlayer.Rankings.DoublesPoints)
+                        - (upper.Player.Rankings.DoublesPoints + upper.OtherPlayer.Rankings.DoublesPoints)) <= _maxDoubleDiff;
         }
     }
 }

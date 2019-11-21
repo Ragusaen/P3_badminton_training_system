@@ -28,7 +28,7 @@ namespace Server.SystemInterface.Requests
                 {RequestType.CreateAccount, new CreateAccountHandler() },
                 {RequestType.GetPracticeTeam, new GetPracticeTeamHandler() },
                 {RequestType.GetSchedule, new GetScheduleHandler() },
-                {RequestType.GetMemberPracticeTeams, new GetMemberPracticeTeamsHandler() },
+                {RequestType.GetMemberPracticeTeams, new GetPlayerPracticeTeamsHandler() },
                 {RequestType.GetPlayersWithNoAccount, new GetPlayersWithNoAccountHandler() },
                 {RequestType.GetAllPlayers, new GetAllPlayersHandler()},
                 {RequestType.GetPracticeSession, new GetPracticeSessionHandler() },
@@ -43,12 +43,16 @@ namespace Server.SystemInterface.Requests
                 {RequestType.GetPracticeTeamYearPlan, new GetPracticeTeamYearPlanHandler() },
                 {RequestType.GetPlayer, new GetPlayerHandler() },
                 {RequestType.GetTokenMember, new GetTokenMemberHandler() },
+                {RequestType.GetAdminPage, new GetAdminPageHandler() },
+                {RequestType.GetAllPracticeTeams, new GetAllPracticeTeamsHandler() },
                 {RequestType.GetExercises, new GetExerciseHandler() },
                 //Setters below
                 {RequestType.SetPlayerFocusPoints, new SetPlayerFocusPointsHandler() },
                 {RequestType.SetComment, new SetCommentHandler() },
+                {RequestType.SetPlayerPracticeTeams, new SetPlayerPracticeTeamsHandler() },
                 //Deleters below
-                {RequestType.DeletePlayerFocusPoints, new DeletePlayerFocusPointsHandler() },
+                {RequestType.DeletePlayerFocusPoint, new DeletePlayerFocusPointsHandler() },
+                {RequestType.DeletePlayerPracticeTeam, new DeletePlayerPracticeTeamHandler() },
                 //Creators below
                 {RequestType.CreateFocusPointDescriptor, new CreateFocusPointDescriptorHandler() },
                 {RequestType.SetExerciseDiscriptor, new SetExerciseDescriptorHandler() },

@@ -24,10 +24,14 @@ namespace application.UI
 
         private void TeamListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            var Team = e.SelectedItem as PracticeTeam;
-            if (Team != null)
+            if (e.SelectedItem is PracticeTeam Team)
                 Navigation.PushAsync(new TeamPage(Team));
             TeamList.SelectedItem = null;
+        }
+
+        private void ListView_OnItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            Navigation.PushAsync(new ProfilePage((Member)e.SelectedItem));
         }
     }
 }
