@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
+using System.Threading;
 using Common.Model;
 
 namespace application.ViewModel
@@ -13,7 +15,11 @@ namespace application.ViewModel
 
         public PlaySessionViewModel(PlaySession playSession)
         {
-            
+            PlaySession = playSession;
+
+            var ps = PlaySession.Start.ToString("D");
         }
+
+
     }
 }

@@ -7,10 +7,18 @@
              x:Class="application.UI.PlaySessionPage">
     <ContentPage.Content>
         <StackLayout>
-            <Label x:Name="Name" Text="{Binding PlaySession}" FontSize="Large" HorizontalOptions="Center"/>
-            <Label x:Name="Date" Text="{Binding Path=PlaySession.Start, StringFormat='Location: {0}'}" />
-            <Label x:Name="Time" Text="{Binding Time}" />
-            <Label x:Name="Location" Text="{Binding Path=PlaySession.Location, StringFormat='Location: {0}'}" />
+            <Label x:Name="Name" Text="name" FontSize="Large" HorizontalOptions="Center"/>
+            <Label x:Name="Date" Text="date" />
+            <Label x:Name="Time" Text="time" />
+            <Label x:Name="Location" Text="{Binding PlaySession.Location}"/>
+        </StackLayout>
+
+        <StackLayout x:Name="PracticeRelevant">
+            
+        </StackLayout>
+
+        <StackLayout x:Name="TeamMatchRelevant">
+            
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
