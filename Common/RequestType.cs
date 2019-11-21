@@ -36,5 +36,6 @@ namespace Common
         GetExercises,
         //Creators below
         CreateFocusPointDescriptor,
+        SetExerciseDiscriptor,
     };
 }

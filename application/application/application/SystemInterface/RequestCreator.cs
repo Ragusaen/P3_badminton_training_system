@@ -314,5 +314,14 @@ namespace application.SystemInterface
 
             return response.FocusPointDescriptor;
         }
+        public static void SetExerciseDiscriptor(ExerciseDescriptor exercise)
+        {
+            var request = new SetExerciseDescriptorRequest
+            {
+                Exercise = exercise
+            };
+
+            var response = SimpleRequest<SetExerciseDescriptorRequest, SetExerciseDescriptorResponse>(RequestType.SetExerciseDiscriptor, request);
+        }
     }
 }
