@@ -233,6 +233,7 @@
     <Compile Include="DAL\YearPlanSectionCast.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\CreateFocusPointDescriptorHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\DeletePlayerFocusPointsHandler.cs" />
+    <Compile Include="SystemInterface\Requests\Handlers\GetAllPracticeTeamsHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetExerciseHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetPlayerFocusPointsHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetPlayerHandler.cs" />
@@ -263,7 +264,7 @@
     <Compile Include="SystemInterface\Requests\Handlers\GetAllFocusPointDescriptorsHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetAllPlayersHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetPlayerFeedbackHandler.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\GetMemberPracticeTeamsHandler.cs" />
+    <Compile Include="SystemInterface\Requests\Handlers\GetPlayerPracticeTeamsHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetPlaySessionFeedback.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetPracticeSessionExercisesHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetPracticeSessionFocusPointsHandler.cs" />
@@ -279,6 +280,7 @@
     <Compile Include="SystemInterface\Requests\Handlers\SetCommentHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\SetPlayerFocusPointsHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\SetPlayerHandler.cs" />
+    <Compile Include="SystemInterface\Requests\Handlers\SetPlayerPracticeTeamsHandler.cs" />
     <Compile Include="SystemInterface\Requests\RequestManager.cs" />
     <Compile Include="Controller\UserManager.cs" />
   </ItemGroup>

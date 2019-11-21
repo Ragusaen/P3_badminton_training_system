@@ -5,7 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:forms="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
              mc:Ignorable="d"
-             x:Class="application.UI.PlayerProfilePage" BackgroundColor="White" NavigationPage.HasBackButton="False"
+             x:Class="application.UI.ProfilePage" BackgroundColor="White" NavigationPage.HasBackButton="False"
              x:Name="rootpage">
 
     <NavigationPage.TitleView>
@@ -20,7 +20,7 @@
             <StackLayout Margin="10,10,10,10">
                 <Label Text="{Binding Member.Name}" VerticalOptions="Start" HorizontalOptions="CenterAndExpand" FontSize="Large"/>
                 <Label Text="Team" VerticalOptions="Start" HorizontalOptions="StartAndExpand" FontSize="Medium"/>
-                <ListView ItemsSource="{Binding PracticeTeams}" VerticalScrollBarVisibility="Never" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding TeamListHeight}">
+                <ListView ItemsSource="{Binding PracticeTeams}" VerticalScrollBarVisibility="Never" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding PracticeTeamsListHeight}">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
@@ -40,7 +40,7 @@
 
                 <StackLayout x:Name="PlayerRelevant">
                     <Label Text="Focus Point" FontSize="Medium"/>
-                    <ListView x:Name="FocusPointList" VerticalScrollBarVisibility="Never" ItemSelected="ListView_OnItemSelected" ItemsSource="{Binding FocusPoints}" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding FocusPointListHeight}">
+                    <ListView x:Name="FocusPointList" VerticalScrollBarVisibility="Never" ItemSelected="ListView_OnItemSelected" ItemsSource="{Binding FocusPoints}" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding FocusPointsListHeight}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <ViewCell>

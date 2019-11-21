@@ -6,8 +6,9 @@ namespace Common.Model
 {
     public class ExerciseItem
     {
-        public int Id;
-        public ExerciseDescriptor ExerciseDescriptor;
-        public int Index;
+        public int Id { get; set; }
+        public ExerciseDescriptor ExerciseDescriptor { get; set; }
+        public int Index { get; set; }
+        public int Minutes { get; set; }
     }
 }

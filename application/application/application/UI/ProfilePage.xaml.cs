@@ -15,7 +15,7 @@ using Xamarin.Forms.Xaml;
 namespace application.UI
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class PlayerProfilePage : ContentPage
+    public partial class ProfilePage : ContentPage
     {
         private ProfilePageViewModel _vm;
 
@@ -40,7 +40,7 @@ namespace application.UI
             }
         };
 
-        public PlayerProfilePage(Member member)
+        public ProfilePage(Member member)
         {
             InitializeComponent();
 

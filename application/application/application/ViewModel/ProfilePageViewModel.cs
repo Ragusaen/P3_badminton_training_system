@@ -14,9 +14,12 @@ namespace application.ViewModel
 {
     class ProfilePageViewModel : BaseViewModel
     {
-        public Member Member;
-        public Player Player;
-        public Trainer Trainer;
+        public Member Member { get; set; }
+        public Player Player { get; set; }
+        public bool IsPlayer { get; set; }
+        public Trainer Trainer { get; set; }
+        public bool IsTrainer { get; set; }
+        public ProfilePageViewModel() { }
 
         private ObservableCollection<PracticeTeam> _practiceTeams;
 
@@ -37,20 +40,20 @@ namespace application.ViewModel
             set { SetProperty(ref _focusPoints, value); }
         }
 
-        private int _teamListHeight;
+        private int _practiceTeamsListHeight;
 
-        public int TeamListHeight
+        public int PracticeTeamsListHeight
         {
-            get { return _teamListHeight; }
-            set { SetProperty(ref _teamListHeight, value); }
+            get { return _practiceTeamsListHeight; }
+            set { SetProperty(ref _practiceTeamsListHeight, value); }
         }
 
-        private int _focusPointListHeight;
+        private int _focusPointsListHeight;
 
-        public int FocusPointListHeight
+        public int FocusPointsListHeight
         {
-            get { return _focusPointListHeight; }
-            set { SetProperty(ref _focusPointListHeight, value); }
+            get { return _focusPointsListHeight; }
+            set { SetProperty(ref _focusPointsListHeight, value); }
         }
 
         public ProfilePageViewModel(Member member)
@@ -61,23 +64,55 @@ namespace application.ViewModel
                 if ((Member.MemberType & MemberType.Player) > 0)
                 {
                     Player = RequestCreator.GetPlayer(Member.Id);
+
                     Player.FocusPointItems = RequestCreator.GetPlayerFocusPointItems(Player.Member.Id);
                     FocusPoints = new ObservableCollection<FocusPointItem>(Player.FocusPointItems);
-                    FocusPointListHeight = FocusPoints.Count * 45;
+                    FocusPointsListHeight = FocusPoints.Count * 45;
+
+                    Player.PracticeTeams = RequestCreator.GetPlayerPracticeTeams(Player);
+                    PracticeTeams = new ObservableCollection<PracticeTeam>(Player.PracticeTeams);
+                    PracticeTeamsListHeight = PracticeTeams.Count * 45;
                 }
                 else if ((Member.MemberType & MemberType.Trainer) > 0)
                 {
                     Trainer = new Trainer();
                 }
-
-                PracticeTeams = new ObservableCollection<PracticeTeam>(RequestCreator.GetMemberPracticeTeams(Member))
-                {
-                    new PracticeTeam() {Name = "U17"}, new PracticeTeam() {Name = "Senior"}
-                };
-
-                TeamListHeight = PracticeTeams.Count * 45;
             }
             CommentText = member?.Comment ?? "Click to add comment";
+        }
+
+        // Practice Team Section
+        private RelayCommand _addPracticeTeamCommand;
+
+        public RelayCommand AddPracticeTeamCommand
+        {
+            get
+            {
+                return _addPracticeTeamCommand ?? (_addPracticeTeamCommand = new RelayCommand(param => ExecuteAddPracticeTeam(param)));
+            }
+        }
+
+        private void ExecuteAddPracticeTeam(object param)
+        {
+            PracticeTeamPopupPage page = new PracticeTeamPopupPage(Player.PracticeTeams);
+            page.CallBackEvent += PracticeTeamPopupPageCallback;
+            PopupNavigation.Instance.PushAsync(page);
+        }
+
+        private void PracticeTeamPopupPageCallback(object sender, PracticeTeam e)
+        {
+            Player.PracticeTeams.Add(e);
+            PracticeTeams.Add(e);
+            PracticeTeams = new ObservableCollection<PracticeTeam>(PracticeTeams);
+            RequestCreator.SetPlayerPracticeTeams(Player, Player.PracticeTeams);
+            PracticeTeamsListHeight = PracticeTeams.Count * 45;
+        }
+
+        // Focus Point Section
+        public void PopupFocusPoint(FocusPointItem focusPoint)
+        {
+            StringAndHeaderPopup popup = new StringAndHeaderPopup(focusPoint.Descriptor);
+            PopupNavigation.Instance.PushAsync(popup);
         }
 
         private RelayCommand _addFocusPointCommand;
@@ -97,13 +132,6 @@ namespace application.ViewModel
             PopupNavigation.Instance.PushAsync(page);
         }
 
-        public void PopupFocusPoint(FocusPointItem focusPoint)
-        {
-            StringAndHeaderPopup popup = new StringAndHeaderPopup(focusPoint.Descriptor);
-            PopupNavigation.Instance.PushAsync(popup);
-        }
-
-
         private void FocusPointPopupPageCallback(object sender, FocusPointDescriptor e)
         {
             var item = new FocusPointItem
@@ -115,7 +143,7 @@ namespace application.ViewModel
 
             RequestCreator.SetPlayerFocusPoints(Player, Player.FocusPointItems);
 
-            FocusPointListHeight = FocusPoints.Count * 45;
+            FocusPointsListHeight = FocusPoints.Count * 45;
         }
 
         private RelayCommand _profileSettingCommand;
@@ -187,9 +215,10 @@ namespace application.ViewModel
         }
         private void DeleteListTeamItemClick(object param)
         {
-            PracticeTeam team = param as PracticeTeam;
-            PracticeTeams.Remove(team);
-            TeamListHeight = PracticeTeams.Count * 45; 
+            PracticeTeam practiceTeam = param as PracticeTeam;
+            PracticeTeams.Remove(practiceTeam);
+            PracticeTeamsListHeight = PracticeTeams.Count * 45;
+            //RequestCreator.DeletePlayerPracticeTeam(Member.Id, practiceTeam);
         }
         private RelayCommand _deleteListFocusItemCommand;
 
@@ -206,7 +235,7 @@ namespace application.ViewModel
             FocusPoints.Remove(focusPoint);
             Player.FocusPointItems.Remove(focusPoint);
             RequestCreator.DeletePlayerFocusPoints(Player.Member.Id, focusPoint);
-            FocusPointListHeight = FocusPoints.Count * 45;
+            FocusPointsListHeight = FocusPoints.Count * 45;
         }
 
         private string _commentText;    
