@@ -16,7 +16,7 @@ namespace Server.SystemInterface.Requests.Handlers
 
         protected override SetPlayerPracticeTeamsResponse InnerHandle(SetPlayerPracticeTeamsRequest request, member requester)
         {
-            if (requester.MemberType == (int) MemberType.Trainer || request.Player.Member.Id != requester.ID)
+            if (requester.MemberType != (int) MemberType.Trainer || request.Player.Member.Id != requester.ID)
                 return null;
             var db = new DatabaseEntities();
             var dbPlayer = db.members.Find(request.Player.Member.Id);

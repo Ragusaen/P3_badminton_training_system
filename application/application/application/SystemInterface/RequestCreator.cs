@@ -217,13 +217,14 @@ namespace application.SystemInterface
         }
 
         // Setters below
-        public static bool SetPlayer()
+        public static void SetPlayer(Player player)
         {
-            var request = new SetPlayerRequest();
+            var request = new SetPlayerRequest
+            {
+                Player = player
+            };
 
-            var response = SimpleRequest<SetPlayerRequest, SetPlayerResponse>(RequestType.SetPlayer, request);
-
-            return response.WasSuccessful;
+            SimpleRequest<SetPlayerRequest, SetPlayerResponse>(RequestType.SetPlayer, request);
         }
 
         public static bool SetPlayerFocusPoints(Player player, List<FocusPointItem> focusPointItems)
@@ -262,6 +263,17 @@ namespace application.SystemInterface
 
             SimpleRequest<SetPlayerPracticeTeamsRequest, SetPlayerPracticeTeamsResponse>(
                 RequestType.SetPlayerPracticeTeams, request);
+        }
+
+        public static void ChangeTrainerPrivileges(Member member)
+        {
+            var request = new ChangeTrainerPrivilegesRequest
+            {
+                Member = member
+            };
+
+            SimpleRequest<ChangeTrainerPrivilegesRequest, ChangeTrainerPrivilegesResponse>(
+                RequestType.ChangeTrainerPrivileges, request);
         }
 
         // Deleters below

@@ -46,9 +46,11 @@ namespace Server.SystemInterface.Requests
                 {RequestType.GetAdminPage, new GetAdminPageHandler() },
                 {RequestType.GetAllPracticeTeams, new GetAllPracticeTeamsHandler() },
                 //Setters below
+                {RequestType.SetPlayer, new SetPlayerHandler() },
                 {RequestType.SetPlayerFocusPoints, new SetPlayerFocusPointsHandler() },
                 {RequestType.SetComment, new SetCommentHandler() },
                 {RequestType.SetPlayerPracticeTeams, new SetPlayerPracticeTeamsHandler() },
+                {RequestType.ChangeTrainerPrivileges, new ChangeTrainerPrivilegesHandler() },
                 //Deleters below
                 {RequestType.DeletePlayerFocusPoint, new DeletePlayerFocusPointsHandler() },
                 {RequestType.DeletePlayerPracticeTeam, new DeletePlayerPracticeTeamHandler() },

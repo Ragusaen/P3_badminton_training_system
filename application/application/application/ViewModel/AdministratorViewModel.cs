@@ -134,7 +134,20 @@ namespace application.ViewModel
         }
         private void NewFocusPointClick(object param)
         {
-            PopupNavigation.Instance.PushAsync(new CreateFocusPointPopupPage(false));
+            var newPage = new CreateFocusPointPopupPage(true);
+            PopupNavigation.Instance.PushAsync(newPage);
+            ((CreateFocusPointPopupViewModel)newPage.BindingContext).CallBackEvent += OnCallBackEvent;
+        }
+
+        private void OnCallBackEvent(object sender, EventArgs e)
+        {
+            FocusPointList = new ObservableCollection<FocusPointDescriptor>(RequestCreator.GetFocusPoints());
+        }
+
+        public void PopupFocusPoint(FocusPointDescriptor focusPoint)
+        {
+            StringAndHeaderPopup popup = new StringAndHeaderPopup(focusPoint);
+            PopupNavigation.Instance.PushAsync(popup);
         }
     }
 }

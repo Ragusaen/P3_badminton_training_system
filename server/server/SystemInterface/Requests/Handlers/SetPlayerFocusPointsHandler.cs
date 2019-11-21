@@ -15,14 +15,14 @@ namespace Server.SystemInterface.Requests.Handlers
         private static Logger _log = LogManager.GetCurrentClassLogger();
         protected override SetPlayerFocusPointsResponse InnerHandle(SetPlayerFocusPointsRequest request, member requester)
         {
+            if (!(requester.MemberType == (int) MemberType.Trainer || requester.ID == request.Player.Member.Id))
+                return null;
+
             var db = new DatabaseEntities();
             var dbPlayer = db.members.Find(request.Player.Member.Id);
 
             if (dbPlayer == null)
                 return new SetPlayerFocusPointsResponse { WasSuccessful = false };
-
-            //if (!AllowedRequest(dbPlayer, requester))
-            //    return new SetPlayerFocusPointsResponse {WasSuccessful = false};
 
             foreach (var fp in request.FocusPoints)
             {
@@ -42,11 +42,6 @@ namespace Server.SystemInterface.Requests.Handlers
 
             db.SaveChanges();
             return new SetPlayerFocusPointsResponse {WasSuccessful = true};
-        }
-
-        public bool AllowedRequest(member player, member requester)
-        {
-            return requester.MemberType == (int)MemberType.Trainer || requester.ID == player.ID;
         }
     }
 }
