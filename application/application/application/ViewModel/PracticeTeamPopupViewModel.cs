@@ -23,7 +23,7 @@ namespace application.ViewModel
                     FocusPoints.OrderByDescending(p => p.Descriptor.Name);
                 else*/
                 FilteredPracticeTeams = new ObservableCollection<PracticeTeam>(_filteredPracticeTeams.OrderByDescending(
-                        x => StringSearch.LongestCommonSubsequence(x.Name.ToLower(), SearchText.ToLower()))
+                        x => StringExtension.LongestCommonSubsequence(x.Name.ToLower(), SearchText.ToLower()))
                         .ThenBy(x => x.Name.Length).ToList());
             }
         }

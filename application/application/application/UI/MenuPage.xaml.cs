@@ -26,7 +26,7 @@ namespace application.UI
             MenuList = new List<MasterPageItem>();
 
             MenuList.Add(new MasterPageItem() { Title = "Schedule", TargetType = typeof(SchedulePage) }); //Set icons
-            MenuList.Add(new MasterPageItem() { Title = "Profile", TargetType = typeof(PlayerProfilePage) }); //Set icons
+            MenuList.Add(new MasterPageItem() { Title = "Profile", TargetType = typeof(ProfilePage) }); //Set icons
             MenuList.Add(new MasterPageItem() { Title = "Administrator", TargetType = typeof(AdministratorPage) }); //Set icons
 
             NavigationList.ItemsSource = MenuList;
@@ -40,8 +40,8 @@ namespace application.UI
         {
             if (e.SelectedItem != null)
             {
-                if (((MasterPageItem) e.SelectedItem).TargetType == typeof(PlayerProfilePage))
-                    (Detail as NavigationPage).PushAsync(new PlayerProfilePage(RequestCreator.LoggedInMember));
+                if (((MasterPageItem) e.SelectedItem).TargetType == typeof(ProfilePage))
+                    (Detail as NavigationPage).PushAsync(new ProfilePage(RequestCreator.LoggedInMember));
                 else
                     (Detail as NavigationPage).PushAsync((Page)Activator.CreateInstance(((MasterPageItem)e.SelectedItem).TargetType));
 
