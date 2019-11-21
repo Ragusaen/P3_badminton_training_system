@@ -19,10 +19,7 @@ namespace application.ViewModel
             set
             {
                 SetProperty(ref _searchText, value);
-                /*if (string.IsNullOrEmpty(_searchtext))
-                    FocusPoints.OrderByDescending(p => p.Descriptor.Name);
-                else*/
-                Exercises.OrderByDescending((x => StringExtension.LongestCommonSubsequence(x.Name.ToLower(), SearchText.ToLower()))).ThenBy(x => x.Name.Length).ToList();
+                Exercises = new ObservableCollection<ExerciseDescriptor> (Exercises.OrderByDescending((x => StringExtension.LongestCommonSubsequence(x.Name.ToLower(), SearchText.ToLower()))).ThenBy(x => x.Name.Length).ToList());
             }
         }
 
@@ -37,7 +34,6 @@ namespace application.ViewModel
         public ExercisePopupViewModel(PracticeSession practice)
         {
             var list = RequestCreator.GetExercises();
-            list = list.Where(p => practice.Exercises.All(q => q.ExerciseDescriptor.Id != p.Id)).ToList();
             Exercises = new ObservableCollection<ExerciseDescriptor>(list);
         }
 

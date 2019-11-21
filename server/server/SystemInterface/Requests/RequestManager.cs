@@ -43,6 +43,7 @@ namespace Server.SystemInterface.Requests
                 {RequestType.GetPracticeTeamYearPlan, new GetPracticeTeamYearPlanHandler() },
                 {RequestType.GetPlayer, new GetPlayerHandler() },
                 {RequestType.GetTokenMember, new GetTokenMemberHandler() },
+                {RequestType.GetExercises, new GetExerciseHandler() },
                 //Setters below
                 {RequestType.SetPlayerFocusPoints, new SetPlayerFocusPointsHandler() },
                 {RequestType.SetComment, new SetCommentHandler() },
@@ -50,6 +51,7 @@ namespace Server.SystemInterface.Requests
                 {RequestType.DeletePlayerFocusPoints, new DeletePlayerFocusPointsHandler() },
                 //Creators below
                 {RequestType.CreateFocusPointDescriptor, new CreateFocusPointDescriptorHandler() },
+                {RequestType.SetExerciseDiscriptor, new SetExerciseDescriptorHandler() },
             }; 
 
         public byte[] Parse(byte[] request)

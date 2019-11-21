@@ -277,6 +277,7 @@
     <Compile Include="SystemInterface\Requests\Handlers\LoginHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\RequestHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\SetCommentHandler.cs" />
+    <Compile Include="SystemInterface\Requests\Handlers\SetExerciseDescriptorHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\SetPlayerFocusPointsHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\SetPlayerHandler.cs" />
     <Compile Include="SystemInterface\Requests\RequestManager.cs" />
@@ -295,13 +296,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="cert.pfx">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <EntityDeploy Include="DAL\DatabaseModel.edmx">
       <Generator>EntityModelCodeGenerator</Generator>
       <LastGenOutput>DatabaseModel.Designer.cs</LastGenOutput>
     </EntityDeploy>
+    <None Include="cert.pfx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="DAL\DatabaseModel.edmx.diagram">
       <DependentUpon>DatabaseModel.edmx</DependentUpon>
     </None>
