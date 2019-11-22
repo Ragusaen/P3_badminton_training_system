@@ -229,9 +229,9 @@
     </Compile>
     <Compile Include="SystemInterface\Requests\Handlers\ChangeTrainerPrivilegesHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\CreateFocusPointDescriptorHandler.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\DeleteFocusPointDescriptor.cs" />
+    <Compile Include="SystemInterface\Requests\Handlers\DeleteFocusPointDescriptorHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\DeletePlayerFocusPointsHandler.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\DeletePracticeTeam.cs" />
+    <Compile Include="SystemInterface\Requests\Handlers\DeletePracticeTeamHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetAdminPageHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\DeletePlayerPracticeTeamHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetAllPracticeTeamsHandler.cs" />

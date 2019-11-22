@@ -33,6 +33,8 @@ namespace Common
         //Deleters below
         DeletePlayerFocusPoint,
         DeletePlayerPracticeTeam,
+        DeleteFocusPointDescriptor,
+        DeletePracticeTeam,
         GetExercises,
         //Creators below
         CreateFocusPointDescriptor,

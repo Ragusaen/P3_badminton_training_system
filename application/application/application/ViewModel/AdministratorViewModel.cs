@@ -94,7 +94,7 @@ namespace application.ViewModel
             if (answer)
             {
                 TeamList.Remove(prac);
-                //RequestCreator.DeletePracticeTeam(fp); //TODO update model
+                RequestCreator.DeletePracticeTeam(prac);
             }
         }
 
@@ -113,7 +113,7 @@ namespace application.ViewModel
             if (answer)
             {
                 FocusPointList.Remove(fp);
-                //RequestCreator.DeleteFocusPointsDescriptor(fp); //TODO update model
+                RequestCreator.DeleteFocusPointDescriptor(fp);
             }
         }
 

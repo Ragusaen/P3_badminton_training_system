@@ -22,7 +22,7 @@ namespace Server.DAL
     
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            throw new UnintentionalCodeFirstException();
+            throw new UnintentionalCodeFirstException(); //TODO: enable cascade deleting for descriptors
         }
     
         public virtual DbSet<account> accounts { get; set; }

@@ -69,7 +69,12 @@
                                 <ViewCell>
                                     <StackLayout>
                                             <Grid Padding="0" Margin="0" RowSpacing="0">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="8*"/>
+                                                    <ColumnDefinition Width="1*"/>
+                                                </Grid.ColumnDefinitions>
                                                 <Label Grid.Column="0" Text="{Binding Name}" VerticalOptions="Center"/>
+                                                <Button Grid.Column="1" Text="❌" BackgroundColor="White" WidthRequest="50" VerticalOptions="End" Command="{Binding BindingContext.DeleteFocusPointCommand, Source={x:Reference rootpage}}" CommandParameter="{Binding}"/>
                                             </Grid>
                                     </StackLayout>
                                 </ViewCell>

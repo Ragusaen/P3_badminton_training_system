@@ -302,6 +302,28 @@ namespace application.SystemInterface
             SimpleRequest<DeletePlayerPracticeTeamRequest, DeletePlayerPracticeTeamResponse>(
                 RequestType.DeletePlayerPracticeTeam, request);
         }
+
+        public static void DeleteFocusPointDescriptor(FocusPointDescriptor fp)
+        {
+            var request = new DeleteFocusPointDescriptorRequest
+            {
+                FocusPointDescriptor = fp
+            };
+
+            SimpleRequest<DeleteFocusPointDescriptorRequest, DeleteFocusPointDescriptorResponse>(
+                RequestType.DeleteFocusPointDescriptor, request);
+        }
+
+        public static void DeletePracticeTeam(PracticeTeam team)
+        {
+            var request = new DeletePracticeTeamRequest
+            {
+                PracticeTeam = team
+            };
+
+            SimpleRequest<DeletePracticeTeamRequest, DeletePracticeTeamResponse>(
+                RequestType.DeletePracticeTeam, request);
+        }
         // creators below
         public static FocusPointDescriptor CreateFocusPointDescriptor(FocusPointDescriptor fp)
         {
