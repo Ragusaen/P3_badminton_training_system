@@ -38,5 +38,6 @@ namespace Common
         CreateFocusPointDescriptor,
         SetExerciseDiscriptor,
         GetAllTrainers,
+        SetPracticeSession,
     };
 }

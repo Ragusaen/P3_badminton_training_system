@@ -332,5 +332,16 @@ namespace application.SystemInterface
 
             return response.Trainers;
         }
+        public static bool SetPracticeSession(PracticeSession practice)
+        {
+            var request = new SetPracticeSessionRequest
+            {
+                Practice = practice
+            };
+
+            var response =
+                SimpleRequest<SetPracticeSessionRequest, SetPracticeSessionResponse>(
+                    RequestType.SetPracticeSession, request);
+        }
     }
 }

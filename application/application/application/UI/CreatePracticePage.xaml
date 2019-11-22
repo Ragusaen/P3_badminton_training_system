@@ -21,7 +21,6 @@
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
                     <RowDefinition Height="40"/>
                 </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
@@ -35,32 +34,26 @@
                     </Label.GestureRecognizers>
                 </Label>
                     <Label Grid.Row="1" Grid.Column="0" Text="Date" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
-            <StackLayout Orientation="Horizontal" Grid.Row="1" Grid.Column="1">
-                <DatePicker MinimumDate="{Binding MinDate}" Date="{Binding SelectedDateStart}"/>
-                <Label Text="-" VerticalOptions="Center"/>
-                    <DatePicker MinimumDate="{Binding SelectedDateStart}" Date="{Binding SelectedDateEnd}"/>
-            </StackLayout>
-            <Label Grid.Row="2" Grid.Column="0" Text="Time" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
-            <StackLayout Orientation="Horizontal" Grid.Row="2" Grid.Column="1" VerticalOptions="Center">
-                <TimePicker Format="HH:mm" Time="{Binding SelectedTimeStart}" x:Name="StartDate"/>
-                <Label Text="-" VerticalOptions="Center"/>
+                <StackLayout Orientation="Horizontal" Grid.Row="1" Grid.Column="1">
+                    <DatePicker MinimumDate="{Binding MinDate}" Date="{Binding SelectedDateStart}"/>
+                    <TimePicker Format="HH:mm" Time="{Binding SelectedTimeStart}" x:Name="StartDate"/>
+                    <Label Text="-" VerticalOptions="Center"/>
                     <TimePicker Format="HH:mm" Time="{Binding SelectedTimeEnd}" x:Name="EndDate"/>
-            </StackLayout>
-            <Label Grid.Row="3" Grid.Column="0" Text="Trainer" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
-                <Picker Grid.Row="3" Grid.Column="1" SelectedItem="{Binding Practice.Trainer}"  ItemDisplayBinding="{Binding Member.Name}" VerticalOptions="Center" ItemsSource="{Binding Trainers}"/>
-                <Label Grid.Row="4" Grid.Column="0" Text="Location" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
-                <Entry Grid.Row="4" Grid.Column="1" Text="{Binding Practice.Location}"  Placeholder="Stjernevej 5, 9200 Aalborg" VerticalOptions="Center"/>
+                </StackLayout>
+
+                <Label Grid.Row="2" Grid.Column="0" Text="Trainer" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
+                <Picker Grid.Row="2" Grid.Column="1" SelectedItem="{Binding Practice.Trainer}"  ItemDisplayBinding="{Binding Member.Name}" VerticalOptions="Center" ItemsSource="{Binding Trainers}"/>
+                <Label Grid.Row="3" Grid.Column="0" Text="Location" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
+                <Entry Grid.Row="3" Grid.Column="1" Text="{Binding Practice.Location}"  Placeholder="Stjernevej 5, 9200 Aalborg" VerticalOptions="Center"/>
             </Grid>
-            <Frame CornerRadius="5" HasShadow="True" Margin="15,0,15,0">
+            <Frame CornerRadius="4" HasShadow="True" Margin="15,0,15,0">
                     <StackLayout>
-            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
-                <Image Source="" x:Name="BullsEyeIcon" HeightRequest="40"/>
-                <Label Text="Focus Points" FontSize="Title" VerticalOptions="Center"/>
-            </StackLayout>
-            <Label Text="Main" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
-            <Label Text="{Binding YearPlan.FocusPoint}" FontSize="18" HorizontalTextAlignment="Center" VerticalOptions="Center"/>
-                    <Label Text="Today" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
-                    <ListView VerticalScrollBarVisibility="Never" ItemsSource="{Binding FocusPoints}" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding FocusPointListHeight}">
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
+                        <Image Source="" x:Name="BullsEyeIcon" HeightRequest="40"/>
+                        <Label Text="Focus Points" FontSize="Title" VerticalOptions="Center"/>
+                    </StackLayout>
+                    <Label Text="Select Main Focus Point" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
+                    <ListView VerticalScrollBarVisibility="Never" ItemsSource="{Binding FocusPoints}" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding FocusPointListHeight}" SelectedItem="{Binding Practice.MainFocusPoint}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <ViewCell>
