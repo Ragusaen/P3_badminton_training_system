@@ -12,11 +12,14 @@ namespace Server.SystemInterface.Requests.Handlers
 {
     class ChangeTrainerPrivilegesHandler : MiddleRequestHandler<ChangeTrainerPrivilegesRequest, ChangeTrainerPrivilegesResponse>
     {
-        private static Logger _log = LogManager.GetCurrentClassLogger();
         protected override ChangeTrainerPrivilegesResponse InnerHandle(ChangeTrainerPrivilegesRequest request, member requester)
         {
-            if (requester.MemberType != (int)MemberType.Trainer)
-                return null;
+            if (!((Common.Model.MemberType)requester.MemberType).HasFlag(MemberType.Trainer))
+            {
+                RequestMember = request.Member;
+                return new ChangeTrainerPrivilegesResponse { AccessDenied = true };
+            }
+
             var db = new DatabaseEntities();
             db.members.Find(request.Member.Id).MemberType = (int)request.Member.MemberType;
 

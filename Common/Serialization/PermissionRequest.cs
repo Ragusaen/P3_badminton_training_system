@@ -14,6 +14,6 @@ namespace Common.Serialization
     [Serializable]
     public class PermissionResponse : Response
     {
-        public bool AccessDenied = true;
+        public bool AccessDenied = false;
     }
 }

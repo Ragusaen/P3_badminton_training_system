@@ -12,11 +12,14 @@ namespace Server.SystemInterface.Requests.Handlers
 {
     class DeletePlayerPracticeTeamHandler : MiddleRequestHandler<DeletePlayerPracticeTeamRequest, DeletePlayerPracticeTeamResponse>
     {
-        private static Logger _log = LogManager.GetCurrentClassLogger();
         protected override DeletePlayerPracticeTeamResponse InnerHandle(DeletePlayerPracticeTeamRequest request, member requester)
         {
-            if (!(requester.MemberType == (int) MemberType.Trainer || request.Player.Member.Id == requester.ID))
-                return null;
+            if (!(((Common.Model.MemberType)requester.MemberType).HasFlag(MemberType.Trainer) ||
+                  requester.ID == request.Player.Member.Id))
+            {
+                RequestMember = request.Player.Member;
+                return new DeletePlayerPracticeTeamResponse { AccessDenied = true };
+            }
 
             var db = new DatabaseEntities();
             var dbPt = db.practiceteams.Find(request.PracticeTeam.Id);

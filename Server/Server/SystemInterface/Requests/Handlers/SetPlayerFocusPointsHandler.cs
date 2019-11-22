@@ -12,17 +12,22 @@ namespace Server.SystemInterface.Requests.Handlers
 {
     class SetPlayerFocusPointsHandler : MiddleRequestHandler<SetPlayerFocusPointsRequest, SetPlayerFocusPointsResponse>
     {
-        private static Logger _log = LogManager.GetCurrentClassLogger();
-        protected override SetPlayerFocusPointsResponse InnerHandle(SetPlayerFocusPointsRequest request, member requester)
+        protected override SetPlayerFocusPointsResponse InnerHandle(SetPlayerFocusPointsRequest request,
+            member requester)
         {
-            if (!(requester.MemberType == (int) MemberType.Trainer || requester.ID == request.Player.Member.Id))
-                return null;
+
+            if (!(((Common.Model.MemberType) requester.MemberType).HasFlag(MemberType.Trainer) ||
+                  requester.ID == request.Player.Member.Id))
+            {
+                RequestMember = request.Player.Member;
+                return new SetPlayerFocusPointsResponse {AccessDenied = true};
+            }
 
             var db = new DatabaseEntities();
             var dbPlayer = db.members.Find(request.Player.Member.Id);
 
             if (dbPlayer == null)
-                return new SetPlayerFocusPointsResponse { WasSuccessful = false };
+                return new SetPlayerFocusPointsResponse {WasSuccessful = false};
 
             foreach (var fp in request.FocusPoints)
             {
@@ -33,7 +38,8 @@ namespace Server.SystemInterface.Requests.Handlers
                     dbPlayer.focuspoints.Add((Server.DAL.focuspoint) fp.Descriptor);
                     _log.Debug($"New FocusPointDescriptor: {fp.Descriptor.Name}: {fp.Descriptor.Description}");
                 }
-                else if (dbPlayer.focuspoints.SingleOrDefault(p => p.ID == dbFp.ID) == null) // if focus is not already assigned to player
+                else if (dbPlayer.focuspoints.SingleOrDefault(p => p.ID == dbFp.ID) == null
+                ) // if focus is not already assigned to player
                 {
                     dbPlayer.focuspoints.Add(dbFp);
                     _log.Debug($"{dbPlayer.Name} assigned FocusPointItem: {fp.Descriptor.Name}");

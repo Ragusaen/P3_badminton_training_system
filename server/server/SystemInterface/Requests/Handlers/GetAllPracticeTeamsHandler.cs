@@ -12,7 +12,6 @@ namespace Server.SystemInterface.Requests.Handlers
 {
     class GetAllPracticeTeamsHandler : MiddleRequestHandler<GetAllPracticeTeamsRequest, GetAllPracticeTeamsResponse>
     {
-        private static Logger _log = LogManager.GetCurrentClassLogger();
         protected override GetAllPracticeTeamsResponse InnerHandle(GetAllPracticeTeamsRequest request, member requester)
         {
             var db = new DatabaseEntities();
