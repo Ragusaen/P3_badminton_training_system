@@ -7,6 +7,7 @@ using System.Text;
 using application.Controller;
 using application.SystemInterface;
 using application.UI;
+using Common;
 using Common.Model;
 using Rg.Plugins.Popup.Services;
 using Xamarin.Forms;
@@ -50,8 +51,8 @@ namespace application.ViewModel
 
         public int FocusPointsListHeight
         {
-            get { return _focusPointsListHeight; }
-            set { SetProperty(ref _focusPointsListHeight, value); }
+            get => _focusPointsListHeight;
+            set => SetProperty(ref _focusPointsListHeight, value); 
         }
 
         public ProfilePageViewModel(Member member)
@@ -62,6 +63,7 @@ namespace application.ViewModel
                 if ((Member.MemberType & MemberType.Player) > 0)
                 {
                     Player = RequestCreator.GetPlayer(Member.Id);
+                    Player.Member = Member;
 
                     Player.FocusPointItems = RequestCreator.GetPlayerFocusPointItems(Player.Member.Id);
                     FocusPoints = new ObservableCollection<FocusPointItem>(Player.FocusPointItems);
@@ -74,6 +76,14 @@ namespace application.ViewModel
                 else if ((Member.MemberType & MemberType.Trainer) > 0)
                 {
                     Trainer = new Trainer();
+                    Trainer.Member = Member;
+
+                    ChangeMemberTypeTitle = "This Member Is a Trainer";
+                    ChangeMemberTypeQuery = "Unmake Trainer";
+
+                    //TODO: handler for fetching a trainers practice teams
+                    //Trainer.PracticeTeams = RequestCreator.GetPlayerPracticeTeams(Player);
+                    //PracticeTeams = new ObservableCollection<PracticeTeam>(Player.PracticeTeams);
                 }
             }
             CommentText = member?.Comment ?? "Click to add comment";
@@ -140,7 +150,6 @@ namespace application.ViewModel
             FocusPoints.Add(item);
 
             RequestCreator.SetPlayerFocusPoints(Player, Player.FocusPointItems);
-
             FocusPointsListHeight = FocusPoints.Count * 45;
         }
 
@@ -154,24 +163,36 @@ namespace application.ViewModel
             }
         }
 
+        private string ChangeMemberTypeTitle = "This Member Is Not a Trainer";
+        private string ChangeMemberTypeQuery = "Make Trainer";
         private async void ExecuteProfileSettingTap(object param)
         {
-            string action = await Application.Current.MainPage.DisplayActionSheet("Settings", "Cancel", null, "Change Password", "Change Member Type");
+            string action;
+            if (Trainer != null)
+            {
+                action = await Application.Current.MainPage.DisplayActionSheet("Settings", "Cancel", null, "Change Password", "Change Member Type");
+            }
+            else
+            {
+                action = await Application.Current.MainPage.DisplayActionSheet("Settings", "Cancel", null, "Change Password");
+            }
 
             if (action == "Change Password")
                 await Navigation.PushAsync(new EditUserInfoPage(Member));
             else if (action == "Change Member Type")
             {
-                string rights = await Application.Current.MainPage.DisplayActionSheet("Choose a Member Type", "Cancel", null, "Player", "Trainer", "Player and Trainer", "Neither Player nor Trainer");
+                string newRights = await Application.Current.MainPage.DisplayActionSheet(ChangeMemberTypeTitle, "Cancel", null, ChangeMemberTypeQuery);
 
-                if (rights == "Neither Player nor Trainer")
-                    Player.Member.MemberType = MemberType.None;
-                else if (rights == "Player")
-                    Player.Member.MemberType = MemberType.Player;
-                else if (rights == "Trainer")
-                    Player.Member.MemberType = MemberType.Trainer;
-                else if (rights == "Player and Trainer")
-                    Player.Member.MemberType = MemberType.Both;
+                if (newRights == "Make Trainer")
+                {
+                    Member.MemberType |= MemberType.Trainer;
+                }
+                else if (newRights == "Unmake Trainer")
+                {
+                    Member.MemberType &= ~MemberType.Trainer;
+                }
+
+                RequestCreator.ChangeTrainerPrivileges(Member);
             }
         }
 

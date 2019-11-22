@@ -29,7 +29,7 @@
                 <ColumnDefinition Width="5*"/>
             </Grid.ColumnDefinitions>
             <Label Grid.Row="0" Grid.Column="0" Text="Team" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
-                <Label Grid.Row="0" Grid.Column="1" VerticalOptions="Center">
+                <Label Grid.Row="0" Grid.Column="1" VerticalOptions="Center" Text="{Binding Practice.PracticeTeam.Name}" FontSize="18">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding TeamCommand}"/>
                     </Label.GestureRecognizers>
@@ -42,12 +42,12 @@
             </StackLayout>
             <Label Grid.Row="2" Grid.Column="0" Text="Time" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
             <StackLayout Orientation="Horizontal" Grid.Row="2" Grid.Column="1" VerticalOptions="Center">
-                <TimePicker Format="HH:mm" Time="{Binding SelectedTimeStart}"/>
+                <TimePicker Format="HH:mm" Time="{Binding SelectedTimeStart}" x:Name="StartDate"/>
                 <Label Text="-" VerticalOptions="Center"/>
-                <TimePicker Format="HH:mm" Time="{Binding SelectedTimeEnd}"/>
+                    <TimePicker Format="HH:mm" Time="{Binding SelectedTimeEnd}" x:Name="EndDate"/>
             </StackLayout>
             <Label Grid.Row="3" Grid.Column="0" Text="Trainer" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
-                <Picker Grid.Row="3" Grid.Column="1" SelectedItem="{Binding Practice.Trainer}"  VerticalOptions="Center" ItemsSource="{Binding Trainers}"/>
+                <Picker Grid.Row="3" Grid.Column="1" SelectedItem="{Binding Practice.Trainer}"  ItemDisplayBinding="{Binding Member.Name}" VerticalOptions="Center" ItemsSource="{Binding Trainers}"/>
                 <Label Grid.Row="4" Grid.Column="0" Text="Location" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
                 <Entry Grid.Row="4" Grid.Column="1" Text="{Binding Practice.Location}"  Placeholder="Stjernevej 5, 9200 Aalborg" VerticalOptions="Center"/>
             </Grid>
@@ -81,7 +81,7 @@
             <Button Text="Add new FocusPoint" Command="{Binding AddNewFocusPointCommand}"/>
 
 
-            <Label Grid.Row="8" Grid.Column="0" Grid.ColumnSpan="2" Text="Practice Plan" TextColor="White" FontSize="Title" FontAttributes="Bold" HorizontalTextAlignment="Center" BackgroundColor="Red" HorizontalOptions="FillAndExpand" Margin="0,10,0,0"/>
+            <Label Text="Practice Plan" TextColor="White" FontSize="Title" FontAttributes="Bold" HorizontalTextAlignment="Center" BackgroundColor="Red" HorizontalOptions="FillAndExpand" Margin="0,10,0,0"/>
             <ListView ItemsSource="{Binding PlanElement}" RowHeight="235" Margin="15,0,15,0" HeightRequest="{Binding PlanHeight}" VerticalScrollBarVisibility="Never" SeparatorVisibility="None">
                 <ListView.ItemTemplate>
                     <DataTemplate>

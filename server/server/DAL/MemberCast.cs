@@ -35,11 +35,12 @@ namespace Server.DAL
         public static explicit operator Common.Model.Player(member m)
         {
             CheckMemberType(m.MemberType, Common.Model.MemberType.Player);
-            return new Player()
+            return new Player
             {
                 Sex = (Sex)m.Sex,
                 BadmintonPlayerId = m.BadmintonPlayerID.GetValueOrDefault(),
                 Member = (Common.Model.Member)m,
+                OnRankList = m.OnRankList,
                 Rankings = (PlayerRanking)m.ranklist
             };
         }

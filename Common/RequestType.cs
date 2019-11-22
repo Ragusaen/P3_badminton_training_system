@@ -29,6 +29,7 @@ namespace Common
         SetPlayerFocusPoints,
         SetComment,
         SetPlayerPracticeTeams,
+        ChangeTrainerPrivileges,
         //Deleters below
         DeletePlayerFocusPoint,
         DeletePlayerPracticeTeam,
@@ -36,5 +37,6 @@ namespace Common
         //Creators below
         CreateFocusPointDescriptor,
         SetExerciseDiscriptor,
+        GetAllTrainers,
     };
 }

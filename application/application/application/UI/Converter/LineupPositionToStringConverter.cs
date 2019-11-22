@@ -11,8 +11,8 @@ namespace application.UI.Converter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            Tuple<Lineup.PositionType, int> pos = (Tuple<Lineup.PositionType, int>)value;
-            string res = pos.Item2 + ". ";
+            var pos = ((Lineup.PositionType, int))value;
+            string res = (pos.Item2 + 1) + ". ";
 
             switch (pos.Item1)
             {

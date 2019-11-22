@@ -47,15 +47,18 @@ namespace Server.SystemInterface.Requests
                 {RequestType.GetAllPracticeTeams, new GetAllPracticeTeamsHandler() },
                 {RequestType.GetExercises, new GetExerciseHandler() },
                 //Setters below
+                {RequestType.SetPlayer, new SetPlayerHandler() },
                 {RequestType.SetPlayerFocusPoints, new SetPlayerFocusPointsHandler() },
                 {RequestType.SetComment, new SetCommentHandler() },
                 {RequestType.SetPlayerPracticeTeams, new SetPlayerPracticeTeamsHandler() },
+                {RequestType.ChangeTrainerPrivileges, new ChangeTrainerPrivilegesHandler() },
                 //Deleters below
                 {RequestType.DeletePlayerFocusPoint, new DeletePlayerFocusPointsHandler() },
                 {RequestType.DeletePlayerPracticeTeam, new DeletePlayerPracticeTeamHandler() },
                 //Creators below
                 {RequestType.CreateFocusPointDescriptor, new CreateFocusPointDescriptorHandler() },
                 {RequestType.SetExerciseDiscriptor, new SetExerciseDescriptorHandler() },
+                {RequestType.GetAllTrainers, new GetAllTrainersHandler() },
             }; 
 
         public byte[] Parse(byte[] request)

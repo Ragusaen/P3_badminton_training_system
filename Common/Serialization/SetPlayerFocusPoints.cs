@@ -7,14 +7,14 @@ using Common.Model;
 namespace Common.Serialization
 {
     [Serializable, XmlRoot]
-    public class SetPlayerFocusPointsRequest : Request
+    public class SetPlayerFocusPointsRequest : PermissionRequest
     {
         public Player Player;
         public List<FocusPointItem> FocusPoints;
     }
 
     [Serializable, XmlRoot]
-    public class SetPlayerFocusPointsResponse : Response
+    public class SetPlayerFocusPointsResponse : PermissionResponse
     {
         public bool WasSuccessful;
     }

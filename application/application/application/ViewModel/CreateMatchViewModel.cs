@@ -117,6 +117,57 @@ namespace application.ViewModel
             }
         }
 
+        private int _season;
+
+        public int Season
+        {
+            get { return _season; }
+            set
+            {
+                if (SetProperty(ref _season, value))
+                {
+                    VerifyLineupCommand.RaiseCanExecuteChanged();
+                }
+            }
+        }
+
+        private int _leagueRound;
+
+        public int LeagueRound
+        {
+            get { return _leagueRound; }
+            set 
+            {
+                if (SetProperty(ref _leagueRound, value))
+                {
+                    VerifyLineupCommand.RaiseCanExecuteChanged();
+                }
+            }
+        }
+
+        private int _teamIndex;
+
+        public int TeamIndex
+        {
+            get { return _teamIndex; }
+            set
+            {
+                if (SetProperty(ref _teamIndex, value))
+                {
+                    VerifyLineupCommand.RaiseCanExecuteChanged();
+                }
+            }
+        }
+
+        private int _lineupHeight;
+
+        public int LineupHeight
+        {
+            get { return _lineupHeight; }
+            set { SetProperty(ref _lineupHeight, value); }
+        }
+
+
         public List<string> LeagueNames
         {
             get { return Enum.GetNames(typeof(TeamMatch.Leagues)).Select(p => StringExtension.SplitCamelCase(p)).ToList(); }
@@ -130,18 +181,35 @@ namespace application.ViewModel
             {
                 if (SetProperty(ref _selectedLeague, value))
                 {
-                    //TODO:
+                    SetLineupTemplate(_selectedLeague);
                 }
             }
         }
 
+        private void SetLineupTemplate(TeamMatch.Leagues value)
+        {
+            var positions = new Dictionary<(Lineup.PositionType, int), Position>();
+            var template = Lineup.LeaguePositions[value];
+            foreach (var group in template)
+            {
+                for (int i = 0; i < group.Value; i++)
+                {
+                    positions.Add((group.Key, i), new Position());
+                }
+            }
+            Positions = positions;
+        }
 
-        private Dictionary<Tuple<Lineup.PositionType, int>, Position> _positions;
+        private Dictionary<(Lineup.PositionType, int), Position> _positions;
 
-        public Dictionary<Tuple<Lineup.PositionType, int>, Position> Positions
+        public Dictionary<(Lineup.PositionType, int), Position> Positions
         {
             get { return _positions; }
-            set { SetProperty(ref _positions, value); }
+            set
+            {
+                if (SetProperty(ref _positions, value)) 
+                    LineupHeight = _positions.Count * 80;
+            }
         }
 
         private ObservableCollection<Player> _players;
@@ -155,17 +223,55 @@ namespace application.ViewModel
         public CreateMatchViewModel()
         {
             Players = new ObservableCollection<Player>(RequestCreator.GetAllPlayers());
-            Positions = new Dictionary<Tuple<Lineup.PositionType, int>, Position>(); //TODO: Handler + Convert list to dictionary
+            SelectedLeague = TeamMatch.Leagues.DenmarksSeries;
+        }
 
-            Position p = new Position();
-            p.Player = new Player() { BadmintonPlayerId = 1234, Member = new Member() { Name = "Bob" } };
-            p.OtherPlayer = new Player() { BadmintonPlayerId = 4321, Member = new Member() { Name = "Jens" } };
+        private RelayCommand _verifyLineupCommand;
 
-            Position q = new Position();
-            q.Player = new Player() { BadmintonPlayerId = 1234, Member = new Member() { Name = "Jens" } };
+        public RelayCommand VerifyLineupCommand
+        {
+            get
+            {
+                return _verifyLineupCommand ?? (_verifyLineupCommand = new RelayCommand(param => ExecuteVerifyLineup(param), param => CanExecuteVerifyLineup(param)));
+            }
+        }
 
-            Positions.Add(new Tuple<Lineup.PositionType, int>(Lineup.PositionType.MensDouble, 1), p);
-            Positions.Add(new Tuple<Lineup.PositionType, int>(Lineup.PositionType.MensSingle, 2), q);
+        private bool CanExecuteVerifyLineup(object param)
+        {
+            return LeagueRound != 0 && Season != 0 && TeamIndex != 0;
+        }
+
+        private void ExecuteVerifyLineup(object param)
+        {
+            TeamMatch match = new TeamMatch()
+            { 
+                Season = Season,
+                LeagueRound = LeagueRound,
+                TeamIndex = TeamIndex,
+                Lineup = ConvertPositionDictionaryToLineup(Positions)
+            };
+            //TODO: RequestCreator.VerifyLineup();
+        }
+
+        private Lineup ConvertPositionDictionaryToLineup(Dictionary<(Lineup.PositionType type, int index), Position> positions)
+        {
+            var lineup = new Lineup();
+            Lineup.PositionType prevType = positions.First().Key.type;
+
+            List<Position> pos = new List<Position>();
+
+            foreach (var position in positions)
+            {
+                if (prevType != position.Key.type)
+                {
+                    lineup.Add( (prevType, pos) );
+                    pos = new List<Position>();
+                }
+                pos.Add(position.Value);
+                prevType = position.Key.type;
+            }
+            lineup.Add( (prevType, pos) );
+            return lineup;
         }
 
         private RelayCommand _saveMatchClickCommand;
