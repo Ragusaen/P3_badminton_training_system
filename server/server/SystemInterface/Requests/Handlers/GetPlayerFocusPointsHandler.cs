@@ -11,7 +11,6 @@ namespace Server.SystemInterface.Requests.Handlers
 {
     class GetPlayerFocusPointsHandler :MiddleRequestHandler<GetPlayerFocusPointsRequest, GetPlayerFocusPointsResponse>
     {
-        private static Logger _log = LogManager.GetCurrentClassLogger();
         protected override GetPlayerFocusPointsResponse InnerHandle(GetPlayerFocusPointsRequest request, member requester)
         {
             var db = new DatabaseEntities();

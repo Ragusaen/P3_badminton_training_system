@@ -47,16 +47,6 @@ IsPrivate bit not null,
 VideoURL varchar(256)
 );
 
-create table YearPlanSection(
-ID int primary key auto_increment,
-TeamID int not null,
-foreign key(TeamID) references PracticeTeam(ID),
-StartDate datetime not null,
-EndDate datetime not null,
-FocusPointId int not null,
-foreign key(FocusPointId) references FocusPoint(ID)
-);
-
 create table MemberFocusPoint(
 MemberID int,
 foreign key(MemberID) references `Member`(ID),
@@ -76,10 +66,12 @@ EndDate datetime not null
 create table PracticeSession(
 PlaySessionID int primary key,
 foreign key(PlaySessionID) references PlaySession(ID),
-YearPlanSectionID int not null,
-foreign key(YearPlanSectionID) references YearPlanSection(ID),
 TrainerID int,
-foreign key(TrainerID) references `Member`(ID)
+foreign key(TrainerID) references `Member`(ID),
+MainFocusPointID int,
+foreign key (MainFocusPointID) references focuspoint(ID),
+TeamID int not null,
+foreign key (TeamId) references practiceteam(ID)
 );
 
 create table PracticeSessionFocusPoint(

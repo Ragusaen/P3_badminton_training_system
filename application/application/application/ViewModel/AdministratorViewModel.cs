@@ -14,7 +14,6 @@ namespace application.ViewModel
     class AdministratorViewModel : BaseViewModel
     {
         private ObservableCollection<PracticeTeam> _teamList;
-
         public ObservableCollection<PracticeTeam> TeamList
         {
             get { return _teamList; }
@@ -22,21 +21,20 @@ namespace application.ViewModel
         }
 
         private ObservableCollection<Member> _memberList;
-
         public ObservableCollection<Member> MemberList
         {
             get { return _memberList; }
             set { SetProperty(ref _memberList, value); }
         }
-        private ObservableCollection<FocusPointDescriptor> _focusPointList;
 
+        private ObservableCollection<FocusPointDescriptor> _focusPointList;
         public ObservableCollection<FocusPointDescriptor> FocusPointList
         {
             get { return _focusPointList; }
             set { SetProperty(ref _focusPointList, value); }
         }
-        private string _searchFocusPointText;
 
+        private string _searchFocusPointText;
         public string SearchFocusPointText
         {
             get { return _searchFocusPointText; }
@@ -44,8 +42,8 @@ namespace application.ViewModel
                 FocusPointList = new ObservableCollection<FocusPointDescriptor>(FocusPointList.OrderByDescending((x => StringExtension.LongestCommonSubsequence(x.Name.ToLower(), SearchFocusPointText.ToLower()))).ThenBy(x => x.Name.Length).ToList());
             }
         }
-        private string _searchTeamText;
 
+        private string _searchTeamText;
         public string SearchTeamText
         {
             get { return _searchTeamText; }
@@ -53,8 +51,8 @@ namespace application.ViewModel
                 TeamList = new ObservableCollection<PracticeTeam>(TeamList.OrderByDescending((x => StringExtension.LongestCommonSubsequence(x.Name.ToLower(), SearchTeamText.ToLower()))).ThenBy(x => x.Name.Length).ToList());
             }
         }
-        private string _searchMemberText;
 
+        private string _searchMemberText;
         public string SearchMemberText
         {
             get { return _searchMemberText; }
@@ -62,8 +60,8 @@ namespace application.ViewModel
                 MemberList = new ObservableCollection<Member>(MemberList.OrderByDescending((x => StringExtension.LongestCommonSubsequence(x.Name.ToLower(), SearchMemberText.ToLower()))).ThenBy(x => x.Name.Length).ToList());
             }
         }
-        private string _newTeam;
 
+        private string _newTeam;
         public string NewTeam
         {
             get { return _newTeam; }
@@ -80,7 +78,6 @@ namespace application.ViewModel
         }
 
         private RelayCommand _deleteTeamCommand;
-
         public RelayCommand DeleteTeamCommand
         {
             get
@@ -88,16 +85,14 @@ namespace application.ViewModel
                 return _deleteTeamCommand ?? (_deleteTeamCommand = new RelayCommand(param => DeleteTeamClick(param)));
             }
         }
+
         private void DeleteTeamClick(object param)
         {
             PracticeTeam prac = param as PracticeTeam;
             TeamList.Remove(prac);
         }
 
-
-
         private RelayCommand _deleteFocusPointCommand;
-
         public RelayCommand DeleteFocusPointCommand
         {
             get
@@ -110,8 +105,8 @@ namespace application.ViewModel
             FocusPointDescriptor fp = param as FocusPointDescriptor;
             FocusPointList.Remove(fp);
         }
-        private RelayCommand _newTeamCommand;
 
+        private RelayCommand _newTeamCommand;
         public RelayCommand NewTeamCommand
         {
             get
@@ -119,12 +114,13 @@ namespace application.ViewModel
                 return _newTeamCommand ?? (_newTeamCommand = new RelayCommand(param => NewTeamClick(param)));
             }
         }
+
         private void NewTeamClick(object param)
         {
             TeamList.Add(new PracticeTeam { Name = NewTeam });
         }
-        private RelayCommand _newFocusPointCommand;
 
+        private RelayCommand _newFocusPointCommand;
         public RelayCommand NewFocusPointCommand
         {
             get
@@ -132,6 +128,7 @@ namespace application.ViewModel
                 return _newFocusPointCommand ?? (_newFocusPointCommand = new RelayCommand(param => NewFocusPointClick(param)));
             }
         }
+
         private void NewFocusPointClick(object param)
         {
             var newPage = new CreateFocusPointPopupPage(true);

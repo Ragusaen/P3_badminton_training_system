@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Common.Model;
 using Common.Serialization;
+using NLog;
 using Server.DAL;
 
 namespace Server.SystemInterface.Requests.Handlers
@@ -13,8 +14,12 @@ namespace Server.SystemInterface.Requests.Handlers
     {
         protected override SetPlayerResponse InnerHandle(SetPlayerRequest request, member requester)
         {
-            if (requester.MemberType != (int)MemberType.Trainer)
-                return null;
+            if (!(((Common.Model.MemberType)requester.MemberType).HasFlag(MemberType.Trainer) ||
+                  requester.ID == request.Player.Member.Id))
+            {
+                RequestMember = request.Player.Member;
+                return new SetPlayerResponse { AccessDenied = true };
+            }
 
             var db = new DatabaseEntities();
             var p = request.Player;
