@@ -4,8 +4,14 @@ using System.Security.Cryptography.X509Certificates;
 
 namespace Common.Model
 {
-    public class Lineup : List<(Lineup.PositionType type, List<Position> positions)>
+    public class Lineup : List<Lineup.Group>
     {
+        public class Group
+        {
+            public PositionType Type;
+            public List<Position> Positions;
+        }
+
         [Flags]
         public enum PositionType
         {

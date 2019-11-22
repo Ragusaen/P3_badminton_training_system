@@ -16,8 +16,12 @@ namespace Server.DAL
 
             foreach (position dbPos in positions)
             {
-                if (lineup.All(l => l.type != (Lineup.PositionType) dbPos.Type))
-                    lineup.Add( ((Lineup.PositionType)dbPos.Type, new List<Position>()) );
+                if (lineup.All(l => l.Type != (Lineup.PositionType) dbPos.Type))
+                    lineup.Add( new Lineup.Group() {
+                        Type = (Lineup.PositionType)dbPos.Type,
+                        Positions = new List<Position>()
+                        }
+                    );
 
                 var newPosition = new Position()
                 {
@@ -33,7 +37,7 @@ namespace Server.DAL
                     newPosition.OtherIsExtra = otherPos.IsExtra;
                 }
 
-                var posList = lineup.Find(l => l.type == (Lineup.PositionType) dbPos.Type).positions;
+                var posList = lineup.Find(l => l.Type == (Lineup.PositionType) dbPos.Type).Positions;
                 posList.Add(newPosition);
             }
 

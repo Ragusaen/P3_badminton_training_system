@@ -172,7 +172,7 @@ namespace application.ViewModel
         {
             get { return Enum.GetNames(typeof(TeamMatch.Leagues)).Select(p => StringExtension.SplitCamelCase(p)).ToList(); }
         }
-
+        
         private TeamMatch.Leagues _selectedLeague;
         public TeamMatch.Leagues SelectedLeague
         {
@@ -250,7 +250,7 @@ namespace application.ViewModel
                 TeamIndex = TeamIndex,
                 Lineup = ConvertPositionDictionaryToLineup(Positions)
             };
-            //TODO: RequestCreator.VerifyLineup();
+            List<RuleBreak> ruleBreaks = RequestCreator.VerifyLineup(match);
         }
 
         private Lineup ConvertPositionDictionaryToLineup(Dictionary<(Lineup.PositionType type, int index), Position> positions)
@@ -264,13 +264,13 @@ namespace application.ViewModel
             {
                 if (prevType != position.Key.type)
                 {
-                    lineup.Add( (prevType, pos) );
+                    lineup.Add( new Lineup.Group() {Type = prevType, Positions = pos} );
                     pos = new List<Position>();
                 }
                 pos.Add(position.Value);
                 prevType = position.Key.type;
             }
-            lineup.Add( (prevType, pos) );
+            lineup.Add(new Lineup.Group() { Type = prevType, Positions = pos });
             return lineup;
         }
 

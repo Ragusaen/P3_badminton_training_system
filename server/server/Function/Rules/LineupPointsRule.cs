@@ -6,7 +6,7 @@ namespace Server.Function.Rules
 {
     class LineupPointsRule : IRule
     {
-        public int Priority { get; set; }
+        public int Priority { get; set; } = 8;
         private int _maxSingleDiff;
         private int _maxDoubleDiff;
         private List<RuleBreak> _ruleBreaks = new List<RuleBreak>();
@@ -23,7 +23,7 @@ namespace Server.Function.Rules
 
             foreach (var group in match.Lineup)
             {
-                CheckPositions(group.positions, group.type);
+                CheckPositions(group.Positions, group.Type);
             }
 
             return _ruleBreaks;
@@ -56,15 +56,16 @@ namespace Server.Function.Rules
 
         private bool ComparePositions(Position lower, Position upper, Lineup.PositionType type)
         {
-            if (Lineup.PositionType.Single.HasFlag(type))
+            if (Lineup.PositionType.Single.HasFlag(type) && lower.Player != null && upper.Player != null)
                 return (lower.Player.Rankings.SinglesPoints - upper.Player.Rankings.SinglesPoints) <= _maxSingleDiff;
-            if (type == Lineup.PositionType.MixDouble)
+            if (type == Lineup.PositionType.MixDouble && lower.Player != null && lower.OtherPlayer != null && upper.Player != null && upper.OtherPlayer != null)
                 return ((lower.Player.Rankings.MixPoints + lower.OtherPlayer.Rankings.MixPoints) 
                         - (upper.Player.Rankings.MixPoints + upper.OtherPlayer.Rankings.MixPoints))
                        <= _maxDoubleDiff;
-            else
+            if (Lineup.PositionType.Double.HasFlag(type) && lower.Player != null && lower.OtherPlayer != null && upper.Player != null && upper.OtherPlayer != null)
                 return ((lower.Player.Rankings.DoublesPoints + lower.OtherPlayer.Rankings.DoublesPoints)
                         - (upper.Player.Rankings.DoublesPoints + upper.OtherPlayer.Rankings.DoublesPoints)) <= _maxDoubleDiff;
+            return true;
         }
     }
 }
