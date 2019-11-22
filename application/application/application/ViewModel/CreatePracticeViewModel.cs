@@ -220,8 +220,8 @@ namespace application.ViewModel
         }
         private void AddNewFocusPointClick(object param)
         {
-            FocusPointPopupPage page = new FocusPointPopupPage(FocusPoints.ToList());
-            page.CallBackEvent += FocusPointPage_CallBackEvent; ;
+            FocusPointPopupPage page = new FocusPointPopupPage(FocusPoints.ToList(), null);
+            ((FocusPointPopupViewModel)page.BindingContext).CallBackEvent += FocusPointPage_CallBackEvent;
             PopupNavigation.Instance.PushAsync(page);
         }
 

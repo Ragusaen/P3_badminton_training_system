@@ -2,19 +2,18 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Xml.Serialization;
+using Common.Model;
 
 namespace Common.Serialization
 {
     [Serializable, XmlRoot]
-    public class DeletePlayerFocusPointRequest : Request
+    public class DeletePlayerFocusPointRequest : PermissionRequest
     {
-        public int MemberId;
-        public int FocusPointId;
+        public Player Player;
+        public FocusPointItem FocusPointItem;
     }
 
     [Serializable, XmlRoot]
-    public class DeletePlayerFocusPointResponse : Response
-    {
-        public bool WasSuccessful;
-    }
+    public class DeletePlayerFocusPointResponse : PermissionResponse
+    { }
 }

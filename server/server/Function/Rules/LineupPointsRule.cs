@@ -20,7 +20,7 @@ namespace Server.Function.Rules
 
         public List<RuleBreak> Rule(TeamMatch match)
         {
-
+            _ruleBreaks = new List<RuleBreak>();
             foreach (var group in match.Lineup)
             {
                 CheckPositions(group.Positions, group.Type);
@@ -41,11 +41,11 @@ namespace Server.Function.Rules
                         success = false;
                         if (Lineup.PositionType.Double.HasFlag(type))
                         {
-                            _ruleBreaks.Add(new RuleBreak((type, i), 0, $"Double has too many points compared to position {j}"));
-                            _ruleBreaks.Add(new RuleBreak((type, i), 1, $"Double has too many points compared to position {j}"));
+                            _ruleBreaks.Add(new RuleBreak((type, i), 0, $"Double has too many points compared to position {j+1}"));
+                            _ruleBreaks.Add(new RuleBreak((type, i), 1, $"Double has too many points compared to position {j+1}"));
                         }
                         else
-                            _ruleBreaks.Add(new RuleBreak((type, i), 0, $"Player has too many points compared to position {j}"));
+                            _ruleBreaks.Add(new RuleBreak((type, i), 0, $"Player has too many points compared to position {j+1}"));
                         break;
                     }
                 }

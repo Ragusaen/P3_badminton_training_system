@@ -60,7 +60,7 @@ namespace application.ViewModel
             Member = member;
             if (Member.MemberType != MemberType.None)
             {
-                if ((Member.MemberType & MemberType.Player) > 0)
+                if (Member.MemberType.HasFlag(MemberType.Player))
                 {
                     Player = RequestCreator.GetPlayer(Member.Id);
                     Player.Member = Member;
@@ -73,13 +73,12 @@ namespace application.ViewModel
                     PracticeTeams = new ObservableCollection<PracticeTeam>(Player.PracticeTeams);
                     PracticeTeamsListHeight = PracticeTeams.Count * 45;
                 }
-                else if ((Member.MemberType & MemberType.Trainer) > 0)
+                if (Member.MemberType.HasFlag(MemberType.Trainer))
                 {
-                    Trainer = new Trainer();
-                    Trainer.Member = Member;
+                    Trainer = new Trainer {Member = Member};
 
-                    ChangeMemberTypeTitle = "This Member Is a Trainer";
-                    ChangeMemberTypeQuery = "Unmake Trainer";
+                    _changeMemberTypeTitle = "This Member Is a Trainer";
+                    _changeMemberTypeQuery = "Unmake Trainer";
 
                     //TODO: handler for fetching a trainers practice teams
                     //Trainer.PracticeTeams = RequestCreator.GetPlayerPracticeTeams(Player);
@@ -87,6 +86,11 @@ namespace application.ViewModel
                 }
             }
             CommentText = member?.Comment ?? "Click to add comment";
+        }
+
+        private void Load()
+        {
+
         }
 
         // Practice Team Section
@@ -135,21 +139,16 @@ namespace application.ViewModel
 
         private void ExecuteAddFocusPoint(object param)
         {
-            FocusPointPopupPage page = new FocusPointPopupPage(Player.FocusPointItems);
-            page.CallBackEvent += FocusPointPopupPageCallback;
+            FocusPointPopupPage page = new FocusPointPopupPage(Player.FocusPointItems, Player);
+            ((FocusPointPopupViewModel)page.BindingContext).CallBackEvent += FocusPointPopupPageCallback;
             PopupNavigation.Instance.PushAsync(page);
         }
 
         private void FocusPointPopupPageCallback(object sender, FocusPointDescriptor e)
         {
-            var item = new FocusPointItem
-            {
-                Descriptor = e
-            };
-            Player.FocusPointItems.Add(item);
-            FocusPoints.Add(item);
-
-            RequestCreator.SetPlayerFocusPoints(Player, Player.FocusPointItems);
+            RequestCreator.SetPlayerFocusPoints(Player, e);
+            Player.FocusPointItems = RequestCreator.GetPlayerFocusPointItems(Player.Member.Id);
+            FocusPoints = new ObservableCollection<FocusPointItem>(Player.FocusPointItems);
             FocusPointsListHeight = FocusPoints.Count * 45;
         }
 
@@ -163,12 +162,12 @@ namespace application.ViewModel
             }
         }
 
-        private string ChangeMemberTypeTitle = "This Member Is Not a Trainer";
-        private string ChangeMemberTypeQuery = "Make Trainer";
+        private readonly string _changeMemberTypeTitle = "This Member Is Not a Trainer";
+        private readonly string _changeMemberTypeQuery = "Make Trainer";
         private async void ExecuteProfileSettingTap(object param)
         {
             string action;
-            if (Trainer != null)
+            if(RequestCreator.LoggedInMember.MemberType.HasFlag(MemberType.Trainer))
             {
                 action = await Application.Current.MainPage.DisplayActionSheet("Settings", "Cancel", null, "Change Password", "Change Member Type");
             }
@@ -181,18 +180,25 @@ namespace application.ViewModel
                 await Navigation.PushAsync(new EditUserInfoPage(Member));
             else if (action == "Change Member Type")
             {
-                string newRights = await Application.Current.MainPage.DisplayActionSheet(ChangeMemberTypeTitle, "Cancel", null, ChangeMemberTypeQuery);
+                string newRights = await Application.Current.MainPage.DisplayActionSheet(_changeMemberTypeTitle, "Cancel", null, _changeMemberTypeQuery);
 
                 if (newRights == "Make Trainer")
                 {
                     Member.MemberType |= MemberType.Trainer;
+
                 }
                 else if (newRights == "Unmake Trainer")
                 {
                     Member.MemberType &= ~MemberType.Trainer;
                 }
-
+                else
+                {
+                    goto here;
+                }
                 RequestCreator.ChangeTrainerPrivileges(Member);
+                Navigation.InsertPageBefore(new ProfilePage(Member), Navigation.NavigationStack.Last());
+                Navigation.PopAsync();
+                here: ;
             }
         }
 
@@ -232,13 +238,15 @@ namespace application.ViewModel
                 return _deleteListPlayerPracticeTeamCommand ?? (_deleteListPlayerPracticeTeamCommand = new RelayCommand(param => DeleteListPlayerPracticeTeamClick(param)));
             }
         }
-        private void DeleteListPlayerPracticeTeamClick(object param)
+        private async void DeleteListPlayerPracticeTeamClick(object param)
         {
             PracticeTeam practiceTeam = param as PracticeTeam;
-            Player.PracticeTeams.Remove(practiceTeam);
-            PracticeTeams.Remove(practiceTeam);
-            RequestCreator.DeletePlayerPracticeTeam(Player, practiceTeam);
-            PracticeTeamsListHeight = PracticeTeams.Count * 45;
+            bool answer = await Application.Current.MainPage.DisplayAlert("Delete", $"Are you sure you want to delete {practiceTeam.Name}?", "yes", "no");
+            if(answer) {Player.PracticeTeams.Remove(practiceTeam);
+                PracticeTeams.Remove(practiceTeam);
+                RequestCreator.DeletePlayerPracticeTeam(Player, practiceTeam);
+                PracticeTeamsListHeight = PracticeTeams.Count * 45;
+            }
         }
         private RelayCommand _deleteListFocusItemCommand;
 
@@ -249,13 +257,17 @@ namespace application.ViewModel
                 return _deleteListFocusItemCommand ?? (_deleteListFocusItemCommand = new RelayCommand(param => DeleteListFocusItemClick(param)));
             }
         }
-        private void DeleteListFocusItemClick(object param)
+        private async void DeleteListFocusItemClick(object param)
         {
             FocusPointItem focusPoint = param as FocusPointItem;
-            FocusPoints.Remove(focusPoint);
-            Player.FocusPointItems.Remove(focusPoint);
-            RequestCreator.DeletePlayerFocusPoints(Player.Member.Id, focusPoint);
-            FocusPointsListHeight = FocusPoints.Count * 45;
+            bool answer = await Application.Current.MainPage.DisplayAlert("Delete", $"Are you sure you want to delete {focusPoint.Descriptor.Name}?", "yes", "no");
+            if (answer)
+            {
+                FocusPoints.Remove(focusPoint);
+                Player.FocusPointItems.Remove(focusPoint);
+                RequestCreator.DeletePlayerFocusPoints(Player, focusPoint);
+                FocusPointsListHeight = FocusPoints.Count * 45;
+            }
         }
 
         private string _commentText;    
