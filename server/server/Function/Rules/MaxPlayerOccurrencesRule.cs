@@ -19,6 +19,7 @@ namespace Server.Function.Rules
 
         public List<RuleBreak> Rule(TeamMatch match)
         {
+            _ruleBreaks = new List<RuleBreak>();
             List<Player> players = GetPlayersInLineup(match.Lineup);
 
             //Find all players that appears more than _max times in lineup
