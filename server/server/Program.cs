@@ -1,9 +1,11 @@
 ﻿using NLog;
 using Server.SystemInterface.Network;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text;
 using Common.Model;
 using Common.Serialization;
 using Server.Controller;
@@ -17,12 +19,36 @@ namespace Server
 
         public static void Main(string[] args)
         {
+            var tm = new TeamMatch()
+            {
+                ID = 0,
+                LeagueRound = 0,
+                Season = 0,
+                Lineup = new Lineup()
+                {
+                    new Lineup.Group
+                    {
+                        Type = Lineup.PositionType.MensDouble,
+                        Positions = new List<Position>
+                    {
+                        new Position()
+                        {
+                            IsExtra = false,
+                            OtherIsExtra = false,
+                            Player = new Player(),
+                            OtherPlayer = new Player()
+                        }
+                    }}
+
+                }
+            };
+
+            var ser = new Serializer();
+
+
+            
+
             var db = new DatabaseEntities();
-
-            //db.members.Find(17).practiceteams.Add(new practiceteam { Name = "Tirsdagstræning" });
-            //db.practiceteams.Add(new practiceteam { Name = "Torsdagstræning" });
-            //db.SaveChanges();
-
             if (!db.members.Any())
             {
                 RankListScraper scraper = new RankListScraper();

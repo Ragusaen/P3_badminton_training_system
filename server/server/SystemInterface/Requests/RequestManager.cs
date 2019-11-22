@@ -26,6 +26,7 @@ namespace Server.SystemInterface.Requests
             {
                 {RequestType.Login, new LoginHandler() },
                 {RequestType.CreateAccount, new CreateAccountHandler() },
+                {RequestType.VerifyLineup, new VerifyLineupHandler() },
                 {RequestType.GetPracticeTeam, new GetPracticeTeamHandler() },
                 {RequestType.GetSchedule, new GetScheduleHandler() },
                 {RequestType.GetMemberPracticeTeams, new GetPlayerPracticeTeamsHandler() },
