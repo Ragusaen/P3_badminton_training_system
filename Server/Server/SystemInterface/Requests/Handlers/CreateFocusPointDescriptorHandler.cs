@@ -12,7 +12,6 @@ namespace Server.SystemInterface.Requests.Handlers
 {
     class CreateFocusPointDescriptorHandler : MiddleRequestHandler<CreateFocusPointDescriptorRequest, CreateFocusPointDescriptorResponse>
     {
-        private static Logger _log = LogManager.GetCurrentClassLogger();
         protected override CreateFocusPointDescriptorResponse InnerHandle(CreateFocusPointDescriptorRequest request, member requester)
         {
             var db = new DatabaseEntities();

@@ -22,10 +22,9 @@ namespace Server
             //db.members.Find(17).practiceteams.Add(new practiceteam { Name = "Tirsdagstræning" });
             //db.practiceteams.Add(new practiceteam { Name = "Torsdagstræning" });
             //db.SaveChanges();
-
+            RankListScraper scraper = new RankListScraper();
             if (!db.members.Any())
             {
-                RankListScraper scraper = new RankListScraper();
                 scraper.UpdatePlayers();
             }
             try
