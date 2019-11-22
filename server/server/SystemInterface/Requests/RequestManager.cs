@@ -60,6 +60,7 @@ namespace Server.SystemInterface.Requests
                 {RequestType.SetExerciseDiscriptor, new SetExerciseDescriptorHandler() },
                 {RequestType.GetAllTrainers, new GetAllTrainersHandler() },
                 {RequestType.SetPracticeSession, new SetPracticeSessionHandler() },
+                {RequestType.SetFeedback, new SetFeedbackHandler() },
             }; 
 
         public byte[] Parse(byte[] request)

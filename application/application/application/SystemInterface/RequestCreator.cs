@@ -354,5 +354,16 @@ namespace application.SystemInterface
                 SimpleRequest<SetPracticeSessionRequest, SetPracticeSessionResponse>(
                     RequestType.SetPracticeSession, request);
         }
+        public static void SetFeedback(Feedback feedback)
+        {
+            var request = new SetFeedbackRequest
+            {
+                Feedback = feedback
+            };
+
+            var response =
+                SimpleRequest<SetFeedbackRequest, SetFeedbackResponse>(
+                    RequestType.SetFeedback, request);
+        }
     }
 }
