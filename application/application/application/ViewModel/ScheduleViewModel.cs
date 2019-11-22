@@ -119,6 +119,19 @@ namespace application.ViewModel
                 await Navigation.PushAsync(new CreateMatchPage());
         }
 
-        
+        private RelayCommand _command;
+
+        public RelayCommand command
+        {
+            get
+            {
+                return _command ?? (_command = new RelayCommand(param => Click(param)));
+            }
+        }
+        PlaySession play = new PracticeSession();
+        private void Click(object param)
+        {
+            Navigation.PushAsync(new PlaySessionPage(play));
+        }
     }
 }

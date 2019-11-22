@@ -26,6 +26,9 @@
                 </DataTemplate>
             </controls:Calendar.EventTemplate>
         </controls:Calendar>
+
+        <Button Command="{Binding command}"/>
+
     </StackLayout>
 
 </ContentPage>

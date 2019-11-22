@@ -12,6 +12,7 @@ namespace Server.Function.Rules
 
         public List<RuleBreak> Rule(TeamMatch match)
         {
+            _ruleBreaks = new List<RuleBreak>();
             List<Lineup> lineups = new List<Lineup>(); //TODO: Get all lineups above current one
             
             foreach (Lineup lineup in lineups)

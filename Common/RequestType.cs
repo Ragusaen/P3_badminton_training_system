@@ -41,5 +41,6 @@ namespace Common
         SetExerciseDiscriptor,
         GetAllTrainers,
         SetPracticeSession,
+        SetFeedback,
     };
 }

@@ -167,6 +167,14 @@ namespace application.ViewModel
             set { SetProperty(ref _lineupHeight, value); }
         }
 
+        private string _lineupErrorMessage;
+
+        public string LineupErrorMessage
+        {
+            get { return _lineupErrorMessage; }
+            set { SetProperty(ref _lineupErrorMessage, value); }
+        }
+
 
         public List<string> LeagueNames
         {
@@ -188,26 +196,26 @@ namespace application.ViewModel
 
         private void SetLineupTemplate(TeamMatch.Leagues value)
         {
-            var positions = new Dictionary<(Lineup.PositionType, int), Position>();
+            var positions = new Dictionary<(Lineup.PositionType, int), PositionError>();
             var template = Lineup.LeaguePositions[value];
             foreach (var group in template)
             {
                 for (int i = 0; i < group.Value; i++)
                 {
-                    positions.Add((group.Key, i), new Position());
+                    positions.Add((group.Key, i), new PositionError());
                 }
             }
             Positions = positions;
         }
 
-        private Dictionary<(Lineup.PositionType, int), Position> _positions;
+        private Dictionary<(Lineup.PositionType, int), PositionError> _positions;
 
-        public Dictionary<(Lineup.PositionType, int), Position> Positions
+        public Dictionary<(Lineup.PositionType, int), PositionError> Positions
         {
             get { return _positions; }
             set
             {
-                if (SetProperty(ref _positions, value)) 
+                if (SetProperty(ref _positions, value))
                     LineupHeight = _positions.Count * 80;
             }
         }
@@ -251,27 +259,50 @@ namespace application.ViewModel
                 Lineup = ConvertPositionDictionaryToLineup(Positions)
             };
             List<RuleBreak> ruleBreaks = RequestCreator.VerifyLineup(match);
+
+            if(ruleBreaks.Count != 0)
+                LineupErrorMessage = ruleBreaks[0].ErrorMessage;
+
+            foreach (var position in Positions)
+            {
+                var posRuleBreak = ruleBreaks.Find(r => r.Position == position.Key && r.PositionIndex == 0);
+                position.Value.Error = posRuleBreak == null ? string.Empty : posRuleBreak.ErrorMessage;
+
+                if (Lineup.PositionType.Double.HasFlag(position.Key.Item1))
+                {
+                    var pos2RuleBreak = ruleBreaks.Find(r => r.Position == position.Key && r.PositionIndex == 1);
+                    position.Value.OtherError = pos2RuleBreak == null ? string.Empty : pos2RuleBreak.ErrorMessage;
+                }
+            }
         }
 
-        private Lineup ConvertPositionDictionaryToLineup(Dictionary<(Lineup.PositionType type, int index), Position> positions)
+        private Lineup ConvertPositionDictionaryToLineup(Dictionary<(Lineup.PositionType type, int index), PositionError> positions)
         {
             var lineup = new Lineup();
             Lineup.PositionType prevType = positions.First().Key.type;
 
-            List<Position> pos = new List<Position>();
+            List<PositionError> pos = new List<PositionError>();
 
             foreach (var position in positions)
             {
                 if (prevType != position.Key.type)
                 {
-                    lineup.Add( new Lineup.Group() {Type = prevType, Positions = pos} );
-                    pos = new List<Position>();
+                    lineup.Add( new Lineup.Group() {Type = prevType, Positions = PositionErrorsToPositions(pos)} );
+                    pos = new List<PositionError>();
                 }
                 pos.Add(position.Value);
                 prevType = position.Key.type;
             }
-            lineup.Add(new Lineup.Group() { Type = prevType, Positions = pos });
+            lineup.Add(new Lineup.Group() { Type = prevType, Positions = PositionErrorsToPositions(pos)});
             return lineup;
+        }
+
+        private List<Position> PositionErrorsToPositions(List<PositionError> posErrors)
+        {
+            List<Position> pos = new List<Position>();
+            foreach(var posError in posErrors)
+                pos.Add(new Position() {IsExtra = posError.IsExtra, Player = posError.Player, OtherIsExtra = posError.OtherIsExtra, OtherPlayer = posError.OtherPlayer});
+            return pos;
         }
 
         private RelayCommand _saveMatchClickCommand;

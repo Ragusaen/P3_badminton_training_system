@@ -15,13 +15,14 @@ namespace Server.Function
             List<IRule> rules = LeagueRules.Dict[match.League];
             rules.Sort((p, q) => p.Priority.CompareTo(q.Priority));
 
-            List<RuleBreak> rulebreaks = new List<RuleBreak>();
+            List<RuleBreak> ruleBreak = new List<RuleBreak>();
+            
             foreach (IRule rule in rules)
             {
-                rulebreaks = rule.Rule(match);
-                if (rulebreaks.Count > 0) break;
+                ruleBreak = rule.Rule(match);
+                if (ruleBreak.Count > 0) break;
             }
-            return rulebreaks;
+            return ruleBreak;
         }
     }
 }
