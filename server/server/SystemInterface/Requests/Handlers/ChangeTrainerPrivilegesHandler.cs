@@ -23,12 +23,16 @@ namespace Server.SystemInterface.Requests.Handlers
             var db = new DatabaseEntities();
             db.members.Find(request.Member.Id).MemberType = (int)request.Member.MemberType;
 
-            if ((request.Member.MemberType & MemberType.Trainer) > 0)
+            if (request.Member.MemberType.HasFlag(MemberType.Trainer))
             {
                 _log.Debug($"Member: {request.Member.Name} has been made Trainer Type");
             }
-            _log.Debug($"Member: {request.Member.Name} has been released from Trainer Type");
+            else
+            {
+                _log.Debug($"Member: {request.Member.Name} has been released from Trainer Type");
+            }
 
+            db.SaveChanges();
             return new ChangeTrainerPrivilegesResponse();
         }
     }
