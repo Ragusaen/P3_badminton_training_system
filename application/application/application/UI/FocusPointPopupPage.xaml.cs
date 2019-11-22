@@ -16,19 +16,17 @@ namespace application.UI
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class FocusPointPopupPage : PopupPage
     {
-        public FocusPointPopupPage(List<FocusPointItem> focusPointItems)
+
+        public FocusPointPopupPage(List<FocusPointItem> focusPointItems, Player player)
         {
             InitializeComponent();
-            FocusPointPopupViewModel vm = new FocusPointPopupViewModel(focusPointItems);
+            FocusPointPopupViewModel vm = new FocusPointPopupViewModel(focusPointItems, player);
             BindingContext = vm;
         }
 
-        public event EventHandler<FocusPointDescriptor> CallBackEvent;
-
-        private void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        public void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            CallBackEvent?.Invoke(this, e.SelectedItem as FocusPointDescriptor);
-            PopupNavigation.Instance.PopAsync();
+            ((FocusPointPopupViewModel)BindingContext).FocusPointSelected(e.SelectedItem as FocusPointDescriptor);
         }
     }
 }

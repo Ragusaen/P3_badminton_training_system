@@ -3,7 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using application.SystemInterface;
+using application.UI;
 using Rg.Plugins.Popup.Services;
+using Xamarin.Forms;
 
 namespace application.ViewModel
 {
@@ -42,11 +44,17 @@ namespace application.ViewModel
         }
         private void CreateFocusPointClick(object param)
         {
-            RequestCreator.CreateFocusPointDescriptor(FocusPoint);
-            CallBackEvent?.Invoke(this, null);
-            PopupNavigation.Instance.PopAsync();
+            if (FocusPoint.Name != null)
+            {
+                CallBackEvent?.Invoke(this, FocusPoint);
+                PopupNavigation.Instance.PopAsync();
+            }
+            else
+            {
+                Application.Current.MainPage.DisplayAlert("Alert", "Please enter a name", "OK");
+            }
         }
 
-        public event EventHandler CallBackEvent;
+        public event EventHandler<FocusPointDescriptor> CallBackEvent;
     }
 }

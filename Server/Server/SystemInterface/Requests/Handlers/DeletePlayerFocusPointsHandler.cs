@@ -4,6 +4,7 @@ using System.Linq;
 using System.Runtime.Remoting;
 using System.Text;
 using System.Threading.Tasks;
+using Common.Model;
 using Common.Serialization;
 using NLog;
 using Server.DAL;
@@ -12,25 +13,33 @@ namespace Server.SystemInterface.Requests.Handlers
 {
     class DeletePlayerFocusPointsHandler : MiddleRequestHandler<DeletePlayerFocusPointRequest, DeletePlayerFocusPointResponse>
     {
-        public static Logger _log = LogManager.GetCurrentClassLogger();
         protected override DeletePlayerFocusPointResponse InnerHandle(DeletePlayerFocusPointRequest request, member requester)
         {
-            var db = new DatabaseEntities();
-            db.SaveChanges();
-
-            var dbPlayer = db.members.Find(request.MemberId);
-            var dbFocusPoint = db.focuspoints.Find(request.FocusPointId);
-
-            var output = new DeletePlayerFocusPointResponse
+            if (!(((Common.Model.MemberType)requester.MemberType).HasFlag(MemberType.Trainer) ||
+                  requester.ID == request.Player.Member.Id))
             {
-                WasSuccessful = dbPlayer.focuspoints.Remove(dbFocusPoint)
-            };
+                RequestMember = request.Player.Member;
+                return new DeletePlayerFocusPointResponse { AccessDenied = true };
+            }
+            var db = new DatabaseEntities();
 
-            _log.Debug($"Remove focus point {dbFocusPoint.Name} from player: {dbPlayer.Name} result: {output.WasSuccessful}");
+            var dbPlayer = db.members.Find(request.Player.Member.Id);
+            var dbFocusPoint = db.focuspoints.Find(request.FocusPointItem.Descriptor.Id);
+
+            dbPlayer.focuspoints.Remove(dbFocusPoint);
+
+            if (dbFocusPoint.IsPrivate)
+            {
+                db.focuspoints.Remove(dbFocusPoint);
+                _log.Debug($"Removed private focus point {dbFocusPoint.Name} from player: {dbPlayer.Name}");
+            }
+            else
+            {
+                _log.Debug($"Removed focus point {dbFocusPoint.Name} from player: {dbPlayer.Name}");
+            }
 
             db.SaveChanges();
-
-            return output;
+            return new DeletePlayerFocusPointResponse();
         }
     }
 }

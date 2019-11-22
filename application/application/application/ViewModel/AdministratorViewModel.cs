@@ -8,6 +8,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using application.SystemInterface;
+using Xamarin.Forms;
 
 namespace application.ViewModel
 {
@@ -86,10 +87,15 @@ namespace application.ViewModel
             }
         }
 
-        private void DeleteTeamClick(object param)
+        private async void DeleteTeamClick(object param)
         {
             PracticeTeam prac = param as PracticeTeam;
-            TeamList.Remove(prac);
+            bool answer = await Application.Current.MainPage.DisplayAlert("Delete", $"Are you sure you want to delete {prac.Name}?", "yes", "no");
+            if (answer)
+            {
+                TeamList.Remove(prac);
+                //RequestCreator.DeletePracticeTeam(fp); //TODO update model
+            }
         }
 
         private RelayCommand _deleteFocusPointCommand;
@@ -100,10 +106,15 @@ namespace application.ViewModel
                 return _deleteFocusPointCommand ?? (_deleteFocusPointCommand = new RelayCommand(param => DeleteFocusPointClick(param)));
             }
         }
-        private void DeleteFocusPointClick(object param)
+        private async void DeleteFocusPointClick(object param)
         {
             FocusPointDescriptor fp = param as FocusPointDescriptor;
-            FocusPointList.Remove(fp);
+            bool answer = await Application.Current.MainPage.DisplayAlert("Delete", $"Are you sure you want to delete {fp.Name}?", "yes", "no");
+            if (answer)
+            {
+                FocusPointList.Remove(fp);
+                //RequestCreator.DeleteFocusPointsDescriptor(fp); //TODO update model
+            }
         }
 
         private RelayCommand _newTeamCommand;
@@ -136,8 +147,9 @@ namespace application.ViewModel
             ((CreateFocusPointPopupViewModel)newPage.BindingContext).CallBackEvent += OnCallBackEvent;
         }
 
-        private void OnCallBackEvent(object sender, EventArgs e)
+        private void OnCallBackEvent(object sender, FocusPointDescriptor e)
         {
+            RequestCreator.CreateFocusPointDescriptor(e);
             FocusPointList = new ObservableCollection<FocusPointDescriptor>(RequestCreator.GetFocusPoints());
         }
 
