@@ -145,7 +145,7 @@ namespace application.ViewModel
                 return _saveCreatedPracticeClickCommand ?? (_saveCreatedPracticeClickCommand = new RelayCommand(param => ExecuteSaveCreatedPracticeClick(param), param => CanExecuteSaveCreatedPracticeClick(param)));
             }
         }
-
+        
         private bool CanExecuteSaveCreatedPracticeClick(object param)
         {
                 return true;
@@ -161,7 +161,8 @@ namespace application.ViewModel
                 Practice.Location = "Stjernevej 5, 9200 Aalborg";
             Practice.Exercises = PlanElement.ToList();
             Practice.FocusPoints = FocusPoints.ToList();
-
+            
+            RequestCreator.SetPracticeSession(Practice);
         }
 
 

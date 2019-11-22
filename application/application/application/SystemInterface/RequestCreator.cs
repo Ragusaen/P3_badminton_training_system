@@ -332,7 +332,7 @@ namespace application.SystemInterface
 
             return response.Trainers;
         }
-        public static bool SetPracticeSession(PracticeSession practice)
+        public static void SetPracticeSession(PracticeSession practice)
         {
             var request = new SetPracticeSessionRequest
             {
