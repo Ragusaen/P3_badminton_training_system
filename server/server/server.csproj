@@ -211,7 +211,7 @@
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\PracticeSessionExerciseCast.cs" />
-    <Compile Include="DAL\ExerciseDescriptorCast.cs" />
+    <Compile Include="DAL\ExerciseCast.cs" />
     <Compile Include="DAL\FeedbackCast.cs" />
     <Compile Include="DAL\FocusPointDescriptorCast.cs" />
     <Compile Include="DAL\PositionCast.cs" />

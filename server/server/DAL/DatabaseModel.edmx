@@ -108,6 +108,7 @@
           <Property Name="ExerciseID" Type="int" Nullable="false" />
           <Property Name="PracticeSessionPlaySessionID" Type="int" Nullable="false" />
           <Property Name="ExerciseIndex" Type="int" Nullable="false" />
+          <Property Name="Minutes" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="practicesessionfocuspoint">
           <Key>
@@ -645,6 +646,7 @@
           <Property Name="ExerciseIndex" Type="Int32" Nullable="false" />
           <NavigationProperty Name="exercise" Relationship="Self.practicesessionexercise_ibfk_1" FromRole="practicesessionexercise" ToRole="exercise" />
           <NavigationProperty Name="practicesession" Relationship="Self.practicesessionexercise_ibfk_2" FromRole="practicesessionexercise" ToRole="practicesession" />
+          <Property Name="Minutes" Type="Int32" Nullable="false" />
         </EntityType>
         <EntityType Name="practiceteam">
           <Key>
@@ -1070,6 +1072,7 @@
           <EntitySetMapping Name="practicesessionexercises">
             <EntityTypeMapping TypeName="DatabaseModel.practicesessionexercise">
               <MappingFragment StoreEntitySet="practicesessionexercise">
+                <ScalarProperty Name="Minutes" ColumnName="Minutes" />
                 <ScalarProperty Name="ExerciseID" ColumnName="ExerciseID" />
                 <ScalarProperty Name="PracticeSessionPlaySessionID" ColumnName="PracticeSessionPlaySessionID" />
                 <ScalarProperty Name="ExerciseIndex" ColumnName="ExerciseIndex" />

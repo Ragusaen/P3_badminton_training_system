@@ -94,7 +94,8 @@ foreign key(ExerciseID) references Exercise(ID),
 PracticeSessionPlaySessionID int,
 foreign key(PracticeSessionPlaySessionID) references PracticeSession(PlaySessionID),
 primary key(ExerciseID, PracticeSessionPlaySessionID),
-ExerciseIndex int not null
+ExerciseIndex int not null,
+Minutes int not null
 );
 
 create table RankList(
