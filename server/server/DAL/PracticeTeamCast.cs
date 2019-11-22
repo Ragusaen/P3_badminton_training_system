@@ -13,9 +13,8 @@ namespace Server.DAL
         {
             return new PracticeTeam
             {
-                Id = pt.ID,
                 Name = pt.Name,
-                Players = pt.members.Select(p => (Common.Model.Player) p).ToList()
+                Id = pt.ID,
             };
         }
     }

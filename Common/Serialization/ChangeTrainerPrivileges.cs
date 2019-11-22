@@ -7,12 +7,13 @@ using Common.Model;
 namespace Common.Serialization
 {
     [Serializable, XmlRoot]
-    public class SetPlayerRequest : PermissionRequest
-    {
-        public Player Player;
-    }
 
+    public class ChangeTrainerPrivilegesRequest : PermissionRequest
+    {
+        public Member Member;
+    }
     [Serializable, XmlRoot]
-    public class SetPlayerResponse : PermissionResponse
-    { }
+    public class ChangeTrainerPrivilegesResponse : PermissionResponse
+    {
+    }
 }

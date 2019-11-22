@@ -69,7 +69,7 @@ namespace application.UI
             {
                 Comment.IsVisible = false;
                 CommentEntry.IsVisible = true;
-                _vm.CommentText = Comment.Text;
+                CommentEntry.Text = Comment.Text;
             };
             Comment.GestureRecognizers.Add(commentTap);
 
@@ -77,10 +77,11 @@ namespace application.UI
             {
                 Comment.IsVisible = true;
                 CommentEntry.IsVisible = false;
-                if (CommentEntry.Text.Length > 0)
+                if (CommentEntry?.Text.Length > 0)
                 {
                     Comment.Text = CommentEntry.Text;
                     _vm.SetComment(CommentEntry.Text);
+                    _vm.Member.Comment = CommentEntry.Text;
                 }
             };
         }

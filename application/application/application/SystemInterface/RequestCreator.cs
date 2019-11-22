@@ -194,6 +194,17 @@ namespace application.SystemInterface
             return list;
         }
 
+        public static (List<Member> members, List<PracticeTeam> practiceTeams, List<FocusPointDescriptor> focusPoints)
+            GetAdminPage()
+        {
+            var request = new GetAdminPageRequest();
+
+            var response = SimpleRequest<GetAdminPageRequest, GetAdminPageResponse>(RequestType.GetAdminPage, request);
+
+            return (response.Members, response.PracticeTeams, response.FocusPoints);
+        }
+
+
         public static List<PracticeTeam> GetAllPracticeTeams()
         {
             var request = new GetAllPracticeTeamsRequest();
@@ -206,13 +217,14 @@ namespace application.SystemInterface
         }
 
         // Setters below
-        public static bool SetPlayer()
+        public static void SetPlayer(Player player)
         {
-            var request = new SetPlayerRequest();
+            var request = new SetPlayerRequest
+            {
+                Player = player
+            };
 
-            var response = SimpleRequest<SetPlayerRequest, SetPlayerResponse>(RequestType.SetPlayer, request);
-
-            return response.WasSuccessful;
+            SimpleRequest<SetPlayerRequest, SetPlayerResponse>(RequestType.SetPlayer, request);
         }
 
         public static bool SetPlayerFocusPoints(Player player, List<FocusPointItem> focusPointItems)
@@ -253,6 +265,17 @@ namespace application.SystemInterface
                 RequestType.SetPlayerPracticeTeams, request);
         }
 
+        public static void ChangeTrainerPrivileges(Member member)
+        {
+            var request = new ChangeTrainerPrivilegesRequest
+            {
+                Member = member
+            };
+
+            SimpleRequest<ChangeTrainerPrivilegesRequest, ChangeTrainerPrivilegesResponse>(
+                RequestType.ChangeTrainerPrivileges, request);
+        }
+
         // Deleters below
 
         public static void DeletePlayerFocusPoints(int memberId, FocusPointItem focusPointItem)
@@ -290,6 +313,24 @@ namespace application.SystemInterface
                     RequestType.CreateFocusPointDescriptor, request);
 
             return response.FocusPointDescriptor;
+        }
+        public static void SetExerciseDiscriptor(ExerciseDescriptor exercise)
+        {
+            var request = new SetExerciseDescriptorRequest
+            {
+                Exercise = exercise
+            };
+
+            var response = SimpleRequest<SetExerciseDescriptorRequest, SetExerciseDescriptorResponse>(RequestType.SetExerciseDiscriptor, request);
+        }
+        public static List<Trainer> GetAllTrainers()
+        {
+            var request = new GetAllTrainersRequest();
+
+            var response =
+                SimpleRequest<GetAllTrainersRequest, GetAllTrainersResponse>(RequestType.GetAllTrainers, request);
+
+            return response.Trainers;
         }
     }
 }

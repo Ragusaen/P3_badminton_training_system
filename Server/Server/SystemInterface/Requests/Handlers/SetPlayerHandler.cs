@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Common.Model;
 using Common.Serialization;
 using Server.DAL;
 
@@ -12,22 +13,20 @@ namespace Server.SystemInterface.Requests.Handlers
     {
         protected override SetPlayerResponse InnerHandle(SetPlayerRequest request, member requester)
         {
-            var db = new DatabaseEntities();
-            var response = new SetPlayerResponse();
+            if (requester.MemberType != (int)MemberType.Trainer)
+                return null;
 
-            var dbMember = db.members.SingleOrDefault(p => p.ID == request.Player.Member.Id);
-            if (dbMember == null)
-            {
-                response.WasSuccessful = false;
-            }
-            else
-            {
-                throw new NotImplementedException();
-            }
+            var db = new DatabaseEntities();
+            var p = request.Player;
+            var dbMem = db.members.Find(request.Player.Member.Id);
+
+            dbMem.Name = p.Member.Name;
+            dbMem.MemberType = (int)p.Member.MemberType;
+            dbMem.Comment = p.Member.Comment;
+            dbMem.Sex = (int)p.Sex;
 
             db.SaveChanges();
-
-            return response;
+            return new SetPlayerResponse();
         }
     }
 }

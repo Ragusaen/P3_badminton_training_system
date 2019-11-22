@@ -22,17 +22,21 @@ namespace Common
         GetPracticeTeamYearPlan,
         GetPlayer,
         GetTokenMember,
+        GetAdminPage,
         GetAllPracticeTeams,
         //Setters below
         SetPlayer,
         SetPlayerFocusPoints,
         SetComment,
         SetPlayerPracticeTeams,
+        ChangeTrainerPrivileges,
         //Deleters below
         DeletePlayerFocusPoint,
         DeletePlayerPracticeTeam,
         GetExercises,
         //Creators below
         CreateFocusPointDescriptor,
+        SetExerciseDiscriptor,
+        GetAllTrainers,
     };
 }
