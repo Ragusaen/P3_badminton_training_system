@@ -8,6 +8,8 @@ namespace Common.Model
         public PracticeTeam PracticeTeam { get; set; }
         public Trainer Trainer { get; set; }
         public List<ExerciseItem> Exercises { get; set; }
+        public List<FocusPointItem> FocusPoints { get; set; }
+        public FocusPointItem MainFocusPoint { get; set; }
 
     }
 }

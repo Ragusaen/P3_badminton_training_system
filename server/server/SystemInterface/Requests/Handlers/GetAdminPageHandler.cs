@@ -15,8 +15,10 @@ namespace Server.SystemInterface.Requests.Handlers
         private static Logger _log = LogManager.GetCurrentClassLogger();
         protected override GetAdminPageResponse InnerHandle(GetAdminPageRequest request, member requester)
         {
-            if ((MemberType.Trainer).HasFlag((MemberType) requester.MemberType))
-                return new GetAdminPageResponse() {AccessDenied = true};
+            if (!((Common.Model.MemberType)requester.MemberType).HasFlag(MemberType.Trainer))
+            {
+                return new GetAdminPageResponse { AccessDenied = true };
+            }
 
             var db = new DatabaseEntities();
             var focusPoints = db.focuspoints.ToList().Select(fp => (FocusPointDescriptor) fp).ToList();

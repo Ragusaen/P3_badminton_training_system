@@ -13,8 +13,11 @@ namespace Server.SystemInterface.Requests.Handlers
     {
         protected override SetExerciseDescriptorResponse InnerHandle(SetExerciseDescriptorRequest request, member requester)
         {
-            if ((requester.MemberType == (int)MemberType.Trainer))
-                return null;
+            if (!((Common.Model.MemberType)requester.MemberType).HasFlag(MemberType.Trainer))
+            {
+                return new SetExerciseDescriptorResponse { AccessDenied = true };
+            }
+
             var db = new DatabaseEntities();
             var e = request.Exercise;
             var dbEx = new exercise

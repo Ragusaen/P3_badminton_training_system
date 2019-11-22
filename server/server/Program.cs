@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
 using Common.Model;
 using Common.Serialization;
 using Server.Controller;
@@ -17,47 +16,69 @@ namespace Server
     {
         private static Logger _log = LogManager.GetCurrentClassLogger();
 
-        public static void Main(string[] args)
+        private static void SetPracticeTeam()
         {
-            var tm = new TeamMatch()
-            {
-                ID = 0,
-                LeagueRound = 0,
-                Season = 0,
-                Lineup = new Lineup()
-                {
-                    new Lineup.Group
-                    {
-                        Type = Lineup.PositionType.MensDouble,
-                        Positions = new List<Position>
-                    {
-                        new Position()
-                        {
-                            IsExtra = false,
-                            OtherIsExtra = false,
-                            Player = new Player(),
-                            OtherPlayer = new Player()
-                        }
-                    }}
+            var db = new DatabaseEntities();
 
+            var ps = new practicesession()
+            {
+                member = db.members.First(),
+                focuspoints = new List<focuspoint>()
+                {
+                    new focuspoint()
+                    {
+                        Name = "Bagbanespil",
+                        Description = "Spil bagerst på din bane"
+                    }
+                },
+                playsession = new playsession()
+                {
+                    StartDate = DateTime.Now.AddDays(1),
+                    EndDate = DateTime.Now.AddDays(1).AddHours(2),
+                    Location = "Aalborg Triton"
+                },
+                focuspoint = new focuspoint()
+                {
+                    Name = "Smash",
+                    Description = "Hit the ball hard"
+                },
+                practicesessionexercises = new List<practicesessionexercise>()
+                {
+                    new practicesessionexercise()
+                    {
+                        exercise = new exercise()
+                        {
+                            Description = "Run fast",
+                            Name = "Fast running"
+                        },
+                        ExerciseIndex = 0
+                    }
+                },
+                practiceteam = new practiceteam()
+                {
+                    Name = "Sunday training"
                 }
             };
 
-            var ser = new Serializer();
+            db.practicesessions.Add(ps);
+            db.SaveChanges();
+        }
 
-
-            
+        public static void Main(string[] args)
+        {
 
             var db = new DatabaseEntities();
+
             if (!db.members.Any())
             {
                 RankListScraper scraper = new RankListScraper();
                 scraper.UpdatePlayers();
             }
+
+            SetPracticeTeam();
+            
             try
             {
-                // var scraper = new RankListScraper();
-                // scraper.UpdatePlayers();
 
                 _log.Debug("Server started");
                 SslTcpServer sslTcpServer = new SslTcpServer("cert.pfx");

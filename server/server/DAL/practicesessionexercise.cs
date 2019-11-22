@@ -17,6 +17,7 @@ namespace Server.DAL
         public int ExerciseID { get; set; }
         public int PracticeSessionPlaySessionID { get; set; }
         public int ExerciseIndex { get; set; }
+        public int Minutes { get; set; }
     
         public virtual exercise exercise { get; set; }
         public virtual practicesession practicesession { get; set; }

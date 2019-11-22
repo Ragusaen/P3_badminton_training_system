@@ -14,7 +14,6 @@ namespace Server.SystemInterface.Requests.Handlers
 {
     class CreateAccountHandler : MiddleRequestHandler<CreateAccountRequest, CreateAccountResponse>
     {
-        private static Logger _log = LogManager.GetCurrentClassLogger();
 
         protected override CreateAccountResponse InnerHandle(CreateAccountRequest request, member requester)
         {

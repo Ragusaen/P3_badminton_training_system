@@ -20,7 +20,6 @@ namespace Common
         GetTeamMatchPositions,
         GetPracticeSessionFocusPoints,
         GetPracticeSessionExercises,
-        GetPracticeTeamYearPlan,
         GetPlayer,
         GetTokenMember,
         GetAdminPage,
@@ -39,5 +38,6 @@ namespace Common
         CreateFocusPointDescriptor,
         SetExerciseDiscriptor,
         GetAllTrainers,
+        SetPracticeSession,
     };
 }

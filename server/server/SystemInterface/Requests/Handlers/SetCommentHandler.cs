@@ -13,11 +13,12 @@ namespace Server.SystemInterface.Requests.Handlers
     {
         protected override SetCommentResponse InnerHandle(SetCommentRequest request, member requester)
         {
-            if ((MemberType)requester.MemberType != MemberType.Trainer && request.Member.Id != requester.ID)
-                return new SetCommentResponse()
-                {
-                    AccessDenied = true
-                };
+            if (!(((Common.Model.MemberType)requester.MemberType).HasFlag(MemberType.Trainer) ||
+                  requester.ID == request.Member.Id))
+            {
+                RequestMember = request.Member;
+                return new SetCommentResponse { AccessDenied = true };
+            }
 
             var db = new DatabaseEntities();
             var m = db.members.Find(request.Member.Id);

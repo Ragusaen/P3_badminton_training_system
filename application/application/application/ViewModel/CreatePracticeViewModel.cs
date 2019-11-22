@@ -14,15 +14,9 @@ namespace application.ViewModel
 {
     class CreatePracticeViewModel : BaseViewModel
     {
-        YearPlanSection YearPlan { get; set; } = new YearPlanSection();
-        
         public PracticeSession Practice { get; set; } = new PracticeSession();
-        private int _planHeight;
-        public int PlanHeight
-        {
-            get => _planHeight;
-            set => SetProperty(ref _planHeight, value);
-        }
+
+        //Date
 
         public DateTime MinDate { get; set; } = DateTime.Today;
 
@@ -38,17 +32,6 @@ namespace application.ViewModel
             }
         }
 
-        private DateTime _selectedDateEnd;
-
-        public DateTime SelectedDateEnd
-        {
-            get { return _selectedDateEnd; }
-            set
-            {
-                if (SetProperty(ref _selectedDateEnd, value))
-                    SaveCreatedPracticeClickCommand.RaiseCanExecuteChanged();
-            }
-        }
 
         private TimeSpan _selectedTimeStart;
 
@@ -59,6 +42,8 @@ namespace application.ViewModel
             {
                 if (SetProperty(ref _selectedTimeStart, value))
                     SaveCreatedPracticeClickCommand.RaiseCanExecuteChanged();
+                if(SelectedTimeStart > _selectedTimeEnd)
+                    SelectedTimeEnd = SelectedTimeStart;
             }
         }
 
@@ -71,8 +56,12 @@ namespace application.ViewModel
             {
                 if (SetProperty(ref _selectedTimeEnd, value))
                     SaveCreatedPracticeClickCommand.RaiseCanExecuteChanged();
+                if (SelectedTimeStart > _selectedTimeEnd)
+                     SelectedTimeStart = SelectedTimeEnd;
             }
         }
+
+        //List
 
         private List<Trainer> _trainers;
 
@@ -97,7 +86,56 @@ namespace application.ViewModel
             }
         }
 
-        
+        private ObservableCollection<FocusPointItem> _focusPoints;
+
+        public ObservableCollection<FocusPointItem> FocusPoints
+        {
+            get { return _focusPoints; }
+            set
+            {
+                SetProperty(ref _focusPoints, value);
+                FocusPointListHeight = FocusPoints.Count * 45;
+            }
+        }
+        //Height
+        private int _planHeight;
+        public int PlanHeight
+        {
+            get => _planHeight;
+            set => SetProperty(ref _planHeight, value);
+        }
+
+        private int _focusPointListHeight;
+
+        public int FocusPointListHeight
+        {
+            get { return _focusPointListHeight; }
+            set { SetProperty(ref _focusPointListHeight, value); }
+        }
+        //rest
+        private string _searchtext;
+
+        public string SearchText
+        {
+            get { return _searchtext; }
+            set
+            {
+                SetProperty(ref _searchtext, value);
+                FocusPoints = new ObservableCollection<FocusPointItem>(FocusPoints.OrderByDescending((x => StringExtension.LongestCommonSubsequence(x.Descriptor.Name, SearchText))).ThenBy(x => x.Descriptor.Name.Length).ToList());
+            }
+        }
+
+        //Ctor
+        public CreatePracticeViewModel()
+        {
+            SelectedDateStart = DateTime.Today;
+            Practice.PracticeTeam = new PracticeTeam() { Name = "Choose Team" };
+            FocusPoints = new ObservableCollection<FocusPointItem>();
+            Trainers = RequestCreator.GetAllTrainers();
+            PlanElement = new ObservableCollection<ExerciseItem>();
+            PlanHeight = 0;
+        }
+        //Save
         private RelayCommand _saveCreatedPracticeClickCommand;
 
         public RelayCommand SaveCreatedPracticeClickCommand
@@ -116,54 +154,20 @@ namespace application.ViewModel
         private void ExecuteSaveCreatedPracticeClick(object param)
         {
             Practice.Start = SelectedDateStart.Date + Convert.ToDateTime(SelectedTimeStart.ToString()).TimeOfDay;
-            Practice.End = SelectedDateEnd.Date + Convert.ToDateTime(SelectedTimeEnd.ToString()).TimeOfDay;
-            //Practice.
+            Practice.End = SelectedDateStart.Date + Convert.ToDateTime(SelectedTimeEnd.ToString()).TimeOfDay;
+            if (Practice.PracticeTeam.Name == "Choose Team")
+                Practice.PracticeTeam.Name = "";
+            if (string.IsNullOrEmpty(Practice.Location))
+                Practice.Location = "Stjernevej 5, 9200 Aalborg";
+            Practice.Exercises = PlanElement.ToList();
+            Practice.FocusPoints = FocusPoints.ToList();
+
         }
 
-        private string _searchtext;
 
-        public string SearchText
-        {
-            get { return _searchtext; }
-            set
-            {
-                SetProperty(ref _searchtext, value);
-                FocusPoints = new ObservableCollection<FocusPointItem>(FocusPoints.OrderByDescending((x => StringExtension.LongestCommonSubsequence(x.Descriptor.Name, SearchText))).ThenBy(x => x.Descriptor.Name.Length).ToList());
-            }
-        }
 
-        private ObservableCollection<FocusPointItem> _focusPoints;
 
-        public ObservableCollection<FocusPointItem> FocusPoints
-        {
-            get { return _focusPoints; }
-            set
-            {
-                SetProperty(ref _focusPoints, value);
-                FocusPointListHeight = FocusPoints.Count * 45;
-            }
-        }
-        private ObservableCollection<ExerciseItem> _exercise;
-
-        public ObservableCollection<ExerciseItem> Exercise
-        {
-            get { return _exercise; }
-            set
-            {
-                SetProperty(ref _exercise, value);
-                FocusPointListHeight = FocusPoints.Count * 45;
-            }
-        }
-
-        private int _focusPointListHeight;
-
-        public int FocusPointListHeight
-        {
-            get { return _focusPointListHeight; }
-            set { SetProperty(ref _focusPointListHeight, value); }
-        }
-        
-
+        //Add
         private RelayCommand _addNewPlanElementClickCommand;
 
         public RelayCommand AddNewPlanElementClickCommand
@@ -179,7 +183,6 @@ namespace application.ViewModel
             return true;
         }
 
-        //Check if username is free in database.
         private async void ExecuteAddNewPlanElementClick(object param)
         {
             string action = await Application.Current.MainPage.DisplayActionSheet("Settings", "Cancel", null,"Add Existing Exercise", "Make New Exercise");
@@ -200,7 +203,49 @@ namespace application.ViewModel
             PlanElement.Add(item);
             PlanHeight = PlanElement.Count * 235;
         }
+        private RelayCommand _addNewFocusPointCommand;
 
+        public RelayCommand AddNewFocusPointCommand
+        {
+            get
+            {
+                return _addNewFocusPointCommand ?? (_addNewFocusPointCommand = new RelayCommand(param => AddNewFocusPointClick(param)));
+            }
+        }
+        private void AddNewFocusPointClick(object param)
+        {
+            FocusPointPopupPage page = new FocusPointPopupPage(FocusPoints.ToList());
+            page.CallBackEvent += FocusPointPage_CallBackEvent; ;
+            PopupNavigation.Instance.PushAsync(page);
+        }
+
+        private void FocusPointPage_CallBackEvent(object sender, FocusPointDescriptor e)
+        {
+            FocusPoints.Add(new FocusPointItem() { Descriptor = e });
+            FocusPointListHeight = FocusPoints.Count * 45;
+        }
+
+        private RelayCommand _teamCommand;
+
+        public RelayCommand TeamCommand
+        {
+            get
+            {
+                return _teamCommand ?? (_teamCommand = new RelayCommand(param => TeamClick(param)));
+            }
+        }
+        private void TeamClick(object param)
+        {
+            PracticeTeamPopupPage page = new PracticeTeamPopupPage(new List<PracticeTeam>());
+            page.CallBackEvent += TeamPage_CallBackEvent; ;
+            PopupNavigation.Instance.PushAsync(page);
+        }
+
+        private void TeamPage_CallBackEvent(object sender, PracticeTeam e)
+        {
+            Practice.PracticeTeam = e;
+        }
+        //Delete
         private RelayCommand _deletePlanItemCommand;
 
         public RelayCommand DeletePlanItemCommand
@@ -232,55 +277,6 @@ namespace application.ViewModel
             FocusPointListHeight = FocusPoints.Count * 45;
         }
 
-        public CreatePracticeViewModel()
-        {
-            SelectedDateStart = DateTime.Today;
-            Practice.PracticeTeam = new PracticeTeam() { Name = "Choose Team" };
-            FocusPoints = new ObservableCollection<FocusPointItem>();
-            Trainers = RequestCreator.GetAllTrainers();
-            PlanElement = new ObservableCollection<ExerciseItem>();
-            PlanHeight = 0;
-        }
-        private RelayCommand _addNewFocusPointCommand;
 
-        public RelayCommand AddNewFocusPointCommand
-        {
-            get
-            {
-                return _addNewFocusPointCommand ?? (_addNewFocusPointCommand = new RelayCommand(param => AddNewFocusPointClick(param)));
-            }
-        }
-        private void AddNewFocusPointClick(object param)
-        {
-            FocusPointPopupPage page = new FocusPointPopupPage(FocusPoints.ToList());
-            page.CallBackEvent += FocusPointPage_CallBackEvent; ;
-            PopupNavigation.Instance.PushAsync(page);
-        }
-
-        private void FocusPointPage_CallBackEvent(object sender, FocusPointDescriptor e)
-        {
-            FocusPoints.Add(new FocusPointItem() { Descriptor = e });
-            FocusPointListHeight = FocusPoints.Count * 45;
-        }
-        private RelayCommand _teamCommand;
-
-        public RelayCommand TeamCommand
-        {
-            get
-            {
-                return _teamCommand ?? (_teamCommand = new RelayCommand(param => TeamClick(param)));
-            }
-        }
-        private void TeamClick(object param)
-        {
-            PracticeTeamPopupPage page = new PracticeTeamPopupPage(new List<PracticeTeam>());
-            page.CallBackEvent += TeamPage_CallBackEvent; ;
-            PopupNavigation.Instance.PushAsync(page);
-        }
-
-        private void TeamPage_CallBackEvent(object sender, PracticeTeam e)
-        {
-            Practice.PracticeTeam = e;
-        }
     }
 }
