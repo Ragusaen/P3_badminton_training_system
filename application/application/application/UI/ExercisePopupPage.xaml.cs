@@ -1,6 +1,7 @@
 ﻿using application.ViewModel;
 using Common.Model;
 using Rg.Plugins.Popup.Pages;
+using Rg.Plugins.Popup.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,9 +23,12 @@ namespace application.UI
             BindingContext = vm;
         }
 
+        public event EventHandler<ExerciseDescriptor> CallBackEvent;
+
         private void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            throw new NotImplementedException();
+            CallBackEvent?.Invoke(this, e.SelectedItem as ExerciseDescriptor);
+            PopupNavigation.Instance.PopAsync();
         }
     }
 }

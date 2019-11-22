@@ -11,14 +11,39 @@
             <Label x:Name="Date" Text="date" />
             <Label x:Name="Time" Text="time" />
             <Label x:Name="Location" Text="{Binding PlaySession.Location}"/>
-        </StackLayout>
 
-        <StackLayout x:Name="PracticeRelevant">
-            
-        </StackLayout>
+            <StackLayout x:Name="PracticeRelevant">
+                <ListView x:Name="Exercises" ItemsSource="{Binding Exercises}" RowHeight="235" Margin="15,0,15,0" HeightRequest="{Binding PlanHeight}" VerticalScrollBarVisibility="Never" SeparatorVisibility="None">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <ViewCell>
+                                <Frame CornerRadius="5" HasShadow="True" Margin="0,10,0,10">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="1.5*"/>
+                                            <RowDefinition Height="1*"/>
+                                            <RowDefinition Height="3*"/>
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1.5*"/>
+                                            <ColumnDefinition Width="4*"/>
+                                            <ColumnDefinition Width="1*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Label Grid.Row="0" Grid.Column="0" Text="{Binding Minutes}" HorizontalOptions="Start" HorizontalTextAlignment="End"/>
+                                        <Label Grid.Row="0" Grid.Column="1" Text="{Binding ExerciseDescriptor.Name}"  VerticalOptions="Center" FontSize="18"/>
+                                        <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Text="Exercises" FontSize="20" TextDecorations="Underline" HorizontalOptions="Center"/>
+                                        <Label Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" FontSize="18" Text="{Binding ExerciseDescriptor.Description}" VerticalOptions="Fill"/>
+                                    </Grid>
+                                </Frame>
+                            </ViewCell>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </StackLayout>
 
-        <StackLayout x:Name="TeamMatchRelevant">
-            
+            <StackLayout x:Name="TeamMatchRelevant">
+
+            </StackLayout>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

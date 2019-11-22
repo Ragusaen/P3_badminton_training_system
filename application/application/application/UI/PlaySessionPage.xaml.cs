@@ -29,8 +29,8 @@ namespace application.UI
             if (_vm.TeamMatch != null)
             {
                 Name.Text = _vm.TeamMatch.OpponentName;
-                
-                _vm.TeamMatchRelevant
+
+                TeamMatchRelevant.IsVisible = true;
             }
         }
     }

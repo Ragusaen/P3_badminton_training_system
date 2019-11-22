@@ -15,7 +15,7 @@ namespace application.SystemInterface.Network
         private readonly string _serverName = "Triton";
 
         private TcpClient _tcpClient = null;
-        private SslStream _sslStream = null;
+        private SslStream _sslStream = null;    
 
         public bool IsConnected => (_tcpClient != null && _sslStream != null) && (_tcpClient.Connected && _sslStream.IsAuthenticated);
 

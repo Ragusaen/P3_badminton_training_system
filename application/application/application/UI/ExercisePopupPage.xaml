@@ -11,7 +11,7 @@
 
     <StackLayout BackgroundColor="White">
         <SearchBar Placeholder="Enter your focus point" Text="{Binding SearchText}"/>
-        <ListView VerticalScrollBarVisibility="Always" ItemSelected="ListView_ItemSelected" ItemsSource="{Binding FocusPoints}" SeparatorVisibility="None">
+        <ListView VerticalScrollBarVisibility="Always" ItemSelected="ListView_ItemSelected" ItemsSource="{Binding Exercises}" SeparatorVisibility="None">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>

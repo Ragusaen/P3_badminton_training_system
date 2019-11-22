@@ -6,6 +6,9 @@ using Common.Model;
 using System.Collections.ObjectModel;
 using System.Linq;
 using application.Controller;
+using Rg.Plugins.Popup.Services;
+using Xamarin.Forms;
+using application.SystemInterface;
 
 namespace application.ViewModel
 {
@@ -149,13 +152,13 @@ namespace application.ViewModel
             set
             {
                 SetProperty(ref _searchtext, value);
-                FocusPoints = new ObservableCollection<FocusPointDescriptor>(FocusPoints.OrderByDescending((x => StringExtension.LongestCommonSubsequence(x.Name, SearchText))).ThenBy(x => x.Name.Length).ToList());
+                FocusPoints = new ObservableCollection<FocusPointItem>(FocusPoints.OrderByDescending((x => StringExtension.LongestCommonSubsequence(x.Descriptor.Name, SearchText))).ThenBy(x => x.Descriptor.Name.Length).ToList());
             }
         }
 
-        private ObservableCollection<FocusPointDescriptor> _focusPoints;
+        private ObservableCollection<FocusPointItem> _focusPoints;
 
-        public ObservableCollection<FocusPointDescriptor> FocusPoints
+        public ObservableCollection<FocusPointItem> FocusPoints
         {
             get { return _focusPoints; }
             set
@@ -164,9 +167,9 @@ namespace application.ViewModel
                 FocusPointListHeight = FocusPoints.Count * 45;
             }
         }
-        private ObservableCollection<ExerciseDescriptor> _exercise;
+        private ObservableCollection<ExerciseItem> _exercise;
 
-        public ObservableCollection<ExerciseDescriptor> Exercise
+        public ObservableCollection<ExerciseItem> Exercise
         {
             get { return _exercise; }
             set
@@ -201,12 +204,27 @@ namespace application.ViewModel
         }
 
         //Check if username is free in database.
-        private void ExecuteAddNewPlanElementClick(object param)
+        private async void ExecuteAddNewPlanElementClick(object param)
         {
-            PlanElement.Add(new ExerciseItem());
+            string action = await Application.Current.MainPage.DisplayActionSheet("Settings", "Cancel", null,"Add Existing Exercise", "Make New Exercise");
+
+            if (action == "Add Existing Exercise")
+            {
+                var page = new ExercisePopupPage(Practice);
+                page.CallBackEvent += ExercisePage_CallBackEvent;
+                await PopupNavigation.Instance.PushAsync(page);
+            }
+            else if (action == "Make New Exercise")
+                await PopupNavigation.Instance.PushAsync(new CreateExercisePopupPage());
+        }
+
+        private void ExercisePage_CallBackEvent(object sender, ExerciseDescriptor e)
+        {
+            ExerciseItem item = new ExerciseItem() { ExerciseDescriptor = e };
+            PlanElement.Add(item);
             PlanHeight = PlanElement.Count * 235;
         }
-        
+
         private RelayCommand _deletePlanItemCommand;
 
         public RelayCommand DeletePlanItemCommand
@@ -222,15 +240,65 @@ namespace application.ViewModel
             PlanElement.Remove(exercise);
             PlanHeight = PlanElement.Count * 235;
         }
+        private RelayCommand _deleteFocusPointItemCommand;
+
+        public RelayCommand DeleteFocusPointItemCommand
+        {
+            get
+            {
+                return _deleteFocusPointItemCommand ?? (_deleteFocusPointItemCommand = new RelayCommand(param => DeleteFocusPointItemClick(param)));
+            }
+        }
+        private void DeleteFocusPointItemClick(object param)
+        {
+            FocusPointItem exercise = param as FocusPointItem;
+            FocusPoints.Remove(exercise);
+            FocusPointListHeight = FocusPoints.Count * 45;
+        }
 
         public CreatePracticeViewModel()
         {
             SelectedDateStart = DateTime.Today;
+            FocusPoints = new ObservableCollection<FocusPointItem>();
 
             PlanElement = new ObservableCollection<ExerciseItem>();
-            PlanElement.Add(new ExerciseItem());
             PlanHeight = PlanElement.Count * 235;
+        }
+        private RelayCommand _addNewFocusPointCommand;
 
+        public RelayCommand AddNewFocusPointCommand
+        {
+            get
+            {
+                return _addNewFocusPointCommand ?? (_addNewFocusPointCommand = new RelayCommand(param => AddNewFocusPointClick(param)));
+            }
+        }
+        private void AddNewFocusPointClick(object param)
+        {
+            FocusPointPopupPage page = new FocusPointPopupPage(FocusPoints.ToList());
+            page.CallBackEvent += FocusPointPage_CallBackEvent; ;
+            PopupNavigation.Instance.PushAsync(page);
+        }
+
+        private void FocusPointPage_CallBackEvent(object sender, FocusPointDescriptor e)
+        {
+            FocusPoints.Add(new FocusPointItem() { Descriptor = e });
+            FocusPointListHeight = FocusPoints.Count * 45;
+        }
+        private RelayCommand _teamCommand;
+
+        public RelayCommand TeamCommand
+        {
+            get
+            {
+                return _teamCommand ?? (_teamCommand = new RelayCommand(param => TeamClick(param)));
+            }
+        }
+        private void TeamClick(object param)
+        {
+            FocusPointPopupPage page = new FocusPointPopupPage(FocusPoints.ToList());
+            page.CallBackEvent += FocusPointPage_CallBackEvent; ;
+            PopupNavigation.Instance.PushAsync(page);
         }
     }
 }
