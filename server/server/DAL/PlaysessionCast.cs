@@ -17,7 +17,7 @@ namespace Server.DAL
                 var practice = p.practicesession;
                 playSession = new PracticeSession()
                 {
-                    PracticeTeam = (Common.Model.PracticeTeam) practice.yearplansection.practiceteam,
+                    PracticeTeam = (Common.Model.PracticeTeam) practice.practiceteam,
                     Trainer = (Common.Model.Trainer) practice.member
                 };
             }

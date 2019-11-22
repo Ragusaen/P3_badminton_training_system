@@ -11,11 +11,11 @@ namespace application.SystemInterface.Network
 {
     class ServerConnection
     {
-        private readonly IPAddress _machineName = new IPAddress(new byte[] {192, 168, 42, 59});
+        private readonly IPAddress _machineName = new IPAddress(new byte[] {192, 168, 42, 99});
         private readonly string _serverName = "Triton";
 
         private TcpClient _tcpClient = null;
-        private SslStream _sslStream = null;    
+        private SslStream _sslStream = null;
 
         public bool IsConnected => (_tcpClient != null && _sslStream != null) && (_tcpClient.Connected && _sslStream.IsAuthenticated);
 

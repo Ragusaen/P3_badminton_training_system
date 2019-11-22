@@ -35,6 +35,8 @@ namespace application.SystemInterface
             Serializer serializer = new Serializer();
             byte[] requestBytes = serializer.Serialize(request);
 
+            Debug.WriteLine(Encoding.ASCII.GetString(requestBytes));
+
             // Add request type
             byte[] messageBytes = new byte[requestBytes.Length + 1];
             messageBytes[0] = (byte)requestType;
@@ -331,6 +333,26 @@ namespace application.SystemInterface
                 SimpleRequest<GetAllTrainersRequest, GetAllTrainersResponse>(RequestType.GetAllTrainers, request);
 
             return response.Trainers;
+        }
+
+
+        public static List<RuleBreak> VerifyLineup(TeamMatch match)
+        {
+            var request = new VerifyLineupRequest() {Match = match};
+            var response = SimpleRequest<VerifyLineupRequest, VerifyLineupResponse>(RequestType.VerifyLineup, request);
+            return response.RuleBreaks;
+        }
+
+        public static void SetPracticeSession(PracticeSession practice)
+        {
+            var request = new SetPracticeSessionRequest
+            {
+                Practice = practice
+            };
+
+            var response =
+                SimpleRequest<SetPracticeSessionRequest, SetPracticeSessionResponse>(
+                    RequestType.SetPracticeSession, request);
         }
     }
 }

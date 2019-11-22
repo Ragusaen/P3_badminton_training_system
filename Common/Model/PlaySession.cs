@@ -4,7 +4,8 @@ namespace Common.Model
 {
     public abstract class PlaySession
     {
-        public enum Type {Practice, Match};
+        [Flags]
+        public enum Type {Practice = 1, Match = 2};
 
         public int Id { get; set; }
         public DateTime Start { get; set; }

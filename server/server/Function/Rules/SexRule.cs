@@ -6,25 +6,25 @@ namespace Server.Function.Rules
 {
     class SexRule : IRule
     {
-        public int Priority { get; set; }
+        public int Priority { get; set; } = 5;
         private List<RuleBreak> _ruleBreaks = new List<RuleBreak>();
 
         public List<RuleBreak> Rule(TeamMatch match)
         {
             foreach (var group in match.Lineup)
             {
-                for (int i = 0; i < group.positions.Count; i++)
+                for (int i = 0; i < group.Positions.Count; i++)
                 {
-                    if (group.type == Lineup.PositionType.MixDouble)
+                    if (group.Type == Lineup.PositionType.MixDouble)
                     {
                         CheckMixSex();
                     }
                     else
                     {
-                        if(!SexGood(group.type, group.positions[i].Player.Sex))
-                            _ruleBreaks.Add(new RuleBreak((group.type, i), 0, "Player sex does not match position!"));
-                        if(Lineup.PositionType.Double.HasFlag(group.type) && !SexGood(group.type, group.positions[i].OtherPlayer.Sex))
-                            _ruleBreaks.Add(new RuleBreak((group.type, i), 1, "Player sex does not match position!"));
+                        if(group.Positions[i].Player != null && !SexGood(group.Type, group.Positions[i].Player.Sex))
+                            _ruleBreaks.Add(new RuleBreak((group.Type, i), 0, "Player sex does not match position!"));
+                        if(Lineup.PositionType.Double.HasFlag(group.Type) && group.Positions[i].OtherPlayer != null && !SexGood(group.Type, group.Positions[i].OtherPlayer.Sex))
+                            _ruleBreaks.Add(new RuleBreak((group.Type, i), 1, "Player sex does not match position!"));
                     }
                 }
             }
@@ -33,7 +33,7 @@ namespace Server.Function.Rules
 
         private void CheckMixSex()
         {
-            throw new NotImplementedException();
+            //TODO: Fix this 
         }
 
         private bool SexGood(Lineup.PositionType positionType, Sex sex)

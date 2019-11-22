@@ -211,7 +211,7 @@
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\PracticeSessionExerciseCast.cs" />
-    <Compile Include="DAL\ExerciseDescriptorCast.cs" />
+    <Compile Include="DAL\ExerciseCast.cs" />
     <Compile Include="DAL\FeedbackCast.cs" />
     <Compile Include="DAL\FocusPointDescriptorCast.cs" />
     <Compile Include="DAL\PositionCast.cs" />
@@ -227,10 +227,6 @@
     <Compile Include="DAL\token.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\yearplansection.cs">
-      <DependentUpon>DatabaseModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\YearPlanSectionCast.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\ChangeTrainerPrivilegesHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\CreateFocusPointDescriptorHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\DeletePlayerFocusPointsHandler.cs" />
@@ -256,7 +252,6 @@
     <Compile Include="Function\Rules\MinAgeRule.cs" />
     <Compile Include="Function\Rules\MultipleLineupPointsRule.cs" />
     <Compile Include="Function\Rules\ReservesRule.cs" />
-    <Compile Include="Function\Rules\RuleBreak.cs" />
     <Compile Include="Function\Rules\SexRule.cs" />
     <Compile Include="SystemInterface\Network\ClientConnection.cs" />
     <Compile Include="SystemInterface\Network\Connection.cs" />
@@ -274,7 +269,6 @@
     <Compile Include="SystemInterface\Requests\Handlers\GetPracticeSessionFocusPointsHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetPracticeSessionHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetPracticeTeamHandler.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\GetPracticeTeamYearPlanHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetScheduleHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetTeamMatchHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetTeamMatchPositionsHandler.cs" />
@@ -284,8 +278,10 @@
     <Compile Include="SystemInterface\Requests\Handlers\SetCommentHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\SetExerciseDescriptorHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\AddPlayerFocusPointHandler.cs" />
+    <Compile Include="SystemInterface\Requests\Handlers\SetPacticeSessionHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\SetPlayerHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\SetPlayerPracticeTeamsHandler.cs" />
+    <Compile Include="SystemInterface\Requests\Handlers\VerifyLineupHandler.cs" />
     <Compile Include="SystemInterface\Requests\RequestManager.cs" />
     <Compile Include="Controller\UserManager.cs" />
   </ItemGroup>

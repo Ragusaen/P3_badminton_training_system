@@ -1,9 +1,10 @@
-﻿using Common.Model;
-using System;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace Server.Function.Rules
+namespace Common.Model
 {
-    class RuleBreak
+    public class RuleBreak
     {
         public (Lineup.PositionType type, int index) Position { get; set; }
         public int PositionIndex { get; set; }
@@ -15,5 +16,7 @@ namespace Server.Function.Rules
             PositionIndex = positionindex;
             ErrorMessage = error;
         }
+
+        public RuleBreak() { }
     }
 }

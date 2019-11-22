@@ -38,6 +38,5 @@ namespace Server.DAL
         public virtual DbSet<ranklist> ranklists { get; set; }
         public virtual DbSet<teammatch> teammatches { get; set; }
         public virtual DbSet<token> tokens { get; set; }
-        public virtual DbSet<yearplansection> yearplansections { get; set; }
     }
 }

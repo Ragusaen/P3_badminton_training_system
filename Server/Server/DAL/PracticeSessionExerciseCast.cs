@@ -16,6 +16,7 @@ namespace Server.DAL
                 Id = pse.ExerciseID,
                 ExerciseDescriptor = (Common.Model.ExerciseDescriptor) pse.exercise,
                 Index = pse.ExerciseIndex,
+                Minutes = pse.Minutes
             };
         }
     }

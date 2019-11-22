@@ -1,4 +1,5 @@
 ﻿using application.ViewModel;
+using Common.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,10 +14,11 @@ namespace application.UI
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CreatePracticePage : ContentPage
     {
+        CreatePracticeViewModel vm;
         public CreatePracticePage()
         {
             InitializeComponent();
-            CreatePracticeViewModel vm = new CreatePracticeViewModel();
+            vm = new CreatePracticeViewModel();
             BindingContext = vm;
             vm.Navigation = Navigation;
 

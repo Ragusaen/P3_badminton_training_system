@@ -7,7 +7,7 @@ namespace Server.Function.Rules
 {
     class MaxPlayerOccurrencesRule : IRule
     {
-        public int Priority { get; set; }
+        public int Priority { get; set; } = 7;
         private int _max;
         private List<RuleBreak> _ruleBreaks = new List<RuleBreak>();
 
@@ -37,10 +37,11 @@ namespace Server.Function.Rules
 
             foreach (var group in lineup)
             {
-                foreach (var position in group.positions)
+                foreach (var position in group.Positions)
                 {
-                    players.Add(position.Player);
-                    if (Lineup.PositionType.Double.HasFlag(group.type))
+                    if(position.Player != null)
+                        players.Add(position.Player);
+                    if (Lineup.PositionType.Double.HasFlag(group.Type) && position.OtherPlayer != null)
                         players.Add(position.OtherPlayer);
                 }
             }
@@ -52,12 +53,12 @@ namespace Server.Function.Rules
         {
             foreach (var group in lineup)
             {
-                for (int i = 0; i < group.positions.Count; i++)
+                for (int i = 0; i < group.Positions.Count; i++)
                 {
-                    if (players.Contains(group.positions[i].Player))
-                        _ruleBreaks.Add(new RuleBreak((group.type, i), 0, $"Player can not appear more than {_max} times on a lineup!"));
-                    if (Lineup.PositionType.Double.HasFlag(group.type) && players.Contains(group.positions[i].OtherPlayer))
-                        _ruleBreaks.Add(new RuleBreak((group.type, i), 1, $"Player can not appear more than {_max} times on a lineup!"));
+                    if (players.Contains(group.Positions[i].Player))
+                        _ruleBreaks.Add(new RuleBreak((group.Type, i), 0, $"Player can not appear more than {_max} times on a lineup!"));
+                    if (Lineup.PositionType.Double.HasFlag(group.Type) && players.Contains(group.Positions[i].OtherPlayer))
+                        _ruleBreaks.Add(new RuleBreak((group.Type, i), 1, $"Player can not appear more than {_max} times on a lineup!"));
                 }
             }
         }
