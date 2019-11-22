@@ -40,7 +40,6 @@ namespace Server.SystemInterface.Requests
                 {RequestType.GetPracticeSessionFocusPoints, new GetPracticeSessionFocusPointsHandler() },
                 {RequestType.GetPracticeSessionExercises, new GetPracticeSessionExercisesHandler() },
                 {RequestType.GetAllFocusPoints, new GetAllFocusPointDescriptorsHandler() },
-                {RequestType.GetPracticeTeamYearPlan, new GetPracticeTeamYearPlanHandler() },
                 {RequestType.GetPlayer, new GetPlayerHandler() },
                 {RequestType.GetTokenMember, new GetTokenMemberHandler() },
                 {RequestType.GetAdminPage, new GetAdminPageHandler() },

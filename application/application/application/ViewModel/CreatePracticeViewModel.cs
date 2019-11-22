@@ -14,8 +14,6 @@ namespace application.ViewModel
 {
     class CreatePracticeViewModel : BaseViewModel
     {
-        YearPlanSection YearPlan { get; set; } = new YearPlanSection();
-        
         public PracticeSession Practice { get; set; } = new PracticeSession();
         private int _planHeight;
         public int PlanHeight

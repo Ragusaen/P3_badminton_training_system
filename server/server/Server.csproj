@@ -227,10 +227,6 @@
     <Compile Include="DAL\token.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
-    <Compile Include="DAL\yearplansection.cs">
-      <DependentUpon>DatabaseModel.tt</DependentUpon>
-    </Compile>
-    <Compile Include="DAL\YearPlanSectionCast.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\ChangeTrainerPrivilegesHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\CreateFocusPointDescriptorHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\DeletePlayerFocusPointsHandler.cs" />
@@ -274,7 +270,6 @@
     <Compile Include="SystemInterface\Requests\Handlers\GetPracticeSessionFocusPointsHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetPracticeSessionHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetPracticeTeamHandler.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\GetPracticeTeamYearPlanHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetScheduleHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetTeamMatchHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetTeamMatchPositionsHandler.cs" />

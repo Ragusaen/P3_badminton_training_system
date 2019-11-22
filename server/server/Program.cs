@@ -1,6 +1,7 @@
 ﻿using NLog;
 using Server.SystemInterface.Network;
 using System;
+using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -15,23 +16,69 @@ namespace Server
     {
         private static Logger _log = LogManager.GetCurrentClassLogger();
 
-        public static void Main(string[] args)
+        private static void SetPracticeTeam()
         {
             var db = new DatabaseEntities();
 
-            //db.members.Find(17).practiceteams.Add(new practiceteam { Name = "Tirsdagstræning" });
-            //db.practiceteams.Add(new practiceteam { Name = "Torsdagstræning" });
-            //db.SaveChanges();
+            var ps = new practicesession()
+            {
+                member = db.members.First(),
+                focuspoints = new List<focuspoint>()
+                {
+                    new focuspoint()
+                    {
+                        Name = "Bagbanespil",
+                        Description = "Spil bagerst på din bane"
+                    }
+                },
+                playsession = new playsession()
+                {
+                    StartDate = DateTime.Now.AddDays(1),
+                    EndDate = DateTime.Now.AddDays(1).AddHours(2),
+                    Location = "Aalborg Triton"
+                },
+                focuspoint = new focuspoint()
+                {
+                    Name = "Smash",
+                    Description = "Hit the ball hard"
+                },
+                practicesessionexercises = new List<practicesessionexercise>()
+                {
+                    new practicesessionexercise()
+                    {
+                        exercise = new exercise()
+                        {
+                            Description = "Run fast",
+                            Name = "Fast running"
+                        },
+                        ExerciseIndex = 0
+                    }
+                },
+                practiceteam = new practiceteam()
+                {
+                    Name = "Sunday training"
+                }
+            };
+
+            db.practicesessions.Add(ps);
+            db.SaveChanges();
+        }
+
+        public static void Main(string[] args)
+        {
+
+            var db = new DatabaseEntities();
 
             if (!db.members.Any())
             {
                 RankListScraper scraper = new RankListScraper();
                 scraper.UpdatePlayers();
             }
+
+            SetPracticeTeam();
+            
             try
             {
-                // var scraper = new RankListScraper();
-                // scraper.UpdatePlayers();
 
                 _log.Debug("Server started");
                 SslTcpServer sslTcpServer = new SslTcpServer("cert.pfx");
