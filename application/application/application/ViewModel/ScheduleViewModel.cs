@@ -2,6 +2,7 @@
 using Common.Model;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using application.SystemInterface;
@@ -36,7 +37,7 @@ namespace application.ViewModel
         public ScheduleViewModel()
         {
             LoadEvents();
-            CurrentMonth = DateTime.Today.ToString("MMMM");
+            //CurrentMonth = DateTime.Today.ToString("MMMM");
         }
 
         public class PlaySessionEvent
@@ -47,7 +48,9 @@ namespace application.ViewModel
 
         private void LoadEvents()
         {
-            List<PlaySession> playSessions = new List<PlaySession>();//RequestCreator.GetSchedule();
+            List<PlaySession> playSessions = RequestCreator.GetSchedule();
+
+            Debug.WriteLine($"THERE WERE {playSessions.Count} PLAYSESSIONS");
 
             Events = new EventCollection();
 

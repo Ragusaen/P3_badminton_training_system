@@ -58,6 +58,7 @@ namespace Server.SystemInterface.Requests
                 //Creators below
                 {RequestType.CreateFocusPointDescriptor, new CreateFocusPointDescriptorHandler() },
                 {RequestType.SetExerciseDiscriptor, new SetExerciseDescriptorHandler() },
+                {RequestType.GetAllTrainers, new GetAllTrainersHandler() },
             }; 
 
         public byte[] Parse(byte[] request)

@@ -237,6 +237,7 @@
     <Compile Include="SystemInterface\Requests\Handlers\GetAdminPageHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\DeletePlayerPracticeTeamHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetAllPracticeTeamsHandler.cs" />
+    <Compile Include="SystemInterface\Requests\Handlers\GetAllTrainersHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetExerciseHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetPlayerFocusPointsHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetPlayerHandler.cs" />
