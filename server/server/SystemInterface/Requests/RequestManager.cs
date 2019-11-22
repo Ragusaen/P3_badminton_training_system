@@ -48,7 +48,7 @@ namespace Server.SystemInterface.Requests
                 {RequestType.GetExercises, new GetExerciseHandler() },
                 //Setters below
                 {RequestType.SetPlayer, new SetPlayerHandler() },
-                {RequestType.SetPlayerFocusPoints, new SetPlayerFocusPointsHandler() },
+                {RequestType.SetPlayerFocusPoints, new AddPlayerFocusPointHandler() },
                 {RequestType.SetComment, new SetCommentHandler() },
                 {RequestType.SetPlayerPracticeTeams, new SetPlayerPracticeTeamsHandler() },
                 {RequestType.ChangeTrainerPrivileges, new ChangeTrainerPrivilegesHandler() },

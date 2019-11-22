@@ -227,16 +227,16 @@ namespace application.SystemInterface
             SimpleRequest<SetPlayerRequest, SetPlayerResponse>(RequestType.SetPlayer, request);
         }
 
-        public static bool SetPlayerFocusPoints(Player player, List<FocusPointItem> focusPointItems)
+        public static bool SetPlayerFocusPoints(Player player, FocusPointDescriptor focusPointDescriptor)
         {
-            var request = new SetPlayerFocusPointsRequest
+            var request = new AddPlayerFocusPointRequest
             {
                 Player = player,
-                FocusPoints = focusPointItems
+                FocusPointDescriptor = focusPointDescriptor
             };
 
             var response =
-                SimpleRequest<SetPlayerFocusPointsRequest, SetPlayerFocusPointsResponse>(
+                SimpleRequest<AddPlayerFocusPointRequest, AddPlayerFocusPointResponse>(
                     RequestType.SetPlayerFocusPoints, request);
 
             return response.WasSuccessful;
@@ -278,12 +278,12 @@ namespace application.SystemInterface
 
         // Deleters below
 
-        public static void DeletePlayerFocusPoints(int memberId, FocusPointItem focusPointItem)
+        public static void DeletePlayerFocusPoints(Player player, FocusPointItem focusPointItem)
         {
             var request = new DeletePlayerFocusPointRequest
             {
-                MemberId = memberId,
-                FocusPointId = focusPointItem.Descriptor.Id
+                Player = player,
+                FocusPointItem = focusPointItem
             };
 
             SimpleRequest<DeletePlayerFocusPointRequest, DeletePlayerFocusPointResponse>(

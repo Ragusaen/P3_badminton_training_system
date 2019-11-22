@@ -12,14 +12,13 @@ namespace Server.SystemInterface.Requests.Handlers
 {
     class GetAllFocusPointDescriptorsHandler : MiddleRequestHandler<GetAllFocusPointsRequest, GetAllFocusPointsResponse>
     {
-        private static Logger _log = LogManager.GetCurrentClassLogger();
         protected override GetAllFocusPointsResponse InnerHandle(GetAllFocusPointsRequest request, member requester)
         {
             var db = new DatabaseEntities();
 
-            var output = db.focuspoints.ToList().Select(p => (Common.Model.FocusPointDescriptor) p).ToList();
+            var output = db.focuspoints.ToList().Where(p => !p.IsPrivate).Select(p => (Common.Model.FocusPointDescriptor) p).ToList();
 
-            _log.Debug($"Found {output.Count} focus point descriptors");
+            _log.Debug($"Found {output.Count} non-private focus point descriptors");
 
             return new GetAllFocusPointsResponse
             {

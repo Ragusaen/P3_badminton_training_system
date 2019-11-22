@@ -283,7 +283,7 @@
     <Compile Include="SystemInterface\Requests\Handlers\RequestHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\SetCommentHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\SetExerciseDescriptorHandler.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\SetPlayerFocusPointsHandler.cs" />
+    <Compile Include="SystemInterface\Requests\Handlers\AddPlayerFocusPointHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\SetPlayerHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\SetPlayerPracticeTeamsHandler.cs" />
     <Compile Include="SystemInterface\Requests\RequestManager.cs" />

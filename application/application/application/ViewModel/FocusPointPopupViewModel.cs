@@ -37,14 +37,13 @@ namespace application.ViewModel
             set => SetProperty(ref _shownFocusPoints, value);
         }
 
-        public FocusPointPopupViewModel(List<FocusPointItem> focusPointItems)
+        public FocusPointPopupViewModel(List<FocusPointItem> focusPointItems, Player player)
         {
             NotShownItems = focusPointItems;
             var list = RequestCreator.GetFocusPoints();
             list = list.Where(p => NotShownItems.All(q => q.Descriptor.Id != p.Id)).ToList();
             FocusPoints = new ObservableCollection<FocusPointDescriptor>(list);
         }
-
 
         private RelayCommand _createNewFocusPointDescriptorClick;
 
@@ -63,11 +62,20 @@ namespace application.ViewModel
             ((CreateFocusPointPopupViewModel) newPage.BindingContext).CallBackEvent += OnCallBackEvent;
         }
 
-        private void OnCallBackEvent(object sender, EventArgs e)
+        private void OnCallBackEvent(object sender, FocusPointDescriptor e)
         {
             var list = RequestCreator.GetFocusPoints();
             list = list.Where(p => NotShownItems.All(q => q.Descriptor.Id != p.Id)).ToList();
             FocusPoints = new ObservableCollection<FocusPointDescriptor>(list);
+            CallBackEvent?.Invoke(this, e);
+            PopupNavigation.Instance.PopAllAsync();
+        }
+
+        public event EventHandler<FocusPointDescriptor> CallBackEvent;
+        public void FocusPointSelected(FocusPointDescriptor fpd)
+        {
+            CallBackEvent?.Invoke(this, fpd);
+            PopupNavigation.Instance.PopAsync();
         }
     }
 }

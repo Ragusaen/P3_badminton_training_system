@@ -15,6 +15,5 @@ namespace Common.Serialization
 
     [Serializable, XmlRoot]
     public class DeletePlayerPracticeTeamResponse : PermissionResponse
-    {
-    }
+    { }
 }
