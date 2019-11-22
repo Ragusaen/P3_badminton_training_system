@@ -181,9 +181,13 @@ namespace application.SystemInterface
             return response.PracticeTeams;
         }
 
-        public static List<PlaySession> GetSchedule()
+        public static List<PlaySession> GetSchedule(DateTime start, DateTime end)
         {
-            var request = new GetScheduleRequest();
+            var request = new GetScheduleRequest()
+            {
+                StartDate = start,
+                EndDate = end
+            };
 
             var response = SimpleRequest<GetScheduleRequest, GetScheduleResponse>(RequestType.GetSchedule, request);
 
@@ -332,7 +336,7 @@ namespace application.SystemInterface
 
             return response.Trainers;
         }
-        public static bool SetPracticeSession(PracticeSession practice)
+        public static void SetPracticeSession(PracticeSession practice)
         {
             var request = new SetPracticeSessionRequest
             {

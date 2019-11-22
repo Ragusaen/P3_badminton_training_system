@@ -7,15 +7,15 @@ using Common.Model;
 
 namespace Common.Serialization
 {
-    [Serializable, XmlRoot]
+    [XmlRoot]
     public class GetTeamMatchRequest : Request
     {
         public int PlaySessionId;
     }
 
-    [Serializable, XmlRoot]
+    [XmlRoot]
     public class GetTeamMatchResponse : Response
     {
-        public PlaySession TeamMatches;
+        public TeamMatch TeamMatch;
     }
 }

@@ -15,19 +15,7 @@ namespace Server.SystemInterface.Requests.Handlers
         {
                 if ((requester.MemberType == (int)MemberType.Trainer))
                     return null;
-                var db = new DatabaseEntities();
-                var e = request.Practice;
-                var dbPS = new PracticeSession
-                {
-                    End = e.End,
-                    Trainer = e.Trainer,
-                    Location = e.Location
-                    
-                    
-                };
-
-                db.practicesessions.Add(dbPS);
-                db.SaveChanges();
+                
                 return null;
 
         }

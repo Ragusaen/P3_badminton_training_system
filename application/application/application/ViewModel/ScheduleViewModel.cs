@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using application.SystemInterface;
 using Xamarin.Forms;
@@ -22,22 +23,30 @@ namespace application.ViewModel
             set => SetProperty(ref _events, value);
         }
 
-        private string _currentMonth;
+        private int CurrentMonth;
 
-        public string CurrentMonth
+        private DateTime _selectedDate;
+        public DateTime SelectedDate
         {
-            get { return _currentMonth; }
+            get => _selectedDate;
             set
             {
-                if (SetProperty(ref _currentMonth, value))
-                    DateClickCommand.RaiseCanExecuteChanged();
+                SetProperty(ref _selectedDate, value);
+                Debug.WriteLine(_selectedDate);
+                if (SelectedDate.Month != CurrentMonth)
+                {
+                    CurrentMonth = SelectedDate.Month;
+                    var firstDayOfMonth = new DateTime(SelectedDate.Year, SelectedDate.Month, 1);
+                    var firstDayOfNextMonth = firstDayOfMonth.AddMonths(1);
+                    LoadEvents(firstDayOfMonth, firstDayOfNextMonth);
+                }
             }
         }
 
+
         public ScheduleViewModel()
         {
-            LoadEvents();
-            //CurrentMonth = DateTime.Today.ToString("MMMM");
+            SelectedDate = DateTime.Today;
         }
 
         public class PlaySessionEvent
@@ -46,9 +55,9 @@ namespace application.ViewModel
             public string Location;
         }
 
-        private void LoadEvents()
+        private void LoadEvents(DateTime start, DateTime end)
         {
-            List<PlaySession> playSessions = RequestCreator.GetSchedule();
+            List<PlaySession> playSessions = RequestCreator.GetSchedule(start, end);
 
             Debug.WriteLine($"THERE WERE {playSessions.Count} PLAYSESSIONS");
 

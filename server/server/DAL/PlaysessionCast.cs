@@ -9,35 +9,40 @@ namespace Server.DAL
 {
     partial class playsession
     {
-        public static explicit operator Common.Model.PlaySession(playsession p)
+        public static explicit operator Common.Model.TeamMatch(playsession p)
         {
-            PlaySession playSession;
-            if (p.Type == (int)PlaySession.Type.Practice)
+            var tm = p.teammatch;
+            return new TeamMatch()
             {
-                var practice = p.practicesession;
-                playSession = new PracticeSession()
-                {
-                    PracticeTeam = (Common.Model.PracticeTeam) practice.practiceteam,
-                    Trainer = (Common.Model.Trainer) practice.member
-                };
-            }
-            else
+                Captain = (Member)tm.member,
+                End = p.EndDate,
+                League = (TeamMatch.Leagues)tm.League,
+                LeagueRound = tm.LeagueRound,
+                Lineup = (new LineUpCast()).CreateLineup(tm.positions),
+                Location = p.Location,
+                OpponentName = tm.OpponentName,
+                Season = tm.Season,
+                Start = p.StartDate
+            };
+        }
+
+        public static explicit operator Common.Model.PracticeSession(playsession p)
+        {
+            var db = new DatabaseEntities();
+            var ps = db.practicesessions.Find(p.ID);
+            return new PracticeSession
             {
-                var match = p.teammatch;
-                playSession = new TeamMatch()
-                {
-                    Captain = (Member)match.member,
-                    League =  (TeamMatch.Leagues)match.League,
-                    LeagueRound = match.LeagueRound
-                };
-            }
-
-            playSession.End = p.EndDate;
-            playSession.Start = p.StartDate;
-            playSession.Location = p.Location;
-            playSession.Id = p.ID;
-
-            return playSession;
+                Id = ps.PlaySessionID,
+                Location = p.Location,
+                Start = p.StartDate,
+                End = p.EndDate,
+                Trainer = (Common.Model.Trainer)db.members.Find(ps.TrainerID),
+                FocusPoints = ps.focuspoints.ToList().Select(fp => new FocusPointItem() { Descriptor = (FocusPointDescriptor)fp }).ToList(),
+                Exercises = ps.practicesessionexercises.ToList().Select(e => (ExerciseItem)e).ToList(),
+                MainFocusPoint = new FocusPointItem { Descriptor = (FocusPointDescriptor)ps.focuspoint },
+                PracticeTeam = (PracticeTeam)ps.practiceteam,
+            };
         }
     }
+
 }

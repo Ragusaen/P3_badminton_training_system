@@ -17,6 +17,8 @@ namespace Server.SystemInterface.Requests.Handlers
             var db = new DatabaseEntities();
 
             var s = db.playsessions.Where(ps => ps.StartDate >= request.StartDate && ps.StartDate <= request.EndDate);
+
+            Console.WriteLine($"Found {s.Count()} playsessions between {request.StartDate} and {request.EndDate}");
             
             GetScheduleResponse response = new GetScheduleResponse()
             {
@@ -26,11 +28,12 @@ namespace Server.SystemInterface.Requests.Handlers
 
             foreach (var DBps in s)
             {
-                var ps = (PlaySession) DBps;
-                if (ps is TeamMatch m)
-                    response.Matches.Add(m);
-                else if (ps is PracticeSession q)
-                    response.PracticeSessions.Add(q);
+                if ((PlaySession.Type)DBps.Type == PlaySession.Type.Practice)
+                    response.PracticeSessions.Add((PracticeSession)DBps);
+                else if ((PlaySession.Type)DBps.Type == PlaySession.Type.Match)
+                    response.Matches.Add((TeamMatch)DBps);
+                else
+                    Console.WriteLine("Invalid type");
             }
 
             return response;

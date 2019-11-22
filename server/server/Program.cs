@@ -35,7 +35,8 @@ namespace Server
                 {
                     StartDate = DateTime.Now.AddDays(1),
                     EndDate = DateTime.Now.AddDays(1).AddHours(2),
-                    Location = "Aalborg Triton"
+                    Location = "Aalborg Triton",
+                    Type = 1
                 },
                 focuspoint = new focuspoint()
                 {
