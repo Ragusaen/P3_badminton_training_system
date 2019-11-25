@@ -36,10 +36,6 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        
-
-        <Button Command="{Binding command}"/>
-
     </StackLayout>
 
 </ContentPage>
