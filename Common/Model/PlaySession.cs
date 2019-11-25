@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Xml.Serialization;
 
 namespace Common.Model
 {
+    [XmlInclude(typeof(PracticeSession))]
+    [XmlInclude(typeof(TeamMatch))]
     public abstract class PlaySession
     {
         [Flags]
