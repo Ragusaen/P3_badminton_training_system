@@ -21,7 +21,7 @@ namespace Server.SystemInterface.Requests.Handlers
             }
 
             var db = new DatabaseEntities();
-            var focusPoints = db.focuspoints.ToList().Select(fp => (FocusPointDescriptor) fp).ToList();
+            var focusPoints = db.focuspoints.ToList().Where(p => p.IsPrivate == false).Select(fp => (FocusPointDescriptor) fp).ToList();
             var members = db.members.ToList().Select(m => (Member) m).ToList();
             var practiceTeams = db.practiceteams.ToList().Select(pt => (PracticeTeam) pt).ToList();
 

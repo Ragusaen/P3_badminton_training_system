@@ -25,12 +25,15 @@ namespace Common
         GetAdminPage,
         GetAllPracticeTeams,
         GetMember,
+        GetFocusPointDescriptor,
         //Setters below
         SetPlayer,
         SetPlayerFocusPoints,
         SetComment,
         SetPlayerPracticeTeams,
         ChangeTrainerPrivileges,
+        SetPracticeTeam,
+        SetNonPrivateFocusPoint,
         //Deleters below
         DeletePlayerFocusPoint,
         DeletePlayerPracticeTeam,

@@ -47,6 +47,7 @@ namespace Server.SystemInterface.Requests
                 {RequestType.GetAllPracticeTeams, new GetAllPracticeTeamsHandler() },
                 {RequestType.GetExercises, new GetExerciseHandler() },
                 {RequestType.GetMember, new GetMemberHandler() },
+                {RequestType.GetFocusPointDescriptor, new GetFocusPointDescriptorHandler() },
                 //Setters below
                 {RequestType.SetPlayer, new SetPlayerHandler() },
                 {RequestType.SetPlayerFocusPoints, new AddPlayerFocusPointHandler() },
@@ -64,6 +65,8 @@ namespace Server.SystemInterface.Requests
                 {RequestType.GetAllTrainers, new GetAllTrainersHandler() },
                 {RequestType.SetPracticeSession, new SetPracticeSessionHandler() },
                 {RequestType.SetFeedback, new SetFeedbackHandler() },
+                {RequestType.SetNonPrivateFocusPoint, new SetNonPrivateFocusPointHandler() },
+                {RequestType.SetPracticeTeam, new SetPracticeTeamHandler() },
             }; 
 
         public byte[] Parse(byte[] request)

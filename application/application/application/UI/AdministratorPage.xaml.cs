@@ -28,11 +28,11 @@ namespace application.UI
             Navigation.PushAsync(new ProfilePage(((Member)e.SelectedItem).Id));
         }
 
-        private void TeamListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
+        private void PracticeTeamListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            if (e.SelectedItem is PracticeTeam Team)
-                Navigation.PushAsync(new TeamPage(Team));
-            TeamList.SelectedItem = null;
+            if (e.SelectedItem is PracticeTeam team)
+                Navigation.PushAsync(new TeamPage(team));
+            PracticeTeamList.SelectedItem = null;
         }
 
         private void FocusPointListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)

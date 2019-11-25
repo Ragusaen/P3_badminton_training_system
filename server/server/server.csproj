@@ -237,6 +237,7 @@
     <Compile Include="SystemInterface\Requests\Handlers\GetAllPracticeTeamsHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetAllTrainersHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetExerciseHandler.cs" />
+    <Compile Include="SystemInterface\Requests\Handlers\GetFocusPointDescriptorHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetMemberHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetPlayerFocusPointsHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\GetPlayerHandler.cs" />
@@ -281,9 +282,11 @@
     <Compile Include="SystemInterface\Requests\Handlers\SetExerciseDescriptorHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\SetFeedbackHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\AddPlayerFocusPointHandler.cs" />
+    <Compile Include="SystemInterface\Requests\Handlers\SetNonPrivateFocusPointHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\SetPacticeSessionHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\SetPlayerHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\SetPlayerPracticeTeamsHandler.cs" />
+    <Compile Include="SystemInterface\Requests\Handlers\SetPracticeTeamHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\VerifyLineupHandler.cs" />
     <Compile Include="SystemInterface\Requests\RequestManager.cs" />
     <Compile Include="Controller\UserManager.cs" />

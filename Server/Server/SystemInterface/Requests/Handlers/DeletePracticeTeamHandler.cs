@@ -20,7 +20,7 @@ namespace Server.SystemInterface.Requests.Handlers
 
             var db = new DatabaseEntities();
             var team = db.practiceteams.Find(request.PracticeTeam.Id);
-            
+
             if (team != null)
             {
                 var members = team.members.ToList();
@@ -37,6 +37,10 @@ namespace Server.SystemInterface.Requests.Handlers
                 }
                 db.practiceteams.Remove(team);
                 _log.Debug($"Completely removed practice team {team.Name}");
+            }
+            else
+            {
+                _log.Debug($"Could not find team - ID: {request.PracticeTeam.Id}");
             }
 
             db.SaveChanges();
