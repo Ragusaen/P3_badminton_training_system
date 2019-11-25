@@ -13,6 +13,25 @@
             <Label x:Name="Location" Text="{Binding PlaySession.Location}"/>
 
             <StackLayout x:Name="PracticeRelevant">
+                <Frame CornerRadius="4" HasShadow="True" Margin="15,0,15,0">
+                    <StackLayout>
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
+                            <Image Source="" x:Name="BullsEyeIcon" HeightRequest="40"/>
+                            <Label Text="Focus Points" FontSize="Title" VerticalOptions="Center"/>
+                        </StackLayout>
+                        <Label Text="Select Main Focus Point" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
+                        <ListView VerticalScrollBarVisibility="Never" ItemsSource="{Binding FocusPoints}" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding FocusPointListHeight}" SelectedItem="{Binding Practice.MainFocusPoint}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <Label Grid.Column="0" Text="{Binding Descriptor.Name}" VerticalOptions="Center"/>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackLayout>
+                </Frame>
+
                 <ListView x:Name="Exercises" ItemsSource="{Binding Exercises}" RowHeight="235" Margin="15,0,15,0" HeightRequest="{Binding PlanHeight}" VerticalScrollBarVisibility="Never" SeparatorVisibility="None">
                     <ListView.ItemTemplate>
                         <DataTemplate>

@@ -2,6 +2,7 @@
 using Common.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -46,29 +47,46 @@ namespace application.ViewModel
             }
         }
 
-
-
-        private int CurrentMonth;
-
         private DateTime _selectedDate;
         public DateTime SelectedDate
         {
             get => _selectedDate;
-            set => SetProperty(ref _selectedDate, value);
+            set
+            {
+                SetProperty(ref _selectedDate, value);
+                SetSelectedEvents();
+            }
         }
-
 
         public ScheduleViewModel()
         {
             SelectedDate = DateTime.Today;
             _month = DateTime.Today.Month;
             _year = DateTime.Today.Year;
+            LoadEvents();
         }
+
+        private ObservableCollection<PlaySessionEvent> _selectedEvents;
+        public ObservableCollection<PlaySessionEvent> SelectedEvents
+        {
+            get => _selectedEvents;
+            set => SetProperty(ref _selectedEvents, value);
+        }
+        private void SetSelectedEvents()
+        {
+            if (Events.ContainsKey(SelectedDate))
+                SelectedEvents = new ObservableCollection<PlaySessionEvent>((List<PlaySessionEvent>)Events[SelectedDate]);
+            else
+                SelectedEvents = new ObservableCollection<PlaySessionEvent>();
+        }
+
 
         public class PlaySessionEvent
         {
-            public string Name;
-            public string Location;
+            public string Name { get; set; }
+            public string Location { get; set; }
+
+            public PlaySession playSession;
         }
 
         private void LoadEvents()
@@ -87,7 +105,8 @@ namespace application.ViewModel
                 
                 var psEvent = new PlaySessionEvent()
                 {
-                    Location = ps.Location
+                    Location = ps.Location,
+                    playSession = ps
                 };
 
                 if (ps is PracticeSession practice)
@@ -97,8 +116,7 @@ namespace application.ViewModel
 
                 ((List<PlaySessionEvent>)Events[ps.Start]).Add(psEvent);
             }
-
-            Debug.WriteLine(Events.Count);
+            Debug.WriteLine("Do something here!");
         }
 
         private RelayCommand _dateClickCommand;
@@ -145,21 +163,6 @@ namespace application.ViewModel
                 await Navigation.PushAsync(new CreatePracticePage());
             else if (action == "Add New Match")
                 await Navigation.PushAsync(new CreateMatchPage());
-        }
-
-        private RelayCommand _command;
-
-        public RelayCommand command
-        {
-            get
-            {
-                return _command ?? (_command = new RelayCommand(param => Click(param)));
-            }
-        }
-        PlaySession play = new PracticeSession();
-        private void Click(object param)
-        {
-            Navigation.PushAsync(new PlaySessionPage(play));
         }
     }
 }
