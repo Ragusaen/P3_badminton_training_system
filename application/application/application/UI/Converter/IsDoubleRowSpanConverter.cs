@@ -10,7 +10,7 @@ namespace application.UI.Converter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            return (bool) value == true ? 1 : 2;
+            return (bool) value == true ? 1 : 4;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

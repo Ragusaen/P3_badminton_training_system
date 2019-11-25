@@ -12,6 +12,7 @@ namespace Server.DAL
         public static explicit operator Common.Model.PlaySession(playsession p)
         {
             PlaySession playSession;
+            var db = new DatabaseEntities();
             if (p.Type == (int)PlaySession.Type.Practice)
             {
                 var practice = p.practicesession;
@@ -23,7 +24,7 @@ namespace Server.DAL
             }
             else
             {
-                var match = p.teammatch;
+                var match = db.teammatches.Find(p.ID);
                 playSession = new TeamMatch()
                 {
                     Captain = (Member)match.member,

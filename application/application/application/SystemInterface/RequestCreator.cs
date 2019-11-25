@@ -357,6 +357,14 @@ namespace application.SystemInterface
             return response.Trainers;
         }
 
+        public static List<Member> GetAllMembers()
+        {
+            var request = new GetAllMembersRequest();
+            var response =
+                SimpleRequest<GetAllMembersRequest, GetAllMembersResponse>(RequestType.GetAllMembers, request);
+
+            return response.Members;
+        }
 
         public static List<RuleBreak> VerifyLineup(TeamMatch match)
         {
@@ -376,6 +384,17 @@ namespace application.SystemInterface
                 SimpleRequest<SetPracticeSessionRequest, SetPracticeSessionResponse>(
                     RequestType.SetPracticeSession, request);
         }
+
+        public static void SetTeamMatch(TeamMatch match)
+        {
+            var request = new SetTeamMatchRequest()
+            {
+                TeamMatch = match
+            };
+
+            var response = SimpleRequest<SetTeamMatchRequest, SetTeamMatchResponse>(RequestType.SetTeamMatch, request);
+        }
+
         public static void SetFeedback(Feedback feedback)
         {
             var request = new SetFeedbackRequest

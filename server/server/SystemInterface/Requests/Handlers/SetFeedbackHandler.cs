@@ -32,8 +32,7 @@ namespace Server.SystemInterface.Requests.Handlers
             };
             db.feedbacks.Add(dbFB);
             db.SaveChanges();
-            return null;
-
+            return new SetFeedbackResponse();
         }
     }
 }

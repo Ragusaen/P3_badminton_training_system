@@ -10,6 +10,8 @@ namespace Common
         GetPracticeTeam,
         GetPlayersWithNoAccount,
         GetAllPlayers,
+        GetAllTrainers,
+        GetAllMembers,
         GetPlayerFeedback,
         GetPlaySessionFeedback,
         GetPracticeSession,
@@ -39,8 +41,8 @@ namespace Common
         //Creators below
         CreateFocusPointDescriptor,
         SetExerciseDiscriptor,
-        GetAllTrainers,
         SetPracticeSession,
+        SetTeamMatch,
         SetFeedback,
     };
 }

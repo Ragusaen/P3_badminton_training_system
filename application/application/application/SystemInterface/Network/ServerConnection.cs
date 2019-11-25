@@ -11,7 +11,7 @@ namespace application.SystemInterface.Network
 {
     class ServerConnection
     {
-        private readonly IPAddress _machineName = new IPAddress(new byte[] {192, 168, 42, 163});
+        private readonly IPAddress _machineName = new IPAddress(new byte[] {192, 168, 42, 229});
         private readonly string _serverName = "Triton";
 
         private TcpClient _tcpClient = null;

@@ -43,5 +43,40 @@ namespace Server.DAL
 
             return lineup;
         }
+
+        public ICollection<position> CreatePositions(Lineup lineup, teammatch match, DatabaseEntities db)
+        {
+            List<position> positions = new List<position>();
+
+            foreach (var group in lineup)
+            {
+                for (int i = 0; i < group.Positions.Count; i++)
+                {
+                    if (group.Positions[i].Player != null)
+                    {
+                        positions.Add(new position()
+                        {
+                            IsExtra = group.Positions[i].IsExtra,
+                            member = db.members.Find(group.Positions[i].Player.Member.Id),
+                            Order = i,
+                            Type = (int)group.Type,
+                            teammatch = match
+                        });
+                    }
+
+                    if (Lineup.PositionType.Double.HasFlag(group.Type) && group.Positions[i].OtherPlayer != null)
+                        positions.Add(new position()
+                        {
+                            IsExtra = group.Positions[i].OtherIsExtra,
+                            member = db.members.Find(group.Positions[i].OtherPlayer.Member.Id),
+                            Order = i, 
+                            Type = (int)group.Type,
+                            teammatch = match
+                        });
+                }
+            }
+
+            return positions;
+        }
     }
 }

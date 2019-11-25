@@ -32,6 +32,8 @@ namespace Server.SystemInterface.Requests
                 {RequestType.GetMemberPracticeTeams, new GetPlayerPracticeTeamsHandler() },
                 {RequestType.GetPlayersWithNoAccount, new GetPlayersWithNoAccountHandler() },
                 {RequestType.GetAllPlayers, new GetAllPlayersHandler()},
+                {RequestType.GetAllTrainers, new GetAllTrainersHandler() },
+                {RequestType.GetAllMembers, new GetAllMembersHandler() },
                 {RequestType.GetPracticeSession, new GetPracticeSessionHandler() },
                 {RequestType.GetPlayerFeedback, new GetPlayerFeedbackHandler() },
                 {RequestType.GetPlaySessionFeedback, new GetPlaySessionFeedback() },
@@ -60,8 +62,8 @@ namespace Server.SystemInterface.Requests
                 //Creators below
                 {RequestType.CreateFocusPointDescriptor, new CreateFocusPointDescriptorHandler() },
                 {RequestType.SetExerciseDiscriptor, new SetExerciseDescriptorHandler() },
-                {RequestType.GetAllTrainers, new GetAllTrainersHandler() },
                 {RequestType.SetPracticeSession, new SetPracticeSessionHandler() },
+                {RequestType.SetTeamMatch, new SetTeamMatchHandler() },
                 {RequestType.SetFeedback, new SetFeedbackHandler() },
             }; 
 
