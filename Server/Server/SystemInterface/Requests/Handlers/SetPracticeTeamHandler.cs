@@ -20,7 +20,13 @@ namespace Server.SystemInterface.Requests.Handlers
             var e = request.PracticeTeam;
             var dbPt = new practiceteam
             {
-                 Name = e.Name,
+                Name = e.Name,
+                member = new member
+                {
+                    Name = e.Trainer.Member.Name,
+                    MemberType = (int)MemberType.Trainer,
+                    Comment = e.Trainer.Member.Comment,
+                },
             };
             db.practiceteams.Add(dbPt);
 

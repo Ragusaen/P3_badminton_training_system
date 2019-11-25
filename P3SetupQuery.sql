@@ -28,7 +28,9 @@ BadmintonPlayerID int,
 
 create table PracticeTeam(
 ID int primary key auto_increment,
-`Name` varchar(64) not null
+`Name` varchar(64) not null,
+TrainerID int,
+foreign key(TrainerID) references `Member`(ID)
 );
 
 create table TeamMember(

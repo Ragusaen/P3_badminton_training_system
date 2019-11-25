@@ -31,7 +31,7 @@ namespace application.UI
         private void PracticeTeamListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             if (e.SelectedItem is PracticeTeam team)
-                Navigation.PushAsync(new TeamPage(team));
+                Navigation.PushAsync(new PracticeTeamPage(team));
             PracticeTeamList.SelectedItem = null;
         }
 
