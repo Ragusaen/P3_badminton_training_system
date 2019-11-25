@@ -14,14 +14,21 @@ namespace application.UI
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class EditUserInfoPage : ContentPage
     {
+        private EditUserInfoViewModel _vm;
+
         public EditUserInfoPage(Member member)
         {
             InitializeComponent();
-            EditUserInfoViewModel vm = new EditUserInfoViewModel(member);
-            BindingContext = vm;
-            vm.Navigation = Navigation;
+            _vm = new EditUserInfoViewModel(member);
+            BindingContext = _vm;
+            _vm.Navigation = Navigation;
 
             SaveIcon.Source = ImageSource.FromResource("application.Images.saveicon.png");
+        }
+
+        private void ShownOnlyRelevantInfo()
+        {
+            TrainerRelevant.IsVisible = _vm != null;
         }
     }
 }
