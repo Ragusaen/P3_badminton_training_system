@@ -164,15 +164,5 @@ namespace application.ViewModel
             else if (action == "Add New Match")
                 await Navigation.PushAsync(new CreateMatchPage());
         }
-
-        private RelayCommand _command;
-
-        public RelayCommand command
-        {
-            get
-            {
-                return _command ?? (_command = new RelayCommand(param => Click(param)));
-            }
-        }
     }
 }
