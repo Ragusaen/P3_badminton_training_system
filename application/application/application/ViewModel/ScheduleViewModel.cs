@@ -85,8 +85,10 @@ namespace application.ViewModel
         {
             public string Name { get; set; }
             public string Location { get; set; }
-
-            public PlaySession playSession;
+            public string Time { get; set; }
+            public string Detail { get; set; }
+            public Color Color { get; set; }
+            public PlaySession PlaySession;
         }
 
         private void LoadEvents()
@@ -106,13 +108,22 @@ namespace application.ViewModel
                 var psEvent = new PlaySessionEvent()
                 {
                     Location = ps.Location,
-                    playSession = ps
+                    Time = ps.Start.ToString("hh:mm"),
+                    PlaySession = ps
                 };
 
                 if (ps is PracticeSession practice)
+                {
                     psEvent.Name = practice.PracticeTeam.Name;
+                    psEvent.Detail = practice.Trainer.Member.Name;
+                    psEvent.Color = Color.DarkSeaGreen;
+                }
                 else if (ps is TeamMatch tm)
+                {
                     psEvent.Name = tm.OpponentName; // Change to team name
+                    psEvent.Detail = Enum.GetName(typeof(TeamMatch.Leagues), tm.League);
+                    psEvent.Color = Color.CornflowerBlue;
+                }
 
                 ((List<PlaySessionEvent>)Events[ps.Start]).Add(psEvent);
             }

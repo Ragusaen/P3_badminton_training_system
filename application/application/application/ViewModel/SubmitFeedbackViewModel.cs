@@ -13,7 +13,7 @@ namespace application.ViewModel
 
         public SubmitFeedbackViewModel(PlaySession playsession)
         {
-            Feedback.Player = new Player { Member = new Member { Id = 123 } };
+            Feedback.PlaySession = playsession;
         }
         private RelayCommand _submitFeedbackCommand;
 
@@ -26,7 +26,6 @@ namespace application.ViewModel
         }
         private void ExecuteSubmitFeedbackClick(object param)
         {
-            Feedback.PlaySession = new PracticeSession() {Id = 1};
             RequestCreator.SetFeedback(Feedback);
         }
     }

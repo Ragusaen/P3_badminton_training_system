@@ -24,6 +24,19 @@ namespace application.ViewModel
             }
         }
 
+        private string _opponentName;
+
+        public string OpponentName
+        {
+            get { return _opponentName; }
+            set
+            {
+                if(SetProperty(ref _opponentName, value))
+                    SaveMatchClickCommand.RaiseCanExecuteChanged();
+            }
+        }
+
+
         private DateTime _minDate;
 
         public DateTime MinDate
@@ -94,14 +107,14 @@ namespace application.ViewModel
             }
         }
 
-        private string _matchResponsibleName;
+        private Member _captain;
 
-        public string MatchResponsibleName
+        public Member Captain
         {
-            get { return _matchResponsibleName; }
+            get { return _captain; }
             set
             {
-                if (SetProperty(ref _matchResponsibleName, value))
+                if (SetProperty(ref _captain, value))
                     SaveMatchClickCommand.RaiseCanExecuteChanged();
             }
         }
@@ -127,6 +140,7 @@ namespace application.ViewModel
                 if (SetProperty(ref _season, value))
                 {
                     VerifyLineupCommand.RaiseCanExecuteChanged();
+                    SaveMatchClickCommand.RaiseCanExecuteChanged();
                 }
             }
         }
@@ -141,6 +155,7 @@ namespace application.ViewModel
                 if (SetProperty(ref _leagueRound, value))
                 {
                     VerifyLineupCommand.RaiseCanExecuteChanged();
+                    SaveMatchClickCommand.RaiseCanExecuteChanged();
                 }
             }
         }
@@ -155,6 +170,7 @@ namespace application.ViewModel
                 if (SetProperty(ref _teamIndex, value))
                 {
                     VerifyLineupCommand.RaiseCanExecuteChanged();
+                    SaveMatchClickCommand.RaiseCanExecuteChanged();
                 }
             }
         }
@@ -167,15 +183,6 @@ namespace application.ViewModel
             set { SetProperty(ref _lineupHeight, value); }
         }
 
-        private string _lineupErrorMessage;
-
-        public string LineupErrorMessage
-        {
-            get { return _lineupErrorMessage; }
-            set { SetProperty(ref _lineupErrorMessage, value); }
-        }
-
-
         public List<string> LeagueNames
         {
             get { return Enum.GetNames(typeof(TeamMatch.Leagues)).Select(p => StringExtension.SplitCamelCase(p)).ToList(); }
@@ -185,12 +192,10 @@ namespace application.ViewModel
         public TeamMatch.Leagues SelectedLeague
         {
             get { return _selectedLeague; }
-            set 
+            set
             {
-                if (SetProperty(ref _selectedLeague, value))
-                {
-                    SetLineupTemplate(_selectedLeague);
-                }
+                SetProperty(ref _selectedLeague, value);
+                SetLineupTemplate(_selectedLeague);
             }
         }
 
@@ -216,7 +221,7 @@ namespace application.ViewModel
             set
             {
                 if (SetProperty(ref _positions, value))
-                    LineupHeight = _positions.Count * 80;
+                    LineupHeight = _positions.Count * 100;
             }
         }
 
@@ -228,10 +233,20 @@ namespace application.ViewModel
             set { SetProperty(ref _players, value); }
         }
 
+        private ObservableCollection<Member> _members;
+
+        public ObservableCollection<Member> Members
+        {
+            get { return _members; }
+            set { SetProperty(ref _members, value); }
+        }
+
         public CreateMatchViewModel()
         {
+            Members = new ObservableCollection<Member>(RequestCreator.GetAllMembers());
             Players = new ObservableCollection<Player>(RequestCreator.GetAllPlayers());
-            SelectedLeague = TeamMatch.Leagues.DenmarksSeries;
+
+            SelectedLeague = TeamMatch.Leagues.BadmintonLeague;
         }
 
         private RelayCommand _verifyLineupCommand;
@@ -259,9 +274,6 @@ namespace application.ViewModel
                 Lineup = ConvertPositionDictionaryToLineup(Positions)
             };
             List<RuleBreak> ruleBreaks = RequestCreator.VerifyLineup(match);
-
-            if(ruleBreaks.Count != 0)
-                LineupErrorMessage = ruleBreaks[0].ErrorMessage;
 
             foreach (var position in Positions)
             {
@@ -317,8 +329,11 @@ namespace application.ViewModel
 
         private bool CanExecuteSaveMatchClick(object param)
         {
-            if (string.IsNullOrEmpty(TeamName) || (SelectedDateStart == null) || (SelectedDateEnd == null) ||
-                (SelectedTimeStart == null) || (SelectedTimeEnd == null))
+            if (string.IsNullOrEmpty(TeamName) || 
+                (string.IsNullOrEmpty(Location)) || 
+                (string.IsNullOrEmpty(OpponentName)) || 
+                Captain == null ||
+                LeagueRound == 0 || Season == 0 || TeamIndex == 0)
                 return false;
             else
                 return true;
@@ -326,7 +341,21 @@ namespace application.ViewModel
 
         private void ExecuteSaveMatchClick(object param)
         {
-            //TODO: Update model
+            TeamMatch match = new TeamMatch()
+            {
+                Captain = Captain,
+                Start = SelectedDateStart,
+                End = SelectedDateEnd,
+                League = SelectedLeague,
+                Lineup = ConvertPositionDictionaryToLineup(Positions),
+                LeagueRound = LeagueRound,
+                Location = Location,
+                OpponentName = OpponentName,
+                Season = Season,
+                TeamIndex = TeamIndex
+            };
+            RequestCreator.SetTeamMatch(match);
+
             //Navigate back
             Navigation.PopAsync();
         }
