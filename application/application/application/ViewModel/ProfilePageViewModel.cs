@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using application.Controller;
 using application.SystemInterface;
 using application.UI;
@@ -16,6 +17,7 @@ namespace application.ViewModel
 {
     class ProfilePageViewModel : BaseViewModel
     {
+        private readonly int _id;
         public Member Member { get; set; }
         public Player Player { get; set; }
         public Trainer Trainer { get; set; }
@@ -55,20 +57,19 @@ namespace application.ViewModel
             set => SetProperty(ref _focusPointsListHeight, value); 
         }
 
-        public string StringMemberType { get; set; }
+        public string StringMemberType { get; set; } = "Neither Player nor Trainer";
 
-        public ProfilePageViewModel(Member member)
+        public ProfilePageViewModel(int profileId)
         {
-            StringMemberType = "Neither Player nor Trainer";
             RequestCreator.LoggedInMember = RequestCreator.GetLoggedInMember(); // reload logged in member, because membertype might have changed
-            Member = member;
-            if (Member.MemberType != MemberType.None)
+            Member = RequestCreator.GetMember(profileId);
+            if (Member.MemberType != MemberType.None) // reload member, because it might have changed
             {
                 if (Member.MemberType.HasFlag(MemberType.Player))
                 {
                     StringMemberType = "Player";
                     Player = RequestCreator.GetPlayer(Member.Id);
-                    Player.Member = Member;
+                    Member = Player.Member;
 
                     Player.FocusPointItems = RequestCreator.GetPlayerFocusPointItems(Player.Member.Id);
                     FocusPoints = new ObservableCollection<FocusPointItem>(Player.FocusPointItems);
@@ -94,12 +95,7 @@ namespace application.ViewModel
                     //PracticeTeams = new ObservableCollection<PracticeTeam>(Trainer.PracticeTeams);
                 }
             }
-            CommentText = member?.Comment ?? "Click to add comment";
-        }
-
-        private void Load()
-        {
-
+            CommentText = Member?.Comment ?? "Click to add comment";
         }
 
         // Practice Team Section
@@ -193,7 +189,7 @@ namespace application.ViewModel
             }
             RequestCreator.ChangeTrainerPrivileges(Member);
             RequestCreator.LoggedInMember = RequestCreator.GetLoggedInMember(); // reload logged in member, because membertype might have changed
-            Navigation.InsertPageBefore(new ProfilePage(Member), Navigation.NavigationStack.Last());
+            Navigation.InsertPageBefore(new ProfilePage(Member.Id), Navigation.NavigationStack.Last());
             await Navigation.PopAsync();
             here:;
 
@@ -290,7 +286,7 @@ namespace application.ViewModel
         private async void DeleteListFocusItemClick(object param)
         {
             FocusPointItem focusPoint = param as FocusPointItem;
-            bool answer = await Application.Current.MainPage.DisplayAlert("Delete", $"Are you sure you want to delete {focusPoint.Descriptor.Name}?", "yes", "no");
+            bool answer = await Application.Current.MainPage.DisplayAlert("Delete", $"Are you sure you want to delete {focusPoint.Descriptor.Name} from this player?", "yes", "no");
             if (answer)
             {
                 FocusPoints.Remove(focusPoint);

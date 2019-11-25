@@ -46,6 +46,7 @@ namespace Server.SystemInterface.Requests
                 {RequestType.GetAdminPage, new GetAdminPageHandler() },
                 {RequestType.GetAllPracticeTeams, new GetAllPracticeTeamsHandler() },
                 {RequestType.GetExercises, new GetExerciseHandler() },
+                {RequestType.GetMember, new GetMemberHandler() },
                 //Setters below
                 {RequestType.SetPlayer, new SetPlayerHandler() },
                 {RequestType.SetPlayerFocusPoints, new AddPlayerFocusPointHandler() },

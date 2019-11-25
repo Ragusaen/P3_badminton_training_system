@@ -22,7 +22,7 @@ namespace Server.SystemInterface.Requests.Handlers
 
             var db = new DatabaseEntities();
             var m = db.members.Find(request.Member.Id);
-
+            _log.Debug($"Member: {m.Name} received new comment {request.NewComment}");
             m.Comment = request.NewComment;
             db.SaveChanges();
 
