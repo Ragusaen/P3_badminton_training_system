@@ -234,6 +234,20 @@ namespace application.SystemInterface
             return response.PracticeTeams;
         }
 
+        public static FocusPointDescriptor GetFocusPointDescriptor(int id)
+        {
+            var request = new GetFocusPointDescriptorRequest
+            {
+                Id = id
+            };
+
+            var response =
+                SimpleRequest<GetFocusPointDescriptorRequest, GetFocusPointDescriptorResponse>(
+                    RequestType.GetFocusPointDescriptor, request);
+
+            return response.FocusPointDescriptor;
+        }
+
         // Setters below
         public static void SetPlayer(Player player)
         {
@@ -292,6 +306,17 @@ namespace application.SystemInterface
 
             SimpleRequest<ChangeTrainerPrivilegesRequest, ChangeTrainerPrivilegesResponse>(
                 RequestType.ChangeTrainerPrivileges, request);
+        }
+
+        public static void SetNonPrivateFocusPoint(FocusPointDescriptor focusPointDescriptor)
+        {
+            var request = new SetNonPrivateFocusPointRequest
+            {
+                FocusPointDescriptor = focusPointDescriptor
+            };
+
+            SimpleRequest<SetNonPrivateFocusPointRequest, SetNonPrivateFocusPointResponse>(
+                RequestType.SetNonPrivateFocusPoint, request);
         }
 
         // Deleters below
@@ -373,6 +398,15 @@ namespace application.SystemInterface
             return response.Trainers;
         }
 
+        public static List<Member> GetAllMembers()
+        {
+            var request = new GetAllMembersRequest();
+            var response =
+                SimpleRequest<GetAllMembersRequest, GetAllMembersResponse>(RequestType.GetAllMembers, request);
+
+            return response.Members;
+        }
+
         public static List<RuleBreak> VerifyLineup(TeamMatch match)
         {
             var request = new VerifyLineupRequest() {Match = match};
@@ -391,6 +425,17 @@ namespace application.SystemInterface
                 SimpleRequest<SetPracticeSessionRequest, SetPracticeSessionResponse>(
                     RequestType.SetPracticeSession, request);
         }
+
+        public static void SetTeamMatch(TeamMatch match)
+        {
+            var request = new SetTeamMatchRequest()
+            {
+                TeamMatch = match
+            };
+
+            var response = SimpleRequest<SetTeamMatchRequest, SetTeamMatchResponse>(RequestType.SetTeamMatch, request);
+        }
+
         public static void SetFeedback(Feedback feedback)
         {
             var request = new SetFeedbackRequest
@@ -401,6 +446,16 @@ namespace application.SystemInterface
             var response =
                 SimpleRequest<SetFeedbackRequest, SetFeedbackResponse>(
                     RequestType.SetFeedback, request);
+        }
+
+        public static void SetPracticeTeam(PracticeTeam practiceTeam)
+        {
+            var request = new SetPracticeTeamRequest
+            {
+                PracticeTeam = practiceTeam
+            };
+
+            SimpleRequest<SetPracticeTeamRequest, SetPracticeTeamResponse>(RequestType.SetPracticeTeam, request);
         }
     }
 }

@@ -24,6 +24,8 @@ namespace Server.SystemInterface.Requests.Handlers
                 Team = practiceTeam
             };
 
+            _log.Debug($"New practice team created: {practiceTeam.Name}");
+
             return response;
         }
     }

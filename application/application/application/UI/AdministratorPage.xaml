@@ -37,7 +37,7 @@
             <Frame HasShadow="True" CornerRadius="5">
                 <StackLayout>
                     <SearchBar Placeholder="Practice Team Name" Text="{Binding SearchTeamText}"/>
-                        <ListView x:Name="TeamList" ItemsSource="{Binding TeamList}" VerticalScrollBarVisibility="Never" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="225" ItemSelected="TeamListView_ItemSelected">
+                        <ListView x:Name="PracticeTeamList" ItemsSource="{Binding PracticeTeamList}" VerticalScrollBarVisibility="Never" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="225" ItemSelected="PracticeTeamListView_ItemSelected">
                             <ListView.ItemTemplate>
                             <DataTemplate>
                                 <ViewCell>
@@ -48,15 +48,15 @@
                                                 <ColumnDefinition Width="1*"/>
                                             </Grid.ColumnDefinitions>
                                             <Label Grid.Column="0" Text="{Binding Name}" VerticalOptions="Center"/>
-                                            <Button Grid.Column="1" Text="❌" BackgroundColor="White" WidthRequest="50" VerticalOptions="End" Command="{Binding BindingContext.DeleteTeamCommand, Source={x:Reference rootpage}}" CommandParameter="{Binding}"/>
+                                            <Button Grid.Column="1" Text="❌" BackgroundColor="White" WidthRequest="50" VerticalOptions="End" Command="{Binding BindingContext.DeletePracticeTeamCommand, Source={x:Reference rootpage}}" CommandParameter="{Binding}"/>
                                         </Grid>
                                     </StackLayout>
                                 </ViewCell>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
-                    <Entry Placeholder="New Team Name" Text="{Binding NewTeam}" Keyboard="Chat"/>
-                    <Button x:Name="CreateTeamButton" Text="Create New Team" Command="{Binding NewTeamCommand}"/>
+                    <Entry Placeholder="New Team Name" Text="{Binding NewPracticeTeam}" Keyboard="Chat"/>
+                    <Button x:Name="CreatePracticeTeamButton" Text="Create New Team" Command="{Binding NewPracticeTeamCommand}"/>
                 </StackLayout>
             </Frame>
                 <Label Text="Focus Points" FontAttributes="Bold" FontSize="Medium" TextColor="#BB0000" Margin="10,0,0,0"/>

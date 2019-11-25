@@ -28,8 +28,7 @@ namespace Server.SystemInterface.Requests.Handlers
 
             db.exercises.Add(dbEx);
             db.SaveChanges();
-            return null;
-            
+            return new SetExerciseDescriptorResponse();
         }
     }
 }
