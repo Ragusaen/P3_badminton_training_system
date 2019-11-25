@@ -13,8 +13,8 @@ namespace Server.SystemInterface.Requests.Handlers
     {
         protected override SetPracticeSessionResponse InnerHandle(SetPracticeSessionRequest request, member requester)
         {
-            if (!MemberType.Trainer.HasFlag((MemberType) requester.MemberType))
-                return new SetPracticeSessionResponse() {AccessDenied = true};
+            if (!((MemberType)requester.MemberType).HasFlag(MemberType.Trainer))
+                return new SetPracticeSessionResponse() { AccessDenied = true };
 
             var db = new DatabaseEntities();
             var e = request.Practice;
