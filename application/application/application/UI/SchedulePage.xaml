@@ -18,14 +18,19 @@
     <StackLayout>
         <controls:Calendar SelectedDate="{Binding SelectedDate}" Month="{Binding Month}" Year="{Binding Year}" Events="{Binding Events}" x:Name="Calendar" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" YearLabelColor="Red" SelectedDateColor="Red" MonthLabelColor="Red" SelectedDayBackgroundColor="Red"/>
 
-        <ListView ItemsSource="{Binding SelectedEvents}" ItemSelected="ListView_OnItemSelected">
+        <ListView ItemsSource="{Binding SelectedEvents}" RowHeight="100" ItemSelected="ListView_OnItemSelected">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <StackLayout>
-                            <Label Text="{Binding Name}"></Label>
-                            <Label Text="{Binding Location}"></Label>
-                        </StackLayout>
+                        <Frame HasShadow="True" CornerRadius="5" Margin="5,5,5,5" Padding="15,15,15,5">
+                            <StackLayout>
+                                <StackLayout Orientation="Horizontal">
+                                    <Label HorizontalOptions="Start" Text="{Binding Name}"/>
+                                    <Label HorizontalOptions="EndAndExpand" Text="{Binding Time}"/>
+                                </StackLayout>
+                                <Label FontAttributes="Italic" Text="{Binding Location}"/>
+                            </StackLayout>
+                        </Frame>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>

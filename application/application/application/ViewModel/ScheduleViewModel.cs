@@ -85,6 +85,7 @@ namespace application.ViewModel
         {
             public string Name { get; set; }
             public string Location { get; set; }
+            public string Time { get; set; }
 
             public PlaySession playSession;
         }
@@ -106,6 +107,7 @@ namespace application.ViewModel
                 var psEvent = new PlaySessionEvent()
                 {
                     Location = ps.Location,
+                    Time = ps.Start.ToString("hh:mm"),
                     playSession = ps
                 };
 
