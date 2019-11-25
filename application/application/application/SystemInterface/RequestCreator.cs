@@ -160,6 +160,15 @@ namespace application.SystemInterface
             return result;
         }
 
+        public static Member GetMember(int id)
+        {
+            var request = new GetMemberRequest { Id = id};
+
+            var response = SimpleRequest<GetMemberRequest, GetMemberResponse>(RequestType.GetMember, request);
+
+            return response.Member;
+        }
+
         public static Member GetLoggedInMember()
         {
             var request = new GetTokenMemberRequest();

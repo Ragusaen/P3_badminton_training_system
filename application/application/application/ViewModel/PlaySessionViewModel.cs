@@ -23,20 +23,22 @@ namespace application.ViewModel
             get => _exercises;
             set => SetProperty(ref _exercises, value);
         }
-        private bool _practiceFeedbackIsVisable;
+        private bool _practiceFeedbackIsVisible;
 
-        public bool PracticeFeedbackIsVisable
+        public bool PracticeFeedbackIsVisible
         {
-            get => _practiceFeedbackIsVisable;
-            set => SetProperty(ref _practiceFeedbackIsVisable, value);
+            get => _practiceFeedbackIsVisible;
+            set => SetProperty(ref _practiceFeedbackIsVisible, value);
         }
 
 
         public PlaySessionViewModel(PlaySession playSession)
         {
             PlaySession = playSession;
+
             //if (PlaySession.Start < DateTime.Now && DateTime.Now < PlaySession.Start.AddDays(7))
-              PracticeFeedbackIsVisable = true;
+                PracticeFeedbackIsVisible = true;
+
 
             var ps = PlaySession.Start.ToString("D");
         }

@@ -24,6 +24,7 @@ namespace Common
         GetTokenMember,
         GetAdminPage,
         GetAllPracticeTeams,
+        GetMember,
         //Setters below
         SetPlayer,
         SetPlayerFocusPoints,

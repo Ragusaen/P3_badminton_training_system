@@ -66,7 +66,11 @@ namespace application.ViewModel
         public string NewTeam
         {
             get { return _newTeam; }
-            set { SetProperty(ref _newTeam, value); }
+            set
+            {
+                if(SetProperty(ref _newTeam, value))
+                    NewTeamCommand.RaiseCanExecuteChanged();
+            }
         }
 
 
@@ -118,18 +122,18 @@ namespace application.ViewModel
         }
 
         private RelayCommand _newTeamCommand;
-        public RelayCommand NewTeamCommand
-        {
-            get
-            {
-                return _newTeamCommand ?? (_newTeamCommand = new RelayCommand(param => NewTeamClick(param)));
-            }
-        }
+        public RelayCommand NewTeamCommand => _newTeamCommand ?? (_newTeamCommand = new RelayCommand(NewTeamClick, CanCreateNewTeam));
 
         private void NewTeamClick(object param)
         {
             TeamList.Add(new PracticeTeam { Name = NewTeam });
             RequestCreator.SetPracticeTeam(new PracticeTeam { Name = NewTeam });
+        }
+
+        private bool CanCreateNewTeam(object param)
+        {
+            return !string.IsNullOrEmpty(NewTeam)
+                   && !string.IsNullOrWhiteSpace(NewTeam);
         }
 
         private RelayCommand _newFocusPointCommand;

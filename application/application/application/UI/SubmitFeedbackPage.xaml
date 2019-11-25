@@ -48,33 +48,33 @@
                 <Frame CornerRadius="5" HasShadow="True" Margin="0,10,0,0">
                     <StackLayout>
                         <Label Text="What helped make the training good today?" FontSize="Small" FontAttributes="Bold" TextColor="Black" HorizontalTextAlignment="Center"/>
-                        <Editor Placeholder="Enter here" FontSize="Small" AutoSize ="TextChanges" Text="{Binding Feedback.GoodQuestion}"/>
+                        <Editor x:Name="Quest1" Placeholder="Enter here" FontSize="Small" AutoSize ="TextChanges" Text="{Binding Feedback.GoodQuestion}"/>
                     </StackLayout>
                 </Frame>
 
                 <Frame CornerRadius="5" HasShadow="True" Margin="0,10,0,0">
                     <StackLayout>
                         <Label Text="Were there any issues with the training today?" FontSize="Small" FontAttributes="Bold" TextColor="Black" HorizontalTextAlignment="Center"/>
-                        <Editor Placeholder="Enter here" FontSize="Small" AutoSize ="TextChanges" Text="{Binding Feedback.BadQuestion}"/>
+                        <Editor x:Name="Quest2" Placeholder="Enter here" FontSize="Small" AutoSize ="TextChanges" Text="{Binding Feedback.BadQuestion}"/>
                     </StackLayout>
                 </Frame>
 
                 <Frame CornerRadius="5" HasShadow="True" Margin="0,10,0,0">
                     <StackLayout>
                         <Label Text="What were the main focus points for you today?" FontSize="Small" FontAttributes="Bold" TextColor="Black" HorizontalTextAlignment="Center"/>
-                        <Editor Placeholder="Enter here" FontSize="Small" AutoSize ="TextChanges" Text="{Binding Feedback.FocusPointQuestion}"/>
+                        <Editor x:Name="Quest3" Placeholder="Enter here" FontSize="Small" AutoSize ="TextChanges" Text="{Binding Feedback.FocusPointQuestion}"/>
                     </StackLayout>
                 </Frame>
 
                 <Frame CornerRadius="5" HasShadow="True" Margin="0,10,0,0">
                     <StackLayout>
                         <Label Text="How has your day been today?" FontSize="Small" FontAttributes="Bold" TextColor="Black" HorizontalTextAlignment="Center"/>
-                        <Editor Placeholder="Briefly describe why your day has been this way" FontSize="Small" AutoSize ="TextChanges" Text="{Binding Feedback.DayQuestion}"/>
+                        <Editor x:Name="Quest4" Placeholder="Briefly describe why your day has been this way" FontSize="Small" AutoSize ="TextChanges" Text="{Binding Feedback.DayQuestion}"/>
                     </StackLayout>
                 </Frame>
 
 
-                <Button Text="Submit Feedback" Command="{Binding SubmitFeedbackCommand}"/>
+                <Button x:Name="SubmitButton" Text="Submit Feedback" Command="{Binding SubmitFeedbackCommand}"/>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

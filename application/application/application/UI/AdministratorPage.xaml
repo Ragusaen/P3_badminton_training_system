@@ -55,8 +55,8 @@
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
-                    <Entry Placeholder="New Team Name" Text="{Binding NewTeam}"/>
-                    <Button Text="Create New Team" Command="{Binding NewTeamCommand}"/>
+                    <Entry Placeholder="New Team Name" Text="{Binding NewTeam}" Keyboard="Chat"/>
+                    <Button x:Name="CreateTeamButton" Text="Create New Team" Command="{Binding NewTeamCommand}"/>
                 </StackLayout>
             </Frame>
                 <Label Text="Focus Points" FontAttributes="Bold" FontSize="Medium" TextColor="#BB0000" Margin="10,0,0,0"/>
