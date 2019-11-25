@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 using System.Text;
 using System.Xml.Serialization;
 using Common.Model;
@@ -8,14 +7,14 @@ using Common.Model;
 namespace Common.Serialization
 {
     [XmlRoot]
-    public class GetTeamMatchRequest : Request
+    public class GetMemberRequest : Request
     {
-        public int PlaySessionId;
+        public int Id;
     }
 
     [XmlRoot]
-    public class GetTeamMatchResponse : Response
+    public class GetMemberResponse : Response
     {
-        public TeamMatch TeamMatch;
+        public Member Member;
     }
 }

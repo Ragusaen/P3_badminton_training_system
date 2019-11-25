@@ -26,12 +26,15 @@ namespace Common
         GetTokenMember,
         GetAdminPage,
         GetAllPracticeTeams,
+        GetMember,
+        GetFocusPointDescriptor,
         //Setters below
         SetPlayer,
         SetPlayerFocusPoints,
         SetComment,
         SetPlayerPracticeTeams,
         ChangeTrainerPrivileges,
+        SetNonPrivateFocusPoint,
         //Deleters below
         DeletePlayerFocusPoint,
         DeletePlayerPracticeTeam,
@@ -44,5 +47,6 @@ namespace Common
         SetPracticeSession,
         SetTeamMatch,
         SetFeedback,
+        SetPracticeTeam,
     };
 }

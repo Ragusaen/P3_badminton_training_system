@@ -48,6 +48,8 @@ namespace Server.SystemInterface.Requests
                 {RequestType.GetAdminPage, new GetAdminPageHandler() },
                 {RequestType.GetAllPracticeTeams, new GetAllPracticeTeamsHandler() },
                 {RequestType.GetExercises, new GetExerciseHandler() },
+                {RequestType.GetMember, new GetMemberHandler() },
+                {RequestType.GetFocusPointDescriptor, new GetFocusPointDescriptorHandler() },
                 //Setters below
                 {RequestType.SetPlayer, new SetPlayerHandler() },
                 {RequestType.SetPlayerFocusPoints, new AddPlayerFocusPointHandler() },
@@ -65,6 +67,8 @@ namespace Server.SystemInterface.Requests
                 {RequestType.SetPracticeSession, new SetPracticeSessionHandler() },
                 {RequestType.SetTeamMatch, new SetTeamMatchHandler() },
                 {RequestType.SetFeedback, new SetFeedbackHandler() },
+                {RequestType.SetNonPrivateFocusPoint, new SetNonPrivateFocusPointHandler() },
+                {RequestType.SetPracticeTeam, new SetPracticeTeamHandler() },
             }; 
 
         public byte[] Parse(byte[] request)

@@ -7,14 +7,14 @@ using Common.Model;
 
 namespace Common.Serialization
 {
-    [Serializable, XmlRoot]
+    [XmlRoot]
     public class GetScheduleRequest : Request
     {
         public DateTime StartDate;
         public DateTime EndDate;
     }
 
-    [Serializable, XmlRoot]
+    [XmlRoot]
     public class GetScheduleResponse : Response
     {
         public List<PracticeSession> PracticeSessions;

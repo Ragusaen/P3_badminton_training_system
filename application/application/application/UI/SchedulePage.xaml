@@ -16,16 +16,21 @@
     </NavigationPage.TitleView>
 
     <StackLayout>
-        <controls:Calendar Events="{Binding Events}" x:Name="Calendar" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" YearLabelColor="Red" SelectedDateColor="Red" MonthLabelColor="Red" SelectedDayBackgroundColor="Red">
-            <controls:Calendar.EventTemplate>
+        <controls:Calendar SelectedDate="{Binding SelectedDate}" Month="{Binding Month}" Year="{Binding Year}" Events="{Binding Events}" x:Name="Calendar" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" YearLabelColor="Red" SelectedDateColor="Red" MonthLabelColor="Red" SelectedDayBackgroundColor="Red"/>
+
+        <ListView ItemsSource="{Binding SelectedEvents}" ItemSelected="ListView_OnItemSelected">
+            <ListView.ItemTemplate>
                 <DataTemplate>
-                    <StackLayout Padding="15,0,0,0">
-                        <Label Text="{Binding Name}" FontAttributes="Bold" FontSize="Medium"/>
-                        <Label Text="{Binding Description}" FontSize="Small" LineBreakMode="WordWrap"/>
-                    </StackLayout>
+                    <ViewCell>
+                        <StackLayout>
+                            <Label Text="{Binding Name}"></Label>
+                            <Label Text="{Binding Location}"></Label>
+                        </StackLayout>
+                    </ViewCell>
                 </DataTemplate>
-            </controls:Calendar.EventTemplate>
-        </controls:Calendar>
+            </ListView.ItemTemplate>
+        </ListView>
+        
 
         <Button Command="{Binding command}"/>
 

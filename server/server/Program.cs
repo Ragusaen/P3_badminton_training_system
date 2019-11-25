@@ -22,7 +22,11 @@ namespace Server
 
             var ps = new practicesession()
             {
-                member = db.members.First(),
+                member = new member
+                {
+                    MemberType = (int)MemberType.Trainer,
+                    Name = "John Bob"
+                },
                 focuspoints = new List<focuspoint>()
                 {
                     new focuspoint()
@@ -35,7 +39,8 @@ namespace Server
                 {
                     StartDate = DateTime.Now.AddDays(1),
                     EndDate = DateTime.Now.AddDays(1).AddHours(2),
-                    Location = "Aalborg Triton"
+                    Location = "Aalborg Triton",
+                    Type = 1
                 },
                 focuspoint = new focuspoint()
                 {
@@ -73,6 +78,7 @@ namespace Server
             {
                 RankListScraper scraper = new RankListScraper();
                 scraper.UpdatePlayers();
+                SetPracticeTeam();
             }
             
             try

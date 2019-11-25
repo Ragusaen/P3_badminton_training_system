@@ -19,6 +19,16 @@ namespace application.UI
             SubmitFeedbackViewModel vm = new SubmitFeedbackViewModel(playsession);
             BindingContext = vm;
             vm.Navigation = Navigation;
+
+            Slider1.Value = 0f;
+            Slider2.Value = 0f;
+            Slider3.Value = 0f;
+            Slider4.Value = 0f;
+
+            Quest1.Completed += (s, a) => Quest2.Focus();
+            Quest2.Completed += (s, a) => Quest3.Focus();
+            Quest3.Completed += (s, a) => Quest4.Focus();
+            Quest4.Completed += (s, a) => SubmitButton.SendClicked();
         }
 
         private void Slider1_ValueChanged(object sender, ValueChangedEventArgs e)

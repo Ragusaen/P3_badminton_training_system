@@ -14,11 +14,11 @@ namespace application.ViewModel
 {
     class AdministratorViewModel : BaseViewModel
     {
-        private ObservableCollection<PracticeTeam> _teamList;
-        public ObservableCollection<PracticeTeam> TeamList
+        private ObservableCollection<PracticeTeam> _practiceTeamList;
+        public ObservableCollection<PracticeTeam> PracticeTeamList
         {
-            get { return _teamList; }
-            set { SetProperty(ref _teamList, value); }
+            get { return _practiceTeamList; }
+            set { SetProperty(ref _practiceTeamList, value); }
         }
 
         private ObservableCollection<Member> _memberList;
@@ -49,7 +49,7 @@ namespace application.ViewModel
         {
             get { return _searchTeamText; }
             set { SetProperty(ref _searchTeamText, value);
-                TeamList = new ObservableCollection<PracticeTeam>(TeamList.OrderByDescending((x => StringExtension.LongestCommonSubsequence(x.Name.ToLower(), SearchTeamText.ToLower()))).ThenBy(x => x.Name.Length).ToList());
+                PracticeTeamList = new ObservableCollection<PracticeTeam>(PracticeTeamList.OrderByDescending((x => StringExtension.LongestCommonSubsequence(x.Name.ToLower(), SearchTeamText.ToLower()))).ThenBy(x => x.Name.Length).ToList());
             }
         }
 
@@ -62,38 +62,42 @@ namespace application.ViewModel
             }
         }
 
-        private string _newTeam;
-        public string NewTeam
+        private string _newPracticeTeam;
+        public string NewPracticeTeam
         {
-            get { return _newTeam; }
-            set { SetProperty(ref _newTeam, value); }
+            get { return _newPracticeTeam; }
+            set
+            {
+                if(SetProperty(ref _newPracticeTeam, value))
+                    NewPracticeTeamCommand.RaiseCanExecuteChanged();
+            }
         }
 
 
         public AdministratorViewModel()
         {
             var pageInfo = RequestCreator.GetAdminPage();
-            TeamList = new ObservableCollection<PracticeTeam>(pageInfo.practiceTeams);
+            PracticeTeamList = new ObservableCollection<PracticeTeam>(pageInfo.practiceTeams);
             MemberList = new ObservableCollection<Member>(pageInfo.members);
             FocusPointList = new ObservableCollection<FocusPointDescriptor>(pageInfo.focusPoints);
         }
 
-        private RelayCommand _deleteTeamCommand;
-        public RelayCommand DeleteTeamCommand
+        private RelayCommand _deletePracticeTeamCommand;
+        public RelayCommand DeletePracticeTeamCommand
         {
             get
             {
-                return _deleteTeamCommand ?? (_deleteTeamCommand = new RelayCommand(param => DeleteTeamClick(param)));
+                return _deletePracticeTeamCommand ?? (_deletePracticeTeamCommand = new RelayCommand(param => DeletePracticeTeamClick(param)));
             }
         }
 
-        private async void DeleteTeamClick(object param)
+        private async void DeletePracticeTeamClick(object param)
         {
             PracticeTeam prac = param as PracticeTeam;
             bool answer = await Application.Current.MainPage.DisplayAlert("Delete", $"Are you sure you want to delete {prac.Name}?", "yes", "no");
             if (answer)
             {
-                TeamList.Remove(prac);
+                PracticeTeamList.Remove(prac);
                 RequestCreator.DeletePracticeTeam(prac);
             }
         }
@@ -114,21 +118,25 @@ namespace application.ViewModel
             {
                 FocusPointList.Remove(fp);
                 RequestCreator.DeleteFocusPointDescriptor(fp);
+                FocusPointList = new ObservableCollection<FocusPointDescriptor>(RequestCreator.GetFocusPoints());
             }
         }
 
-        private RelayCommand _newTeamCommand;
-        public RelayCommand NewTeamCommand
+        private RelayCommand _newPracticeTeamCommand;
+        public RelayCommand NewPracticeTeamCommand => _newPracticeTeamCommand ?? (_newPracticeTeamCommand = new RelayCommand(NewPracticeTeamClick, CanCreateNewPracticeTeam));
+
+        private void NewPracticeTeamClick(object param)
         {
-            get
-            {
-                return _newTeamCommand ?? (_newTeamCommand = new RelayCommand(param => NewTeamClick(param)));
-            }
+            var team = new PracticeTeam {Name = NewPracticeTeam};
+            RequestCreator.SetPracticeTeam(team);
+            PracticeTeamList = new ObservableCollection<PracticeTeam>(RequestCreator.GetAllPracticeTeams());
+            NewPracticeTeam = null;
         }
 
-        private void NewTeamClick(object param)
+        private bool CanCreateNewPracticeTeam(object param)
         {
-            TeamList.Add(new PracticeTeam { Name = NewTeam });
+            return !string.IsNullOrEmpty(NewPracticeTeam)
+                   && !string.IsNullOrWhiteSpace(NewPracticeTeam);
         }
 
         private RelayCommand _newFocusPointCommand;
@@ -136,20 +144,19 @@ namespace application.ViewModel
         {
             get
             {
-                return _newFocusPointCommand ?? (_newFocusPointCommand = new RelayCommand(param => NewFocusPointClick(param)));
+                return _newFocusPointCommand ?? (_newFocusPointCommand = new RelayCommand(NewFocusPointClick));
             }
         }
 
         private void NewFocusPointClick(object param)
         {
-            var newPage = new CreateFocusPointPopupPage(true);
+            var newPage = new CreateFocusPointPopupPage(false);
             PopupNavigation.Instance.PushAsync(newPage);
             ((CreateFocusPointPopupViewModel)newPage.BindingContext).CallBackEvent += OnCallBackEvent;
         }
 
         private void OnCallBackEvent(object sender, FocusPointDescriptor e)
         {
-            RequestCreator.CreateFocusPointDescriptor(e);
             FocusPointList = new ObservableCollection<FocusPointDescriptor>(RequestCreator.GetFocusPoints());
         }
 

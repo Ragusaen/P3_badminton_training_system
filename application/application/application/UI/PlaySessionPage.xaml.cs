@@ -32,6 +32,13 @@ namespace application.UI
 
                 TeamMatchRelevant.IsVisible = true;
             }
+            else if (_vm.PracticeSession != null)
+            {
+                Name.Text = _vm.PracticeSession.PracticeTeam.Name;
+
+                PracticeRelevant.IsVisible = true;
+            }
+            BullsEyeIcon.Source = ImageSource.FromResource("application.Images.bullseyeicon.png");
         }
     }
 }

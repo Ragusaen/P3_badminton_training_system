@@ -16,10 +16,10 @@ namespace Server.DAL
     {
         public int MemberID { get; set; }
         public int PlaySessionID { get; set; }
-        public Nullable<int> Ready { get; set; }
-        public Nullable<int> Effort { get; set; }
-        public Nullable<int> Challenge { get; set; }
-        public Nullable<int> Absorb { get; set; }
+        public int Ready { get; set; }
+        public int Effort { get; set; }
+        public int Challenge { get; set; }
+        public int Absorb { get; set; }
         public string Good { get; set; }
         public string Bad { get; set; }
         public string FocusPoint { get; set; }

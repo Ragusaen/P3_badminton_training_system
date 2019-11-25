@@ -110,9 +110,12 @@ namespace application.SystemInterface
             return response.FocusPointDescriptors;
         }
 
-        public static List<Feedback> GetPlayerFeedback()
+        public static List<Feedback> GetPlayerFeedback(Member member)
         {
-            var request = new GetPlayerFeedbackRequest();
+            var request = new GetPlayerFeedbackRequest
+            {
+                MemberId = member.Id
+            };
 
             var response = SimpleRequest<GetPlayerFeedbackRequest, GetPlayerFeedbackResponse>(RequestType.GetPlayerFeedback, request);
 
@@ -157,6 +160,15 @@ namespace application.SystemInterface
             return result;
         }
 
+        public static Member GetMember(int id)
+        {
+            var request = new GetMemberRequest { Id = id};
+
+            var response = SimpleRequest<GetMemberRequest, GetMemberResponse>(RequestType.GetMember, request);
+
+            return response.Member;
+        }
+
         public static Member GetLoggedInMember()
         {
             var request = new GetTokenMemberRequest();
@@ -183,9 +195,13 @@ namespace application.SystemInterface
             return response.PracticeTeams;
         }
 
-        public static List<PlaySession> GetSchedule()
+        public static List<PlaySession> GetSchedule(DateTime start, DateTime end)
         {
-            var request = new GetScheduleRequest();
+            var request = new GetScheduleRequest()
+            {
+                StartDate = start,
+                EndDate = end
+            };
 
             var response = SimpleRequest<GetScheduleRequest, GetScheduleResponse>(RequestType.GetSchedule, request);
 
@@ -216,6 +232,20 @@ namespace application.SystemInterface
                     request);
 
             return response.PracticeTeams;
+        }
+
+        public static FocusPointDescriptor GetFocusPointDescriptor(int id)
+        {
+            var request = new GetFocusPointDescriptorRequest
+            {
+                Id = id
+            };
+
+            var response =
+                SimpleRequest<GetFocusPointDescriptorRequest, GetFocusPointDescriptorResponse>(
+                    RequestType.GetFocusPointDescriptor, request);
+
+            return response.FocusPointDescriptor;
         }
 
         // Setters below
@@ -276,6 +306,17 @@ namespace application.SystemInterface
 
             SimpleRequest<ChangeTrainerPrivilegesRequest, ChangeTrainerPrivilegesResponse>(
                 RequestType.ChangeTrainerPrivileges, request);
+        }
+
+        public static void SetNonPrivateFocusPoint(FocusPointDescriptor focusPointDescriptor)
+        {
+            var request = new SetNonPrivateFocusPointRequest
+            {
+                FocusPointDescriptor = focusPointDescriptor
+            };
+
+            SimpleRequest<SetNonPrivateFocusPointRequest, SetNonPrivateFocusPointResponse>(
+                RequestType.SetNonPrivateFocusPoint, request);
         }
 
         // Deleters below
@@ -405,6 +446,16 @@ namespace application.SystemInterface
             var response =
                 SimpleRequest<SetFeedbackRequest, SetFeedbackResponse>(
                     RequestType.SetFeedback, request);
+        }
+
+        public static void SetPracticeTeam(PracticeTeam practiceTeam)
+        {
+            var request = new SetPracticeTeamRequest
+            {
+                PracticeTeam = practiceTeam
+            };
+
+            SimpleRequest<SetPracticeTeamRequest, SetPracticeTeamResponse>(RequestType.SetPracticeTeam, request);
         }
     }
 }

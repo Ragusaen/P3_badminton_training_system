@@ -54,7 +54,7 @@ namespace application.ViewModel
         }
         public ViewFeedbackViewModel(Player player) 
         {
-            List<Feedback> feedbacks = RequestCreator.GetPlayerFeedback();
+            List<Feedback> feedbacks = RequestCreator.GetPlayerFeedback(player.Member);
             List<Entry> entries = new List<Entry>();
             List<Entry> entries1 = new List<Entry>();
             List<Entry> entries2 = new List<Entry>();

@@ -18,7 +18,12 @@ namespace application.ViewModel
         {
             if (canCreatePrivateFocusPoint)
             {
-                if (RequestCreator.LoggedInMember.MemberType != MemberType.Trainer)
+                if (RequestCreator.LoggedInMember.MemberType.HasFlag(MemberType.Trainer))
+                {
+                    PrivateCheckBoxIsVisible = true;
+                    IsPrivateChecked = false;
+                }
+                else
                 {
                     PrivateCheckBoxIsVisible = false;
                     IsPrivateChecked = true;
@@ -46,6 +51,7 @@ namespace application.ViewModel
         {
             if (FocusPoint.Name != null)
             {
+                FocusPoint = RequestCreator.CreateFocusPointDescriptor(FocusPoint);
                 CallBackEvent?.Invoke(this, FocusPoint);
                 PopupNavigation.Instance.PopAsync();
             }

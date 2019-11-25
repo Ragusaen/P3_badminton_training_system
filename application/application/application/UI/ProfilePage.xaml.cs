@@ -40,7 +40,7 @@ namespace application.UI
             }
         };
 
-        public ProfilePage(Member member)
+        public ProfilePage(int profileId)
         {
             InitializeComponent();
 
@@ -48,7 +48,7 @@ namespace application.UI
 
             SetupCommentEvents();
 
-            _vm = new ProfilePageViewModel(member);
+            _vm = new ProfilePageViewModel(profileId);
             BindingContext = _vm;
             _vm.Navigation = Navigation;
 
@@ -59,7 +59,9 @@ namespace application.UI
 
         private void ShownOnlyRelevantInfo()
         {
+            BothRelevant.IsVisible = _vm.Member.MemberType != MemberType.None;
             PlayerRelevant.IsVisible = _vm.Player != null;
+            Settingsicon.IsVisible = _vm.Trainer != null; // Only trainers can view profile settings
         }
 
         private void SetupCommentEvents()
@@ -70,6 +72,9 @@ namespace application.UI
                 Comment.IsVisible = false;
                 CommentEntry.IsVisible = true;
                 CommentEntry.Text = Comment.Text;
+                if (CommentEntry.Text == "Click to add comment")
+                    CommentEntry.Text = null;
+                CommentEntry.Focus();
             };
             Comment.GestureRecognizers.Add(commentTap);
 
@@ -77,7 +82,7 @@ namespace application.UI
             {
                 Comment.IsVisible = true;
                 CommentEntry.IsVisible = false;
-                if (CommentEntry?.Text.Length > 0)
+                if (CommentEntry?.Text?.Length > 0)
                 {
                     Comment.Text = CommentEntry.Text;
                     _vm.SetComment(CommentEntry.Text);

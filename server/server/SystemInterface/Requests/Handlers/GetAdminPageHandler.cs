@@ -12,7 +12,6 @@ namespace Server.SystemInterface.Requests.Handlers
 {
     class GetAdminPageHandler : MiddleRequestHandler<GetAdminPageRequest, GetAdminPageResponse>
     {
-        private static Logger _log = LogManager.GetCurrentClassLogger();
         protected override GetAdminPageResponse InnerHandle(GetAdminPageRequest request, member requester)
         {
             if (!((Common.Model.MemberType)requester.MemberType).HasFlag(MemberType.Trainer))
@@ -21,7 +20,7 @@ namespace Server.SystemInterface.Requests.Handlers
             }
 
             var db = new DatabaseEntities();
-            var focusPoints = db.focuspoints.ToList().Select(fp => (FocusPointDescriptor) fp).ToList();
+            var focusPoints = db.focuspoints.ToList().Where(p => p.IsPrivate == false).Select(fp => (FocusPointDescriptor) fp).ToList();
             var members = db.members.ToList().Select(m => (Member) m).ToList();
             var practiceTeams = db.practiceteams.ToList().Select(pt => (PracticeTeam) pt).ToList();
 
