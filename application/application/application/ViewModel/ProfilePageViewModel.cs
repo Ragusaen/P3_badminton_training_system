@@ -55,13 +55,18 @@ namespace application.ViewModel
             set => SetProperty(ref _focusPointsListHeight, value); 
         }
 
+        public string StringMemberType { get; set; }
+
         public ProfilePageViewModel(Member member)
         {
+            StringMemberType = "Neither Player nor Trainer";
+            RequestCreator.LoggedInMember = RequestCreator.GetLoggedInMember(); // reload logged in member, because membertype might have changed
             Member = member;
             if (Member.MemberType != MemberType.None)
             {
                 if (Member.MemberType.HasFlag(MemberType.Player))
                 {
+                    StringMemberType = "Player";
                     Player = RequestCreator.GetPlayer(Member.Id);
                     Player.Member = Member;
 
@@ -76,13 +81,17 @@ namespace application.ViewModel
                 if (Member.MemberType.HasFlag(MemberType.Trainer))
                 {
                     Trainer = new Trainer {Member = Member};
-
                     _changeMemberTypeTitle = "This Member Is a Trainer";
                     _changeMemberTypeQuery = "Unmake Trainer";
 
+                    if (Member.MemberType == MemberType.Both)
+                        StringMemberType = "Both Player and Trainer";
+                    else
+                        StringMemberType = "Trainer";
+
                     //TODO: handler for fetching a trainers practice teams
-                    //Trainer.PracticeTeams = RequestCreator.GetPlayerPracticeTeams(Player);
-                    //PracticeTeams = new ObservableCollection<PracticeTeam>(Player.PracticeTeams);
+                    //Trainer.PracticeTeams = RequestCreator.GetTrainerPracticeTeams(Trainer);
+                    //PracticeTeams = new ObservableCollection<PracticeTeam>(Trainer.PracticeTeams);
                 }
             }
             CommentText = member?.Comment ?? "Click to add comment";
@@ -166,10 +175,31 @@ namespace application.ViewModel
         private readonly string _changeMemberTypeQuery = "Make Trainer";
         private async void ExecuteProfileSettingTap(object param)
         {
-            string action;
-            if(RequestCreator.LoggedInMember.MemberType.HasFlag(MemberType.Trainer))
+            await Application.Current.MainPage.DisplayActionSheet("Settings", "Cancel", null, "Change Member Type");
+            string newRights = await Application.Current.MainPage.DisplayActionSheet(_changeMemberTypeTitle, "Cancel", null, _changeMemberTypeQuery);
+
+            if (newRights == "Make Trainer")
             {
-                action = await Application.Current.MainPage.DisplayActionSheet("Settings", "Cancel", null, "Change Password", "Change Member Type");
+                Member.MemberType |= MemberType.Trainer;
+
+            }
+            else if (newRights == "Unmake Trainer")
+            {
+                Member.MemberType &= ~MemberType.Trainer;
+            }
+            else
+            {
+                goto here;
+            }
+            RequestCreator.ChangeTrainerPrivileges(Member);
+            RequestCreator.LoggedInMember = RequestCreator.GetLoggedInMember(); // reload logged in member, because membertype might have changed
+            Navigation.InsertPageBefore(new ProfilePage(Member), Navigation.NavigationStack.Last());
+            await Navigation.PopAsync();
+            here:;
+
+            /*if(RequestCreator.LoggedInMember.MemberType.HasFlag(MemberType.Trainer)) // No support for change password, thus commented away
+            {
+                action = await Application.Current.MainPage.DisplayActionSheet("Settings", "Cancel", null, "Change Member Type");
             }
             else
             {
@@ -199,7 +229,7 @@ namespace application.ViewModel
                 Navigation.InsertPageBefore(new ProfilePage(Member), Navigation.NavigationStack.Last());
                 Navigation.PopAsync();
                 here: ;
-            }
+            }*/
         }
 
         private RelayCommand _viewFeedbackCommand;

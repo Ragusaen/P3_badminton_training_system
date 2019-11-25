@@ -18,7 +18,10 @@
     <ContentPage.Content>
         <ScrollView>
             <StackLayout Margin="10,10,10,10">
-                <Label Text="{Binding Member.Name}" VerticalOptions="Start" HorizontalOptions="CenterAndExpand" FontSize="Large"/>
+                <StackLayout BackgroundColor="#F0F0F0">
+                    <Label Text="{Binding Member.Name}" FontSize="Large" HorizontalOptions="CenterAndExpand" VerticalOptions="Start"/>
+                    <Label Text="{Binding StringMemberType}" FontSize="Small" HorizontalOptions="CenterAndExpand"/>
+                </StackLayout>
                 <Label Text="Practice Teams" VerticalOptions="Start" HorizontalOptions="StartAndExpand" FontSize="Medium"/>
                 <ListView ItemsSource="{Binding PracticeTeams}" VerticalScrollBarVisibility="Never" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding PracticeTeamsListHeight}">
                     <ListView.ItemTemplate>
