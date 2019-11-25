@@ -308,16 +308,6 @@ namespace application.SystemInterface
                 RequestType.ChangeTrainerPrivileges, request);
         }
 
-        public static void SetPracticeTeam(PracticeTeam practiceTeam)
-        {
-            var request = new SetPracticeTeamRequest
-            {
-                PracticeTeam = practiceTeam
-            };
-
-            SimpleRequest<SetPracticeTeamRequest, SetPracticeTeamResponse>(RequestType.SetPracticeTeam, request);
-        }
-
         public static void SetNonPrivateFocusPoint(FocusPointDescriptor focusPointDescriptor)
         {
             var request = new SetNonPrivateFocusPointRequest
@@ -437,14 +427,15 @@ namespace application.SystemInterface
                 SimpleRequest<SetFeedbackRequest, SetFeedbackResponse>(
                     RequestType.SetFeedback, request);
         }
-        public static void SetPracticeTeam(PracticeTeam team)
+
+        public static void SetPracticeTeam(PracticeTeam practiceTeam)
         {
-            var request = new SetPracticeTeamRequest()
+            var request = new SetPracticeTeamRequest
             {
-                Team = team
+                PracticeTeam = practiceTeam
             };
 
-            var response = SimpleRequest<SetPracticeTeamRequest, SetPracticeTeamResponse>(RequestType.SetPracticeTeam, request);
+            SimpleRequest<SetPracticeTeamRequest, SetPracticeTeamResponse>(RequestType.SetPracticeTeam, request);
         }
     }
 }

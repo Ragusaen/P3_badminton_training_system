@@ -12,7 +12,6 @@ namespace Server.SystemInterface.Requests.Handlers
 {
     class GetAdminPageHandler : MiddleRequestHandler<GetAdminPageRequest, GetAdminPageResponse>
     {
-        private static Logger _log = LogManager.GetCurrentClassLogger();
         protected override GetAdminPageResponse InnerHandle(GetAdminPageRequest request, member requester)
         {
             if (!((Common.Model.MemberType)requester.MemberType).HasFlag(MemberType.Trainer))
