@@ -23,16 +23,16 @@ namespace application.UI
             BindingContext = _vm;
         }
 
+        private void ListView_OnItemSelected(object sender, SelectedItemChangedEventArgs e)
+        {
+            Navigation.PushAsync(new ProfilePage(((Member)e.SelectedItem).Id));
+        }
+
         private void TeamListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             if (e.SelectedItem is PracticeTeam Team)
                 Navigation.PushAsync(new TeamPage(Team));
             TeamList.SelectedItem = null;
-        }
-
-        private void ListView_OnItemSelected(object sender, SelectedItemChangedEventArgs e)
-        {
-            Navigation.PushAsync(new ProfilePage((Member)e.SelectedItem));
         }
 
         private void FocusPointListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
