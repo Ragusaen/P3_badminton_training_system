@@ -37,7 +37,6 @@ namespace Server.SystemInterface.Requests.Handlers
             db.practicesessions.Add(dbPS);
             db.SaveChanges();
             return null;
-
         }
     }
 }

@@ -16,7 +16,7 @@
     </NavigationPage.TitleView>
 
     <StackLayout>
-        <controls:Calendar Events="{Binding Events}" x:Name="Calendar" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" YearLabelColor="Red" SelectedDateColor="Red" MonthLabelColor="Red" SelectedDayBackgroundColor="Red">
+        <controls:Calendar SelectedDate="{Binding SelectedDate}" Month="{Binding Month}" Year="{Binding Year}" Events="{Binding Events}" x:Name="Calendar" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" YearLabelColor="Red" SelectedDateColor="Red" MonthLabelColor="Red" SelectedDayBackgroundColor="Red">
             <controls:Calendar.EventTemplate>
                 <DataTemplate>
                     <StackLayout Padding="15,0,0,0">

@@ -39,7 +39,7 @@
                         </DataTemplate>
                     </ListView.ItemTemplate>
                 </ListView>
-                <Button Text="Submit feedback for this practice" Command="{Binding FeedbackCommand}"/>
+                <Button Text="Submit feedback for this practice" Command="{Binding FeedbackCommand}" IsVisible="{Binding PracticeFeedbackIsVisable}"/>
             </StackLayout>
 
             <StackLayout x:Name="TeamMatchRelevant">

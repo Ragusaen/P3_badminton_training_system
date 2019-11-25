@@ -26,7 +26,7 @@ namespace application.ViewModel
         public ViewDetailedFeedbackViewModel(Player player)
         {
             Player = player;
-            Player.Feedbacks = RequestCreator.GetPlayerFeedback();
+            Player.Feedbacks = RequestCreator.GetPlayerFeedback(Player.Member);
         }
 
         private RelayCommand _expandCommand;

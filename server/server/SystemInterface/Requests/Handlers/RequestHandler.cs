@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using Common.Model;
 using Common.Serialization;
 using NLog;
@@ -28,6 +31,29 @@ namespace Server.SystemInterface.Requests.Handlers
             
             TResponse response = innerHandle(request, member);
 
+
+            LogAccess(response, member);
+
+            try
+            {
+                return serializer.Serialize(response);
+            }
+            catch (XmlException)
+            {
+                var msg = $"Error serializing {response} to type {typeof(TResponse).FullName}\n";
+                foreach (var fieldInfo in typeof(TResponse).GetFields())
+                {
+                    msg += fieldInfo.Name + ": " + fieldInfo.GetValue(response) + "\n";
+                }
+                _log.Error(msg);
+
+                throw;
+            }
+        }
+
+        [Conditional("DEBUG")]
+        private void LogAccess(Response response, member member)
+        {
             if (response is PermissionResponse r && r.AccessDenied)
             {
                 if (RequestMember == null)
@@ -37,12 +63,10 @@ namespace Server.SystemInterface.Requests.Handlers
                 }
                 else
                 {
-                    _log.Error($"{this.GetType()} Access Denied - requester type: {Enum.GetName(typeof(MemberType), member.MemberType)}. " + 
+                    _log.Error($"{this.GetType()} Access Denied - requester type: {Enum.GetName(typeof(MemberType), member.MemberType)}. " +
                                $"Subject id: {RequestMember.Id} | Requester id {member.ID} -> {member.Name}");
                 }
             }
-
-            return serializer.Serialize(response);
         }
 
         private Server.DAL.member GetMember(PermissionRequest pr)

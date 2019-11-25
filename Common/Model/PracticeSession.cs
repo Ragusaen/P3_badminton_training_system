@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Xml.Serialization;
 
 namespace Common.Model
 {
+    [XmlInclude(typeof(PlaySession))]
     public class PracticeSession : PlaySession
     {
         public PracticeTeam PracticeTeam { get; set; }

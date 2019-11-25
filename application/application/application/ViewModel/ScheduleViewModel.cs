@@ -3,7 +3,9 @@ using Common.Model;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using application.SystemInterface;
 using Xamarin.Forms;
@@ -15,29 +17,52 @@ namespace application.ViewModel
     class ScheduleViewModel : BaseViewModel
     {
         private EventCollection _events = new EventCollection();
-
         public EventCollection Events
         {
             get => _events;
             set => SetProperty(ref _events, value);
         }
 
-        private string _currentMonth;
-
-        public string CurrentMonth
+        private int _month;
+        public int Month
         {
-            get { return _currentMonth; }
+            get => _month;
             set
             {
-                if (SetProperty(ref _currentMonth, value))
-                    DateClickCommand.RaiseCanExecuteChanged();
+                SetProperty(ref _month, value);
+                LoadEvents();
             }
         }
 
+        private int _year;
+
+        public int Year
+        {
+            get => _year;
+            set
+            {
+                SetProperty(ref _year, value);
+                LoadEvents();
+            }
+        }
+
+
+
+        private int CurrentMonth;
+
+        private DateTime _selectedDate;
+        public DateTime SelectedDate
+        {
+            get => _selectedDate;
+            set => SetProperty(ref _selectedDate, value);
+        }
+
+
         public ScheduleViewModel()
         {
-            LoadEvents();
-            //CurrentMonth = DateTime.Today.ToString("MMMM");
+            SelectedDate = DateTime.Today;
+            _month = DateTime.Today.Month;
+            _year = DateTime.Today.Year;
         }
 
         public class PlaySessionEvent
@@ -48,11 +73,12 @@ namespace application.ViewModel
 
         private void LoadEvents()
         {
-            List<PlaySession> playSessions = RequestCreator.GetSchedule();
+            DateTime start = new DateTime(_year, _month, 1);
+            DateTime end = start.AddMonths(1);
+
+            List<PlaySession> playSessions = RequestCreator.GetSchedule(start, end);
 
             Debug.WriteLine($"THERE WERE {playSessions.Count} PLAYSESSIONS");
-
-            Events = new EventCollection();
 
             foreach (PlaySession ps in playSessions)
             {
@@ -71,6 +97,8 @@ namespace application.ViewModel
 
                 ((List<PlaySessionEvent>)Events[ps.Start]).Add(psEvent);
             }
+
+            Debug.WriteLine(Events.Count);
         }
 
         private RelayCommand _dateClickCommand;

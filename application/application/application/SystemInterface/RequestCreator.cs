@@ -110,9 +110,12 @@ namespace application.SystemInterface
             return response.FocusPointDescriptors;
         }
 
-        public static List<Feedback> GetPlayerFeedback()
+        public static List<Feedback> GetPlayerFeedback(Member member)
         {
-            var request = new GetPlayerFeedbackRequest();
+            var request = new GetPlayerFeedbackRequest
+            {
+                MemberId = member.Id
+            };
 
             var response = SimpleRequest<GetPlayerFeedbackRequest, GetPlayerFeedbackResponse>(RequestType.GetPlayerFeedback, request);
 
@@ -192,9 +195,13 @@ namespace application.SystemInterface
             return response.PracticeTeams;
         }
 
-        public static List<PlaySession> GetSchedule()
+        public static List<PlaySession> GetSchedule(DateTime start, DateTime end)
         {
-            var request = new GetScheduleRequest();
+            var request = new GetScheduleRequest()
+            {
+                StartDate = start,
+                EndDate = end
+            };
 
             var response = SimpleRequest<GetScheduleRequest, GetScheduleResponse>(RequestType.GetSchedule, request);
 
@@ -365,7 +372,6 @@ namespace application.SystemInterface
 
             return response.Trainers;
         }
-
 
         public static List<RuleBreak> VerifyLineup(TeamMatch match)
         {
