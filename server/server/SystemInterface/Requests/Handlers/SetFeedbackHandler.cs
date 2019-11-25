@@ -13,8 +13,8 @@ namespace Server.SystemInterface.Requests.Handlers
     {
         protected override SetFeedbackResponse InnerHandle(SetFeedbackRequest request, member requester)
         {
-            if (!(requester.MemberType == (int)MemberType.Player))
-                return null;
+            if (!((Common.Model.MemberType)requester.MemberType).HasFlag(MemberType.Player))
+                return new SetFeedbackResponse() { AccessDenied = true};
 
             var db = new DatabaseEntities();
             var e = request.Feedback;

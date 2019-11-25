@@ -110,9 +110,12 @@ namespace application.SystemInterface
             return response.FocusPointDescriptors;
         }
 
-        public static List<Feedback> GetPlayerFeedback()
+        public static List<Feedback> GetPlayerFeedback(Member member)
         {
-            var request = new GetPlayerFeedbackRequest();
+            var request = new GetPlayerFeedbackRequest
+            {
+                MemberId = member.Id
+            };
 
             var response = SimpleRequest<GetPlayerFeedbackRequest, GetPlayerFeedbackResponse>(RequestType.GetPlayerFeedback, request);
 

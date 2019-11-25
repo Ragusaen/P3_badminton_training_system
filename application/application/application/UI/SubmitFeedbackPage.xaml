@@ -20,28 +20,28 @@
                 <Frame>
                     <StackLayout>
                         <Label x:Name="Label1" Text="How ready did you feel to train today?" FontSize="Small" TextColor="Black" HorizontalTextAlignment="Center"/>
-                        <Slider x:Name="Slider1" ThumbColor="White" Minimum="-2" Maximum="2" BackgroundColor="LightGray" HeightRequest="30" Margin="0,0,0,15" Value="{Binding Feedback.ReadyQuestion}" ValueChanged="Slider1_ValueChanged"/>
+                        <Slider x:Name="Slider1" Minimum="-2" Maximum="2" HeightRequest="30" Margin="0,0,0,15" Value="{Binding Feedback.ReadyQuestion}" ValueChanged="Slider1_ValueChanged" ThumbColor="Red" MaximumTrackColor="IndianRed" MinimumTrackColor="IndianRed"/>
                     </StackLayout>
                 </Frame>
 
                 <Frame>
                     <StackLayout>
                         <Label x:Name="Label2" Text="How was your effort today taking into account how ready you felt?" FontSize="Small" TextColor="Black" HorizontalTextAlignment="Center"/>
-                        <Slider x:Name="Slider2" ThumbColor="White" Minimum="-2" Maximum="2" Value="{Binding Feedback.EffortQuestion}" BackgroundColor="LightGray" HeightRequest="30" Margin="0,0,0,15" ValueChanged="Slider2_ValueChanged"/>
+                        <Slider x:Name="Slider2" Minimum="-2" Maximum="2" Value="{Binding Feedback.EffortQuestion}" HeightRequest="30" Margin="0,0,0,15" ValueChanged="Slider2_ValueChanged" ThumbColor="Red" MaximumTrackColor="IndianRed" MinimumTrackColor="IndianRed"/>
                     </StackLayout>
                 </Frame>
 
                 <Frame>
                     <StackLayout>
                         <Label x:Name="Label3" Text="How were you challenged today in relation to the exercises?" FontSize="Small" TextColor="Black" HorizontalTextAlignment="Center"/>
-                        <Slider x:Name="Slider3" ThumbColor="White" Minimum="-2" Maximum="2" Value="{Binding Feedback.ChallengeQuestion}" BackgroundColor="LightGray" HeightRequest="30" Margin="0,0,0,15" ValueChanged="Slider3_ValueChanged" />
+                        <Slider x:Name="Slider3" Minimum="-2" Maximum="2" Value="{Binding Feedback.ChallengeQuestion}" HeightRequest="30" Margin="0,0,0,15" ValueChanged="Slider3_ValueChanged" ThumbColor="Red" MaximumTrackColor="IndianRed" MinimumTrackColor="IndianRed" />
                     </StackLayout>
                 </Frame>
 
                 <Frame>
                     <StackLayout>
                         <Label x:Name="Label4" Text="To what extent were you absorbed by the training today?" FontSize="Small" TextColor="Black" HorizontalTextAlignment="Center"/>
-                        <Slider x:Name="Slider4" ThumbColor="White" Minimum="-2" Maximum="2" Value="{Binding Feedback.AbsorbQuestion}" BackgroundColor="LightGray" HeightRequest="30" Margin="0,0,0,0" ValueChanged="Slider4_ValueChanged"/>
+                        <Slider x:Name="Slider4" Minimum="-2" Maximum="2" Value="{Binding Feedback.AbsorbQuestion}" HeightRequest="30" Margin="0,0,0,0" ValueChanged="Slider4_ValueChanged" ThumbColor="Red" MaximumTrackColor="IndianRed" MinimumTrackColor="IndianRed"/>
                     </StackLayout>
                 </Frame>
 
