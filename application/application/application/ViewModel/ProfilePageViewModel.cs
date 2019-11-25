@@ -60,7 +60,7 @@ namespace application.ViewModel
             Member = member;
             if (Member.MemberType != MemberType.None)
             {
-                if ((Member.MemberType & MemberType.Player) > 0)
+                if (Member.MemberType.HasFlag(MemberType.Player))
                 {
                     Player = RequestCreator.GetPlayer(Member.Id);
                     Player.Member = Member;
@@ -73,10 +73,9 @@ namespace application.ViewModel
                     PracticeTeams = new ObservableCollection<PracticeTeam>(Player.PracticeTeams);
                     PracticeTeamsListHeight = PracticeTeams.Count * 45;
                 }
-                else if ((Member.MemberType & MemberType.Trainer) > 0)
+                if (Member.MemberType.HasFlag(MemberType.Trainer))
                 {
-                    Trainer = new Trainer();
-                    Trainer.Member = Member;
+                    Trainer = new Trainer {Member = Member};
 
                     _changeMemberTypeTitle = "This Member Is a Trainer";
                     _changeMemberTypeQuery = "Unmake Trainer";
@@ -87,6 +86,11 @@ namespace application.ViewModel
                 }
             }
             CommentText = member?.Comment ?? "Click to add comment";
+        }
+
+        private void Load()
+        {
+
         }
 
         // Practice Team Section
@@ -163,7 +167,7 @@ namespace application.ViewModel
         private async void ExecuteProfileSettingTap(object param)
         {
             string action;
-            if (Trainer != null)
+            if(RequestCreator.LoggedInMember.MemberType.HasFlag(MemberType.Trainer))
             {
                 action = await Application.Current.MainPage.DisplayActionSheet("Settings", "Cancel", null, "Change Password", "Change Member Type");
             }
@@ -181,13 +185,20 @@ namespace application.ViewModel
                 if (newRights == "Make Trainer")
                 {
                     Member.MemberType |= MemberType.Trainer;
+
                 }
                 else if (newRights == "Unmake Trainer")
                 {
                     Member.MemberType &= ~MemberType.Trainer;
                 }
-
+                else
+                {
+                    goto here;
+                }
                 RequestCreator.ChangeTrainerPrivileges(Member);
+                Navigation.InsertPageBefore(new ProfilePage(Member), Navigation.NavigationStack.Last());
+                Navigation.PopAsync();
+                here: ;
             }
         }
 

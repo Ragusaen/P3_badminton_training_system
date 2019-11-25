@@ -3,6 +3,7 @@ using Common.Model;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
@@ -16,12 +17,36 @@ namespace application.ViewModel
     class ScheduleViewModel : BaseViewModel
     {
         private EventCollection _events = new EventCollection();
-
         public EventCollection Events
         {
             get => _events;
             set => SetProperty(ref _events, value);
         }
+
+        private int _month;
+        public int Month
+        {
+            get => _month;
+            set
+            {
+                SetProperty(ref _month, value);
+                LoadEvents();
+            }
+        }
+
+        private int _year;
+
+        public int Year
+        {
+            get => _year;
+            set
+            {
+                SetProperty(ref _year, value);
+                LoadEvents();
+            }
+        }
+
+
 
         private int CurrentMonth;
 
@@ -29,24 +54,15 @@ namespace application.ViewModel
         public DateTime SelectedDate
         {
             get => _selectedDate;
-            set
-            {
-                SetProperty(ref _selectedDate, value);
-                Debug.WriteLine(_selectedDate);
-                if (SelectedDate.Month != CurrentMonth)
-                {
-                    CurrentMonth = SelectedDate.Month;
-                    var firstDayOfMonth = new DateTime(SelectedDate.Year, SelectedDate.Month, 1);
-                    var firstDayOfNextMonth = firstDayOfMonth.AddMonths(1);
-                    LoadEvents(firstDayOfMonth, firstDayOfNextMonth);
-                }
-            }
+            set => SetProperty(ref _selectedDate, value);
         }
 
 
         public ScheduleViewModel()
         {
             SelectedDate = DateTime.Today;
+            _month = DateTime.Today.Month;
+            _year = DateTime.Today.Year;
         }
 
         public class PlaySessionEvent
@@ -55,13 +71,14 @@ namespace application.ViewModel
             public string Location;
         }
 
-        private void LoadEvents(DateTime start, DateTime end)
+        private void LoadEvents()
         {
+            DateTime start = new DateTime(_year, _month, 1);
+            DateTime end = start.AddMonths(1);
+
             List<PlaySession> playSessions = RequestCreator.GetSchedule(start, end);
 
             Debug.WriteLine($"THERE WERE {playSessions.Count} PLAYSESSIONS");
-
-            Events = new EventCollection();
 
             foreach (PlaySession ps in playSessions)
             {
@@ -80,6 +97,8 @@ namespace application.ViewModel
 
                 ((List<PlaySessionEvent>)Events[ps.Start]).Add(psEvent);
             }
+
+            Debug.WriteLine(Events.Count);
         }
 
         private RelayCommand _dateClickCommand;
@@ -128,6 +147,19 @@ namespace application.ViewModel
                 await Navigation.PushAsync(new CreateMatchPage());
         }
 
-        
+        private RelayCommand _command;
+
+        public RelayCommand command
+        {
+            get
+            {
+                return _command ?? (_command = new RelayCommand(param => Click(param)));
+            }
+        }
+        PlaySession play = new PracticeSession();
+        private void Click(object param)
+        {
+            Navigation.PushAsync(new PlaySessionPage(play));
+        }
     }
 }

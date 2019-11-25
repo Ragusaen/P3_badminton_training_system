@@ -306,6 +306,28 @@ namespace application.SystemInterface
             SimpleRequest<DeletePlayerPracticeTeamRequest, DeletePlayerPracticeTeamResponse>(
                 RequestType.DeletePlayerPracticeTeam, request);
         }
+
+        public static void DeleteFocusPointDescriptor(FocusPointDescriptor fp)
+        {
+            var request = new DeleteFocusPointDescriptorRequest
+            {
+                FocusPointDescriptor = fp
+            };
+
+            SimpleRequest<DeleteFocusPointDescriptorRequest, DeleteFocusPointDescriptorResponse>(
+                RequestType.DeleteFocusPointDescriptor, request);
+        }
+
+        public static void DeletePracticeTeam(PracticeTeam team)
+        {
+            var request = new DeletePracticeTeamRequest
+            {
+                PracticeTeam = team
+            };
+
+            SimpleRequest<DeletePracticeTeamRequest, DeletePracticeTeamResponse>(
+                RequestType.DeletePracticeTeam, request);
+        }
         // creators below
         public static FocusPointDescriptor CreateFocusPointDescriptor(FocusPointDescriptor fp)
         {
@@ -356,6 +378,17 @@ namespace application.SystemInterface
             var response =
                 SimpleRequest<SetPracticeSessionRequest, SetPracticeSessionResponse>(
                     RequestType.SetPracticeSession, request);
+        }
+        public static void SetFeedback(Feedback feedback)
+        {
+            var request = new SetFeedbackRequest
+            {
+                Feedback = feedback
+            };
+
+            var response =
+                SimpleRequest<SetFeedbackRequest, SetFeedbackResponse>(
+                    RequestType.SetFeedback, request);
         }
     }
 }

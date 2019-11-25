@@ -26,13 +26,13 @@ namespace Server.DAL
         public Nullable<int> MainFocusPointID { get; set; }
         public int TeamID { get; set; }
     
+        public virtual focuspoint focuspoint { get; set; }
         public virtual member member { get; set; }
         public virtual playsession playsession { get; set; }
+        public virtual practiceteam practiceteam { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<practicesessionexercise> practicesessionexercises { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<focuspoint> focuspoints { get; set; }
-        public virtual focuspoint focuspoint { get; set; }
-        public virtual practiceteam practiceteam { get; set; }
     }
 }

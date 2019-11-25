@@ -18,6 +18,7 @@ namespace Server.Function.Rules
 
         public List<RuleBreak> Rule(TeamMatch match)
         {
+            _ruleBreaks = new List<RuleBreak>();
             foreach (var group in match.Lineup)
             {
                 for (int i = 0; i < group.Positions.Count; i++)

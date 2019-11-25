@@ -80,7 +80,6 @@ namespace Server
                 scraper.UpdatePlayers();
                 SetPracticeTeam();
             }
-
             
             try
             {

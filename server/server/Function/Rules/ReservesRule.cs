@@ -16,6 +16,7 @@ namespace Server.Function.Rules
 
         public List<RuleBreak> Rule(TeamMatch match)
         {
+            _ruleBreaks = new List<RuleBreak>();
             throw new NotImplementedException();
             /*List<int> memberidsRound = null;//TODO: GetMemberIDsPlayingInLeagueRound(match.LeagueRound, match.Season);
             foreach (var position in match.Lineup.Positions)

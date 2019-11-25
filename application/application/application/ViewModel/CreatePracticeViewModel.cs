@@ -161,7 +161,12 @@ namespace application.ViewModel
                 Practice.Location = "Stjernevej 5, 9200 Aalborg";
             Practice.Exercises = PlanElement.ToList();
             Practice.FocusPoints = FocusPoints.ToList();
-            
+            int i = 0;
+            foreach (ExerciseItem exerciseitem in Practice.Exercises) 
+            {
+                exerciseitem.Index = i;
+                i++;
+            }
             RequestCreator.SetPracticeSession(Practice);
         }
 

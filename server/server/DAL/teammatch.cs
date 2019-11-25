@@ -25,8 +25,8 @@ namespace Server.DAL
         public string OpponentName { get; set; }
         public int League { get; set; }
         public int LeagueRound { get; set; }
-        public int Season { get; set; }
         public int TeamIndex { get; set; }
+        public int Season { get; set; }
     
         public virtual member member { get; set; }
         public virtual playsession playsession { get; set; }
