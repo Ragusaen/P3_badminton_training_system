@@ -5,6 +5,7 @@ namespace Common
         ConnectionTest,
         Login,
         CreateAccount,
+        VerifyLineup,
         GetSchedule,
         GetPracticeTeam,
         GetPlayersWithNoAccount,

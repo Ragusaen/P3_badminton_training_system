@@ -22,7 +22,11 @@ namespace Server
 
             var ps = new practicesession()
             {
-                member = db.members.First(),
+                member = new member
+                {
+                    MemberType = (int)MemberType.Trainer,
+                    Name = "John Bob"
+                },
                 focuspoints = new List<focuspoint>()
                 {
                     new focuspoint()
@@ -74,9 +78,9 @@ namespace Server
             {
                 RankListScraper scraper = new RankListScraper();
                 scraper.UpdatePlayers();
+                SetPracticeTeam();
             }
 
-            SetPracticeTeam();
             
             try
             {

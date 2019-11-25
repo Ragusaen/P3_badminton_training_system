@@ -136,8 +136,9 @@ namespace application.ViewModel
             ((CreateFocusPointPopupViewModel)newPage.BindingContext).CallBackEvent += OnCallBackEvent;
         }
 
-        private void OnCallBackEvent(object sender, EventArgs e)
+        private void OnCallBackEvent(object sender, FocusPointDescriptor e)
         {
+            RequestCreator.CreateFocusPointDescriptor(e);
             FocusPointList = new ObservableCollection<FocusPointDescriptor>(RequestCreator.GetFocusPoints());
         }
 

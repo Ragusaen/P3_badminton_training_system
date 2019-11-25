@@ -35,6 +35,8 @@ namespace application.SystemInterface
             Serializer serializer = new Serializer();
             byte[] requestBytes = serializer.Serialize(request);
 
+            Debug.WriteLine(Encoding.ASCII.GetString(requestBytes));
+
             // Add request type
             byte[] messageBytes = new byte[requestBytes.Length + 1];
             messageBytes[0] = (byte)requestType;
@@ -231,16 +233,16 @@ namespace application.SystemInterface
             SimpleRequest<SetPlayerRequest, SetPlayerResponse>(RequestType.SetPlayer, request);
         }
 
-        public static bool SetPlayerFocusPoints(Player player, List<FocusPointItem> focusPointItems)
+        public static bool SetPlayerFocusPoints(Player player, FocusPointDescriptor focusPointDescriptor)
         {
-            var request = new SetPlayerFocusPointsRequest
+            var request = new AddPlayerFocusPointRequest
             {
                 Player = player,
-                FocusPoints = focusPointItems
+                FocusPointDescriptor = focusPointDescriptor
             };
 
             var response =
-                SimpleRequest<SetPlayerFocusPointsRequest, SetPlayerFocusPointsResponse>(
+                SimpleRequest<AddPlayerFocusPointRequest, AddPlayerFocusPointResponse>(
                     RequestType.SetPlayerFocusPoints, request);
 
             return response.WasSuccessful;
@@ -282,12 +284,12 @@ namespace application.SystemInterface
 
         // Deleters below
 
-        public static void DeletePlayerFocusPoints(int memberId, FocusPointItem focusPointItem)
+        public static void DeletePlayerFocusPoints(Player player, FocusPointItem focusPointItem)
         {
             var request = new DeletePlayerFocusPointRequest
             {
-                MemberId = memberId,
-                FocusPointId = focusPointItem.Descriptor.Id
+                Player = player,
+                FocusPointItem = focusPointItem
             };
 
             SimpleRequest<DeletePlayerFocusPointRequest, DeletePlayerFocusPointResponse>(
@@ -336,6 +338,14 @@ namespace application.SystemInterface
 
             return response.Trainers;
         }
+
+        public static List<RuleBreak> VerifyLineup(TeamMatch match)
+        {
+            var request = new VerifyLineupRequest() {Match = match};
+            var response = SimpleRequest<VerifyLineupRequest, VerifyLineupResponse>(RequestType.VerifyLineup, request);
+            return response.RuleBreaks;
+        }
+
         public static void SetPracticeSession(PracticeSession practice)
         {
             var request = new SetPracticeSessionRequest

@@ -252,7 +252,6 @@
     <Compile Include="Function\Rules\MinAgeRule.cs" />
     <Compile Include="Function\Rules\MultipleLineupPointsRule.cs" />
     <Compile Include="Function\Rules\ReservesRule.cs" />
-    <Compile Include="Function\Rules\RuleBreak.cs" />
     <Compile Include="Function\Rules\SexRule.cs" />
     <Compile Include="SystemInterface\Network\ClientConnection.cs" />
     <Compile Include="SystemInterface\Network\Connection.cs" />
@@ -278,10 +277,11 @@
     <Compile Include="SystemInterface\Requests\Handlers\RequestHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\SetCommentHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\SetExerciseDescriptorHandler.cs" />
+    <Compile Include="SystemInterface\Requests\Handlers\AddPlayerFocusPointHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\SetPacticeSessionHandler.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\SetPlayerFocusPointsHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\SetPlayerHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\SetPlayerPracticeTeamsHandler.cs" />
+    <Compile Include="SystemInterface\Requests\Handlers\VerifyLineupHandler.cs" />
     <Compile Include="SystemInterface\Requests\RequestManager.cs" />
     <Compile Include="Controller\UserManager.cs" />
   </ItemGroup>
