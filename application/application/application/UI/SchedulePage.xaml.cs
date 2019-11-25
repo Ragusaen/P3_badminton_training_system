@@ -32,7 +32,7 @@ namespace application.UI
             if (e.SelectedItem == null)
                 return;
 
-            Navigation.PushAsync(new PlaySessionPage(((ScheduleViewModel.PlaySessionEvent) e.SelectedItem).playSession));
+            Navigation.PushAsync(new PlaySessionPage(((ScheduleViewModel.PlaySessionEvent) e.SelectedItem).PlaySession));
 
             ((ListView) sender).SelectedItem = null;
         }

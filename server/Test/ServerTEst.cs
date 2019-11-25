@@ -65,19 +65,5 @@ namespace Test
             Assert.AreEqual(UserManager.TokenSize, la.Token.Length);
         }
 
-        [TestMethod]
-        public void LoginWith_nonexistant()
-        {
-            var s = StartServerAndClient();
-            ClientRequests cr = new ClientRequests(s.conn);
-
-            LoginResponse la = cr.Login("someuserthatdoesnotexist", "hypnotoad");
-
-            s.server.Close();
-
-            Assert.IsFalse(la.LoginSuccessful);
-            Assert.AreEqual(0, la.Token.Length);
-        }
-
     }
 }
