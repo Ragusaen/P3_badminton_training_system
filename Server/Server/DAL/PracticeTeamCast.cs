@@ -11,15 +11,18 @@ namespace Server.DAL
     {
         public static explicit operator Common.Model.PracticeTeam(practiceteam pt)
         {
+            var db = new DatabaseEntities();
             var res = new PracticeTeam
             {
                 Name = pt.Name,
                 Id = pt.ID,
             };
 
-            if (pt.member != null)
+            if (pt.TrainerID != null)
             {
-                res.Trainer = (Common.Model.Trainer) pt.member;
+                var dbTrainer = db.members.Find(pt.TrainerID);
+                if (dbTrainer != null)
+                    res.Trainer = (Common.Model.Trainer)dbTrainer;
             }
 
             return res;

@@ -177,9 +177,9 @@
       <DependentUpon>DatabaseModel.Context.tt</DependentUpon>
     </Compile>
     <Compile Include="DAL\DatabaseModel.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>DatabaseModel.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="DAL\DatabaseModel.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -286,7 +286,7 @@
     <Compile Include="SystemInterface\Requests\Handlers\SetPracticeSessionHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\SetNonPrivateFocusPointHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\SetPlayerHandler.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\SetPlayerPracticeTeamsHandler.cs" />
+    <Compile Include="SystemInterface\Requests\Handlers\SetPlayerPracticeTeamHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\SetTeamMatchHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\SetPracticeTeamHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\VerifyLineupHandler.cs" />
@@ -360,8 +360,8 @@
     </Content>
     <Content Include="DAL\DatabaseModel.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>DatabaseModel.edmx</DependentUpon>
       <LastGenOutput>DatabaseModel.cs</LastGenOutput>
+      <DependentUpon>DatabaseModel.edmx</DependentUpon>
     </Content>
   </ItemGroup>
   <ItemGroup>

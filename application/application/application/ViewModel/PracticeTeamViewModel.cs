@@ -1,4 +1,5 @@
-﻿using Common.Model;
+﻿using application.SystemInterface;
+using Common.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -8,6 +9,8 @@ namespace application.ViewModel
 {
     class PracticeTeamViewModel : BaseViewModel
     {
+        public PracticeTeam PracticeTeam;
+
         private string _name;
         public string Name
         {
@@ -29,11 +32,12 @@ namespace application.ViewModel
             set => SetProperty(ref _players, value);
         }
 
-        public PracticeTeamViewModel(PracticeTeam practiceTeam)
+        public PracticeTeamViewModel(int Id)
         {
-            Name = practiceTeam.Name;
-            Trainer = practiceTeam.Trainer;
-            Players = new ObservableCollection<Player>(practiceTeam.Players);
+            PracticeTeam = RequestCreator.GetPracticeTeam(Id);
+            Name = PracticeTeam.Name;
+            Trainer = PracticeTeam.Trainer;
+            Players = new ObservableCollection<Player>(PracticeTeam.Players);
         }
     }
 }

@@ -115,10 +115,10 @@ namespace application.ViewModel
 
         private void PracticeTeamPopupPageCallback(object sender, PracticeTeam e)
         {
-            Player.PracticeTeams.Add(e);
-            PracticeTeams.Add(e);
-            PracticeTeams = new ObservableCollection<PracticeTeam>(PracticeTeams);
-            RequestCreator.SetPlayerPracticeTeams(Player, Player.PracticeTeams);
+            RequestCreator.SetPlayerPracticeTeams(Player, e);
+            var newPracticeTeams = RequestCreator.GetPlayerPracticeTeams(Player);
+            Player.PracticeTeams = newPracticeTeams;
+            PracticeTeams = new ObservableCollection<PracticeTeam>(newPracticeTeams);
             PracticeTeamsListHeight = PracticeTeams.Count * 45;
         }
 

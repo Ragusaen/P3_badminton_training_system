@@ -29,8 +29,7 @@ BadmintonPlayerID int,
 create table PracticeTeam(
 ID int primary key auto_increment,
 `Name` varchar(64) not null,
-TrainerID int,
-foreign key(TrainerID) references `Member`(ID)
+TrainerID int
 );
 
 create table TeamMember(
@@ -72,7 +71,7 @@ TrainerID int,
 foreign key(TrainerID) references `Member`(ID),
 MainFocusPointID int,
 foreign key (MainFocusPointID) references focuspoint(ID),
-TeamID int not null,
+TeamID int,
 foreign key (TeamId) references practiceteam(ID)
 );
 

@@ -18,7 +18,7 @@ namespace application.UI
         public PracticeTeamPage(PracticeTeam practiceTeam)
         {
             InitializeComponent();
-            _vm = new PracticeTeamViewModel(practiceTeam);
+            _vm = new PracticeTeamViewModel(practiceTeam.Id);
             _vm.Navigation = Navigation;
             BindingContext = _vm;
 

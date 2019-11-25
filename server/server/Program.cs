@@ -37,8 +37,8 @@ namespace Server
                 },
                 playsession = new playsession()
                 {
-                    StartDate = DateTime.Now.AddDays(1),
-                    EndDate = DateTime.Now.AddDays(1).AddHours(2),
+                    StartDate = DateTime.Now.AddDays(2),
+                    EndDate = DateTime.Now.AddDays(2).AddHours(2),
                     Location = "Aalborg Triton",
                     Type = 1
                 },
@@ -61,7 +61,7 @@ namespace Server
                 },
                 practiceteam = new practiceteam()
                 {
-                    Name = "Sunday training"
+                    Name = "Sunday training",
                 }
             };
 
@@ -71,14 +71,13 @@ namespace Server
 
         public static void Main(string[] args)
         {
-
             var db = new DatabaseEntities();
 
             if (!db.members.Any())
             {
                 RankListScraper scraper = new RankListScraper();
                 scraper.UpdatePlayers();
-                SetPracticeTeam();
+                //SetPracticeTeam();
             }
             
             try

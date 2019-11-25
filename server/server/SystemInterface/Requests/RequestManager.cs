@@ -54,7 +54,7 @@ namespace Server.SystemInterface.Requests
                 {RequestType.SetPlayer, new SetPlayerHandler() },
                 {RequestType.SetPlayerFocusPoints, new AddPlayerFocusPointHandler() },
                 {RequestType.SetComment, new SetCommentHandler() },
-                {RequestType.SetPlayerPracticeTeams, new SetPlayerPracticeTeamsHandler() },
+                {RequestType.SetPlayerPracticeTeam, new SetPlayerPracticeTeamHandler() },
                 {RequestType.ChangeTrainerPrivileges, new ChangeTrainerPrivilegesHandler() },
                 //Deleters below
                 {RequestType.DeletePlayerFocusPoint, new DeletePlayerFocusPointsHandler() },

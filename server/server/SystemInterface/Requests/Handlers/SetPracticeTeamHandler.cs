@@ -20,14 +20,13 @@ namespace Server.SystemInterface.Requests.Handlers
             var e = request.PracticeTeam;
             var dbPt = new practiceteam
             {
-                Name = e.Name,
-                member = new member
-                {
-                    Name = e.Trainer.Member.Name,
-                    MemberType = (int)MemberType.Trainer,
-                    Comment = e.Trainer.Member.Comment,
-                },
+                Name = e.Name
             };
+            if(e.Trainer != null)
+            {
+                dbPt.TrainerID = e.Trainer.Member.Id;
+            }
+            _log.Debug($"Created new practice team: {dbPt.Name}");
             db.practiceteams.Add(dbPt);
 
             db.SaveChanges();
