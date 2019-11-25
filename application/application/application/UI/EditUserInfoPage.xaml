@@ -20,16 +20,19 @@
         <Entry Text="{Binding Password}" IsPassword="True"/>
         <Label Text="New password"/>
         <Entry Text="{Binding newPassword}" IsPassword="True"/>
-        <Label Text="Pick member type"/>
-        <Picker SelectedIndex="{Binding Member.MemberType}">
-            <Picker.ItemsSource>
-                <x:Array Type="{x:Type x:String}">
-                    <x:String>None</x:String>
-                    <x:String>Player</x:String>
-                    <x:String>Trainer</x:String>
-                    <x:String>Both</x:String>
-                </x:Array>
-            </Picker.ItemsSource>
-        </Picker>
+
+        <StackLayout x:Name="TrainerRelevant">
+            <Label Text="Pick member type"/>
+            <Picker SelectedIndex="{Binding Member.MemberType}">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>None</x:String>
+                        <x:String>Player</x:String>
+                        <x:String>Trainer</x:String>
+                        <x:String>Both</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+        </StackLayout>
     </StackLayout>
 </ContentPage>

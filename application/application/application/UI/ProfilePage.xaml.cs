@@ -60,6 +60,7 @@ namespace application.UI
         private void ShownOnlyRelevantInfo()
         {
             PlayerRelevant.IsVisible = _vm.Player != null;
+            Settingsicon.IsVisible = _vm.Trainer != null; // Only trainers can view profile settings
         }
 
         private void SetupCommentEvents()
