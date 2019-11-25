@@ -156,10 +156,5 @@ namespace application.ViewModel
                 return _command ?? (_command = new RelayCommand(param => Click(param)));
             }
         }
-        PlaySession play = new PracticeSession();
-        private void Click(object param)
-        {
-            Navigation.PushAsync(new PlaySessionPage(play));
-        }
     }
 }

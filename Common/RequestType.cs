@@ -42,5 +42,6 @@ namespace Common
         GetAllTrainers,
         SetPracticeSession,
         SetFeedback,
+        SetPracticeTeam,
     };
 }

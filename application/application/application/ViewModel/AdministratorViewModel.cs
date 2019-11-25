@@ -129,6 +129,7 @@ namespace application.ViewModel
         private void NewTeamClick(object param)
         {
             TeamList.Add(new PracticeTeam { Name = NewTeam });
+            RequestCreator.SetPracticeTeam(new PracticeTeam { Name = NewTeam });
         }
 
         private RelayCommand _newFocusPointCommand;

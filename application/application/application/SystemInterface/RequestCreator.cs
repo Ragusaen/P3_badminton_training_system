@@ -393,5 +393,14 @@ namespace application.SystemInterface
                 SimpleRequest<SetFeedbackRequest, SetFeedbackResponse>(
                     RequestType.SetFeedback, request);
         }
+        public static void SetPracticeTeam(PracticeTeam team)
+        {
+            var request = new SetPracticeTeamRequest()
+            {
+                Team = team
+            };
+
+            var response = SimpleRequest<SetPracticeTeamRequest, SetPracticeTeamResponse>(RequestType.SetPracticeTeam, request);
+        }
     }
 }

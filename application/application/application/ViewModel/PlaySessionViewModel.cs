@@ -35,8 +35,8 @@ namespace application.ViewModel
         public PlaySessionViewModel(PlaySession playSession)
         {
             PlaySession = playSession;
-            if (PlaySession.Start < DateTime.Now && DateTime.Now < PlaySession.Start.AddDays(7))
-                PracticeFeedbackIsVisable = true;
+            //if (PlaySession.Start < DateTime.Now && DateTime.Now < PlaySession.Start.AddDays(7))
+              PracticeFeedbackIsVisable = true;
 
             var ps = PlaySession.Start.ToString("D");
         }
