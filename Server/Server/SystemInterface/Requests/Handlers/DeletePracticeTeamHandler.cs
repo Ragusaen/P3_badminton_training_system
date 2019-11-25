@@ -20,9 +20,21 @@ namespace Server.SystemInterface.Requests.Handlers
 
             var db = new DatabaseEntities();
             var team = db.practiceteams.Find(request.PracticeTeam.Id);
-
+            
             if (team != null)
             {
+                var members = team.members.ToList();
+                var practiceSessions = team.practicesessions.ToList();
+
+                foreach (var m in members)
+                {
+                    m.practiceteams.Remove(team);
+                }
+
+                foreach (var ps in practiceSessions)
+                {
+                    ps.practiceteam = null;
+                }
                 db.practiceteams.Remove(team);
                 _log.Debug($"Completely removed practice team {team.Name}");
             }
