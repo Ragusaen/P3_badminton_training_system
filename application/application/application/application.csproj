@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Images\add.png" />
     <None Remove="Images\bullseyeicon.png" />
     <None Remove="Images\deleteicon.png" />
     <None Remove="Images\editicon.png" />
@@ -21,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Images\add.png" />
     <EmbeddedResource Include="Images\bullseyeicon.png" />
     <EmbeddedResource Include="Images\deleteicon.png" />
     <EmbeddedResource Include="Images\editicon.png" />
@@ -85,6 +87,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="UI\ChooseTrainerPopupPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="UI\ConnectionFailedPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>

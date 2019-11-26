@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<pages:PopupPage
+    xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup" 
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:cvtr="clr-namespace:application.UI.Converter"
+    mc:Ignorable="d"
+    x:Class="application.UI.ChooseTrainerPopupPage" Padding="40,150,40,150">
+
+    <StackLayout BackgroundColor="White">
+        <SearchBar Placeholder="Search Practice Team" Text="{Binding SearchText}"/>
+        <ListView x:Name="TrainerList" ItemsSource="{Binding Trainers}" VerticalScrollBarVisibility="Default" ItemSelected="ListView_OnItemSelected" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding TrainerListHeight}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Label FontSize="Medium" HorizontalOptions="Center" Text="{Binding Member.Name}"/>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+</pages:PopupPage>

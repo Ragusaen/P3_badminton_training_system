@@ -8,13 +8,13 @@
     <ContentPage.Content>
         <StackLayout Margin="10,10,10,10">
             <Label Text="{Binding PracticeTeam.Name}" FontAttributes="Bold" FontSize="Large"/>
-            <StackLayout Orientation="Horizontal" HeightRequest="45"  Margin="0,0,0,10">
+            <StackLayout Orientation="Horizontal" Margin="0,0,0,10">
                 <Label x:Name="Trainer" Text="{Binding Trainer.Member.Name}" VerticalOptions="Center" FontSize="Medium">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding TrainerViewCommand}" />
                     </Label.GestureRecognizers>
                 </Label>
-                <ImageButton Source="" x:Name="SwapPerson" VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand" Command="{Binding NewTrainerCommand}" BackgroundColor="Transparent"/>
+                <ImageButton Source="" x:Name="SwapPerson" VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand" Command="{Binding NewTrainerCommand}" BackgroundColor="Transparent" HeightRequest="30" Margin="10,0,0,0"/>
             </StackLayout>
             <Label Text="Players" FontAttributes="Bold" FontSize="Medium"/>
             <Frame HasShadow="True" CornerRadius="5">
