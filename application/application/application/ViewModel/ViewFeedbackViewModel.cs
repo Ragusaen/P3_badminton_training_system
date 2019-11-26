@@ -62,10 +62,10 @@ namespace application.ViewModel
             //fix feedback submit date
             foreach (Feedback fb in feedbacks) 
             { 
-                entries.Add(new Entry((float)fb.ReadyQuestion) { Color = SKColor.Parse("#33ccff"), Label = DateTime.Now.ToString() });
-                entries1.Add(new Entry((float)fb.EffortQuestion) { Color = SKColor.Parse("#33ccff"), Label = DateTime.Now.ToString() });
-                entries2.Add(new Entry((float)fb.ChallengeQuestion) { Color = SKColor.Parse("#33ccff"), Label = DateTime.Now.ToString() });
-                entries3.Add(new Entry((float)fb.AbsorbQuestion) { Color = SKColor.Parse("#33ccff"), Label = DateTime.Now.ToString() });  
+                entries.Add(new Entry((float)fb.ReadyQuestion) { Color = SKColor.Parse("#33ccff"), Label = fb.PlaySession.Start.ToString() });
+                entries1.Add(new Entry((float)fb.EffortQuestion) { Color = SKColor.Parse("#33ccff"), Label = fb.PlaySession.Start.ToString() });
+                entries2.Add(new Entry((float)fb.ChallengeQuestion) { Color = SKColor.Parse("#33ccff"), Label = fb.PlaySession.Start.ToString() });
+                entries3.Add(new Entry((float)fb.AbsorbQuestion) { Color = SKColor.Parse("#33ccff"), Label = fb.PlaySession.Start.ToString() });  
             }
   
             Chart = new LineChart { Entries = entries, LineMode = LineMode.Straight, PointMode = PointMode.Circle, LabelTextSize = 25, PointSize = 12 };
