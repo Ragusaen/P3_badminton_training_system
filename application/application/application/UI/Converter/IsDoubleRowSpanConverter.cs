@@ -10,10 +10,7 @@ namespace application.UI.Converter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if(targetType == typeof(Label))
-                return (bool)value == true ? 1 : 3;
-
-            return (bool) value == true ? 1 : 4;
+            return (bool) value == true ? 1 : 2;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

@@ -36,5 +36,20 @@ namespace application.UI
 
             ((ListView) sender).SelectedItem = null;
         }
+
+        private void AddPlaysession_OnClicked(object sender, EventArgs e)
+        {
+            DisplayAddPlaySessionActionSheet();
+        }
+
+        private async void DisplayAddPlaySessionActionSheet()
+        {
+            string action = await Application.Current.MainPage.DisplayActionSheet("Choose what you want to add:", "Cancel", null, "Add New Practice", "Add New Match");
+
+            if (action == "Add New Practice")
+                await Navigation.PushAsync(new CreatePracticePage());
+            else if (action == "Add New Match")
+                await Navigation.PushAsync(new CreateMatchPage());
+        }
     }
 }
