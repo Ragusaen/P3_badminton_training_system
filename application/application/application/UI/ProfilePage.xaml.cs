@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using application.SystemInterface;
 using application.ViewModel;
 using Common.Model;
 using Common.Serialization;
@@ -38,7 +39,7 @@ namespace application.UI
         {
             BothRelevant.IsVisible = _vm.Member.MemberType != MemberType.None;
             PlayerRelevant.IsVisible = _vm.Player != null;
-            Settingsicon.IsVisible = _vm.Trainer != null; // Only trainers can view profile settings
+            Settingsicon.IsVisible = RequestCreator.LoggedInMember.MemberType.HasFlag(MemberType.Trainer); // Only trainers can view profile settings
         }
 
         private void SetupCommentEvents()

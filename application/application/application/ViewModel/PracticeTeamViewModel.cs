@@ -4,18 +4,19 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using application.UI;
+using Xamarin.Forms;
 
 namespace application.ViewModel
 {
     class PracticeTeamViewModel : BaseViewModel
     {
-        public PracticeTeam PracticeTeam;
+        private PracticeTeam _practiceTeam;
 
-        private string _name;
-        public string Name
+        public PracticeTeam PracticeTeam
         {
-            get => _name;
-            set => SetProperty(ref _name, value);
+            get => _practiceTeam;
+            set => SetProperty(ref _practiceTeam, value);
         }
 
         private Trainer _trainer;
@@ -32,12 +33,53 @@ namespace application.ViewModel
             set => SetProperty(ref _players, value);
         }
 
-        public PracticeTeamViewModel(int Id)
+        private int _playerListHeight;
+        public int PlayerListHeight
         {
-            PracticeTeam = RequestCreator.GetPracticeTeam(Id);
-            Name = PracticeTeam.Name;
+            get => _playerListHeight;
+            set => SetProperty(ref _playerListHeight, value);
+        }
+
+        public PracticeTeamViewModel(int id)
+        {
+            PracticeTeam = RequestCreator.GetPracticeTeam(id);
             Trainer = PracticeTeam.Trainer;
             Players = new ObservableCollection<Player>(PracticeTeam.Players);
+            PlayerListHeight = Players.Count * 45;
+        }
+
+        private RelayCommand _removePlayerCommand;
+        public RelayCommand RemovePlayerCommand => _removePlayerCommand ?? (_removePlayerCommand = new RelayCommand(RemovePlayerClick));
+
+        private async void RemovePlayerClick(object param)
+        {
+            var player = param as Player;
+            bool answer = await Application.Current.MainPage.DisplayAlert("Remove", $"Remove {player.Member.Name} from this practice team?", "yes", "no");
+            if (answer)
+            {
+                RequestCreator.DeletePlayerPracticeTeam(player, PracticeTeam);
+
+                PracticeTeam = RequestCreator.GetPracticeTeam(PracticeTeam.Id);
+                Trainer = PracticeTeam.Trainer;
+                Players = new ObservableCollection<Player>(PracticeTeam.Players);
+                PlayerListHeight = Players.Count * 45;
+            }
+        }
+
+        private RelayCommand _trainerViewCommand;
+        public RelayCommand TrainerViewCommand => _trainerViewCommand ?? (_trainerViewCommand = new RelayCommand(param => TrainerClick()));
+
+        private async void TrainerClick()
+        {
+            await Navigation.PushAsync(new ProfilePage(Trainer.Member.Id));
+        }
+
+        private RelayCommand _newTrainerCommand;
+        public RelayCommand NewTrainerCommand => _newTrainerCommand ?? (_newTrainerCommand = new RelayCommand(NewTrainerClick));
+
+        private async void NewTrainerClick(object param)
+        {
+
         }
     }
 }

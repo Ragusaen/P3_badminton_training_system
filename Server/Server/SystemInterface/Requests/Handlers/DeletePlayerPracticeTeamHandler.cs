@@ -23,10 +23,12 @@ namespace Server.SystemInterface.Requests.Handlers
 
             var db = new DatabaseEntities();
             var dbPt = db.practiceteams.Find(request.PracticeTeam.Id);
-            db.members.Find(request.Player.Member.Id).practiceteamsplayer.Remove(dbPt);
+            var dbPlayer = db.members.Find(request.Player.Member.Id);
+            dbPlayer.practiceteamsplayer.Remove(dbPt);
+            dbPt.players.Remove(dbPlayer);
+            db.SaveChanges();
 
             _log.Debug($"Player: {request.Player.Member.Name} removed from Practice Team: {dbPt.Name}");
-
             return new DeletePlayerPracticeTeamResponse();
         }
     }
