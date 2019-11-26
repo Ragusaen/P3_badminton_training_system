@@ -35,11 +35,10 @@ namespace Server.SystemInterface.Requests.Handlers
                 member = db.members.Find(e.Trainer.Member.Id),
                 practiceteam = db.practiceteams.Find(e.PracticeTeam.Id),
                 practicesessionexercises = e.Exercises.Select(p => new practicesessionexercise { exercise = db.exercises.Find(p.ExerciseDescriptor.Id), Minutes = p.Minutes, ExerciseIndex = p.Index }).ToList(),
-                focuspoint = db.focuspoints.Find(e.MainFocusPoint.Descriptor.Id),
+                focuspoint = e.MainFocusPoint == null ? null : db.focuspoints.Find(e.MainFocusPoint.Descriptor.Id),
                 focuspoints = e.FocusPoints.Select(p => db.focuspoints.Find(p.Descriptor.Id)).ToList(),
             };
-
-            var d = db.practicesessions.Add(dbPS);
+            db.practicesessions.Add(dbPS);
 
             db.SaveChanges();
             return new SetPracticeSessionResponse();

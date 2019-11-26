@@ -73,8 +73,14 @@ namespace application.ViewModel
             set
             {
                 SetProperty(ref _searchText, value);
-                if (!NotOnList)
-                    UpdatePlayerList();
+                if (string.IsNullOrEmpty(_searchText))
+                    ShownPlayerList = new ObservableCollection<Player>(ShownPlayerList.OrderByDescending(p => p.Member.Name).ToList());
+                else
+                {
+                    ShownPlayerList = new ObservableCollection<Player>(_shownPlayerList.OrderByDescending(
+                            x => StringExtension.LongestCommonSubsequence(x.Member.Name.ToLower(), SearchText.ToLower()))
+                        .ThenBy(x => x.Member.Name.Length).ToList());
+                }
             }
         }
 

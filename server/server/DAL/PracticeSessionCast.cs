@@ -21,8 +21,8 @@ namespace Server.DAL
                 Trainer = (Trainer)db.members.Find(ps.TrainerID),
                 FocusPoints = ps.focuspoints.ToList().Select(fp => new FocusPointItem() {Descriptor = (FocusPointDescriptor)fp}).ToList(),
                 Exercises = ps.practicesessionexercises.ToList().Select(e => (ExerciseItem)e).ToList(),
-                MainFocusPoint = new FocusPointItem{ Descriptor = (FocusPointDescriptor)ps.focuspoint },
-                PracticeTeam = (PracticeTeam)ps.practiceteam,
+                MainFocusPoint = ps.MainFocusPointID == null ? null : new FocusPointItem {Descriptor = (FocusPointDescriptor)ps.focuspoint},
+                PracticeTeam = ps.practiceteam == null ? null : (PracticeTeam)ps.practiceteam,
             };
         }
     }
