@@ -68,11 +68,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DataTableComparer.cs" />
-    <Compile Include="DBResetter.cs" />
-    <Compile Include="DBTests.cs" />
-    <Compile Include="UserTests.cs" />
-    <Compile Include="ServerTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
