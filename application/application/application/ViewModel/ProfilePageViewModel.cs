@@ -10,6 +10,9 @@ using application.SystemInterface;
 using application.UI;
 using Common;
 using Common.Model;
+using Entry = Microcharts.Entry;
+using Microcharts;
+using SkiaSharp;
 using Rg.Plugins.Popup.Services;
 using Xamarin.Forms;
 
@@ -21,6 +24,17 @@ namespace application.ViewModel
         public Member Member { get; set; }
         public Player Player { get; set; }
         public Trainer Trainer { get; set; }
+
+        private Chart _chart;
+
+        public Chart Chart
+        {
+            get { return _chart; }
+            set
+            {
+                SetProperty(ref _chart, value);
+            }
+        }
 
         private ObservableCollection<PracticeTeam> _practiceTeams;
 
@@ -75,6 +89,14 @@ namespace application.ViewModel
                     Player.PracticeTeams = RequestCreator.GetPlayerPracticeTeams(Player);
                     PracticeTeams = new ObservableCollection<PracticeTeam>(Player.PracticeTeams);
                     PracticeTeamsListHeight = PracticeTeams.Count * 45;
+
+                    List<Feedback> feedbacks = RequestCreator.GetPlayerFeedback(Member);
+                    List<Entry> entries = new List<Entry>();
+                    foreach (Feedback fb in feedbacks)
+                    {
+                        entries.Add(new Entry(((float)fb.ReadyQuestion + (float)fb.EffortQuestion + (float)fb.ChallengeQuestion + (float)fb.AbsorbQuestion) / 4) { Color = SKColor.Parse("#33ccff"), Label = DateTime.Now.ToString() });
+                    }
+                    Chart = new LineChart { Entries = entries, LineMode = LineMode.Straight, PointMode = PointMode.Circle, LabelTextSize = 25, PointSize = 12 };
                 }
                 if (Member.MemberType.HasFlag(MemberType.Trainer))
                 {

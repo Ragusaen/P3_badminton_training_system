@@ -19,32 +19,9 @@ namespace application.UI
     {
         private ProfilePageViewModel _vm;
 
-        List<Microcharts.Entry> entries = new List<Microcharts.Entry>
-        {
-            new Microcharts.Entry (2)
-            {
-                Color = SKColor.Parse("#33ccff"),
-                Label = "Dato"
-            },
-
-            new Microcharts.Entry(-1)
-            {
-                Color = SKColor.Parse("#ff3399"),
-                Label = "Dato"
-            },
-
-             new Microcharts.Entry(0)
-            {
-                Color = SKColor.Parse("#0099ff"),
-                Label = "Dato"
-            }
-        };
-
         public ProfilePage(int profileId)
         {
             InitializeComponent();
-
-            FeedbackChart.Chart = new LineChart { Entries = entries, LineMode = LineMode.Straight, PointMode = PointMode.Square, LabelTextSize = 25, PointSize = 12};
 
             SetupCommentEvents();
 
