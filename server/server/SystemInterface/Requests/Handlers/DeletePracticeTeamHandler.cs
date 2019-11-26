@@ -23,12 +23,12 @@ namespace Server.SystemInterface.Requests.Handlers
 
             if (team != null)
             {
-                var members = team.members.ToList();
+                var players = team.players.ToList();
                 var practiceSessions = team.practicesessions.ToList();
 
-                foreach (var m in members)
+                foreach (var m in players)
                 {
-                    m.practiceteams.Remove(team);
+                    m.practiceteamsplayers.Remove(team);
                 }
 
                 foreach (var ps in practiceSessions)

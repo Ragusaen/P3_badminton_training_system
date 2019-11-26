@@ -18,16 +18,18 @@ namespace Server.DAL
         public practiceteam()
         {
             this.practicesessions = new HashSet<practicesession>();
-            this.members = new HashSet<member>();
+            this.players = new HashSet<member>();
         }
     
         public int ID { get; set; }
         public string Name { get; set; }
         public Nullable<int> TrainerID { get; set; }
+        public Nullable<int> TrainerrID { get; set; }
     
+        public virtual member trainer { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<practicesession> practicesessions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<member> members { get; set; }
+        public virtual ICollection<member> players { get; set; }
     }
 }

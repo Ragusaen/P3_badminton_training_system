@@ -16,6 +16,7 @@ namespace Server
     {
         private static Logger _log = LogManager.GetCurrentClassLogger();
 
+
         private static void SetPracticeTeam()
         {
             var db = new DatabaseEntities();
@@ -62,6 +63,7 @@ namespace Server
                 practiceteam = new practiceteam()
                 {
                     Name = "Sunday training",
+                    trainer = db.members.Find(118)
                 }
             };
 
@@ -77,7 +79,7 @@ namespace Server
             {
                 RankListScraper scraper = new RankListScraper();
                 scraper.UpdatePlayers();
-                //SetPracticeTeam();
+                SetPracticeTeam();
             }
             
             try
