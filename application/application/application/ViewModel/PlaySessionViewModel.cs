@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.Text;
 using System.Threading;
@@ -36,11 +37,13 @@ namespace application.ViewModel
         {
             PlaySession = playSession;
 
-            //if (PlaySession.Start < DateTime.Now && DateTime.Now < PlaySession.Start.AddDays(7))
+            if (PlaySession.Start < DateTime.Now && DateTime.Now < PlaySession.Start.AddDays(7))
                 PracticeFeedbackIsVisible = true;
 
-
-            var ps = PlaySession.Start.ToString("D");
+            if (PlaySession is PracticeSession practice)
+                PracticeSession = practice;
+            else if (PlaySession is TeamMatch match)
+                TeamMatch = match;
         }
         private RelayCommand _feedbackCommand;
 
