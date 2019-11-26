@@ -74,8 +74,7 @@ namespace Server
         public static void Main(string[] args)
         {
             var db = new DatabaseEntities();
-            db.practiceteams.Find(1).trainer = new member {Name = "Christian Bisgaard", MemberType = 2};
-            db.SaveChanges();
+
             if (!db.members.Any())
             {
                 RankListScraper scraper = new RankListScraper();
