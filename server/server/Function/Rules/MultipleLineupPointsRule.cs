@@ -6,7 +6,7 @@ namespace Server.Function.Rules
 {
     class MultipleLineupsPointsRule : IRule
     {
-        public int Priority { get; set; }
+        public int Priority { get; set; } = 10;
         private List<RuleBreak> _ruleBreaks = new List<RuleBreak>();
 
 

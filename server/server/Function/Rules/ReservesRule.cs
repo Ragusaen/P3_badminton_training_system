@@ -10,7 +10,7 @@ namespace Server.Function.Rules
 {
     class ReservesRule : IRule
     {
-        public int Priority { get; set; }
+        public int Priority { get; set; } = 6;
         private List<RuleBreak> _ruleBreaks = new List<RuleBreak>();
 
         public List<RuleBreak> Rule(TeamMatch match)
