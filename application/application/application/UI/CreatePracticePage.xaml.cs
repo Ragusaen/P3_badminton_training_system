@@ -15,10 +15,18 @@ namespace application.UI
     public partial class CreatePracticePage : ContentPage
     {
         CreatePracticeViewModel vm;
-        public CreatePracticePage()
+        public CreatePracticePage() : this(DateTime.Today)
         {
+
+        }
+
+        public CreatePracticePage(DateTime time)
+        {
+            if (time < DateTime.Today)
+                time = DateTime.Today;
+
             InitializeComponent();
-            vm = new CreatePracticeViewModel();
+            vm = new CreatePracticeViewModel(time);
             BindingContext = vm;
             vm.Navigation = Navigation;
 

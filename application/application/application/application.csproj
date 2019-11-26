@@ -78,9 +78,6 @@
     <Compile Update="UI\PracticeTeamPage.xaml.cs">
       <DependentUpon>PracticeTeamPage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="UI\ViewPracticePage.xaml.cs">
-      <DependentUpon>ViewPracticePage.xaml</DependentUpon>
-    </Compile>
     <Compile Update="UI\SchedulePage.xaml.cs">
       <DependentUpon>SchedulePage.xaml</DependentUpon>
     </Compile>
@@ -133,9 +130,6 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="UI\PracticeTeamPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="UI\ViewPracticePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="UI\ProfilePage.xaml">
