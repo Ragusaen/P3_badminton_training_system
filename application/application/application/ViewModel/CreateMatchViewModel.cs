@@ -197,7 +197,7 @@ namespace application.ViewModel
             set
             {
                 if (SetProperty(ref _positions, value))
-                    LineupHeight = _positions.Count * 120;
+                    LineupHeight = _positions.Count * 110;
             }
         }
 

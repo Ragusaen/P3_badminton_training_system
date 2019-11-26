@@ -71,7 +71,7 @@
             </Grid>
 
 
-            <ListView RowHeight="100" ItemsSource="{Binding Positions}" HeightRequest="{Binding LineupHeight}">
+            <ListView RowHeight="110" ItemsSource="{Binding Positions}" HeightRequest="{Binding LineupHeight}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -86,28 +86,28 @@
                                 </Grid.RowDefinitions>
                                 
                                 <Label Grid.Column="0" Grid.RowSpan="2" VerticalOptions="Center" FontSize="Medium" Text="{Binding Key, Converter={StaticResource LineupPositionConverter}}"/>
-                                <Grid Grid.Row="0" Grid.Column="1">
+                                <Grid Grid.Row="0" Grid.Column="1" Grid.RowSpan="{Binding Source={x:Reference DoublePicker}, Path=IsVisible, Converter={StaticResource IsDoubleRowSpanConverter}}">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="6*"/>
+                                        <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
+                                        <RowDefinition Height="4*"/>
+                                        <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
-                                    <Picker x:Name="SinglePicker" Title="Select Player" Grid.Column="0" Grid.Row="0" Grid.RowSpan="{Binding Source={x:Reference DoublePicker}, Path=IsVisible, Converter={StaticResource IsDoubleRowSpanConverter}}" Margin="0" ItemsSource="{Binding BindingContext.Players, Source={x:Reference rootpage}}" ItemDisplayBinding="{Binding Member.Name}" SelectedItem="{Binding Value.Player}" VerticalOptions="Center" TextColor="{Binding Value.Error, Converter={StaticResource ErrorMessageColorConverter}}"/>
-                                    <CheckBox IsChecked="{Binding Value.IsExtra}" Grid.Column="1" Grid.Row="0" Grid.RowSpan="{Binding Source={x:Reference DoublePicker}, Path=IsVisible, Converter={StaticResource IsDoubleRowSpanConverter}}" VerticalOptions="Center" HorizontalOptions="Center"/>
-                                    <Label Grid.Column="0" Grid.Row="1" Grid.RowSpan="{Binding Source={x:Reference DoublePicker}, Path=IsVisible, Converter={StaticResource IsDoubleRowSpanConverter}}" TextColor="Red" FontSize="8" Text="{Binding Value.Error}" VerticalOptions="Start"/>
+                                    <Picker x:Name="SinglePicker" Title="Select Player" Grid.Column="0" Grid.Row="0" Margin="0" ItemsSource="{Binding BindingContext.Players, Source={x:Reference rootpage}}" ItemDisplayBinding="{Binding Member.Name}" SelectedItem="{Binding Value.Player}" VerticalOptions="Center" TextColor="{Binding Value.Error, Converter={StaticResource ErrorMessageColorConverter}}"/>
+                                    <CheckBox IsChecked="{Binding Value.IsExtra}" Grid.Column="1" Grid.Row="0" VerticalOptions="Center" HorizontalOptions="Center"/>
+                                    <Label Grid.Column="0" Grid.Row="1" TextColor="Red" FontSize="8" Text="{Binding Value.Error}" VerticalOptions="Start"/>
                                 </Grid>
                                 
                                 <Grid Grid.Row="1" Grid.Column="1">
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition/>
-                                        <ColumnDefinition/>
+                                        <ColumnDefinition Width="6*"/>
+                                        <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
-                                        <RowDefinition/>
-                                        <RowDefinition/>
+                                        <RowDefinition Height="4*"/>
+                                        <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
                                     <Picker x:Name="DoublePicker" Title="Select Player" IsVisible="{Binding Key, Converter={StaticResource IsPositionDoubleConverter}}" Grid.Column="0" Grid.Row="0" Margin="0" ItemsSource="{Binding BindingContext.Players, Source={x:Reference rootpage}}" ItemDisplayBinding="{Binding Member.Name}" SelectedItem="{Binding Value.OtherPlayer}" TextColor="{Binding Value.OtherError, Converter={StaticResource ErrorMessageColorConverter}}"/>
                                     <CheckBox IsVisible="{Binding Key, Converter={StaticResource IsPositionDoubleConverter}}" IsChecked="{Binding Value.OtherIsExtra}" Grid.Column="1" Grid.Row="0" HorizontalOptions="CenterAndExpand"/>
