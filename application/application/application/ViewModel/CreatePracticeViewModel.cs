@@ -126,9 +126,9 @@ namespace application.ViewModel
         }
 
         //Ctor
-        public CreatePracticeViewModel()
+        public CreatePracticeViewModel(DateTime startDate)
         {
-            SelectedDateStart = DateTime.Today;
+            SelectedDateStart = startDate;
             Practice.PracticeTeam = new PracticeTeam() { Name = "Choose Team" };
             FocusPoints = new ObservableCollection<FocusPointItem>();
             Trainers = RequestCreator.GetAllTrainers();

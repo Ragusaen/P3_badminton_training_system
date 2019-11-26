@@ -36,7 +36,6 @@ namespace application.ViewModel
         }
 
         private int _year;
-
         public int Year
         {
             get => _year;
@@ -64,6 +63,7 @@ namespace application.ViewModel
             _month = DateTime.Today.Month;
             _year = DateTime.Today.Year;
             LoadEvents();
+            SetSelectedEvents();
         }
 
         private ObservableCollection<PlaySessionEvent> _selectedEvents;
@@ -102,8 +102,8 @@ namespace application.ViewModel
 
             foreach (PlaySession ps in playSessions)
             {
-                if (!Events.ContainsKey(ps.Start))
-                    Events.Add(ps.Start, new List<PlaySessionEvent>());
+                if (!Events.ContainsKey(ps.Start.Date))
+                    Events.Add(ps.Start.Date, new List<PlaySessionEvent>());
                 
                 var psEvent = new PlaySessionEvent()
                 {

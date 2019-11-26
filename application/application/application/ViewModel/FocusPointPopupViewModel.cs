@@ -22,10 +22,15 @@ namespace application.ViewModel
             set
             {
                 SetProperty(ref _searchText, value);
-                FocusPoints = new ObservableCollection<FocusPointDescriptor>(FocusPoints.OrderByDescending(
-                        x => StringExtension.LongestCommonSubsequence(x.Name.ToLower(), SearchText.ToLower()))
+                if (string.IsNullOrEmpty(_searchText))
+                    FocusPoints = new ObservableCollection<FocusPointDescriptor>(FocusPoints.OrderBy(p => p.Name).ToList());
+                else
+                {
+                    FocusPoints = new ObservableCollection<FocusPointDescriptor>(_shownFocusPoints.OrderByDescending(
+                            x => StringExtension.LongestCommonSubsequence(x.Name.ToLower(),
+                                SearchText.ToLower()))
                         .ThenBy(x => x.Name.Length).ToList());
-                FocusPoints.OrderByDescending((x => StringExtension.LongestCommonSubsequence(x.Name.ToLower(), SearchText.ToLower()))).ThenBy(x => x.Name.Length).ToList();
+                }
             }
         }
 
@@ -43,6 +48,7 @@ namespace application.ViewModel
             var list = RequestCreator.GetFocusPoints();
             list = list.Where(p => NotShownItems.All(q => q.Descriptor.Id != p.Id)).ToList();
             FocusPoints = new ObservableCollection<FocusPointDescriptor>(list);
+            SearchText = null;
         }
 
         private RelayCommand _createNewFocusPointDescriptorClick;
