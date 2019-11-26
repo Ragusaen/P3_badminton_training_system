@@ -3,8 +3,10 @@ using Common.Model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Text;
 using application.UI;
+using Rg.Plugins.Popup.Services;
 using Xamarin.Forms;
 
 namespace application.ViewModel
@@ -79,7 +81,16 @@ namespace application.ViewModel
 
         private async void NewTrainerClick(object param)
         {
+            var popup = new ChooseTrainerPopupPage();
+            popup.CallBackEvent += ChooseTrainerPopupPageCallback;
+            await PopupNavigation.Instance.PushAsync(popup);
+        }
 
+        private async void ChooseTrainerPopupPageCallback(object sender, Trainer e)
+        {
+            RequestCreator.SetPracticeTeamTrainer(PracticeTeam, e);
+            Navigation.InsertPageBefore(new PracticeTeamPage(PracticeTeam.Id), Navigation.NavigationStack.Last());
+            await Navigation.PopAsync();
         }
     }
 }

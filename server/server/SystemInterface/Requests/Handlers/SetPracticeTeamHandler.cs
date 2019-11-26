@@ -13,8 +13,8 @@ namespace Server.SystemInterface.Requests.Handlers
     {
         protected override SetPracticeTeamResponse InnerHandle(SetPracticeTeamRequest request, member requester)
         {
-            if (!((Common.Model.MemberType)requester.MemberType).HasFlag(MemberType.Trainer))
-                return new SetPracticeTeamResponse();
+            if (!((Common.Model.MemberType) requester.MemberType).HasFlag(MemberType.Trainer))
+                return new SetPracticeTeamResponse {AccessDenied = true};
 
             var db = new DatabaseEntities();
             var e = request.PracticeTeam;
