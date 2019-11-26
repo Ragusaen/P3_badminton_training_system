@@ -229,7 +229,9 @@
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Function\Rules\DoubleSamePlayerRule.cs" />
+    <Compile Include="Function\Rules\EmptyPositionRule.cs" />
     <Compile Include="Function\Rules\HalfEmptyLineupRule.cs" />
+    <Compile Include="Function\Rules\SamePositionType.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\ChangeTrainerPrivilegesHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\CreateFocusPointDescriptorHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\DeleteFocusPointDescriptorHandler.cs" />

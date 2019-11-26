@@ -27,6 +27,7 @@ namespace application.ViewModel
         private void ExecuteSubmitFeedbackClick(object param)
         {
             RequestCreator.SetFeedback(Feedback);
+            Navigation.PopAsync();
         }
     }
 }

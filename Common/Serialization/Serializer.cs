@@ -36,8 +36,6 @@ namespace Common.Serialization
             var stream = new MemoryStream();
             serializer.Serialize(stream, obj);
 
-            Debug.WriteLine($"{stream.ToArray()}");
-
             return stream.ToArray();
         }
     }
