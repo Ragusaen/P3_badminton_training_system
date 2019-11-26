@@ -98,12 +98,14 @@ namespace application.ViewModel
 
             List<PlaySession> playSessions = RequestCreator.GetSchedule(start, end);
 
-            Debug.WriteLine($"THERE WERE {playSessions.Count} PLAYSESSIONS");
-
             foreach (PlaySession ps in playSessions)
             {
+                // Add entry to dictionary if it doesn't exist
                 if (!Events.ContainsKey(ps.Start.Date))
                     Events.Add(ps.Start.Date, new List<PlaySessionEvent>());
+                // Skip if the event already has been added
+                else if (((List<PlaySessionEvent>) Events[ps.Start]).Any(pse => pse.PlaySession.Id == ps.Id))
+                    continue;
                 
                 var psEvent = new PlaySessionEvent()
                 {
@@ -127,7 +129,6 @@ namespace application.ViewModel
 
                 ((List<PlaySessionEvent>)Events[ps.Start]).Add(psEvent);
             }
-            Debug.WriteLine("Do something here!");
         }
     }
 }

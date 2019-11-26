@@ -324,7 +324,6 @@ namespace application.ViewModel
 
         public void SetComment(string comment)
         {
-            Debug.WriteLine(Member.Name);
             RequestCreator.SetComment(Member, comment);
         }
     }
