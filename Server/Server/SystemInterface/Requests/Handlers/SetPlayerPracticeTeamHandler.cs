@@ -24,7 +24,7 @@ namespace Server.SystemInterface.Requests.Handlers
             var db = new DatabaseEntities();
             var dbPlayer = db.members.Find(request.Player.Member.Id);
             var dbPt = db.practiceteams.Find(request.PracticeTeam.Id);
-            dbPlayer.practiceteamsplayers.Add(dbPt);
+            dbPlayer.practiceteamsplayer.Add(dbPt);
             db.SaveChanges();
 
             _log.Debug($"Player: {dbPlayer.Name} received new team: {request.PracticeTeam.Name}");

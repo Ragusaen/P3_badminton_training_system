@@ -125,7 +125,6 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="varchar" MaxLength="64" Nullable="false" />
           <Property Name="TrainerID" Type="int" />
-          <Property Name="TrainerrID" Type="int" />
         </EntityType>
         <EntityType Name="ranklist">
           <Key>
@@ -354,7 +353,7 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="practiceteam">
-              <PropertyRef Name="TrainerrID" />
+              <PropertyRef Name="TrainerID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -607,11 +606,11 @@
           <NavigationProperty Name="feedbacks" Relationship="Self.feedback_ibfk_1" FromRole="member" ToRole="feedback" />
           <NavigationProperty Name="positions" Relationship="Self.position_ibfk_1" FromRole="member" ToRole="position" />
           <NavigationProperty Name="practicesessions" Relationship="Self.practicesession_ibfk_2" FromRole="member" ToRole="practicesession" />
-          <NavigationProperty Name="practiceteamtrainers" Relationship="Self.practiceteam_ibfk_1" FromRole="member" ToRole="practiceteam" />
+          <NavigationProperty Name="practiceteamstrainer" Relationship="Self.practiceteam_ibfk_1" FromRole="member" ToRole="practiceteam" />
           <NavigationProperty Name="ranklist" Relationship="Self.ranklist_ibfk_1" FromRole="member" ToRole="ranklist" />
           <NavigationProperty Name="teammatches" Relationship="Self.teammatch_ibfk_2" FromRole="member" ToRole="teammatch" />
           <NavigationProperty Name="focuspoints" Relationship="Self.memberfocuspoint" FromRole="member" ToRole="focuspoint" />
-          <NavigationProperty Name="practiceteamsplayers" Relationship="Self.teammember" FromRole="member" ToRole="practiceteam" />
+          <NavigationProperty Name="practiceteamsplayer" Relationship="Self.teammember" FromRole="member" ToRole="practiceteam" />
         </EntityType>
         <EntityType Name="playsession">
           <Key>
@@ -675,7 +674,6 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" MaxLength="64" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="TrainerID" Type="Int32" />
-          <Property Name="TrainerrID" Type="Int32" />
           <NavigationProperty Name="trainer" Relationship="Self.practiceteam_ibfk_1" FromRole="practiceteam" ToRole="member" />
           <NavigationProperty Name="practicesessions" Relationship="Self.practicesession_ibfk_4" FromRole="practiceteam" ToRole="practicesession" />
           <NavigationProperty Name="players" Relationship="Self.teammember" FromRole="practiceteam" ToRole="member" />
@@ -820,7 +818,7 @@
               <PropertyRef Name="ID" />
             </Principal>
             <Dependent Role="practiceteam">
-              <PropertyRef Name="TrainerrID" />
+              <PropertyRef Name="TrainerID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1124,7 +1122,6 @@
                 <ScalarProperty Name="ID" ColumnName="ID" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="TrainerID" ColumnName="TrainerID" />
-                <ScalarProperty Name="TrainerrID" ColumnName="TrainerrID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

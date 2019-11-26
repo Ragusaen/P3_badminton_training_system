@@ -20,10 +20,10 @@ namespace Server.DAL
             this.feedbacks = new HashSet<feedback>();
             this.positions = new HashSet<position>();
             this.practicesessions = new HashSet<practicesession>();
-            this.practiceteamtrainers = new HashSet<practiceteam>();
+            this.practiceteamstrainer = new HashSet<practiceteam>();
             this.teammatches = new HashSet<teammatch>();
             this.focuspoints = new HashSet<focuspoint>();
-            this.practiceteamsplayers = new HashSet<practiceteam>();
+            this.practiceteamsplayer = new HashSet<practiceteam>();
         }
     
         public int ID { get; set; }
@@ -43,13 +43,13 @@ namespace Server.DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<practicesession> practicesessions { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<practiceteam> practiceteamtrainers { get; set; }
+        public virtual ICollection<practiceteam> practiceteamstrainer { get; set; }
         public virtual ranklist ranklist { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<teammatch> teammatches { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<focuspoint> focuspoints { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<practiceteam> practiceteamsplayers { get; set; }
+        public virtual ICollection<practiceteam> practiceteamsplayer { get; set; }
     }
 }

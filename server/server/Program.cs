@@ -63,7 +63,7 @@ namespace Server
                 practiceteam = new practiceteam()
                 {
                     Name = "Sunday training",
-                    trainer = db.members.Find(118)
+                    trainer = db.members.Add(new member { Name = "Christian Bisgaard", MemberType = 2 })
                 }
             };
 
@@ -74,7 +74,8 @@ namespace Server
         public static void Main(string[] args)
         {
             var db = new DatabaseEntities();
-
+            db.practiceteams.Find(1).trainer = new member {Name = "Christian Bisgaard", MemberType = 2};
+            db.SaveChanges();
             if (!db.members.Any())
             {
                 RankListScraper scraper = new RankListScraper();

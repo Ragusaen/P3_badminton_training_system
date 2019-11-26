@@ -23,7 +23,7 @@ namespace Server.SystemInterface.Requests.Handlers
 
             var db = new DatabaseEntities();
             var dbPt = db.practiceteams.Find(request.PracticeTeam.Id);
-            db.members.Find(request.Player.Member.Id).practiceteamsplayers.Remove(dbPt);
+            db.members.Find(request.Player.Member.Id).practiceteamsplayer.Remove(dbPt);
 
             _log.Debug($"Player: {request.Player.Member.Name} removed from Practice Team: {dbPt.Name}");
 
