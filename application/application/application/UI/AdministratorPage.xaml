@@ -20,7 +20,7 @@
                 <Frame HasShadow="True" CornerRadius="5">
                     <StackLayout>
                     <SearchBar Placeholder="Member Name" Text="{Binding SearchMemberText}"/>
-                    <ListView ItemsSource="{Binding MemberList}" ItemSelected="ListView_OnItemSelected" VerticalScrollBarVisibility="Never" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="225">
+                    <ListView ItemsSource="{Binding MemberList}" ItemSelected="ListView_OnItemSelected" VerticalScrollBarVisibility="Default" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="225">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <ViewCell>
@@ -37,7 +37,7 @@
             <Frame HasShadow="True" CornerRadius="5">
                 <StackLayout>
                     <SearchBar Placeholder="Practice Team Name" Text="{Binding SearchTeamText}"/>
-                        <ListView x:Name="PracticeTeamList" ItemsSource="{Binding PracticeTeamList}" VerticalScrollBarVisibility="Never" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="225" ItemSelected="PracticeTeamListView_ItemSelected">
+                        <ListView x:Name="PracticeTeamList" ItemsSource="{Binding PracticeTeamList}" VerticalScrollBarVisibility="Default" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="225" ItemSelected="PracticeTeamListView_ItemSelected">
                             <ListView.ItemTemplate>
                             <DataTemplate>
                                 <ViewCell>

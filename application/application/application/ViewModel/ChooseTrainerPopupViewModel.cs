@@ -42,6 +42,7 @@ namespace application.ViewModel
         public ChooseTrainerPopupViewModel()
         {
             Trainers = new ObservableCollection<Trainer>(RequestCreator.GetAllTrainers());
+            SearchText = null;
         }
 
         public event EventHandler<Trainer> CallBackEvent;
