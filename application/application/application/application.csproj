@@ -87,6 +87,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Update="UI\ChoosePlayerPopupPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="UI\ChooseTrainerPopupPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>

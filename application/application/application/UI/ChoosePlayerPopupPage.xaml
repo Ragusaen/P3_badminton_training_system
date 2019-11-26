@@ -7,11 +7,11 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:cvtr="clr-namespace:application.UI.Converter"
     mc:Ignorable="d"
-    x:Class="application.UI.ChooseTrainerPopupPage" Padding="40,150,40,150">
+    x:Class="application.UI.ChoosePlayerPopupPage" Padding="40,150,40,150">
 
     <StackLayout BackgroundColor="White">
-        <SearchBar Placeholder="Search Trainer" Text="{Binding SearchText}"/>
-        <ListView x:Name="TrainerList" ItemsSource="{Binding Trainers}" VerticalScrollBarVisibility="Default" ItemSelected="ListView_OnItemSelected" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding TrainerListHeight}">
+        <SearchBar Placeholder="Search Player" Text="{Binding SearchText}"/>
+        <ListView x:Name="PlayerList" ItemsSource="{Binding Players}" VerticalScrollBarVisibility="Default" ItemSelected="ListView_OnItemSelected" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding PlayerListHeight}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>

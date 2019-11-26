@@ -25,6 +25,7 @@ namespace application.UI
             trainerNameTap.Tapped += (s, r) => TrainerNameClick();
 
             SwapPerson.Source = ImageSource.FromResource("application.Images.swapperson.png");
+            AddPlayerButton.Source = ImageSource.FromResource("application.Images.add.png");
         }
 
         private void TrainerNameClick()
