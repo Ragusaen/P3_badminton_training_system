@@ -16,7 +16,7 @@ namespace Server.SystemInterface.Requests.Handlers
             var db = new DatabaseEntities();
             return new GetTeamMatchResponse
             {
-                TeamMatch = (TeamMatch) db.playsessions.Find(request.PlaySessionId)
+                TeamMatch = (TeamMatch) db.teammatches.Find(request.PlaySessionId)
             };
         }
     }

@@ -147,8 +147,8 @@ namespace application.ViewModel
         }
         
         private bool CanExecuteSaveCreatedPracticeClick(object param)
-        {
-                return true;
+        { 
+            return true;
         }
 
         private void ExecuteSaveCreatedPracticeClick(object param)

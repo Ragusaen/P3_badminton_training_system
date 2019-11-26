@@ -224,6 +224,7 @@
     <Compile Include="DAL\teammatch.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DAL\TeamMatchCast.cs" />
     <Compile Include="DAL\token.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
@@ -245,7 +246,6 @@
     <Compile Include="SystemInterface\Requests\Handlers\GetPlayersWithNoAccountHandler.cs" />
     <Compile Include="DAL\MemberCast.cs" />
     <Compile Include="DAL\LineupCast.cs" />
-    <Compile Include="DAL\PlaySessionCast.cs" />
     <Compile Include="DAL\PracticeSessionCast.cs" />
     <Compile Include="DAL\PracticeTeamCast.cs" />
     <Compile Include="DAL\RankListCast.cs" />
