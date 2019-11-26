@@ -32,7 +32,7 @@
             <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
 
-        <Image Grid.Row="0" Source="" x:Name="RedLogo" HorizontalOptions="Center" VerticalOptions="Center" Aspect="AspectFit"/>
+        <Image Grid.Row="0" Source="" x:Name="RedLogo" HorizontalOptions="Center" VerticalOptions="Center" Aspect="AspectFit" Margin="10,30,10,30"/>
         <Label Grid.Row="1" Text="Invalid username or password" TextColor="Red" IsVisible="{Binding InvalidLoginTextVisible}"
                    HeightRequest="{Binding InvalidLoginTextHeight}" />
         <Label Grid.Row="2" Text="Username" />
