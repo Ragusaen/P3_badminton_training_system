@@ -21,7 +21,7 @@ namespace Server.DAL
 
             return new Feedback
             {
-                PlaySession = ps;
+                PlaySession = ps,
                 ReadyQuestion = f.Ready,
                 EffortQuestion = f.Effort,
                 ChallengeQuestion = f.Challenge,
