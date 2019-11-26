@@ -20,7 +20,6 @@ namespace application.ViewModel
 {
     class ProfilePageViewModel : BaseViewModel
     {
-        private readonly int _id;
         public Member Member { get; set; }
         public Player Player { get; set; }
         public Trainer Trainer { get; set; }
@@ -152,14 +151,7 @@ namespace application.ViewModel
         }
 
         private RelayCommand _addFocusPointCommand;
-
-        public RelayCommand AddFocusPointCommand
-        {
-            get 
-            { 
-                return _addFocusPointCommand ?? (_addFocusPointCommand = new RelayCommand(param => ExecuteAddFocusPoint(param))); 
-            }
-        }
+        public RelayCommand AddFocusPointCommand => _addFocusPointCommand ?? (_addFocusPointCommand = new RelayCommand(ExecuteAddFocusPoint));
 
         private void ExecuteAddFocusPoint(object param)
         {
@@ -190,27 +182,34 @@ namespace application.ViewModel
         private readonly string _changeMemberTypeQuery = "Make Trainer";
         private async void ExecuteProfileSettingTap(object param)
         {
-            await Application.Current.MainPage.DisplayActionSheet("Settings", "Cancel", null, "Change Member Type");
-            string newRights = await Application.Current.MainPage.DisplayActionSheet(_changeMemberTypeTitle, "Cancel", null, _changeMemberTypeQuery);
+            var action = await Application.Current.MainPage.DisplayActionSheet("Settings", "Cancel", null, "Change Trainer Privileges");
+            if (action == "Change Trainer Privileges")
+            {
+                string newRights = await Application.Current.MainPage.DisplayActionSheet(_changeMemberTypeTitle,
+                    "Cancel", null, _changeMemberTypeQuery);
 
-            if (newRights == "Make Trainer")
-            {
-                Member.MemberType |= MemberType.Trainer;
+                if (newRights == "Make Trainer")
+                {
+                    Member.MemberType |= MemberType.Trainer;
 
+                }
+                else if (newRights == "Unmake Trainer")
+                {
+                    Member.MemberType &= ~MemberType.Trainer;
+                }
+                else
+                {
+                    goto here;
+                }
+
+                RequestCreator.ChangeTrainerPrivileges(Member);
+                RequestCreator.LoggedInMember =
+                    RequestCreator
+                        .GetLoggedInMember(); // reload logged in member, because membertype might have changed
+                Navigation.InsertPageBefore(new ProfilePage(Member.Id), Navigation.NavigationStack.Last());
+                await Navigation.PopAsync();
+                here: ;
             }
-            else if (newRights == "Unmake Trainer")
-            {
-                Member.MemberType &= ~MemberType.Trainer;
-            }
-            else
-            {
-                goto here;
-            }
-            RequestCreator.ChangeTrainerPrivileges(Member);
-            RequestCreator.LoggedInMember = RequestCreator.GetLoggedInMember(); // reload logged in member, because membertype might have changed
-            Navigation.InsertPageBefore(new ProfilePage(Member.Id), Navigation.NavigationStack.Last());
-            await Navigation.PopAsync();
-            here:;
 
             /*if(RequestCreator.LoggedInMember.MemberType.HasFlag(MemberType.Trainer)) // No support for change password, thus commented away
             {
