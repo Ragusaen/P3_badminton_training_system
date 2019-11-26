@@ -6,12 +6,13 @@
              mc:Ignorable="d"
              x:Class="application.UI.PlaySessionPage">
     <ContentPage.Content>
+        <ScrollView>
         <StackLayout>
             <Label x:Name="Name" Text="name" FontSize="Large" HorizontalOptions="Center"/>
             <Label x:Name="Date" Text="date" />
             <Label x:Name="Time" Text="time" />
             <Label x:Name="Location" Text="{Binding PlaySession.Location}"/>
-
+            
             <StackLayout x:Name="PracticeRelevant">
                 <Frame CornerRadius="4" HasShadow="True" Margin="15,0,15,0">
                     <StackLayout>
@@ -19,8 +20,8 @@
                             <Image Source="" x:Name="BullsEyeIcon" HeightRequest="40"/>
                             <Label Text="Focus Points" FontSize="Title" VerticalOptions="Center"/>
                         </StackLayout>
-                        <Label Text="{Binding PracticeSession.MainFocusPoint.Descriptor.Name}"/>
-                        <ListView VerticalScrollBarVisibility="Never" ItemsSource="{Binding PracticeSession.FocusPoints}" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding FocusPointListHeight}" SelectedItem="{Binding Practice.MainFocusPoint}">
+                        <Label x:Name="MainFocusPoint" FontAttributes="Bold" Text="{Binding PracticeSession.MainFocusPoint.Descriptor.Name}"/>
+                        <ListView x:Name="FocusPointList" VerticalScrollBarVisibility="Never" ItemsSource="{Binding PracticeSession.FocusPoints}" ItemSelected="ListView_OnItemSelected" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding FocusPointListHeight}" SelectedItem="{Binding Practice.MainFocusPoint}">
                             <ListView.ItemTemplate>
                                 <DataTemplate>
                                     <ViewCell>
@@ -32,26 +33,24 @@
                     </StackLayout>
                 </Frame>
 
-                <ListView x:Name="Exercises" ItemsSource="{Binding PracticeSession.Exercises}" RowHeight="235" Margin="15,0,15,0" HeightRequest="{Binding PlanHeight}" VerticalScrollBarVisibility="Never" SeparatorVisibility="None">
+                <Label Text="Exercises" FontSize="20" TextDecorations="Underline" HorizontalOptions="Center"/>
+                <ListView x:Name="ExerciseList" HasUnevenRows="true" SelectionMode="None" ItemsSource="{Binding PracticeSession.Exercises}" Margin="15,0,15,0" HeightRequest="{Binding PlanHeight}" VerticalScrollBarVisibility="Never" SeparatorVisibility="None">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
                                 <Frame CornerRadius="5" HasShadow="True" Margin="0,10,0,10">
                                     <Grid>
                                         <Grid.RowDefinitions>
-                                            <RowDefinition Height="1.5*"/>
-                                            <RowDefinition Height="1*"/>
-                                            <RowDefinition Height="3*"/>
+                                            <RowDefinition Height="40"/>
+                                            <RowDefinition Height="Auto"/>
                                         </Grid.RowDefinitions>
                                         <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="1.5*"/>
-                                            <ColumnDefinition Width="4*"/>
                                             <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="9*"/>
                                         </Grid.ColumnDefinitions>
-                                        <Label Grid.Row="0" Grid.Column="0" Text="{Binding Minutes}" HorizontalOptions="Start" HorizontalTextAlignment="End"/>
-                                        <Label Grid.Row="0" Grid.Column="1" Text="{Binding ExerciseDescriptor.Name}"  VerticalOptions="Center" FontSize="18"/>
-                                        <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Text="Exercises" FontSize="20" TextDecorations="Underline" HorizontalOptions="Center"/>
-                                        <Label Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" FontSize="18" Text="{Binding ExerciseDescriptor.Description}" VerticalOptions="Fill"/>
+                                        <Label Grid.Row="0" Grid.Column="0" Text="{Binding Minutes}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" HorizontalTextAlignment="End" FontSize="20"/>
+                                        <Label Grid.Row="0" Grid.Column="1" Text="{Binding ExerciseDescriptor.Name}"  HorizontalOptions="Start" VerticalOptions="CenterAndExpand"  FontSize="18"/>
+                                        <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" FontSize="18" Text="{Binding ExerciseDescriptor.Description}" VerticalOptions="Fill" SizeChanged="ExerciseDescription_SizeChanged"/>
                                     </Grid>
                                 </Frame>
                             </ViewCell>
@@ -65,5 +64,6 @@
 
             </StackLayout>
         </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

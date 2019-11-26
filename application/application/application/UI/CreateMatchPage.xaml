@@ -25,19 +25,18 @@
         <StackLayout>
             <Grid Margin="15,15,15,10">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="2*"/>
-                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="15"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="15"/>
                 </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="120"/>
@@ -49,30 +48,30 @@
                 <Label Grid.Row="1" Grid.Column="0" Text="Opponent" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
                 <Entry Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Placeholder="Enter opponent team name" Text="{Binding OpponentName}" VerticalOptions="Center"/>
                 <Label Grid.Row="2" Grid.Column="0" Text="Date" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
-                <StackLayout Orientation="Horizontal" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2">
-                    <DatePicker MinimumDate="{Binding MinDate}" MaximumDate="{Binding MaxDate}" Date="{Binding SelectedDateStart}"/>
-                    <TimePicker Format="HH:mm" Time="{Binding SelectedTimeStart}"/>
+                <StackLayout Orientation="Horizontal" Grid.Row="2" Grid.Column="1">
+                    <DatePicker MinimumDate="{Binding MinDate}" Date="{Binding SelectedDateStart}"/>
+                    <TimePicker Format="HH:mm" Time="{Binding SelectedTimeStart}" x:Name="StartDate"/>
                     <Label Text="-" VerticalOptions="Center"/>
-                    <TimePicker Format="HH:mm" Time="{Binding SelectedTimeEnd}"/>
+                    <TimePicker Format="HH:mm" Time="{Binding SelectedTimeEnd}" x:Name="EndDate"/>
                 </StackLayout>
-                <Label Grid.Row="4" Grid.Column="0" Text="Captain" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
-                <Picker Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Title="Choose team captain" ItemsSource="{Binding Members}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding Captain}" VerticalOptions="Center"/>
-                <Label Grid.Row="5" Grid.Column="0" Text="Location" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
-                <Entry Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Location}"  Placeholder="Enter location" VerticalOptions="Center"/>
-                <Label Grid.Row="6" Grid.Column="0" Text="League" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
-                <Picker Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" ItemsSource="{Binding LeagueNames}" SelectedIndex="{Binding SelectedLeague, Converter={StaticResource IntLeagueEnumConverter}}"/>
-                <Label Grid.Row="7" Grid.Column="0" Text="Round" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
-                <Entry Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding LeagueRound}" Placeholder="Enter league round" VerticalOptions="Center"/>
-                <Label Grid.Row="8" Grid.Column="0" Text="Season" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
-                <Entry Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Season}"  Placeholder="Enter season" VerticalOptions="Center"/>
-                <Label Grid.Row="9" Grid.Column="0" Text="Team Nr." FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
-                <Entry Grid.Row="9" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding TeamIndex}"  Placeholder="Enter team number" VerticalOptions="Center"/>
-                <Label Grid.Row="11" Grid.Column="0" Grid.ColumnSpan="2" Text="Lineup" FontSize="Title" HorizontalOptions="Start" VerticalOptions="Center"/>
-                <Label Grid.Row="12" Grid.Column="2" HorizontalOptions="End" Text="Is Reserve:" FontSize="10"/>
+                <Label Grid.Row="3" Grid.Column="0" Text="Captain" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
+                <Picker Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Title="Choose team captain" ItemsSource="{Binding Members}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding Captain}" VerticalOptions="Center"/>
+                <Label Grid.Row="4" Grid.Column="0" Text="Location" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
+                <Entry Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Location}"  Placeholder="Enter location" VerticalOptions="Center"/>
+                <Label Grid.Row="5" Grid.Column="0" Text="League" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
+                <Picker Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" ItemsSource="{Binding LeagueNames}" SelectedIndex="{Binding SelectedLeague, Converter={StaticResource IntLeagueEnumConverter}}"/>
+                <Label Grid.Row="6" Grid.Column="0" Text="Round" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
+                <Entry Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding LeagueRound}" Keyboard="Numeric" Placeholder="Enter league round" VerticalOptions="Center"/>
+                <Label Grid.Row="7" Grid.Column="0" Text="Season" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
+                <Entry Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Season}" Keyboard="Numeric" Placeholder="Enter season" VerticalOptions="Center"/>
+                <Label Grid.Row="8" Grid.Column="0" Text="Team Nr." FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
+                <Entry Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding TeamIndex}" Keyboard="Numeric" Placeholder="Enter team number" VerticalOptions="Center"/>
+                <Label Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="2" Text="Lineup" FontSize="Title" HorizontalOptions="Start" VerticalOptions="Center"/>
+                <Label Grid.Row="11" Grid.Column="2" HorizontalOptions="End" Text="Reserve:" FontSize="12"/>
             </Grid>
 
 
-            <ListView RowHeight="100" ItemsSource="{Binding Positions}" HeightRequest="{Binding LineupHeight}">
+            <ListView RowHeight="110" ItemsSource="{Binding Positions}" HeightRequest="{Binding LineupHeight}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -80,21 +79,40 @@
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="1*"/>
                                     <ColumnDefinition Width="6*"/>
-                                    <ColumnDefinition Width="1*"/>
                                 </Grid.ColumnDefinitions>
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="4*"/>
                                     <RowDefinition Height="*"/>
-                                    <RowDefinition Height="4*"/>
                                     <RowDefinition Height="*"/>
                                 </Grid.RowDefinitions>
-                                <Label Grid.Column="0" Grid.RowSpan="4" VerticalOptions="Center" FontSize="Medium" Text="{Binding Key, Converter={StaticResource LineupPositionConverter}}"/>
-                                <Picker x:Name="SinglePicker" Title="Select Player" Grid.Column="1" Grid.Row="0" Grid.RowSpan="{Binding Source={x:Reference DoublePicker}, Path=IsVisible, Converter={StaticResource IsDoubleRowSpanConverter}}" Margin="0" ItemsSource="{Binding BindingContext.Players, Source={x:Reference rootpage}}" ItemDisplayBinding="{Binding Member.Name}" SelectedItem="{Binding Value.Player}" VerticalOptions="Center" TextColor="{Binding Value.Error, Converter={StaticResource ErrorMessageColorConverter}}"/>
-                                <CheckBox IsChecked="{Binding Value.IsExtra}" Grid.Column="2" Grid.Row="0" Grid.RowSpan="{Binding Source={x:Reference DoublePicker}, Path=IsVisible, Converter={StaticResource IsDoubleRowSpanConverter}}" VerticalOptions="Center" HorizontalOptions="Center"/>
-                                <Label Grid.Column="1" Grid.Row="1" TextColor="Red" FontSize="8" Text="{Binding Value.Error}" VerticalOptions="Start"/>
-                                <Picker x:Name="DoublePicker" Title="Select Player" IsVisible="{Binding Key, Converter={StaticResource IsPositionDoubleConverter}}" Grid.Column="1" Grid.Row="2" Margin="0" ItemsSource="{Binding BindingContext.Players, Source={x:Reference rootpage}}" ItemDisplayBinding="{Binding Member.Name}" SelectedItem="{Binding Value.OtherPlayer}" TextColor="{Binding Value.OtherError, Converter={StaticResource ErrorMessageColorConverter}}"/>
-                                <CheckBox IsVisible="{Binding Key, Converter={StaticResource IsPositionDoubleConverter}}" IsChecked="{Binding Value.OtherIsExtra}" Grid.Column="2" Grid.Row="2" HorizontalOptions="CenterAndExpand"/>
-                                <Label Grid.Column="1" Grid.Row="3" TextColor="Red" FontSize="8" Text="{Binding Value.OtherError}" VerticalOptions="Start"/>
+                                
+                                <Label Grid.Column="0" Grid.RowSpan="2" VerticalOptions="Center" FontSize="Medium" Text="{Binding Key, Converter={StaticResource LineupPositionConverter}}"/>
+                                <Grid Grid.Row="0" Grid.Column="1" Grid.RowSpan="{Binding Source={x:Reference DoublePicker}, Path=IsVisible, Converter={StaticResource IsDoubleRowSpanConverter}}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="6*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="4*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Picker x:Name="SinglePicker" Title="Select Player" Grid.Column="0" Grid.Row="0" Margin="0" ItemsSource="{Binding BindingContext.Players, Source={x:Reference rootpage}}" ItemDisplayBinding="{Binding Member.Name}" SelectedItem="{Binding Value.Player}" VerticalOptions="Center" TextColor="{Binding Value.Error, Converter={StaticResource ErrorMessageColorConverter}}"/>
+                                    <CheckBox IsChecked="{Binding Value.IsExtra}" Grid.Column="1" Grid.Row="0" VerticalOptions="Center" HorizontalOptions="Center"/>
+                                    <Label Grid.Column="0" Grid.Row="1" TextColor="Red" FontSize="8" Text="{Binding Value.Error}" VerticalOptions="Start"/>
+                                </Grid>
+                                
+                                <Grid Grid.Row="1" Grid.Column="1">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="6*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="4*"/>
+                                        <RowDefinition Height="*"/>
+                                    </Grid.RowDefinitions>
+                                    <Picker x:Name="DoublePicker" Title="Select Player" IsVisible="{Binding Key, Converter={StaticResource IsPositionDoubleConverter}}" Grid.Column="0" Grid.Row="0" Margin="0" ItemsSource="{Binding BindingContext.Players, Source={x:Reference rootpage}}" ItemDisplayBinding="{Binding Member.Name}" SelectedItem="{Binding Value.OtherPlayer}" TextColor="{Binding Value.OtherError, Converter={StaticResource ErrorMessageColorConverter}}"/>
+                                    <CheckBox IsVisible="{Binding Key, Converter={StaticResource IsPositionDoubleConverter}}" IsChecked="{Binding Value.OtherIsExtra}" Grid.Column="1" Grid.Row="0" HorizontalOptions="CenterAndExpand"/>
+                                    <Label Grid.Column="0" Grid.Row="1" TextColor="Red" FontSize="8" Text="{Binding Value.OtherError}" VerticalOptions="Start"/>
+                                </Grid>
                             </Grid>
                         </ViewCell>
                     </DataTemplate>

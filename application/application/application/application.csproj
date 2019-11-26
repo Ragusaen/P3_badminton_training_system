@@ -17,6 +17,7 @@
     <None Remove="Images\settingsicon.jpg" />
     <None Remove="Images\swapperson.png" />
     <None Remove="Images\tritonlogo.jpg" />
+    <None Remove="Images\TritonLogo.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,6 +32,7 @@
     <EmbeddedResource Include="Images\settingsicon.jpg" />
     <EmbeddedResource Include="Images\swapperson.png" />
     <EmbeddedResource Include="Images\tritonlogo.jpg" />
+    <EmbeddedResource Include="Images\TritonLogo.png" />
   </ItemGroup>
 
   <ItemGroup>

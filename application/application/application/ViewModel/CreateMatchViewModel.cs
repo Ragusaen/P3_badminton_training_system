@@ -37,27 +37,7 @@ namespace application.ViewModel
         }
 
 
-        private DateTime _minDate;
-
-        public DateTime MinDate
-        {
-            get { return _minDate; }
-            set
-            {
-                SetProperty(ref _minDate, value);
-            }
-        }
-
-        private DateTime _maxDate;
-
-        public DateTime MaxDate
-        {
-            get { return _maxDate; }
-            set
-            {
-                SetProperty(ref _maxDate, value);
-            }
-        }
+        public DateTime MinDate { get; set; } = DateTime.Today;
 
         private DateTime _selectedDateStart;
 
@@ -66,44 +46,40 @@ namespace application.ViewModel
             get { return _selectedDateStart; }
             set
             {
-                if (SetProperty(ref _selectedDateStart, value))
+                if (SetProperty(ref _selectedDateStart, value)) { }
                     SaveMatchClickCommand.RaiseCanExecuteChanged();
             }
         }
 
-        private DateTime _selectedDateEnd;
+        private TimeSpan _selectedTimeStart;
 
-        public DateTime SelectedDateEnd
-        {
-            get { return _selectedDateEnd; }
-            set
-            {
-                if (SetProperty(ref _selectedDateEnd, value))
-                    SaveMatchClickCommand.RaiseCanExecuteChanged();
-            }
-        }
-
-        private string _selectedTimeStart;
-
-        public string SelectedTimeStart
+        public TimeSpan SelectedTimeStart
         {
             get { return _selectedTimeStart; }
             set
             {
                 if (SetProperty(ref _selectedTimeStart, value))
+                {
                     SaveMatchClickCommand.RaiseCanExecuteChanged();
+                    if (SelectedTimeStart > _selectedTimeEnd)
+                        SelectedTimeEnd = SelectedTimeStart;
+                }
             }
         }
 
-        private string _selectedTimeEnd;
+        private TimeSpan _selectedTimeEnd;
 
-        public string SelectedTimeEnd
+        public TimeSpan SelectedTimeEnd
         {
             get { return _selectedTimeEnd; }
             set
             {
                 if (SetProperty(ref _selectedTimeEnd, value))
+                {
                     SaveMatchClickCommand.RaiseCanExecuteChanged();
+                    if (SelectedTimeStart > _selectedTimeEnd)
+                        SelectedTimeStart = SelectedTimeEnd;
+                }
             }
         }
 
@@ -221,7 +197,7 @@ namespace application.ViewModel
             set
             {
                 if (SetProperty(ref _positions, value))
-                    LineupHeight = _positions.Count * 100;
+                    LineupHeight = _positions.Count * 110;
             }
         }
 
@@ -245,8 +221,9 @@ namespace application.ViewModel
         {
             Members = new ObservableCollection<Member>(RequestCreator.GetAllMembers());
             Players = new ObservableCollection<Player>(RequestCreator.GetAllPlayers());
-
+            SelectedDateStart = DateTime.Today;
             SelectedLeague = TeamMatch.Leagues.BadmintonLeague;
+            Location = "Stjernevej 5, 9200 Aalborg";
         }
 
         private RelayCommand _verifyLineupCommand;
@@ -344,8 +321,8 @@ namespace application.ViewModel
             TeamMatch match = new TeamMatch()
             {
                 Captain = Captain,
-                Start = SelectedDateStart,
-                End = SelectedDateEnd,
+                Start = SelectedDateStart.Date + Convert.ToDateTime(SelectedTimeStart.ToString()).TimeOfDay,
+                End = SelectedDateStart.Date + Convert.ToDateTime(SelectedTimeEnd.ToString()).TimeOfDay,
                 League = SelectedLeague,
                 Lineup = ConvertPositionDictionaryToLineup(Positions),
                 LeagueRound = LeagueRound,

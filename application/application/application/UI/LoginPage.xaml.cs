@@ -25,7 +25,7 @@ namespace application.UI
             BindingContext = vm;
             vm.Navigation = Navigation;
             
-            RedLogo.Source = ImageSource.FromResource("application.Images.tritonlogo.jpg");
+            RedLogo.Source = ImageSource.FromResource("application.Images.TritonLogo.png");
             NaviLogo.Source = ImageSource.FromResource("application.Images.logo.gif");
         }
 
