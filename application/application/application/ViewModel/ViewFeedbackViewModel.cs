@@ -67,8 +67,8 @@ namespace application.ViewModel
                 entries2.Add(new Entry((float)fb.ChallengeQuestion) { Color = SKColor.Parse("#33ccff"), Label = DateTime.Now.ToString() });
                 entries3.Add(new Entry((float)fb.AbsorbQuestion) { Color = SKColor.Parse("#33ccff"), Label = DateTime.Now.ToString() });  
             }
- 
-            Chart = new LineChart(){ Entries = entries, LineMode = LineMode.Straight, PointMode = PointMode.Circle, LabelTextSize = 25, PointSize = 12 };
+  
+            Chart = new LineChart { Entries = entries, LineMode = LineMode.Straight, PointMode = PointMode.Circle, LabelTextSize = 25, PointSize = 12 };
             Chart1 = new LineChart { Entries = entries1, LineMode = LineMode.Straight, PointMode = PointMode.Square, LabelTextSize = 25, PointSize = 12 };
             Chart2 = new LineChart { Entries = entries2, LineMode = LineMode.Straight, PointMode = PointMode.Square, LabelTextSize = 25, PointSize = 12 };
             Chart3 = new LineChart { Entries = entries3, LineMode = LineMode.Straight, PointMode = PointMode.Square, LabelTextSize = 25, PointSize = 12 };
