@@ -16,6 +16,7 @@ namespace Server
     {
         private static Logger _log = LogManager.GetCurrentClassLogger();
 
+
         private static void SetPracticeTeam()
         {
             var db = new DatabaseEntities();
@@ -37,8 +38,8 @@ namespace Server
                 },
                 playsession = new playsession()
                 {
-                    StartDate = DateTime.Now.AddDays(1),
-                    EndDate = DateTime.Now.AddDays(1).AddHours(2),
+                    StartDate = DateTime.Now.AddDays(2),
+                    EndDate = DateTime.Now.AddDays(2).AddHours(2),
                     Location = "Aalborg Triton",
                     Type = 1
                 },
@@ -61,7 +62,8 @@ namespace Server
                 },
                 practiceteam = new practiceteam()
                 {
-                    Name = "Sunday training"
+                    Name = "Sunday training",
+                    trainer = db.members.Add(new member { Name = "Christian Bisgaard", MemberType = 2 })
                 }
             };
 
@@ -71,7 +73,6 @@ namespace Server
 
         public static void Main(string[] args)
         {
-
             var db = new DatabaseEntities();
 
             if (!db.members.Any())

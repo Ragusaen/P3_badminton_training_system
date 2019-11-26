@@ -10,24 +10,25 @@ using Server.DAL;
 
 namespace Server.SystemInterface.Requests.Handlers
 {
-    class DeletePlayerPracticeTeamHandler : MiddleRequestHandler<DeletePlayerPracticeTeamRequest, DeletePlayerPracticeTeamResponse>
+    class SetPlayerPracticeTeamHandler : MiddleRequestHandler<SetPlayerPracticeTeamRequest, SetPlayerPracticeTeamResponse>
     {
-        protected override DeletePlayerPracticeTeamResponse InnerHandle(DeletePlayerPracticeTeamRequest request, member requester)
+        protected override SetPlayerPracticeTeamResponse InnerHandle(SetPlayerPracticeTeamRequest request, member requester)
         {
             if (!(((Common.Model.MemberType)requester.MemberType).HasFlag(MemberType.Trainer) ||
                   requester.ID == request.Player.Member.Id))
             {
                 RequestMember = request.Player.Member;
-                return new DeletePlayerPracticeTeamResponse { AccessDenied = true };
+                return new SetPlayerPracticeTeamResponse { AccessDenied = true };
             }
 
             var db = new DatabaseEntities();
+            var dbPlayer = db.members.Find(request.Player.Member.Id);
             var dbPt = db.practiceteams.Find(request.PracticeTeam.Id);
-            db.members.Find(request.Player.Member.Id).practiceteamsplayer.Remove(dbPt);
+            dbPlayer.practiceteamsplayer.Add(dbPt);
+            db.SaveChanges();
 
-            _log.Debug($"Player: {request.Player.Member.Name} removed from Practice Team: {dbPt.Name}");
-
-            return new DeletePlayerPracticeTeamResponse();
+            _log.Debug($"Player: {dbPlayer.Name} received new team: {request.PracticeTeam.Name}");
+            return new SetPlayerPracticeTeamResponse();
         }
     }
 }
