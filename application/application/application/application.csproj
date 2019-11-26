@@ -15,6 +15,7 @@
     <None Remove="Images\plusicon.jpg" />
     <None Remove="Images\saveicon.png" />
     <None Remove="Images\settingsicon.jpg" />
+    <None Remove="Images\swapperson.png" />
     <None Remove="Images\tritonlogo.jpg" />
     <None Remove="Images\TritonLogo.png" />
   </ItemGroup>
@@ -29,6 +30,7 @@
     <EmbeddedResource Include="Images\plusicon.jpg" />
     <EmbeddedResource Include="Images\saveicon.png" />
     <EmbeddedResource Include="Images\settingsicon.jpg" />
+    <EmbeddedResource Include="Images\swapperson.png" />
     <EmbeddedResource Include="Images\tritonlogo.jpg" />
     <EmbeddedResource Include="Images\TritonLogo.png" />
   </ItemGroup>
@@ -73,9 +75,6 @@
     </Compile>
     <Compile Update="UI\PracticeTeamPage.xaml.cs">
       <DependentUpon>PracticeTeamPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="UI\ViewPracticePage.xaml.cs">
-      <DependentUpon>ViewPracticePage.xaml</DependentUpon>
     </Compile>
     <Compile Update="UI\SchedulePage.xaml.cs">
       <DependentUpon>SchedulePage.xaml</DependentUpon>
@@ -123,9 +122,6 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="UI\PracticeTeamPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="UI\ViewPracticePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="UI\ProfilePage.xaml">

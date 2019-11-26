@@ -36,7 +36,6 @@ namespace application.ViewModel
         }
 
         private int _year;
-
         public int Year
         {
             get => _year;
@@ -64,6 +63,7 @@ namespace application.ViewModel
             _month = DateTime.Today.Month;
             _year = DateTime.Today.Year;
             LoadEvents();
+            SetSelectedEvents();
         }
 
         private ObservableCollection<PlaySessionEvent> _selectedEvents;
