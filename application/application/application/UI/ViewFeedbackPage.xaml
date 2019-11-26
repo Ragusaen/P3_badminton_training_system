@@ -22,7 +22,7 @@
                     <Frame CornerRadius="5" HasShadow="True">
                         <StackLayout>
                             <Label Text="How ready did you feel to train today?" TextColor="Black" FontSize="Small" VerticalTextAlignment="Center"/>
-                        <microcharts:ChartView Chart="{Binding Chart}" HeightRequest="300" Margin="-80, 0, -80, 0"/>
+                            <microcharts:ChartView Chart="{Binding Chart}" HeightRequest="300" Margin="-80, 0, -80, 0"/>
                         </StackLayout>
                     </Frame>
 

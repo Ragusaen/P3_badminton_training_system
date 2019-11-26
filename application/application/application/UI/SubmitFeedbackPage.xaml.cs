@@ -28,7 +28,6 @@ namespace application.UI
             Quest1.Completed += (s, a) => Quest2.Focus();
             Quest2.Completed += (s, a) => Quest3.Focus();
             Quest3.Completed += (s, a) => Quest4.Focus();
-            Quest4.Completed += (s, a) => SubmitButton.SendClicked();
         }
 
         private void Slider1_ValueChanged(object sender, ValueChangedEventArgs e)

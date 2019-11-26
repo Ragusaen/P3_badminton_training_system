@@ -93,7 +93,7 @@ namespace application.ViewModel
                     List<Entry> entries = new List<Entry>();
                     foreach (Feedback fb in feedbacks)
                     {
-                        entries.Add(new Entry(((float)fb.ReadyQuestion + (float)fb.EffortQuestion + (float)fb.ChallengeQuestion + (float)fb.AbsorbQuestion) / 4) { Color = SKColor.Parse("#33ccff"), Label = fb.PlaySession.Start.ToString() });
+                        entries.Add(new Entry(((float)fb.ReadyQuestion + (float)fb.EffortQuestion + (float)fb.ChallengeQuestion + (float)fb.AbsorbQuestion) / 4) { Color = SKColor.Parse("#33ccff"), Label = fb.PlaySession.Start.Date.ToString()});
                     }
                     Chart = new LineChart { Entries = entries, LineMode = LineMode.Straight, PointMode = PointMode.Circle, LabelTextSize = 25, PointSize = 12 };
                 }
