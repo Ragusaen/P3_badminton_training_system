@@ -232,22 +232,22 @@
     <Compile Include="Function\Rules\EmptyPositionRule.cs" />
     <Compile Include="Function\Rules\HalfEmptyLineupRule.cs" />
     <Compile Include="Function\Rules\SamePositionType.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\ChangeTrainerPrivilegesHandler.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\CreateFocusPointDescriptorHandler.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\DeleteFocusPointDescriptorHandler.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\DeletePlayerFocusPointsHandler.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\DeletePracticeTeamHandler.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\GetAdminPageHandler.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\DeletePlayerPracticeTeamHandler.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\GetAllMembersHandler.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\GetAllPracticeTeamsHandler.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\GetAllTrainersHandler.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\GetExerciseHandler.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\GetFocusPointDescriptorHandler.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\GetMemberHandler.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\GetPlayerFocusPointsHandler.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\GetPlayerHandler.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\GetPlayersWithNoAccountHandler.cs" />
+    <Compile Include="Function\Handlers\ChangeTrainerPrivilegesHandler.cs" />
+    <Compile Include="Function\Handlers\CreateFocusPointDescriptorHandler.cs" />
+    <Compile Include="Function\Handlers\DeleteFocusPointDescriptorHandler.cs" />
+    <Compile Include="Function\Handlers\DeletePlayerFocusPointsHandler.cs" />
+    <Compile Include="Function\Handlers\DeletePracticeTeamHandler.cs" />
+    <Compile Include="Function\Handlers\GetAdminPageHandler.cs" />
+    <Compile Include="Function\Handlers\DeletePlayerPracticeTeamHandler.cs" />
+    <Compile Include="Function\Handlers\GetAllMembersHandler.cs" />
+    <Compile Include="Function\Handlers\GetAllPracticeTeamsHandler.cs" />
+    <Compile Include="Function\Handlers\GetAllTrainersHandler.cs" />
+    <Compile Include="Function\Handlers\GetExerciseHandler.cs" />
+    <Compile Include="Function\Handlers\GetFocusPointDescriptorHandler.cs" />
+    <Compile Include="Function\Handlers\GetMemberHandler.cs" />
+    <Compile Include="Function\Handlers\GetPlayerFocusPointsHandler.cs" />
+    <Compile Include="Function\Handlers\GetPlayerHandler.cs" />
+    <Compile Include="Function\Handlers\GetPlayersWithNoAccountHandler.cs" />
     <Compile Include="DAL\MemberCast.cs" />
     <Compile Include="DAL\LineupCast.cs" />
     <Compile Include="DAL\PracticeSessionCast.cs" />
@@ -267,36 +267,36 @@
     <Compile Include="SystemInterface\Network\NetworkException.cs" />
     <Compile Include="SystemInterface\Network\SslTcpClient.cs" />
     <Compile Include="SystemInterface\Network\SslTcpServer.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\CreateAccountHandler.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\GetAllFocusPointDescriptorsHandler.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\GetAllPlayersHandler.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\GetPlayerFeedbackHandler.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\GetPlayerPracticeTeamsHandler.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\GetPlaySessionFeedback.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\GetPracticeSessionExercisesHandler.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\GetPracticeSessionFocusPointsHandler.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\GetPracticeSessionHandler.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\GetPracticeTeamHandler.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\GetScheduleHandler.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\GetTeamMatchHandler.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\GetTeamMatchPositionsHandler.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\GetTokenMemberHandler.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\LoginHandler.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\RequestHandler.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\SetCommentHandler.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\SetExerciseDescriptorHandler.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\SetFeedbackHandler.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\AddPlayerFocusPointHandler.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\SetPracticeSessionHandler.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\SetNonPrivateFocusPointHandler.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\SetPlayerHandler.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\SetPlayerPracticeTeamHandler.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\SetPracticeTeamTrainerHandler.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\SetTeamMatchHandler.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\SetPracticeTeamHandler.cs" />
-    <Compile Include="SystemInterface\Requests\Handlers\VerifyLineupHandler.cs" />
-    <Compile Include="SystemInterface\Requests\RequestManager.cs" />
-    <Compile Include="Controller\UserManager.cs" />
+    <Compile Include="Function\Handlers\CreateAccountHandler.cs" />
+    <Compile Include="Function\Handlers\GetAllFocusPointDescriptorsHandler.cs" />
+    <Compile Include="Function\Handlers\GetAllPlayersHandler.cs" />
+    <Compile Include="Function\Handlers\GetPlayerFeedbackHandler.cs" />
+    <Compile Include="Function\Handlers\GetPlayerPracticeTeamsHandler.cs" />
+    <Compile Include="Function\Handlers\GetPlaySessionFeedback.cs" />
+    <Compile Include="Function\Handlers\GetPracticeSessionExercisesHandler.cs" />
+    <Compile Include="Function\Handlers\GetPracticeSessionFocusPointsHandler.cs" />
+    <Compile Include="Function\Handlers\GetPracticeSessionHandler.cs" />
+    <Compile Include="Function\Handlers\GetPracticeTeamHandler.cs" />
+    <Compile Include="Function\Handlers\GetScheduleHandler.cs" />
+    <Compile Include="Function\Handlers\GetTeamMatchHandler.cs" />
+    <Compile Include="Function\Handlers\GetTeamMatchPositionsHandler.cs" />
+    <Compile Include="Function\Handlers\GetTokenMemberHandler.cs" />
+    <Compile Include="Function\Handlers\LoginHandler.cs" />
+    <Compile Include="Function\Handlers\RequestHandler.cs" />
+    <Compile Include="Function\Handlers\SetCommentHandler.cs" />
+    <Compile Include="Function\Handlers\SetExerciseDescriptorHandler.cs" />
+    <Compile Include="Function\Handlers\SetFeedbackHandler.cs" />
+    <Compile Include="Function\Handlers\AddPlayerFocusPointHandler.cs" />
+    <Compile Include="Function\Handlers\SetPracticeSessionHandler.cs" />
+    <Compile Include="Function\Handlers\SetNonPrivateFocusPointHandler.cs" />
+    <Compile Include="Function\Handlers\SetPlayerHandler.cs" />
+    <Compile Include="Function\Handlers\SetPlayerPracticeTeamHandler.cs" />
+    <Compile Include="Function\Handlers\SetPracticeTeamTrainerHandler.cs" />
+    <Compile Include="Function\Handlers\SetTeamMatchHandler.cs" />
+    <Compile Include="Function\Handlers\SetPracticeTeamHandler.cs" />
+    <Compile Include="Function\Handlers\VerifyLineupHandler.cs" />
+    <Compile Include="SystemInterface\RequestManager.cs" />
+    <Compile Include="Function\UserManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
@@ -307,7 +307,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="Controller\RankListScraper.cs" />
+    <Compile Include="Function\RankListScraper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -374,6 +374,7 @@
       <Version>6.2.0</Version>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\Selenium.WebDriver.PhantomJS.CrossPlatform.2.1.1\build\Selenium.WebDriver.PhantomJS.CrossPlatform.targets" Condition="Exists('..\packages\Selenium.WebDriver.PhantomJS.CrossPlatform.2.1.1\build\Selenium.WebDriver.PhantomJS.CrossPlatform.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
