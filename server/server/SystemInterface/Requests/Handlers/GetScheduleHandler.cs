@@ -18,7 +18,7 @@ namespace Server.SystemInterface.Requests.Handlers
 
             var s = db.playsessions.Where(ps => ps.StartDate >= request.StartDate && ps.StartDate <= request.EndDate);
 
-            Console.WriteLine($"Found {s.Count()} playsessions between {request.StartDate} and {request.EndDate}");
+            _log.Debug($"Found {s.Count()} playsessions between {request.StartDate} and {request.EndDate}");
             
             GetScheduleResponse response = new GetScheduleResponse()
             {

@@ -248,6 +248,17 @@ namespace application.SystemInterface
             return response.FocusPointDescriptor;
         }
 
+        public static PracticeTeam GetPracticeTeam(int id)
+        {
+            var request = new GetPracticeTeamRequest
+            {
+                Id = id,
+            };
+
+            var response = SimpleRequest<GetPracticeTeamRequest, GetPracticeTeamResponse>(RequestType.GetPracticeTeam, request);
+
+            return response.Team;
+        }
         // Setters below
         public static void SetPlayer(Player player)
         {
@@ -285,16 +296,16 @@ namespace application.SystemInterface
             var response = SimpleRequest<SetCommentRequest, SetCommentResponse>(RequestType.SetComment, request);
         }
 
-        public static void SetPlayerPracticeTeams(Player player, List<PracticeTeam> practiceTeams)
+        public static void SetPlayerPracticeTeams(Player player, PracticeTeam practiceTeam)
         {
-            var request = new SetPlayerPracticeTeamsRequest
+            var request = new SetPlayerPracticeTeamRequest
             {
                 Player = player,
-                PracticeTeams = practiceTeams
+                PracticeTeam = practiceTeam
             };
 
-            SimpleRequest<SetPlayerPracticeTeamsRequest, SetPlayerPracticeTeamsResponse>(
-                RequestType.SetPlayerPracticeTeams, request);
+            SimpleRequest<SetPlayerPracticeTeamRequest, SetPlayerPracticeTeamResponse>(
+                RequestType.SetPlayerPracticeTeam, request);
         }
 
         public static void ChangeTrainerPrivileges(Member member)

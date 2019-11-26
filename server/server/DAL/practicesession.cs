@@ -24,7 +24,7 @@ namespace Server.DAL
         public int PlaySessionID { get; set; }
         public Nullable<int> TrainerID { get; set; }
         public Nullable<int> MainFocusPointID { get; set; }
-        public int TeamID { get; set; }
+        public Nullable<int> TeamID { get; set; }
     
         public virtual focuspoint focuspoint { get; set; }
         public virtual member member { get; set; }

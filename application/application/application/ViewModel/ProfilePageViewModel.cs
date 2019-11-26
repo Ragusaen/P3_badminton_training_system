@@ -26,27 +26,24 @@ namespace application.ViewModel
 
         public ObservableCollection<PracticeTeam> PracticeTeams
         {
-            get { return _practiceTeams; }
-            set
-            {
-                SetProperty(ref _practiceTeams, value);
-            }
+            get => _practiceTeams;
+            set => SetProperty(ref _practiceTeams, value);
         }
 
         private ObservableCollection<FocusPointItem> _focusPoints;
 
         public ObservableCollection<FocusPointItem> FocusPoints
         {
-            get { return _focusPoints; }
-            set { SetProperty(ref _focusPoints, value); }
+            get => _focusPoints;
+            set => SetProperty(ref _focusPoints, value);
         }
 
         private int _practiceTeamsListHeight;
 
         public int PracticeTeamsListHeight
         {
-            get { return _practiceTeamsListHeight; }
-            set { SetProperty(ref _practiceTeamsListHeight, value); }
+            get => _practiceTeamsListHeight;
+            set => SetProperty(ref _practiceTeamsListHeight, value);
         }
 
         private int _focusPointsListHeight;
@@ -118,10 +115,10 @@ namespace application.ViewModel
 
         private void PracticeTeamPopupPageCallback(object sender, PracticeTeam e)
         {
-            Player.PracticeTeams.Add(e);
-            PracticeTeams.Add(e);
-            PracticeTeams = new ObservableCollection<PracticeTeam>(PracticeTeams);
-            RequestCreator.SetPlayerPracticeTeams(Player, Player.PracticeTeams);
+            RequestCreator.SetPlayerPracticeTeams(Player, e);
+            var newPracticeTeams = RequestCreator.GetPlayerPracticeTeams(Player);
+            Player.PracticeTeams = newPracticeTeams;
+            PracticeTeams = new ObservableCollection<PracticeTeam>(newPracticeTeams);
             PracticeTeamsListHeight = PracticeTeams.Count * 45;
         }
 
