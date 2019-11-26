@@ -18,26 +18,28 @@ namespace application.UI
         public PracticeTeamPage(PracticeTeam practiceTeam)
         {
             InitializeComponent();
-            _vm = new PracticeTeamViewModel(practiceTeam.Id);
-            _vm.Navigation = Navigation;
+            _vm = new PracticeTeamViewModel(practiceTeam.Id) {Navigation = Navigation};
             BindingContext = _vm;
 
-            var trainerTap = new TapGestureRecognizer();
-            trainerTap.Tapped += (s,r) => TrainerClick();
+            var trainerNameTap = new TapGestureRecognizer();
+            trainerNameTap.Tapped += (s, r) => TrainerNameClick();
+
+            SwapPerson.Source = ImageSource.FromResource("application.Images.swapperson.png");
+        }
+
+        private void TrainerNameClick()
+        {
+            _vm.TrainerViewCommand.Execute(new object());
         }
 
         private void ListView_OnItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             var player = (Common.Model.Player)e.SelectedItem;
-            Navigation.PushAsync(new ProfilePage(player.Member.Id));
-            PlayerList.SelectedItem = null;
-        }
-
-
-
-        private void TrainerClick()
-        {
-            Navigation.PushAsync(new ProfilePage(_vm.Trainer.Member.Id));
+            if (player != null)
+            {
+                Navigation.PushAsync(new ProfilePage(player.Member.Id));
+                PlayerList.SelectedItem = null;
+            }
         }
     }
 }
