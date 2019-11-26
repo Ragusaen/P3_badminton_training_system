@@ -129,7 +129,7 @@ namespace application.ViewModel
 
         private void ExecuteAddPracticeTeam(object param)
         {
-            PracticeTeamPopupPage page = new PracticeTeamPopupPage(Player.PracticeTeams);
+            var page = new PracticeTeamPopupPage(Player.PracticeTeams);
             page.CallBackEvent += PracticeTeamPopupPageCallback;
             PopupNavigation.Instance.PushAsync(page);
         }

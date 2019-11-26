@@ -96,7 +96,7 @@
             <PropertyRef Name="PlaySessionID" />
           </Key>
           <Property Name="PlaySessionID" Type="int" Nullable="false" />
-          <Property Name="TrainerID" Type="int" />
+          <Property Name="TrainerID" Type="int" Nullable="false" />
           <Property Name="MainFocusPointID" Type="int" />
           <Property Name="TeamID" Type="int" />
         </EntityType>
@@ -262,7 +262,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="practicesession_ibfk_2">
-          <End Role="member" Type="Self.member" Multiplicity="0..1" />
+          <End Role="member" Type="Self.member" Multiplicity="1" />
           <End Role="practicesession" Type="Self.practicesession" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="member">
@@ -645,7 +645,7 @@
             <PropertyRef Name="PlaySessionID" />
           </Key>
           <Property Name="PlaySessionID" Type="Int32" Nullable="false" />
-          <Property Name="TrainerID" Type="Int32" />
+          <Property Name="TrainerID" Type="Int32" Nullable="false" />
           <Property Name="MainFocusPointID" Type="Int32" />
           <Property Name="TeamID" Type="Int32" />
           <NavigationProperty Name="focuspoint" Relationship="Self.practicesession_ibfk_3" FromRole="practicesession" ToRole="focuspoint" />
@@ -799,7 +799,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="practicesession_ibfk_2">
-          <End Role="member" Type="Self.member" Multiplicity="0..1" />
+          <End Role="member" Type="Self.member" Multiplicity="1" />
           <End Role="practicesession" Type="Self.practicesession" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="member">

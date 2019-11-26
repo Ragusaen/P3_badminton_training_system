@@ -289,6 +289,7 @@
     <Compile Include="SystemInterface\Requests\Handlers\SetNonPrivateFocusPointHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\SetPlayerHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\SetPlayerPracticeTeamHandler.cs" />
+    <Compile Include="SystemInterface\Requests\Handlers\SetPracticeTeamTrainerHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\SetTeamMatchHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\SetPracticeTeamHandler.cs" />
     <Compile Include="SystemInterface\Requests\Handlers\VerifyLineupHandler.cs" />

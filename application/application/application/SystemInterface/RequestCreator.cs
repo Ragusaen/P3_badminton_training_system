@@ -330,6 +330,18 @@ namespace application.SystemInterface
                 RequestType.SetNonPrivateFocusPoint, request);
         }
 
+        public static void SetPracticeTeamTrainer(PracticeTeam practiceTeam, Trainer trainer)
+        {
+            var request = new SetPracticeTeamTrainerRequest
+            {
+                PracticeTeam = practiceTeam,
+                Trainer = trainer,
+            };
+
+            SimpleRequest<SetPracticeTeamTrainerRequest, SetPracticeTeamTrainerResponse>(
+                RequestType.SetPracticeTeamTrainer, request);
+        }
+
         // Deleters below
 
         public static void DeletePlayerFocusPoints(Player player, FocusPointItem focusPointItem)

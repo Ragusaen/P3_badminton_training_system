@@ -15,16 +15,15 @@ namespace application.UI
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class SchedulePage : ContentPage
     {
+        private ScheduleViewModel _vm;
         public SchedulePage()
         {
             InitializeComponent();
 
-            ScheduleViewModel vm = new ScheduleViewModel();
-            BindingContext = vm;
-            vm.Navigation = Navigation;
+            _vm = new ScheduleViewModel();
+            BindingContext = _vm;
+            _vm.Navigation = Navigation;
             Plusicon.Source = ImageSource.FromResource("application.Images.plusicon.jpg");
-
-
         }
 
         private void ListView_OnItemSelected(object sender, SelectedItemChangedEventArgs e)
@@ -47,7 +46,7 @@ namespace application.UI
             string action = await Application.Current.MainPage.DisplayActionSheet("Choose what you want to add:", "Cancel", null, "Add New Practice", "Add New Match");
 
             if (action == "Add New Practice")
-                await Navigation.PushAsync(new CreatePracticePage());
+                await Navigation.PushAsync(new CreatePracticePage(_vm.SelectedDate));
             else if (action == "Add New Match")
                 await Navigation.PushAsync(new CreateMatchPage());
         }

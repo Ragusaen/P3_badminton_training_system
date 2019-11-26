@@ -15,16 +15,17 @@ namespace application.UI
     public partial class PracticeTeamPage : ContentPage
     {
         private PracticeTeamViewModel _vm;
-        public PracticeTeamPage(PracticeTeam practiceTeam)
+        public PracticeTeamPage(int id)
         {
             InitializeComponent();
-            _vm = new PracticeTeamViewModel(practiceTeam.Id) {Navigation = Navigation};
+            _vm = new PracticeTeamViewModel(id) {Navigation = Navigation};
             BindingContext = _vm;
 
             var trainerNameTap = new TapGestureRecognizer();
             trainerNameTap.Tapped += (s, r) => TrainerNameClick();
 
             SwapPerson.Source = ImageSource.FromResource("application.Images.swapperson.png");
+            AddPlayerButton.Source = ImageSource.FromResource("application.Images.add.png");
         }
 
         private void TrainerNameClick()
