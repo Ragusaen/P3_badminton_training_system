@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -25,6 +26,7 @@ namespace application.UI
             Time.Text = _vm.PlaySession.Start.ToString("hh:mm") + " - " + _vm.PlaySession.End.ToString("hh:mm");
             Date.Text = _vm.PlaySession.Start.ToString("dddd, d MMMM");
             Location.Text = _vm.PlaySession.Location;
+
 
             if (_vm.TeamMatch != null)
             {
@@ -61,6 +63,16 @@ namespace application.UI
 
             FocusPointList.SelectedItem = null;
             GoToFocusPoint(((FocusPointItem)e.SelectedItem).Descriptor);
+        }
+
+        private void ExerciseDescription_SizeChanged(object sender, EventArgs e)
+        {
+            Debug.WriteLine("CHANGED SIZE!!!!");
+
+            var label = (Label) sender;
+            var grid = (Grid) label.Parent;
+
+            grid.RowDefinitions[1].Height = label.Height;
         }
     }
 }

@@ -20,23 +20,31 @@
         </StackLayout>
     </NavigationPage.TitleView>
 
-    <ScrollView>
-        <StackLayout HorizontalOptions="Center">
-            <Image Source="" x:Name="RedLogo" HeightRequest="222" Margin="20,25,20,25" />
-            <Label Text="Invalid username or password" TextColor="Red" IsVisible="{Binding InvalidLoginTextVisible}"
-                   HeightRequest="{Binding InvalidLoginTextHeight}" />
-            <Label Text="Username" />
-            <Entry x:Name="Username" ReturnType="Next" Placeholder="Enter username" Text="{Binding Username}" />
-            <Label Text="Password" />
-            <Entry x:Name="Password" Placeholder="Enter password" IsPassword="True" Text="{Binding Password}" />
-            <Button x:Name="LoginButton" Text="Log In" Command="{Binding LoginClickCommand}" />
-            <StackLayout Orientation="Horizontal">
-                <Button Text="Forgot password?" FontSize="Micro" HorizontalOptions="FillAndExpand"
-                        VerticalOptions="FillAndExpand" Command="{Binding ForgotPassWordClickCommand}" />
-                <Button Text="Create a New Account" FontSize="Micro" HorizontalOptions="FillAndExpand"
-                        VerticalOptions="FillAndExpand" Command="{Binding CreateAccountClickCommand}" />
-            </StackLayout>
-        </StackLayout>
-    </ScrollView>
+    <Grid Margin="20,10,20,10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="10*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="1*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+            <RowDefinition Height="2*"/>
+        </Grid.RowDefinitions>
 
+        <Image Grid.Row="0" Source="" x:Name="RedLogo" HorizontalOptions="Center" VerticalOptions="Center" Aspect="AspectFit"/>
+        <Label Grid.Row="1" Text="Invalid username or password" TextColor="Red" IsVisible="{Binding InvalidLoginTextVisible}"
+                   HeightRequest="{Binding InvalidLoginTextHeight}" />
+        <Label Grid.Row="2" Text="Username" />
+        <Entry Grid.Row="3" x:Name="Username" ReturnType="Next" Placeholder="Enter username" Text="{Binding Username}" />
+        <Label Grid.Row="4" Text="Password" />
+        <Entry Grid.Row="5" x:Name="Password" Placeholder="Enter password" IsPassword="True" Text="{Binding Password}" />
+        <Button Grid.Row="6" x:Name="LoginButton" Text="Log In" Command="{Binding LoginClickCommand}" />
+        <StackLayout Grid.Row="7" Orientation="Horizontal">
+            <Button Text="Forgot password?" FontSize="Micro" HorizontalOptions="FillAndExpand"
+                        VerticalOptions="FillAndExpand" Command="{Binding ForgotPassWordClickCommand}" />
+            <Button Text="Create a New Account" FontSize="Micro" HorizontalOptions="FillAndExpand"
+                        VerticalOptions="FillAndExpand" Command="{Binding CreateAccountClickCommand}" />
+        </StackLayout>
+        </Grid>
 </ContentPage>
