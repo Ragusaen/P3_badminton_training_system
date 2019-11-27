@@ -17,19 +17,19 @@ namespace application.UI.Converter
             switch (pos.Item1)
             {
                 case Lineup.PositionType.MensDouble:
-                    res += "HD";
+                    res += "MD";
                     break;
                 case Lineup.PositionType.MensSingle:
-                    res += "HS";
+                    res += "MS";
                     break;
                 case Lineup.PositionType.WomensDouble:
-                    res += "DD";
+                    res += "WD";
                     break;
                 case Lineup.PositionType.WomensSingle:
-                    res += "DS";
+                    res += "WS";
                     break;
                 case Lineup.PositionType.MixDouble:
-                    res += "MD";
+                    res += "XD";
                     break;
             }
             return res;

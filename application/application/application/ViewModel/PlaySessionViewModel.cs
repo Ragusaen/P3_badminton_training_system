@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using System.Threading;
+using application.Controller;
 using application.UI;
 using Common.Model;
 using Common.Serialization;
@@ -47,8 +49,58 @@ namespace application.ViewModel
                 _focusPointListHeight = PracticeSession.FocusPoints.Count * 45;
             }
             else if (PlaySession is TeamMatch match)
+            {
                 TeamMatch = match;
+                SetLineupTemplate(match.League);
+                SetPositionsFromLineup(match.Lineup);
+            }
         }
+
+        private void SetPositionsFromLineup(Lineup lineup)
+        {
+            foreach (var group in lineup)
+            {
+                for (int i = 0; i < group.Positions.Count; i++)
+                {
+                    Positions[(group.Type, i)] = group.Positions[i];
+                }
+            }
+        }
+
+        private void SetLineupTemplate(TeamMatch.Leagues value)
+        {
+            var positions = new Dictionary<(Lineup.PositionType, int), Position>();
+            var template = Lineup.LeaguePositions[value];
+            foreach (var group in template)
+            {
+                for (int i = 0; i < group.Value; i++)
+                {
+                    positions.Add((group.Key, i), new Position());
+                }
+            }
+            Positions = positions;
+        }
+
+        private Dictionary<(Lineup.PositionType, int), Position> _positions;
+
+        public Dictionary<(Lineup.PositionType, int), Position> Positions
+        {
+            get { return _positions; }
+            set
+            {
+                if (SetProperty(ref _positions, value))
+                    LineupHeight = _positions.Count * 110;
+            }
+        }
+
+        private int _lineupHeight;
+
+        public int LineupHeight
+        {
+            get { return _lineupHeight; }
+            set { SetProperty(ref _lineupHeight, value); }
+        }
+
         private RelayCommand _feedbackCommand;
 
         public RelayCommand FeedbackCommand

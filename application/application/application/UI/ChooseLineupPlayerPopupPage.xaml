@@ -6,7 +6,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="application.UI.ChooseLineupPlayerPopupPage" Padding="40">
-    <StackLayout BackgroundColor="White">
+    <StackLayout BackgroundColor="White" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Padding="20">
         <SearchBar Placeholder="Search Player" Text="{Binding SearchText}"/>
 
         <Grid>
@@ -23,7 +23,6 @@
             <Label Grid.Column="3" FontSize="9" Text="Double"/>
             <Label Grid.Column="4" FontSize="9" Text="Mix"/>
         </Grid>
-
 
         <ListView x:Name="PlayerList" ItemsSource="{Binding Players}" VerticalScrollBarVisibility="Default" ItemSelected="ListView_OnItemSelected" VerticalOptions="Fill" SeparatorVisibility="None">
             <ListView.ItemTemplate>

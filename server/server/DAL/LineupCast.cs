@@ -33,8 +33,8 @@ namespace Server.DAL
                 if (Lineup.PositionType.Double.HasFlag(((Lineup.PositionType)dbPos.Type)))
                 {
                     var otherPos = positions.Find(s => s.Type == dbPos.Type && s.Order == dbPos.Order && s != dbPos);
-                    newPosition.OtherPlayer = (Player) otherPos.member;
-                    newPosition.OtherIsExtra = otherPos.IsExtra;
+                    newPosition.OtherPlayer = otherPos == null ? null : (Player) otherPos.member;
+                    newPosition.OtherIsExtra = otherPos == null ? false : otherPos.IsExtra;
                 }
 
                 var posList = lineup.Find(l => l.Type == (Lineup.PositionType) dbPos.Type).Positions;

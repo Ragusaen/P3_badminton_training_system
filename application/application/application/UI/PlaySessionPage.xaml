@@ -3,11 +3,20 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:cvtr="clr-namespace:application.UI.Converter"
              mc:Ignorable="d"
              x:Class="application.UI.PlaySessionPage">
+
+    <ContentPage.Resources>
+        <cvtr:LineupPositionToStringConverter x:Key="LineupPositionConverter"/>
+        <cvtr:IsPositionDoubleConverter x:Key="IsPositionDoubleConverter"/>
+        <cvtr:PlayerNameOrEmptyConverter x:Key="PlayerNameOrEmptyConverter"/>
+        <cvtr:LeagueEnumStringConverter x:Key="LeagueEnumStringConverter"/>
+    </ContentPage.Resources>
+
     <ContentPage.Content>
         <ScrollView>
-        <StackLayout>
+            <StackLayout>
             
             <StackLayout Margin="15,15,15,15">
                 <Label x:Name="Name" Text="name" FontSize="28" HorizontalOptions="Center"/>
@@ -16,7 +25,7 @@
                 <Label x:Name="Location" Text="{Binding PlaySession.Location}" FontSize="16"/>
             </StackLayout>
 
-            <StackLayout x:Name="PracticeRelevant">
+            <StackLayout x:Name="PracticeRelevant" IsVisible="False">
                 <Frame CornerRadius="4" HasShadow="True" Margin="15,0,15,0">
                      <StackLayout>
                             <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
@@ -41,12 +50,82 @@
                     </StackLayout>
                 </StackLayout>
 
-                <StackLayout x:Name="TeamMatchRelevant">
+                <StackLayout x:Name="TeamMatchRelevant" IsVisible="False">
+                    <Grid Margin="15,15,15,10">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="15"/>
+                            <RowDefinition Height="40"/>
+                            <RowDefinition Height="15"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="120"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Row="0" Grid.Column="0" Text="Captain" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
+                        <Label Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding TeamMatch.Captain.Name}" VerticalOptions="Center"/>
+                        <Label Grid.Row="1" Grid.Column="0" Text="League" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
+                        <Label Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding TeamMatch.League, Converter={StaticResource LeagueEnumStringConverter}}" VerticalOptions="Center"/>
+                        <Label Grid.Row="2" Grid.Column="0" Text="Round" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
+                        <Label Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding TeamMatch.LeagueRound}" VerticalOptions="Center"/>
+                        <Label Grid.Row="3" Grid.Column="0" Text="Season" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
+                        <Label Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding TeamMatch.Season}" VerticalOptions="Center"/>
+                        <Label Grid.Row="4" Grid.Column="0" Text="Team Nr." FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
+                        <Label Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding TeamMatch.TeamIndex}" VerticalOptions="Center"/>
+                        <Label Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Text="Lineup" FontSize="Title" HorizontalOptions="Start" VerticalOptions="Center"/>
+                        <Label Grid.Row="7" Grid.Column="2" HorizontalOptions="End" Text="Reserve:" FontSize="12"/>
+                    </Grid>
+                    <ListView x:Name="LineupList" RowHeight="110" ItemsSource="{Binding Positions}" HeightRequest="{Binding LineupHeight}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <ViewCell>
+                                    <Grid Padding="0" Margin="0" RowSpacing="0" ColumnSpacing="0">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="1*"/>
+                                            <ColumnDefinition Width="6*"/>
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="*"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
 
+                                        <Label Grid.Column="0" Grid.RowSpan="2" VerticalOptions="Center" FontSize="Medium" Text="{Binding Key, Converter={StaticResource LineupPositionConverter}}"/>
+                                        <Grid Grid.Row="0" Grid.Column="1">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="6*"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*"/>
+                                            </Grid.RowDefinitions>
+                                            <Label x:Name="SinglePicker" FontSize="20" Text="{Binding Value.Player, Converter={StaticResource PlayerNameOrEmptyConverter}}" Grid.Column="0" Grid.Row="0" VerticalOptions="Center"/>
+                                            <CheckBox IsChecked="{Binding Value.IsExtra}" IsEnabled="False" Grid.Column="1" Grid.Row="0" VerticalOptions="Center" HorizontalOptions="Center"/>
+                                        </Grid>
+
+                                        <Grid Grid.Row="1" Grid.Column="1">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="6*"/>
+                                                <ColumnDefinition Width="*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="*"/>
+                                            </Grid.RowDefinitions>
+                                            <Label x:Name="DoublePicker" FontSize="20" Text="{Binding Value.OtherPlayer, Converter={StaticResource PlayerNameOrEmptyConverter}}" IsVisible="{Binding Key, Converter={StaticResource IsPositionDoubleConverter}}" Grid.Column="0" Grid.Row="0" VerticalOptions="Center"/>
+                                            <CheckBox IsEnabled="False" IsVisible="{Binding Key, Converter={StaticResource IsPositionDoubleConverter}}" IsChecked="{Binding Value.OtherIsExtra}" Grid.Column="1" Grid.Row="0" HorizontalOptions="CenterAndExpand"/>
+                                        </Grid>
+                                    </Grid>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
                 </StackLayout>
-                <Button x:Name="FeedBackButton" Text="Submit feedback for this practice" Command="{Binding FeedbackCommand}" IsVisible="{Binding PracticeFeedbackIsVisable}"/>
-
-        </StackLayout>
+                <Button x:Name="FeedBackButton" Text="Submit feedback for this session" Command="{Binding FeedbackCommand}"/>
+            </StackLayout>
         </ScrollView>
     </ContentPage.Content>
 </ContentPage>
