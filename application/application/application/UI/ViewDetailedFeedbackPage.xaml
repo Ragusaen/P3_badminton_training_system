@@ -22,7 +22,7 @@
                 <DataTemplate>
                     <ViewCell>
                         <StackLayout Padding="10">
-                            <Button Text="{Binding PlaySession.Start}" TextColor="Black" FontSize="Medium" Command="{Binding BindingContext.ExpandCommand, Source={x:Reference rootpage}}" CommandParameter="{x:Reference Details}"/>
+                            <Button Text="{Binding PlaySession.Start}" BackgroundColor="#ffcccb" TextColor="Black" FontSize="Medium" Command="{Binding BindingContext.ExpandCommand, Source={x:Reference rootpage}}" CommandParameter="{x:Reference Details}"/>
                             <StackLayout x:Name="Details" Margin="0,10,0,0" IsVisible="False">
                                 <Frame HasShadow="True" CornerRadius="5">
                                     <StackLayout>

@@ -1,0 +1,52 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="application.UI.ChooseLineupPlayerPopupPage" Padding="40">
+
+    <StackLayout BackgroundColor="White">
+        <SearchBar Placeholder="Search Player" Text="{Binding SearchText}"/>
+
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="150"/>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="40"/>
+                <ColumnDefinition Width="40"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" FontSize="8" Text="Name"/>
+            <Label Grid.Column="1" FontSize="8" Text="Level"/>
+            <Label Grid.Column="2" FontSize="8" Text="Single"/>
+            <Label Grid.Column="3" FontSize="8" Text="Double"/>
+            <Label Grid.Column="4" FontSize="8" Text="Mix"/>
+        </Grid>
+
+
+        <ListView x:Name="PlayerList" ItemsSource="{Binding Players}" VerticalScrollBarVisibility="Default" ItemSelected="ListView_OnItemSelected" VerticalOptions="Fill" SeparatorVisibility="None">
+            <ListView.ItemTemplate>
+                    <DataTemplate>
+                    <ViewCell>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="150"/>
+                                <ColumnDefinition Width="40"/>
+                                <ColumnDefinition Width="40"/>
+                                <ColumnDefinition Width="40"/>
+                                <ColumnDefinition Width="40"/>
+                            </Grid.ColumnDefinitions>
+                            <Label Grid.Column="0" FontSize="Small" Text="{Binding Member.Name}"/>
+                            <Label Grid.Column="1" FontSize="Small" Text="{Binding Rankings.LevelPoints}"/>
+                            <Label Grid.Column="2" FontSize="Small" Text="{Binding Rankings.SinglesPoints}"/>
+                            <Label Grid.Column="3" FontSize="Small" Text="{Binding Rankings.DoublesPoints}"/>
+                            <Label Grid.Column="4" FontSize="Small" Text="{Binding Rankings.MixPoints}"/>
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+    </StackLayout>
+</pages:PopupPage>
