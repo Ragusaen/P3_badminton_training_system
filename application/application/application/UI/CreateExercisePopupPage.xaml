@@ -11,21 +11,10 @@
 
     <StackLayout BackgroundColor="White">
         <Frame CornerRadius="5" HasShadow="True" Margin="5,10,5,10">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="1.5*"/>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="4*"/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1.5*"/>
-                    <ColumnDefinition Width="4*"/>
-                    <ColumnDefinition Width="1*"/>
-                </Grid.ColumnDefinitions>
-                <Entry Grid.Row="0" Grid.Column="1" Text="{Binding Exercise.Name}" Placeholder="Exercise Theme   " HorizontalOptions="Fill"/>
-                <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" Text="Exercises" FontSize="20" TextDecorations="Underline" HorizontalOptions="Center"/>
-                <Editor Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Placeholder="Descibe exercises here..." Text="{Binding Exercise.Description}" FontSize="16" AutoSize="TextChanges" VerticalOptions="Fill"/>
-            </Grid>
+            <StackLayout>
+            <Entry Grid.Row="0" Grid.Column="1" Text="{Binding Exercise.Name}" Placeholder="Exercise Theme" HorizontalOptions="Fill"/>
+                <Editor Placeholder="Descibe exercises here..." Text="{Binding Exercise.Description}" FontSize="16" AutoSize="TextChanges" VerticalOptions="Fill"/>
+            </StackLayout>
         </Frame>
         <Button Text="Create New" Command="{Binding CreateNewExerciseCommand}"/>
     </StackLayout>
