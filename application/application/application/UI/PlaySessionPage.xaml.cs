@@ -4,8 +4,10 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using application.SystemInterface;
 using application.ViewModel;
 using Common.Model;
+using Rg.Plugins.Popup.Services;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -50,12 +52,17 @@ namespace application.UI
 
             PracticeRelevant.IsVisible = true;
 
-            SetExercises();
+            if (RequestCreator.LoggedInMember.MemberType.HasFlag(MemberType.Trainer))
+            {
+                FocusPointList.IsVisible = true;
+                ExerciseStack.IsVisible = true;
+                SetExercises();
+            }
         }
 
         private void GoToFocusPoint(FocusPointDescriptor fpd)
         {
-            Navigation.PushAsync(new StringAndHeaderPopup(fpd));
+            PopupNavigation.Instance.PushAsync(new StringAndHeaderPopup(fpd));
         }
 
         private void ListView_OnItemSelected(object sender, SelectedItemChangedEventArgs e)
