@@ -35,12 +35,35 @@ namespace application.ViewModel
             }
         }
 
-        private ObservableCollection<PracticeTeam> _practiceTeams;
+        private ObservableCollection<PracticeTeam> _trainerPracticeTeams;
 
-        public ObservableCollection<PracticeTeam> PracticeTeams
+        public ObservableCollection<PracticeTeam> TrainerPracticeTeams
         {
-            get => _practiceTeams;
-            set => SetProperty(ref _practiceTeams, value);
+            get => _trainerPracticeTeams;
+            set => SetProperty(ref _trainerPracticeTeams, value);
+        }
+        private int _trainerPracticeTeamsListHeight;
+
+        public int TrainerPracticeTeamsListHeight
+        {
+            get => _trainerPracticeTeamsListHeight;
+            set => SetProperty(ref _trainerPracticeTeamsListHeight, value);
+        }
+
+        private ObservableCollection<PracticeTeam> _playerPracticeTeams;
+
+        public ObservableCollection<PracticeTeam> PlayerPracticeTeams
+        {
+            get => _playerPracticeTeams;
+            set => SetProperty(ref _playerPracticeTeams, value);
+        }
+
+        private int _playerPracticeTeamsListHeight;
+
+        public int PlayerPracticeTeamsListHeight
+        {
+            get => _playerPracticeTeamsListHeight;
+            set => SetProperty(ref _playerPracticeTeamsListHeight, value);
         }
 
         private ObservableCollection<FocusPointItem> _focusPoints;
@@ -49,14 +72,6 @@ namespace application.ViewModel
         {
             get => _focusPoints;
             set => SetProperty(ref _focusPoints, value);
-        }
-
-        private int _practiceTeamsListHeight;
-
-        public int PracticeTeamsListHeight
-        {
-            get => _practiceTeamsListHeight;
-            set => SetProperty(ref _practiceTeamsListHeight, value);
         }
 
         private int _focusPointsListHeight;
@@ -86,8 +101,8 @@ namespace application.ViewModel
                     FocusPointsListHeight = FocusPoints.Count * 45;
 
                     Player.PracticeTeams = RequestCreator.GetPlayerPracticeTeams(Player);
-                    PracticeTeams = new ObservableCollection<PracticeTeam>(Player.PracticeTeams);
-                    PracticeTeamsListHeight = PracticeTeams.Count * 45;
+                    PlayerPracticeTeams = new ObservableCollection<PracticeTeam>(Player.PracticeTeams);
+                    PlayerPracticeTeamsListHeight = PlayerPracticeTeams.Count * 45;
 
                     List<Feedback> feedbacks = RequestCreator.GetPlayerFeedback(Member);
                     List<Entry> entries = new List<Entry>();
@@ -108,39 +123,58 @@ namespace application.ViewModel
                     else
                         StringMemberType = "Trainer";
 
-                    //TODO: handler for fetching a trainers practice teams
-                    //Trainer.PracticeTeams = RequestCreator.GetTrainerPracticeTeams(Trainer);
-                    //PracticeTeams = new ObservableCollection<PracticeTeam>(Trainer.PracticeTeams);
+                    Trainer.PracticeTeams = RequestCreator.GetTrainerPracticeTeams(Trainer);
+                    TrainerPracticeTeams = new ObservableCollection<PracticeTeam>(Trainer.PracticeTeams);
+                    TrainerPracticeTeamsListHeight = TrainerPracticeTeams.Count * 45;
+                    SetNoTrainerLabel();
                 }
             }
             CommentText = Member?.Comment ?? "Click to add comment";
         }
 
         // Practice Team Section
-        private RelayCommand _addPracticeTeamCommand;
-
-        public RelayCommand AddPracticeTeamCommand
+        private bool _noTrainerVisibility;
+        public bool NoTrainerVisibility
         {
-            get
+            get => _noTrainerVisibility;
+            set => SetProperty(ref _noTrainerVisibility, value);
+        }
+        private void SetNoTrainerLabel()
+        {
+            if (TrainerPracticeTeams == null || TrainerPracticeTeams.Count < 1)
             {
-                return _addPracticeTeamCommand ?? (_addPracticeTeamCommand = new RelayCommand(param => ExecuteAddPracticeTeam(param)));
+                NoTrainerVisibility = true;
+            }
+            else
+            {
+                NoTrainerVisibility = false;
             }
         }
 
-        private void ExecuteAddPracticeTeam(object param)
+        private RelayCommand _addPlayerPracticeTeamCommand;
+
+        public RelayCommand AddPlayerPracticeTeamCommand
+        {
+            get
+            {
+                return _addPlayerPracticeTeamCommand ?? (_addPlayerPracticeTeamCommand = new RelayCommand(param => ExecuteAddPlayerPracticeTeam(param)));
+            }
+        }
+
+        private void ExecuteAddPlayerPracticeTeam(object param)
         {
             var page = new PracticeTeamPopupPage(Player.PracticeTeams);
-            page.CallBackEvent += PracticeTeamPopupPageCallback;
+            page.CallBackEvent += PlayerPracticeTeamPopupPageCallback;
             PopupNavigation.Instance.PushAsync(page);
         }
 
-        private void PracticeTeamPopupPageCallback(object sender, PracticeTeam e)
+        private void PlayerPracticeTeamPopupPageCallback(object sender, PracticeTeam e)
         {
             RequestCreator.SetPlayerPracticeTeams(Player, e);
             var newPracticeTeams = RequestCreator.GetPlayerPracticeTeams(Player);
             Player.PracticeTeams = newPracticeTeams;
-            PracticeTeams = new ObservableCollection<PracticeTeam>(newPracticeTeams);
-            PracticeTeamsListHeight = PracticeTeams.Count * 45;
+            PlayerPracticeTeams = new ObservableCollection<PracticeTeam>(newPracticeTeams);
+            PlayerPracticeTeamsListHeight = PlayerPracticeTeams.Count * 45;
         }
 
         // Focus Point Section
@@ -287,9 +321,9 @@ namespace application.ViewModel
             PracticeTeam practiceTeam = param as PracticeTeam;
             bool answer = await Application.Current.MainPage.DisplayAlert("Delete", $"Are you sure you want to delete {practiceTeam.Name}?", "yes", "no");
             if(answer) {Player.PracticeTeams.Remove(practiceTeam);
-                PracticeTeams.Remove(practiceTeam);
+                PlayerPracticeTeams.Remove(practiceTeam);
                 RequestCreator.DeletePlayerPracticeTeam(Player, practiceTeam);
-                PracticeTeamsListHeight = PracticeTeams.Count * 45;
+                PlayerPracticeTeamsListHeight = PlayerPracticeTeams.Count * 45;
             }
         }
         private RelayCommand _deleteListFocusItemCommand;

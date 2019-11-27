@@ -38,6 +38,7 @@ namespace application.UI
         private void ShownOnlyRelevantInfo()
         {
             BothRelevant.IsVisible = _vm.Member.MemberType != MemberType.None;
+            TrainerRelevant.IsVisible = _vm.Trainer != null;
             PlayerRelevant.IsVisible = _vm.Player != null;
             Settingsicon.IsVisible = RequestCreator.LoggedInMember.MemberType.HasFlag(MemberType.Trainer); // Only trainers can view profile settings
         }

@@ -29,6 +29,11 @@ namespace Server.SystemInterface.Requests.Handlers
             }
             else
             {
+                foreach (var practiceteam in db.practiceteams.Where(p => p.trainer.ID == request.Member.Id))
+                {
+                    practiceteam.trainer = null;
+                }
+
                 _log.Debug($"Member: {request.Member.Name} has been released from Trainer Type");
             }
 
