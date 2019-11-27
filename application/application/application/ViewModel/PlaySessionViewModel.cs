@@ -5,9 +5,11 @@ using System.Diagnostics;
 using System.Globalization;
 using System.Text;
 using System.Threading;
+using application.SystemInterface;
 using application.UI;
 using Common.Model;
 using Common.Serialization;
+using Xamarin.Forms;
 
 namespace application.ViewModel
 {
@@ -62,6 +64,33 @@ namespace application.ViewModel
         private void FeedbackClick(object param)
         {
             Navigation.PushAsync(new SubmitFeedbackPage(PlaySession));
+        }
+
+        public async void EditButtonClicked()
+        {
+            string edit = await Application.Current.MainPage.DisplayActionSheet("Options", "Cancel", null, "Edit", "Remove");
+
+            if (edit == "Edit")
+            {
+                if (PracticeSession != null)
+                {
+                    var page = new CreatePracticePage(PracticeSession);
+                    page.Disappearing += (s, a) => Navigation.PopAsync();
+
+                    await Navigation.PushAsync(page);
+                }
+                else if (TeamMatch != null)
+                    ;// Create Team match
+
+            } else if (edit == "Remove")
+            {
+
+            }
+            else
+            {
+                return;
+            }
+
         }
     }
 }

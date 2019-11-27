@@ -18,7 +18,7 @@ namespace Server.DAL
         public practicesession()
         {
             this.practicesessionexercises = new HashSet<practicesessionexercise>();
-            this.focuspoints = new HashSet<focuspoint>();
+            this.subfocuspoints = new HashSet<focuspoint>();
         }
     
         public int PlaySessionID { get; set; }
@@ -26,13 +26,13 @@ namespace Server.DAL
         public Nullable<int> MainFocusPointID { get; set; }
         public Nullable<int> TeamID { get; set; }
     
-        public virtual focuspoint focuspoint { get; set; }
-        public virtual member member { get; set; }
+        public virtual focuspoint mainfocuspoint { get; set; }
+        public virtual member trainer { get; set; }
         public virtual playsession playsession { get; set; }
         public virtual practiceteam practiceteam { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<practicesessionexercise> practicesessionexercises { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<focuspoint> focuspoints { get; set; }
+        public virtual ICollection<focuspoint> subfocuspoints { get; set; }
     }
 }

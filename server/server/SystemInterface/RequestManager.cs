@@ -65,6 +65,8 @@ namespace Server.SystemInterface.Requests
                 {RequestType.DeletePlayerPracticeTeam, new DeletePlayerPracticeTeamHandler() },
                 {RequestType.DeleteFocusPointDescriptor, new DeleteFocusPointDescriptorHandler() },
                 {RequestType.DeletePracticeTeam, new DeletePracticeTeamHandler() },
+                {RequestType.DeleteTeamMatch, new DeleteTeamMatchHandler() },
+                {RequestType.DeletePracticeSession, new DeletePracticeSessionHandler() },
                 //Creators below
                 {RequestType.CreateFocusPointDescriptor, new CreateFocusPointDescriptorHandler() },
                 {RequestType.SetExerciseDiscriptor, new SetExerciseDescriptorHandler() },

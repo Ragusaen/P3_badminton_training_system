@@ -5,12 +5,17 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="application.UI.PlaySessionPage">
+    <NavigationPage.TitleView>
+        <StackLayout Orientation="Horizontal">
+            <Label x:Name="Name" Text="name" FontAttributes="Bold" FontSize="30" TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+            <ImageButton Source="" x:Name="EditButton" HeightRequest="30" VerticalOptions="CenterAndExpand" HorizontalOptions="End" Margin="0,0,15,0" BackgroundColor="Red"/>
+        </StackLayout>
+    </NavigationPage.TitleView>
     <ContentPage.Content>
         <ScrollView>
         <StackLayout>
             
             <StackLayout Margin="15,15,15,15">
-                <Label x:Name="Name" Text="name" FontSize="28" HorizontalOptions="Center"/>
                 <Label x:Name="Date" Text="date" FontSize="16"/>
                 <Label x:Name="Time" Text="time" FontSize="16"/>
                 <Label x:Name="Location" Text="{Binding PlaySession.Location}" FontSize="16"/>

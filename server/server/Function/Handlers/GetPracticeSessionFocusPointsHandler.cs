@@ -17,7 +17,7 @@ namespace Server.SystemInterface.Requests.Handlers
             return new GetPracticeSessionFocusPointsResponse
             {
                 FocusPoints = db.practicesessions.
-                    Single(p => p.PlaySessionID == request.PlaySessionId).focuspoints.
+                    Single(p => p.PlaySessionID == request.PlaySessionId).subfocuspoints.
                     Select(p => (Common.Model.FocusPointDescriptor) p).
                     ToList()
             };
