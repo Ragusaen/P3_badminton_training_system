@@ -186,7 +186,7 @@ namespace application.ViewModel
             set
             {
                 if (SetProperty(ref _positions, value))
-                    LineupHeight = _positions.Count * 110;
+                    LineupHeight = _positions.Count * 120;
             }
         }
 
@@ -206,13 +206,31 @@ namespace application.ViewModel
             set { SetProperty(ref _members, value); }
         }
 
-        public CreateMatchViewModel()
+        public CreateMatchViewModel(DateTime startDate)
         {
             Members = new ObservableCollection<Member>(RequestCreator.GetAllMembers().OrderBy(p => p.Name));
             Players = new ObservableCollection<Player>(RequestCreator.GetAllPlayers().OrderBy(p => p.Member.Name));
-            SelectedDateStart = DateTime.Today;
+            SelectedDateStart = startDate;
             SelectedLeague = TeamMatch.Leagues.BadmintonLeague;
             Location = "Stjernevej 5, 9200 Aalborg";
+        }
+
+        private void RemoveSamePlayerDouble(Lineup lineup)
+        {
+            foreach (var group in lineup)
+            {
+                for (int i = 0; i < group.Positions.Count; i++)
+                {
+                    var pos = group.Positions[i];
+                    if (Lineup.PositionType.Double.HasFlag(group.Type) && pos.Player != null && pos.OtherPlayer != null &&
+                        pos.Player.Member.Id == group.Positions[i].OtherPlayer.Member.Id)
+                    {
+                        pos.OtherPlayer = null;
+                        pos.OtherIsExtra = false;
+                    }
+                }
+            }
+
         }
 
         private RelayCommand _verifyLineupCommand;
@@ -366,6 +384,7 @@ namespace application.ViewModel
                 Season = Season,
                 TeamIndex = TeamIndex
             };
+            RemoveSamePlayerDouble(match.Lineup);
             RequestCreator.SetTeamMatch(match);
 
             //Navigate back

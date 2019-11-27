@@ -41,7 +41,7 @@ namespace Server.Function.Rules
 
         private void CheckPlayersReserveRound(TeamMatch match)
         {
-            List<Position> positions = GetPlayersInLeagueRound(match.LeagueRound, match.Season, match.ID);
+            List<Position> positions = GetPlayersInLeagueRound(match.LeagueRound, match.Season, match.Id);
             foreach (var group in match.Lineup)
             {
                 for (int i = 0; i < group.Positions.Count; i++)
@@ -67,7 +67,7 @@ namespace Server.Function.Rules
 
         private void CheckPlayersReserveLastRound(TeamMatch match)
         {
-            List<Position> positions = GetPlayersInLeagueRound(match.LeagueRound - 1, match.Season, match.ID);
+            List<Position> positions = GetPlayersInLeagueRound(match.LeagueRound - 1, match.Season, match.Id);
             foreach (var group in match.Lineup)
             {
                 for (int i = 0; i < group.Positions.Count; i++)

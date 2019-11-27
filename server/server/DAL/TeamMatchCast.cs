@@ -14,7 +14,7 @@ namespace Server.DAL
             var db = new DatabaseEntities();
             return new TeamMatch()
             {
-                ID = tm.PlaySessionID,
+                Id = tm.PlaySessionID,
                 Captain = (Member)db.members.First(p => p.ID == tm.CaptainID),
                 End = tm.playsession.EndDate,
                 Start = tm.playsession.StartDate,

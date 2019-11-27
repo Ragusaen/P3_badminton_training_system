@@ -16,15 +16,16 @@ namespace Server.Function.Rules
             {
                 for (int i = 0; i < group.Positions.Count; i++)
                 {
+                    var pos = group.Positions[i];
                     if (group.Type == Lineup.PositionType.MixDouble)
                     {
-                        CheckMixSex();
+                        CheckMixSex(pos, i);
                     }
                     else
                     {
-                        if(group.Positions[i].Player != null && !SexGood(group.Type, group.Positions[i].Player.Sex))
+                        if(pos.Player != null && !SexGood(group.Type, pos.Player.Sex))
                             _ruleBreaks.Add(new RuleBreak((group.Type, i), 0, "Player sex does not match position!"));
-                        if(Lineup.PositionType.Double.HasFlag(group.Type) && group.Positions[i].OtherPlayer != null && !SexGood(group.Type, group.Positions[i].OtherPlayer.Sex))
+                        if(Lineup.PositionType.Double.HasFlag(group.Type) && pos.OtherPlayer != null && !SexGood(group.Type, pos.OtherPlayer.Sex))
                             _ruleBreaks.Add(new RuleBreak((group.Type, i), 1, "Player sex does not match position!"));
                     }
                 }
@@ -32,9 +33,16 @@ namespace Server.Function.Rules
             return _ruleBreaks;
         }
 
-        private void CheckMixSex()
+        private void CheckMixSex(Position mix, int index)
         {
-            //TODO: Fix this 
+            if (mix.Player != null && mix.OtherPlayer != null)
+            {
+                if (!(mix.Player.Sex == Sex.Male && mix.OtherPlayer.Sex == Sex.Female) && !(mix.Player.Sex == Sex.Female && mix.OtherPlayer.Sex == Sex.Male))
+                {
+                    _ruleBreaks.Add(new RuleBreak((Lineup.PositionType.MixDouble, index), 0, "Mix double must have a male and a female player!"));
+                    _ruleBreaks.Add(new RuleBreak((Lineup.PositionType.MixDouble, index), 1, "Mix double must have a male and a female player!"));
+                }
+            }
         }
 
         private bool SexGood(Lineup.PositionType positionType, Sex sex)

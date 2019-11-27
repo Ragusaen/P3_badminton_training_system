@@ -19,7 +19,6 @@ namespace Common.Model
             Series2Nordjylland
         }
 
-        public int ID { get; set; }
         public int Season { get; set; }
         public Leagues League { get; set; }
         public int LeagueRound { get; set; }
