@@ -15,11 +15,34 @@ namespace Server.Function.Rules
         public List<RuleBreak> Rule(TeamMatch match)
         {
             _ruleBreaks = new List<RuleBreak>();
+            Dictionary<int, int> playerCount;
 
-            //TODO: FIX
-            throw new NotImplementedException();
+            foreach (var group in match.Lineup)
+            {
+                playerCount = new Dictionary<int, int>();
+                foreach (var pos in group.Positions)
+                {
+                    if (pos.Player != null)
+                        playerCount[pos.Player.Member.Id]++;
 
+                    if (Lineup.PositionType.Double.HasFlag(group.Type) && pos.OtherPlayer != null)
+                        playerCount[pos.OtherPlayer.Member.Id]++;
+                }
+                playerCount.Where(p => p.Value > 1).ToList().ForEach(p => AddRuleBreaks(p.Key, group));
+            }
             return _ruleBreaks;
+        }
+
+        private void AddRuleBreaks(int illegalPlayerId, Lineup.Group group)
+        {
+            for (int i = 0; i < group.Positions.Count; i++)
+            {
+                var pos = group.Positions[i];
+                if(illegalPlayerId == pos.Player.Member.Id)
+                    _ruleBreaks.Add(new RuleBreak((group.Type, i), 0, "Player can not play twice in same position type!"));
+                if(Lineup.PositionType.Double.HasFlag(group.Type) && illegalPlayerId == pos.OtherPlayer.Member.Id)
+                    _ruleBreaks.Add(new RuleBreak((group.Type, i), 1, "Player can not play twice in same position type!"));
+            }
         }
     }
 }

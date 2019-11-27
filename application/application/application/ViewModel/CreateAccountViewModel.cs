@@ -19,6 +19,7 @@ namespace application.ViewModel
 
         public CreateAccountViewModel()
         {
+            ShownPlayerList = new ObservableCollection<Player>();
             SearchText = "";
             _availablePlayers = RequestCreator.GetPlayersWithNoAccount();
             UpdatePlayerList();

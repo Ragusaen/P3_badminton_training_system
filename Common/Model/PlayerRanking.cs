@@ -16,12 +16,12 @@ namespace Common.Model
             Unknown, D, CD, C, BC, B, AB, A, MA, M, EM, E
         }
 
-        public AgeGroup Age;
-        public LevelGroup Level;
-        public int LevelPoints;
-        public int SinglesPoints;
-        public int DoublesPoints;
-        public int MixPoints;
+        public AgeGroup Age { get; set; }
+        public LevelGroup Level { get; set; }
+        public int LevelPoints { get; set; }
+        public int SinglesPoints { get; set; }
+        public int DoublesPoints { get; set; }
+        public int MixPoints { get; set; }
 
         public override string ToString()
         {

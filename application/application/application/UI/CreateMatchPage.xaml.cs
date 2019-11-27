@@ -21,5 +21,6 @@ namespace application.UI
             vm.Navigation = Navigation;
             SaveIcon.Source = ImageSource.FromResource("application.Images.saveicon.png");
         }
+
     }
 }
