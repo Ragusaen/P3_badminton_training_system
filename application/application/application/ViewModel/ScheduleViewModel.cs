@@ -124,8 +124,8 @@ namespace application.ViewModel
                 }
                 else if (ps is TeamMatch tm)
                 {
-                    psEvent.Name = tm.OpponentName; // Change to team name
-                    psEvent.Detail = Enum.GetName(typeof(TeamMatch.Leagues), tm.League);
+                    psEvent.Name = Enum.GetName(typeof(TeamMatch.Leagues), tm.League);
+                    psEvent.Detail = tm.OpponentName;
                     psEvent.Color = Color.CornflowerBlue;
                 }
 

@@ -29,7 +29,7 @@
                                     <Label HorizontalOptions="EndAndExpand" Text="{Binding Time}"/>
                                 </StackLayout>
                                 <Label Text="{Binding Detail}"/>
-                                <Label FontAttributes="Italic" Text="{Binding Location}"/>
+                                <Label FontAttributes="Italic" Text="{Binding Location}" Margin="2,0,0,0"/>
                             </StackLayout>
                         </Frame>
                     </ViewCell>
