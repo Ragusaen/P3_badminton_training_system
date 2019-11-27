@@ -504,5 +504,16 @@ namespace application.SystemInterface
 
             SimpleRequest<DeleteTeamMatchRequest, DeleteTeamMatchResponse>(RequestType.DeleteTeamMatch, request);
         }
+
+        public static void DeletePracticeSession(int id)
+        {
+            var request = new DeletePracticeSessionRequest
+            {
+                Id = id,
+            };
+
+            SimpleRequest<DeletePracticeSessionRequest, DeletePracticeSessionResponse>(
+                RequestType.DeletePracticeSession, request);
+        }
     }
 }

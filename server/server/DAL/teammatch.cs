@@ -28,7 +28,7 @@ namespace Server.DAL
         public int TeamIndex { get; set; }
         public int Season { get; set; }
     
-        public virtual member member { get; set; }
+        public virtual member captain { get; set; }
         public virtual playsession playsession { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<position> positions { get; set; }
