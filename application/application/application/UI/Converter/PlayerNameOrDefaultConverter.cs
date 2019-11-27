@@ -2,17 +2,16 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
+using Common.Model;
 using Xamarin.Forms;
 
 namespace application.UI.Converter
 {
-    class ErrorMessageColorConverter : IValueConverter
+    class PlayerNameOrDefaultConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if (value == null)
-                return Color.Gray;
-            return string.IsNullOrEmpty(value.ToString()) ? Color.Black : Color.Red;
+            return value == null ? "Select Player" : ((Player) value).Member.Name;
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

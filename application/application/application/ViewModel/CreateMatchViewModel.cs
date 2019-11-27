@@ -219,8 +219,8 @@ namespace application.ViewModel
 
         public CreateMatchViewModel()
         {
-            Members = new ObservableCollection<Member>(RequestCreator.GetAllMembers());
-            Players = new ObservableCollection<Player>(RequestCreator.GetAllPlayers());
+            Members = new ObservableCollection<Member>(RequestCreator.GetAllMembers().OrderBy(p => p.Name));
+            Players = new ObservableCollection<Player>(RequestCreator.GetAllPlayers().OrderBy(p => p.Member.Name));
             SelectedDateStart = DateTime.Today;
             SelectedLeague = TeamMatch.Leagues.BadmintonLeague;
             Location = "Stjernevej 5, 9200 Aalborg";
@@ -292,6 +292,53 @@ namespace application.ViewModel
             foreach(var posError in posErrors)
                 pos.Add(new Position() {IsExtra = posError.IsExtra, Player = posError.Player, OtherIsExtra = posError.OtherIsExtra, OtherPlayer = posError.OtherPlayer});
             return pos;
+        }
+
+        private RelayCommand _selectSinglePlayerCommand;
+
+        public RelayCommand SelectSinglePlayerCommand
+        {
+            get
+            {
+                return _selectSinglePlayerCommand ?? (_selectSinglePlayerCommand = new RelayCommand(param => ExecuteSelectPlayerCommand(param, 0)));
+            }
+        }
+
+        private RelayCommand _selectDoublePlayerCommand;
+
+        public RelayCommand SelectDoublePlayerCommand
+        {
+            get
+            {
+                return _selectDoublePlayerCommand ?? (_selectDoublePlayerCommand = new RelayCommand(param => ExecuteSelectPlayerCommand(param, 1)));
+            }
+        }
+
+
+        private void ExecuteSelectPlayerCommand(object param, int index)
+        {
+            var pos = ((Lineup.PositionType, int))param;
+
+            ChooseLineupPlayerPopupPage page = new ChooseLineupPlayerPopupPage();
+            page.CallBackEvent += (sender, e) => SetChosenPlayer(sender, e, pos, index);
+            PopupNavigation.Instance.PushAsync(page);
+        }
+
+        private void SetChosenPlayer(object sender, Player e, (Lineup.PositionType, int) pos, int index)
+        {
+            var newPositions = new Dictionary<(Lineup.PositionType, int), PositionError>(Positions);
+            foreach (var p in newPositions)
+            {
+                if (p.Key.Item1 == pos.Item1 && p.Key.Item2 == pos.Item2)
+                {
+                    if (index == 0)
+                        p.Value.Player = e;
+                    else 
+                        p.Value.OtherPlayer = e;
+                }
+            }
+
+            Positions = newPositions;
         }
 
         private RelayCommand _saveMatchClickCommand;

@@ -19,6 +19,7 @@
         <cvtr:IsPositionDoubleConverter x:Key="IsPositionDoubleConverter"/>
         <cvtr:IsDoubleRowSpanConverter x:Key="IsDoubleRowSpanConverter"/>
         <cvtr:ErrorMessageColorConverter x:Key="ErrorMessageColorConverter"/>
+        <cvtr:PlayerNameOrDefaultConverter x:Key="PlayerNameOrDefaultConverter"/>
     </ContentPage.Resources>
     
     <ScrollView>
@@ -71,7 +72,7 @@
             </Grid>
 
 
-            <ListView RowHeight="110" ItemsSource="{Binding Positions}" HeightRequest="{Binding LineupHeight}">
+            <ListView x:Name="LineupList" RowHeight="110" ItemsSource="{Binding Positions}" HeightRequest="{Binding LineupHeight}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -86,18 +87,24 @@
                                 </Grid.RowDefinitions>
                                 
                                 <Label Grid.Column="0" Grid.RowSpan="2" VerticalOptions="Center" FontSize="Medium" Text="{Binding Key, Converter={StaticResource LineupPositionConverter}}"/>
-                                <Grid Grid.Row="0" Grid.Column="1" Grid.RowSpan="{Binding Source={x:Reference DoublePicker}, Path=IsVisible, Converter={StaticResource IsDoubleRowSpanConverter}}">
+                                <Grid Grid.Row="0" Grid.Column="1">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="6*"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="4*"/>
+                                        <RowDefinition Height="1"/>
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
-                                    <Picker x:Name="SinglePicker" Title="Select Player" Grid.Column="0" Grid.Row="0" Margin="0" ItemsSource="{Binding BindingContext.Players, Source={x:Reference rootpage}}" ItemDisplayBinding="{Binding Member.Name}" SelectedItem="{Binding Value.Player}" VerticalOptions="Center" TextColor="{Binding Value.Error, Converter={StaticResource ErrorMessageColorConverter}}"/>
+                                    <Label x:Name="SinglePicker" FontSize="14" Text="{Binding Value.Player, Converter={StaticResource PlayerNameOrDefaultConverter}}" Grid.Column="0" Grid.Row="0" VerticalOptions="Center" TextColor="{Binding Value.Error, Converter={StaticResource ErrorMessageColorConverter}}">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding BindingContext.SelectSinglePlayerCommand, Source={x:Reference rootpage}}" CommandParameter="{Binding Key}" />
+                                        </Label.GestureRecognizers>
+                                    </Label>
+                                    <BoxView Grid.Row="1" Grid.Column="0" Color="Black"/>
                                     <CheckBox IsChecked="{Binding Value.IsExtra}" Grid.Column="1" Grid.Row="0" VerticalOptions="Center" HorizontalOptions="Center"/>
-                                    <Label Grid.Column="0" Grid.Row="1" TextColor="Red" FontSize="8" Text="{Binding Value.Error}" VerticalOptions="Start"/>
+                                    <Label Grid.Column="0" Grid.Row="2" TextColor="Red" FontSize="8" Text="{Binding Value.Error}" VerticalOptions="Start"/>
                                 </Grid>
                                 
                                 <Grid Grid.Row="1" Grid.Column="1">
@@ -107,11 +114,17 @@
                                     </Grid.ColumnDefinitions>
                                     <Grid.RowDefinitions>
                                         <RowDefinition Height="4*"/>
+                                        <RowDefinition Height="1"/>
                                         <RowDefinition Height="*"/>
                                     </Grid.RowDefinitions>
-                                    <Picker x:Name="DoublePicker" Title="Select Player" IsVisible="{Binding Key, Converter={StaticResource IsPositionDoubleConverter}}" Grid.Column="0" Grid.Row="0" Margin="0" ItemsSource="{Binding BindingContext.Players, Source={x:Reference rootpage}}" ItemDisplayBinding="{Binding Member.Name}" SelectedItem="{Binding Value.OtherPlayer}" TextColor="{Binding Value.OtherError, Converter={StaticResource ErrorMessageColorConverter}}"/>
+                                    <Label x:Name="DoublePicker" FontSize="14" Text="{Binding Value.OtherPlayer, Converter={StaticResource PlayerNameOrDefaultConverter}}" IsVisible="{Binding Key, Converter={StaticResource IsPositionDoubleConverter}}" Grid.Column="0" Grid.Row="0" VerticalOptions="Center" TextColor="{Binding Value.OtherError, Converter={StaticResource ErrorMessageColorConverter}}">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding BindingContext.SelectDoublePlayerCommand, Source={x:Reference rootpage}}" CommandParameter="{Binding Key}" />
+                                        </Label.GestureRecognizers>
+                                    </Label>
+                                    <BoxView Grid.Row="1" Grid.Column="0" Color="Black" IsVisible="{Binding Key, Converter={StaticResource IsPositionDoubleConverter}}"/>
                                     <CheckBox IsVisible="{Binding Key, Converter={StaticResource IsPositionDoubleConverter}}" IsChecked="{Binding Value.OtherIsExtra}" Grid.Column="1" Grid.Row="0" HorizontalOptions="CenterAndExpand"/>
-                                    <Label Grid.Column="0" Grid.Row="1" TextColor="Red" FontSize="8" Text="{Binding Value.OtherError}" VerticalOptions="Start"/>
+                                    <Label Grid.Column="0" Grid.Row="2" TextColor="Red" FontSize="8" Text="{Binding Value.OtherError}" VerticalOptions="Start"/>
                                 </Grid>
                             </Grid>
                         </ViewCell>
