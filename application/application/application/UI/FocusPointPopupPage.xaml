@@ -7,9 +7,10 @@
      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
      xmlns:cvtr="clr-namespace:application.UI.Converter"
      mc:Ignorable="d"
-     x:Class="application.UI.FocusPointPopupPage" Padding="40,150,40,150">
-    
-    <StackLayout BackgroundColor="White">
+     x:Class="application.UI.FocusPointPopupPage">
+
+    <StackLayout Padding="24" Spacing="24" Margin="12">
+        <StackLayout BackgroundColor="White">
         <SearchBar Placeholder="Search Focus Point" Text="{Binding SearchText}"/>
         <ListView VerticalScrollBarVisibility="Always" ItemSelected="ListView_ItemSelected" ItemsSource="{Binding FocusPoints}" SeparatorVisibility="None">
             <ListView.ItemTemplate>
@@ -21,5 +22,6 @@
             </ListView.ItemTemplate>
         </ListView>
         <Button Text="Create New" Command="{Binding CreateNewFocusPointDescriptorClick}"/>
+    </StackLayout>
     </StackLayout>
 </pages:PopupPage>
