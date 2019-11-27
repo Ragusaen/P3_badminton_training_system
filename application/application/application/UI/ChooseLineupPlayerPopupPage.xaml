@@ -5,8 +5,10 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="application.UI.ChooseLineupPlayerPopupPage" Padding="40">
-    <StackLayout BackgroundColor="White" VerticalOptions="Center" HorizontalOptions="FillAndExpand" Padding="20">
+             x:Class="application.UI.ChooseLineupPlayerPopupPage">
+    
+    <StackLayout Padding="24" Spacing="24" Margin="12">
+        <StackLayout BackgroundColor="White">
         <SearchBar Placeholder="Search Player" Text="{Binding SearchText}"/>
 
         <Grid>
@@ -23,6 +25,7 @@
             <Label Grid.Column="3" FontSize="9" Text="Double"/>
             <Label Grid.Column="4" FontSize="9" Text="Mix"/>
         </Grid>
+
 
         <ListView x:Name="PlayerList" ItemsSource="{Binding Players}" VerticalScrollBarVisibility="Default" ItemSelected="ListView_OnItemSelected" VerticalOptions="Fill" SeparatorVisibility="None">
             <ListView.ItemTemplate>
@@ -46,5 +49,6 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+    </StackLayout>
     </StackLayout>
 </pages:PopupPage>

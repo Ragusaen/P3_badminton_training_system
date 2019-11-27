@@ -2,7 +2,6 @@
 namespace Common
 {
     public enum RequestType {
-        ConnectionTest,
         Login,
         CreateAccount,
         VerifyLineup,
@@ -43,6 +42,8 @@ namespace Common
         DeleteFocusPointDescriptor,
         DeletePracticeTeam,
         GetExercises,
+        DeleteTeamMatch,
+        DeletePracticeSession,
         //Creators below
         CreateFocusPointDescriptor,
         SetExerciseDiscriptor,

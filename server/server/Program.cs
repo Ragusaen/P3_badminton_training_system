@@ -23,12 +23,12 @@ namespace Server
 
             var ps = new practicesession()
             {
-                member = new member
+                trainer= new member
                 {
                     MemberType = (int)MemberType.Trainer,
                     Name = "John Bob"
                 },
-                focuspoints = new List<focuspoint>()
+                subfocuspoints = new List<focuspoint>()
                 {
                     new focuspoint()
                     {
@@ -43,7 +43,7 @@ namespace Server
                     Location = "Aalborg Triton",
                     Type = 1
                 },
-                focuspoint = new focuspoint()
+                mainfocuspoint = new focuspoint()
                 {
                     Name = "Smash",
                     Description = "Hit the ball hard"

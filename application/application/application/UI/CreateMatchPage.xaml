@@ -46,7 +46,7 @@
                 <Label Grid.Row="0" Grid.Column="0" Text="Opponent" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
                 <Entry Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Placeholder="Enter opponent team name" Text="{Binding OpponentName}" VerticalOptions="Center"/>
                 <Label Grid.Row="1" Grid.Column="0" Text="Date" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
-                <StackLayout Orientation="Horizontal" Grid.Row="1" Grid.Column="1">
+                <StackLayout Orientation="Horizontal" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2">
                     <DatePicker MinimumDate="{Binding MinDate}" Date="{Binding SelectedDateStart}"/>
                     <TimePicker Format="HH:mm" Time="{Binding SelectedTimeStart}" x:Name="StartDate"/>
                     <Label Text="-" VerticalOptions="Center"/>

@@ -108,9 +108,9 @@ namespace application.ViewModel
                     List<Entry> entries = new List<Entry>();
                     foreach (Feedback fb in feedbacks)
                     {
-                        entries.Add(new Entry(((float)fb.ReadyQuestion + (float)fb.EffortQuestion + (float)fb.ChallengeQuestion + (float)fb.AbsorbQuestion) / 4) { Color = SKColor.Parse("#33ccff"), Label = fb.PlaySession.Start.Date.ToString()});
+                        entries.Add(new Entry(((float)fb.ReadyQuestion + (float)fb.EffortQuestion + (float)fb.ChallengeQuestion + (float)fb.AbsorbQuestion) / 4) { Color = SKColor.Parse("#33ccff"), ValueLabel = fb.PlaySession.Start.Date.ToString("dd/MM-yyyy") });
                     }
-                    Chart = new LineChart { Entries = entries, LineMode = LineMode.Straight, PointMode = PointMode.Circle, LabelTextSize = 25, PointSize = 12 };
+                    Chart = new LineChart { Entries = entries, LineMode = LineMode.Straight, PointMode = PointMode.Circle, LabelTextSize = 25, PointSize = 12, MaxValue = 2, MinValue = -2 };
                 }
                 if (Member.MemberType.HasFlag(MemberType.Trainer))
                 {

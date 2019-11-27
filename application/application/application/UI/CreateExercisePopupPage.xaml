@@ -7,9 +7,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:cvtr="clr-namespace:application.UI.Converter"
              mc:Ignorable="d"
-             x:Class="application.UI.CreateExercisePopupPage" Padding="40,150,40,150">
+             x:Class="application.UI.CreateExercisePopupPage">
 
-    <StackLayout BackgroundColor="White">
+    <StackLayout Padding="24" Spacing="24" Margin="12">
+        <StackLayout BackgroundColor="White">
         <Frame CornerRadius="5" HasShadow="True" Margin="5,10,5,10">
             <StackLayout>
             <Entry Grid.Row="0" Grid.Column="1" Text="{Binding Exercise.Name}" Placeholder="Exercise Theme" HorizontalOptions="Fill"/>
@@ -17,5 +18,6 @@
             </StackLayout>
         </Frame>
         <Button Text="Create New" Command="{Binding CreateNewExerciseCommand}"/>
+    </StackLayout>
     </StackLayout>
 </pages:PopupPage>
