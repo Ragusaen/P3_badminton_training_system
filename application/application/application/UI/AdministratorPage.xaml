@@ -15,11 +15,11 @@
 
     <ContentPage.Content>
         <ScrollView>
-            <StackLayout>
-                <Label Text="Members" FontAttributes="Bold" FontSize="Medium" TextColor="#BB0000" Margin="10,0,0,0"/>
+            <StackLayout Padding="10,10,10,10">
                 <Frame HasShadow="True" CornerRadius="5">
                     <StackLayout>
-                    <SearchBar Placeholder="Member Name" Text="{Binding SearchMemberText}"/>
+                        <Label Text="Members" FontAttributes="Bold" FontSize="Large" TextColor="#BB0000" Margin="10,0,0,0"/>
+                        <SearchBar Placeholder="Member Name" Text="{Binding SearchMemberText}"/>
                     <ListView ItemsSource="{Binding MemberList}" ItemSelected="ListView_OnItemSelected" VerticalScrollBarVisibility="Never" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="225">
                         <ListView.ItemTemplate>
                             <DataTemplate>
@@ -33,10 +33,11 @@
                     </ListView>
                 </StackLayout>
             </Frame>
-                <Label Text="Practice Teams" FontAttributes="Bold" FontSize="Medium" TextColor="#BB0000" Margin="10,0,0,0"/>
+
             <Frame HasShadow="True" CornerRadius="5">
                 <StackLayout>
-                    <SearchBar Placeholder="Practice Team Name" Text="{Binding SearchTeamText}"/>
+                        <Label Text="Practice Teams" FontAttributes="Bold" FontSize="Large" TextColor="#BB0000" Margin="10,0,0,0"/>
+                        <SearchBar Placeholder="Practice Team Name" Text="{Binding SearchTeamText}"/>
                         <ListView x:Name="PracticeTeamList" ItemsSource="{Binding PracticeTeamList}" VerticalScrollBarVisibility="Never" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="225" ItemSelected="PracticeTeamListView_ItemSelected">
                             <ListView.ItemTemplate>
                             <DataTemplate>
@@ -59,10 +60,11 @@
                     <Button x:Name="CreatePracticeTeamButton" Text="Create New Team" Command="{Binding NewPracticeTeamCommand}"/>
                 </StackLayout>
             </Frame>
-                <Label Text="Focus Points" FontAttributes="Bold" FontSize="Medium" TextColor="#BB0000" Margin="10,0,0,0"/>
+
                 <Frame HasShadow="True" CornerRadius="5">
                 <StackLayout>
-                    <SearchBar Placeholder="Focus point name" Text="{Binding SearchFocusPointText}"/>
+                        <Label Text="Focus Points" FontAttributes="Bold" FontSize="Large" TextColor="#BB0000" Margin="10,0,0,0"/>
+                        <SearchBar Placeholder="Focus point name" Text="{Binding SearchFocusPointText}"/>
                         <ListView x:Name="FocusPointList" ItemsSource="{Binding FocusPointList}" VerticalScrollBarVisibility="Never" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="225" ItemSelected="FocusPointListView_ItemSelected">
                         <ListView.ItemTemplate>
                             <DataTemplate>

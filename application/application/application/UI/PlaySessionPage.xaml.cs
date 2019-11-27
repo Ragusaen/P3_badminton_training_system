@@ -33,7 +33,6 @@ namespace application.UI
             if (_vm.TeamMatch != null)
             {
                 Name.Text = _vm.TeamMatch.OpponentName;
-
                 TeamMatchRelevant.IsVisible = true;
             }
             else if (_vm.PracticeSession != null)

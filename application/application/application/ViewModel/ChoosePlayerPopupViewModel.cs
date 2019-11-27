@@ -21,7 +21,7 @@ namespace application.ViewModel
             {
                 SetProperty(ref _searchText, value);
                 if (string.IsNullOrEmpty(_searchText))
-                    Players = new ObservableCollection<Player>(Players.OrderByDescending(p => p.Member.Name).ToList());
+                    Players = new ObservableCollection<Player>(Players.OrderBy(p => p.Member.Name).ToList());
                 else
                 {
                     Players = new ObservableCollection<Player>(_players.OrderByDescending(

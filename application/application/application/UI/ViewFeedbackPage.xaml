@@ -21,7 +21,7 @@
                     
                     <Frame CornerRadius="5" HasShadow="True">
                         <StackLayout>
-                            <Label Text="How ready did you feel to train today?" TextColor="Black" FontSize="Small" VerticalTextAlignment="Center"/>
+                            <Label Text="How ready did you feel today?" TextColor="Black" FontSize="Small" VerticalTextAlignment="Center"/>
                             <microcharts:ChartView Chart="{Binding Chart}" HeightRequest="300" Margin="-80, 0, -80, 0"/>
                         </StackLayout>
                     </Frame>
@@ -35,14 +35,14 @@
                     
                     <Frame CornerRadius="5" HasShadow="True">
                         <StackLayout>
-                            <Label Text="How were you challenged today in relation to the exercises?" TextColor="Black" FontSize="Small" VerticalTextAlignment="Center"/>
+                            <Label Text="How were you challenged today" TextColor="Black" FontSize="Small" VerticalTextAlignment="Center"/>
                             <microcharts:ChartView Chart="{Binding Chart2}" HeightRequest="300" Margin="-80, 0, -80, 0"/>
                         </StackLayout>
                     </Frame>
                     
                     <Frame CornerRadius="5" HasShadow="True">
                         <StackLayout>
-                            <Label Text="To what extent were you absorbed by the training today?" TextColor="Black" FontSize="Small" VerticalTextAlignment="Center"/>
+                            <Label Text="To what extent were you absorbed?" TextColor="Black" FontSize="Small" VerticalTextAlignment="Center"/>
                             <microcharts:ChartView Chart="{Binding Chart3}" HeightRequest="300" Margin="-80, 0, -80, 0"/>
                         </StackLayout>
                     </Frame>

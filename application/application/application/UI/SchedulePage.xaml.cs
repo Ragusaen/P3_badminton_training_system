@@ -20,9 +20,6 @@ namespace application.UI
         {
             InitializeComponent();
 
-            _vm = new ScheduleViewModel();
-            BindingContext = _vm;
-            _vm.Navigation = Navigation;
             Plusicon.Source = ImageSource.FromResource("application.Images.plusicon.jpg");
         }
 
@@ -60,6 +57,14 @@ namespace application.UI
                 Navigation.PopAsync();
             };
             await Navigation.PushAsync(page);
+                await Navigation.PushAsync(new CreateMatchPage(_vm.SelectedDate));
+        }
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            _vm = new ScheduleViewModel();
+            BindingContext = _vm;
+            _vm.Navigation = Navigation;
         }
     }
 }

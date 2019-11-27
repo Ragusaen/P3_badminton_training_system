@@ -15,10 +15,15 @@
         </StackLayout>
     </NavigationPage.TitleView>
 
-    <StackLayout>
-        <controls:Calendar SelectedDate="{Binding SelectedDate}" Month="{Binding Month}" Year="{Binding Year}" Events="{Binding Events}" x:Name="Calendar" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" YearLabelColor="Red" SelectedDateColor="Red" MonthLabelColor="Red" SelectedDayBackgroundColor="Red"/>
 
-        <ListView ItemsSource="{Binding SelectedEvents}" RowHeight="100" ItemSelected="ListView_OnItemSelected">
+        <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <controls:Calendar Grid.Row="0" SelectedDate="{Binding SelectedDate}" Month="{Binding Month}" Year="{Binding Year}" Events="{Binding Events}" x:Name="Calendar" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" YearLabelColor="Red" SelectedDateColor="Red" MonthLabelColor="Red" SelectedDayBackgroundColor="Red"/>
+
+        <ListView Grid.Row="1" ItemsSource="{Binding SelectedEvents}" RowHeight="100" ItemSelected="ListView_OnItemSelected">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
@@ -36,6 +41,6 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-    </StackLayout>
+    </Grid>
 
 </ContentPage>

@@ -15,60 +15,64 @@
 
     <StackLayout>
         <Label Text="{Binding Path=Player.Member.Name, StringFormat='Choose the feedback date for {0} to show details'}" FontSize="Large" TextColor="Black"/>
-        <ListView ItemsSource="{Binding Player.Feedbacks}"
+        <ListView ItemsSource="{Binding Feedbacks}"
               HasUnevenRows="True"
-              BackgroundColor="White">
+              BackgroundColor="White" SelectionMode="None">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
                         <StackLayout Padding="10">
-                            <Button Text="{Binding PlaySession.Start}" BackgroundColor="#ffcccb" TextColor="Black" FontSize="Medium" Command="{Binding BindingContext.ExpandCommand, Source={x:Reference rootpage}}" CommandParameter="{x:Reference Details}"/>
+                            <Frame HasShadow="True" CornerRadius="5" BackgroundColor="#ffcccb">
+                                <StackLayout>
+                                    <Button Text="{Binding PlaySession.Start}" BackgroundColor="#ffcccb" TextColor="Black" FontSize="Medium" Command="{Binding BindingContext.ExpandCommand, Source={x:Reference rootpage}}" CommandParameter="{x:Reference Details}"/>
+                                </StackLayout>
+                            </Frame>
                             <StackLayout x:Name="Details" Margin="0,10,0,0" IsVisible="False">
                                 <Frame HasShadow="True" CornerRadius="5">
                                     <StackLayout>
-                                        <Label Text="How ready did you feel to train today?" FontSize="Small" TextColor="Black" HorizontalTextAlignment="Center"/>
+                                        <Label Text="{Binding Label1}" FontSize="Small" TextColor="Black" HorizontalTextAlignment="Center"/>
                                         <Slider Value="{Binding ReadyQuestion}" IsEnabled="False" Maximum="2" Minimum="-2" HeightRequest="30" ThumbColor="Red" MaximumTrackColor="IndianRed"/>
                                     </StackLayout>
                                 </Frame>
                                 <Frame HasShadow="True" CornerRadius="5">
                                     <StackLayout>
-                                        <Label Text="How was your effort today taking into account how ready you felt?" FontSize="Small" TextColor="Black" HorizontalTextAlignment="Center"/>
+                                        <Label Text="{Binding Label2}" FontSize="Small" TextColor="Black" HorizontalTextAlignment="Center"/>
                                         <Slider Value="{Binding EffortQuestion}" IsEnabled="False" Maximum="2" Minimum="-2" HeightRequest="30" ThumbColor="Red" MaximumTrackColor="IndianRed"/>
                                     </StackLayout>
                                 </Frame>
                                 <Frame HasShadow="True" CornerRadius="5">
                                     <StackLayout>
-                                        <Label Text="How were you challenged today in relation to the exercises?" FontSize="Small" TextColor="Black" HorizontalTextAlignment="Center"/>
+                                        <Label Text="{Binding Label3}" FontSize="Small" TextColor="Black" HorizontalTextAlignment="Center"/>
                                         <Slider Value="{Binding ChallengeQuestion}" IsEnabled="False" Maximum="2" Minimum="-2" HeightRequest="30" ThumbColor="Red" MaximumTrackColor="IndianRed"/>
                                     </StackLayout>
                                 </Frame>
                                 <Frame HasShadow="True" CornerRadius="5">
                                     <StackLayout>
-                                        <Label Text="To what extent were you absorbed by the training today?" FontSize="Small" TextColor="Black" HorizontalTextAlignment="Center"/>
+                                        <Label Text="{Binding Label4}" FontSize="Small" TextColor="Black" HorizontalTextAlignment="Center"/>
                                         <Slider Value="{Binding AbsorbQuestion}" IsEnabled="False" Maximum="2" Minimum="-2" HeightRequest="30" ThumbColor="Red" MaximumTrackColor="IndianRed"/>
                                     </StackLayout>
                                 </Frame>
                                 <Frame HasShadow="True" CornerRadius="5">
                                     <StackLayout>
-                                        <Label Text="What helped make the training good today?" FontSize="Small" TextColor="Black" HorizontalTextAlignment="Center"/>
+                                        <Label Text="{Binding Label5}" FontSize="Small" TextColor="Black" HorizontalTextAlignment="Center"/>
                                         <Label Text="{Binding GoodQuestion}" HorizontalTextAlignment="Center" TextColor="Red"/>
                                     </StackLayout>
                                 </Frame>
                                 <Frame HasShadow="True" CornerRadius="5">
                                     <StackLayout>
-                                        <Label Text="Were there any issues with the training today?" FontSize="Small" TextColor="Black" HorizontalTextAlignment="Center"/>
+                                        <Label Text="{Binding Label6}" FontSize="Small" TextColor="Black" HorizontalTextAlignment="Center"/>
                                         <Label Text="{Binding BadQuestion}" HorizontalTextAlignment="Center" TextColor="Red"/>
                                     </StackLayout>
                                 </Frame>
                                 <Frame HasShadow="True" CornerRadius="5">
                                     <StackLayout>
-                                        <Label Text="What were the main focus points for you today?" FontSize="Small" TextColor="Black" HorizontalTextAlignment="Center"/>
+                                        <Label Text="{Binding Label7}" FontSize="Small" TextColor="Black" HorizontalTextAlignment="Center"/>
                                         <Label Text="{Binding FocusPointQuestion}" HorizontalTextAlignment="Center" TextColor="Red"/>
                                     </StackLayout>
                                 </Frame>
                                 <Frame HasShadow="True" CornerRadius="5">
                                     <StackLayout>
-                                        <Label Text="How has your day been today?" FontSize="Small" TextColor="Black" HorizontalTextAlignment="Center"/>
+                                        <Label Text="{Binding Label8}" FontSize="Small" TextColor="Black" HorizontalTextAlignment="Center"/>
                                         <Label Text="{Binding DayQuestion}" HorizontalTextAlignment="Center" TextColor="Red"/>
                                     </StackLayout>
                                 </Frame>
