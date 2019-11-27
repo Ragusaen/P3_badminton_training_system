@@ -7,9 +7,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:cvtr="clr-namespace:application.UI.Converter"
     mc:Ignorable="d"
-    x:Class="application.UI.PracticeTeamPopupPage" Padding="40,150,40,150">
+    x:Class="application.UI.PracticeTeamPopupPage">
 
-    <StackLayout BackgroundColor="White">
+    <StackLayout Padding="24" Spacing="24" Margin="12">
+        <StackLayout BackgroundColor="White">
         <SearchBar Placeholder="Search Practice Team" Text="{Binding SearchText}"/>
         <ListView VerticalScrollBarVisibility="Always" ItemSelected="ListView_ItemSelectedPracticeTeam" ItemsSource="{Binding FilteredPracticeTeams}" SeparatorVisibility="None">
             <ListView.ItemTemplate>
@@ -20,5 +21,6 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+    </StackLayout>
     </StackLayout>
 </pages:PopupPage>

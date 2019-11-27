@@ -495,6 +495,7 @@ namespace application.SystemInterface
             SimpleRequest<SetPracticeTeamRequest, SetPracticeTeamResponse>(RequestType.SetPracticeTeam, request);
         }
 
+
         public static void SetMemberSex(Sex newSex, Player player)
         {
             var request = new SetMemberSexRequest()
@@ -504,6 +505,16 @@ namespace application.SystemInterface
             };
 
             var response = SimpleRequest<SetMemberSexRequest, SetMemberSexResponse>(RequestType.SetMemberSex, request);
+        }
+
+        public static void DeleteTeamMatch(int id)
+        {
+            var request = new DeleteTeamMatchRequest
+            {
+                Id = id,
+            };
+
+            SimpleRequest<DeleteTeamMatchRequest, DeleteTeamMatchResponse>(RequestType.DeleteTeamMatch, request);
         }
     }
 }
