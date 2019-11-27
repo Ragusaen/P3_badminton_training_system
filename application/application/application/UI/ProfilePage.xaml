@@ -24,70 +24,84 @@
                         <Label Text="{Binding StringMemberType}" FontSize="Small" HorizontalOptions="CenterAndExpand"/>
                     </StackLayout>
                 </Frame>
-
-                    <StackLayout x:Name="BothRelevant">
+                <StackLayout x:Name="BothRelevant"></StackLayout> <!--Currently nothing-->
+                <StackLayout x:Name="TrainerRelevant">
                     <Frame HasShadow="True" CornerRadius="5">
                         <StackLayout>
-                        <Label Text="Practice Teams" VerticalOptions="Start" HorizontalOptions="StartAndExpand" FontSize="Medium"/>
-                    <ListView ItemsSource="{Binding PracticeTeams}" VerticalScrollBarVisibility="Never" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding PracticeTeamsListHeight}">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <ViewCell>
-                                    <Grid Padding="0" Margin="0" RowSpacing="0">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="8*"/>
-                                            <ColumnDefinition Width="1*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Label Grid.Column="0" Text="{Binding Name}" VerticalOptions="Center"/>
-                                        <Button Grid.Column="1" Text="❌" BackgroundColor="White" WidthRequest="50" VerticalOptions="End" Command="{Binding BindingContext.DeleteListPlayerPracticeTeamCommand, Source={x:Reference rootpage}}" CommandParameter="{Binding}"/>
-                                    </Grid>
-                                </ViewCell>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                    <Button Text="Add Practice Team" Command="{Binding AddPracticeTeamCommand}" HeightRequest="50"/>
+                            <Label Text="Trainer on Teams" VerticalOptions="Start" HorizontalOptions="StartAndExpand" FontSize="Medium"/>
+                            <Label Text="Currently not a trainer on any team" IsVisible="{Binding NoTrainerVisibility}" FontSize="Small"/>
+                            <ListView ItemsSource="{Binding TrainerPracticeTeams}" VerticalScrollBarVisibility="Never" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding TrainerPracticeTeamsListHeight}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ViewCell>
+                                            <Label Text="{Binding Name}" VerticalOptions="Center"/>
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
                         </StackLayout>
                     </Frame>
                 </StackLayout>
 
-                        <StackLayout x:Name="PlayerRelevant">
+                <StackLayout x:Name="PlayerRelevant">
                     <Frame HasShadow="True" CornerRadius="5">
                         <StackLayout>
-                        <Label Text="Focus Points" FontSize="Medium"/>
-                    <ListView x:Name="FocusPointList" VerticalScrollBarVisibility="Never" ItemSelected="ListView_OnItemSelected" ItemsSource="{Binding FocusPoints}" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding FocusPointsListHeight}">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <ViewCell>
-                                    <Grid Padding="0" Margin="0" RowSpacing="0">
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="8*"/>
-                                            <ColumnDefinition Width="1*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Label Grid.Column="0" Text="{Binding Descriptor.Name}" VerticalOptions="Center"/>
-                                        <Button Grid.Column="1" Text="❌" BackgroundColor="White" WidthRequest="50" VerticalOptions="End" Command="{Binding BindingContext.DeleteListFocusItemCommand, Source={x:Reference rootpage}}" CommandParameter="{Binding}"/>
-                                    </Grid>
-                                </ViewCell>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-                    <Button Text="Add Focus Point" Command="{Binding AddFocusPointCommand}" HeightRequest="50"/>
+                            <Label Text="Player on Teams" VerticalOptions="Start" HorizontalOptions="StartAndExpand" FontSize="Medium"/>
+                            <ListView ItemsSource="{Binding PlayerPracticeTeams}" VerticalScrollBarVisibility="Never" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding PlayerPracticeTeamsListHeight}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ViewCell>
+                                            <Grid Padding="0" Margin="0" RowSpacing="0">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="8*"/>
+                                                    <ColumnDefinition Width="1*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label Grid.Column="0" Text="{Binding Name}" VerticalOptions="Center"/>
+                                                <Button Grid.Column="1" Text="❌" BackgroundColor="White" WidthRequest="50" VerticalOptions="End" Command="{Binding BindingContext.DeleteListPlayerPracticeTeamCommand, Source={x:Reference rootpage}}" CommandParameter="{Binding}"/>
+                                            </Grid>
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                            <Button Text="Add Practice Team" Command="{Binding AddPlayerPracticeTeamCommand}" HeightRequest="50"/>
                         </StackLayout>
                     </Frame>
-
-                            <Label Text="Feedback graph" FontSize="Medium"/>
+                    <Frame HasShadow="True" CornerRadius="5">
+                        <StackLayout>
+                            <Label Text="Focus Points" FontSize="Medium"/>
+                            <ListView x:Name="FocusPointList" VerticalScrollBarVisibility="Never" ItemSelected="ListView_OnItemSelected" ItemsSource="{Binding FocusPoints}" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding FocusPointsListHeight}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ViewCell>
+                                            <Grid Padding="0" Margin="0" RowSpacing="0">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="8*"/>
+                                                    <ColumnDefinition Width="1*"/>
+                                                </Grid.ColumnDefinitions>
+                                                <Label Grid.Column="0" Text="{Binding Descriptor.Name}" VerticalOptions="Center"/>
+                                                <Button Grid.Column="1" Text="❌" BackgroundColor="White" WidthRequest="50" VerticalOptions="End" Command="{Binding BindingContext.DeleteListFocusItemCommand, Source={x:Reference rootpage}}" CommandParameter="{Binding}"/>
+                                            </Grid>
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
+                            <Button Text="Add Focus Point" Command="{Binding AddFocusPointCommand}" HeightRequest="50"/>
+                        </StackLayout>
+                    </Frame>
+                    <Label Text="Feedback graph" FontSize="Medium"/>
                     <forms:ChartView  Chart="{Binding Chart}" HeightRequest="300" Margin="-80, 0, -80, 0"/>
                     <Button Text="View Feedback" Command="{Binding ViewFeedbackCommand}"/>
-                            <Button Text="View all Feedback graph" Command="{Binding ViewFeedbackGraphCommand}"/>
-                        </StackLayout>
-                <Frame HasShadow="True" CornerRadius="5">
-                    <StackLayout>
-                        <Label Text="Comments" FontSize="Medium"/>
-                <Frame  CornerRadius="5" HasShadow="True">
-                    <StackLayout>
-                        <Label x:Name="Comment" TextColor="Black" Text="{Binding CommentText}" FontSize="Medium" IsVisible="True"></Label>
-                        <Editor x:Name="CommentEntry" IsVisible="False" Placeholder="Enter a comment" AutoSize="TextChanges"/>
+                    <Button Text="View all Feedback graph" Command="{Binding ViewFeedbackGraphCommand}"/>
                     </StackLayout>
-                </Frame>
+                    <Frame HasShadow="True" CornerRadius="5">
+                        <StackLayout>
+                            <Label Text="Comments" FontSize="Medium"/>
+                            <Frame HasShadow="True" CornerRadius="5">
+                            <StackLayout>
+                                <Label x:Name="Comment" TextColor="Black" Text="{Binding CommentText}" FontSize="Medium" IsVisible="True"></Label>
+                                <Editor x:Name="CommentEntry" IsVisible="False" Placeholder="Enter a comment" AutoSize="TextChanges" Keyboard="Chat"/>
+                            </StackLayout>
+                        </Frame>
                     </StackLayout>
                 </Frame>
             </StackLayout>

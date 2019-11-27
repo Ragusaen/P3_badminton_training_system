@@ -49,6 +49,8 @@ namespace application.UI
             MainFocusPoint.GestureRecognizers.Add(MFPTapGest);
 
             PracticeRelevant.IsVisible = true;
+
+            SetExercises();
         }
 
         private void GoToFocusPoint(FocusPointDescriptor fpd)
@@ -65,14 +67,41 @@ namespace application.UI
             GoToFocusPoint(((FocusPointItem)e.SelectedItem).Descriptor);
         }
 
-        private void ExerciseDescription_SizeChanged(object sender, EventArgs e)
+        private void SetExercises()
         {
-            Debug.WriteLine("CHANGED SIZE!!!!");
+            foreach (ExerciseItem e in _vm.PracticeSession.Exercises)
+            {
+                Frame frame = new Frame()
+                {
+                    CornerRadius = 5,
+                    HasShadow = true,
+                    Margin = new Thickness(0, 10, 0, 10),
+                };
 
-            var label = (Label) sender;
-            var grid = (Grid) label.Parent;
+                Grid grid = new Grid()
+                {
+                    RowDefinitions = new RowDefinitionCollection()
+                    {
+                        new RowDefinition() {Height = 40},
+                        new RowDefinition() {Height = GridLength.Auto}
+                    },
+                    ColumnDefinitions = new ColumnDefinitionCollection()
+                    {
+                        new ColumnDefinition {Width = 40},
+                        new ColumnDefinition {Width = GridLength.Star}
+                    }
+                };
 
-            grid.RowDefinitions[1].Height = label.Height;
+                grid.Children.Add(new Label() {Text=e.Minutes.ToString(), HorizontalOptions = LayoutOptions.CenterAndExpand, FontSize=20}, 0,0);
+                grid.Children.Add(new Label() {Text = e.ExerciseDescriptor.Name, HorizontalOptions = LayoutOptions.FillAndExpand, FontSize = 18}, 1,0);
+                var descriptionEditor = new Label() {Text = e.ExerciseDescriptor.Description, LineBreakMode=LineBreakMode.WordWrap, HorizontalOptions = LayoutOptions.FillAndExpand};
+                grid.Children.Add(descriptionEditor, 0, 1);
+                Grid.SetColumnSpan(descriptionEditor, 2);
+
+                frame.Content = grid;
+
+                ExerciseStack.Children.Add(frame);
+            }
         }
     }
 }

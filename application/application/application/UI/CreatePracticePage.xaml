@@ -75,33 +75,10 @@
 
 
             <Label Text="Practice Plan" TextColor="White" FontSize="Title" FontAttributes="Bold" HorizontalTextAlignment="Center" BackgroundColor="Red" HorizontalOptions="FillAndExpand" Margin="0,10,0,0"/>
-            <ListView ItemsSource="{Binding PlanElement}" SelectionMode="None" HasUnevenRows="True" Margin="15,0,15,0" HeightRequest="{Binding PlanHeight}" VerticalScrollBarVisibility="Never" SeparatorVisibility="None">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <ViewCell>
-                            <Frame CornerRadius="5" HasShadow="True" Margin="0,10,0,10">
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="50"/>
-                                        <RowDefinition Height="Auto"  />
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="1.5*"/>
-                                        <ColumnDefinition Width="4*"/>
-                                        <ColumnDefinition Width="1*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Entry Grid.Row="0" Grid.Column="0" Text="{Binding Minutes}" Keyboard="Numeric" Placeholder="Minutes" HorizontalOptions="Start" HorizontalTextAlignment="End"/>
-                                    <Label Grid.Row="0" Grid.Column="1" Text="{Binding ExerciseDescriptor.Name}" VerticalOptions="Center" FontSize="18"/>
-                                    <Button Grid.Row="0" Grid.Column="2" Text="❌" VerticalOptions="Center" HorizontalOptions="End" BackgroundColor="White" Command="{Binding BindingContext.DeletePlanItemCommand, Source={x:Reference rootpage}}" CommandParameter="{Binding}"/>
-                                    <Editor IsEnabled="False" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" FontSize="18" Text="{Binding ExerciseDescriptor.Description}" VerticalOptions="Fill"/>
-                                </Grid>
-                            </Frame>
-                        </ViewCell>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+            <StackLayout x:Name="ExerciseStack">
 
-            <Button Text="Add new element to practice plan" Command="{Binding AddNewPlanElementClickCommand}"/>
+            </StackLayout>
+            <Button Text="Add new element to practice plan" Clicked="AddNewElementButton_OnClicked"/>
 
     </StackLayout>
     </ScrollView>

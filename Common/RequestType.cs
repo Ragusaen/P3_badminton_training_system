@@ -28,6 +28,7 @@ namespace Common
         GetAllPracticeTeams,
         GetMember,
         GetFocusPointDescriptor,
+        GetTrainerPracticeTeams,
         //Setters below
         SetPlayer,
         SetPlayerFocusPoints,
