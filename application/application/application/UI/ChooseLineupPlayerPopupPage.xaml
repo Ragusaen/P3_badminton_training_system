@@ -6,7 +6,6 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
              x:Class="application.UI.ChooseLineupPlayerPopupPage" Padding="40">
-
     <StackLayout BackgroundColor="White">
         <SearchBar Placeholder="Search Player" Text="{Binding SearchText}"/>
 
