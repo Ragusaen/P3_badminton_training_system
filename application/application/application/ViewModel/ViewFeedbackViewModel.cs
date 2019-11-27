@@ -62,32 +62,16 @@ namespace application.ViewModel
             //fix feedback submit date
             foreach (Feedback fb in feedbacks) 
             { 
-                entries.Add(new Entry((float)fb.ReadyQuestion) { Color = SKColor.Parse("#33ccff"), Label = fb.PlaySession.Start.Date.ToString(), ValueLabel = FeedbackString(fb.ReadyQuestion) });
-                entries1.Add(new Entry((float)fb.EffortQuestion) { Color = SKColor.Parse("#33ccff"), Label = fb.PlaySession.Start.Date.ToString(), ValueLabel = FeedbackString(fb.EffortQuestion) });
-                entries2.Add(new Entry((float)fb.ChallengeQuestion) { Color = SKColor.Parse("#33ccff"), Label = fb.PlaySession.Start.Date.ToString(), ValueLabel = FeedbackString(fb.ChallengeQuestion) });
-                entries3.Add(new Entry((float)fb.AbsorbQuestion) { Color = SKColor.Parse("#33ccff"), Label = fb.PlaySession.Start.Date.ToString(), ValueLabel =  FeedbackString(fb.AbsorbQuestion)});  
+                entries.Add(new Entry((float)fb.ReadyQuestion) { Color = SKColor.Parse("#33ccff"), ValueLabel = fb.PlaySession.Start.Date.ToString("dd/MM-yyyy") });
+                entries1.Add(new Entry((float)fb.EffortQuestion) { Color = SKColor.Parse("#33ccff"), ValueLabel = fb.PlaySession.Start.Date.ToString("dd/MM-yyyy") });
+                entries2.Add(new Entry((float)fb.ChallengeQuestion) { Color = SKColor.Parse("#33ccff"), ValueLabel = fb.PlaySession.Start.Date.ToString("dd/MM-yyyy") });
+                entries3.Add(new Entry((float)fb.AbsorbQuestion) { Color = SKColor.Parse("#33ccff"), ValueLabel = fb.PlaySession.Start.Date.ToString("dd/MM-yyyy") });  
             }
   
-            Chart = new LineChart { Entries = entries, LineMode = LineMode.Straight, PointMode = PointMode.Circle, LabelTextSize = 25, PointSize = 12 };
-            Chart1 = new LineChart { Entries = entries1, LineMode = LineMode.Straight, PointMode = PointMode.Square, LabelTextSize = 25, PointSize = 12 };
-            Chart2 = new LineChart { Entries = entries2, LineMode = LineMode.Straight, PointMode = PointMode.Square, LabelTextSize = 25, PointSize = 12 };
-            Chart3 = new LineChart { Entries = entries3, LineMode = LineMode.Straight, PointMode = PointMode.Square, LabelTextSize = 25, PointSize = 12 };
+            Chart = new LineChart { Entries = entries, LineMode = LineMode.Straight, PointMode = PointMode.Circle, LabelTextSize = 25, PointSize = 12, MaxValue = 2, MinValue = -2 };
+            Chart1 = new LineChart { Entries = entries1, LineMode = LineMode.Straight, PointMode = PointMode.Square, LabelTextSize = 25, PointSize = 12, MaxValue = 2, MinValue = -2 };
+            Chart2 = new LineChart { Entries = entries2, LineMode = LineMode.Straight, PointMode = PointMode.Square, LabelTextSize = 25, PointSize = 12, MaxValue = 2, MinValue = -2 };
+            Chart3 = new LineChart { Entries = entries3, LineMode = LineMode.Straight, PointMode = PointMode.Square, LabelTextSize = 25, PointSize = 12, MaxValue = 2, MinValue = -2 };
         }
-        public string FeedbackString(int value)
-        {
-            if (value == 2)
-                return "best";
-            else if (value == 1)
-                return "good";
-            else if (value == 0)
-                return "average";
-            else if (value == -1)
-                return "bad";
-            else if (value == -2)
-                return "worst";
-            else
-                return null;
-        }
-
     }
 }
