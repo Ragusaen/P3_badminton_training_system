@@ -18,11 +18,11 @@
                 <ColumnDefinition Width="40"/>
                 <ColumnDefinition Width="40"/>
             </Grid.ColumnDefinitions>
-            <Label Grid.Column="0" FontSize="8" Text="Name"/>
-            <Label Grid.Column="1" FontSize="8" Text="Level"/>
-            <Label Grid.Column="2" FontSize="8" Text="Single"/>
-            <Label Grid.Column="3" FontSize="8" Text="Double"/>
-            <Label Grid.Column="4" FontSize="8" Text="Mix"/>
+            <Label Grid.Column="0" FontSize="9" Text="Name"/>
+            <Label Grid.Column="1" FontSize="9" Text="Level"/>
+            <Label Grid.Column="2" FontSize="9" Text="Single"/>
+            <Label Grid.Column="3" FontSize="9" Text="Double"/>
+            <Label Grid.Column="4" FontSize="9" Text="Mix"/>
         </Grid>
 
 
