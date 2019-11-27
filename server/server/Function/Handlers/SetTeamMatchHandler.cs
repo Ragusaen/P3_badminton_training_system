@@ -27,7 +27,7 @@ namespace Server.SystemInterface.Requests.Handlers
                     Location = e.Location,
                     Type = (int)PlaySession.Type.Match
                 },
-                member = e.Captain == null ? null : db.members.Find(e.Captain.Id),
+                captain = e.Captain == null ? null : db.members.Find(e.Captain.Id),
                 League = (int)e.League,
                 LeagueRound = e.LeagueRound,
                 OpponentName = e.OpponentName,

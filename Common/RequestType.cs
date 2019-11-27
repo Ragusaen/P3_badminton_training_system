@@ -43,6 +43,7 @@ namespace Common
         DeletePracticeTeam,
         GetExercises,
         DeleteTeamMatch,
+        DeletePracticeSession,
         //Creators below
         CreateFocusPointDescriptor,
         SetExerciseDiscriptor,
