@@ -216,7 +216,7 @@ namespace application.ViewModel
         private readonly string _changeMemberTypeQuery = "Make Trainer";
         private async void ExecuteProfileSettingTap(object param)
         {
-            var action = await Application.Current.MainPage.DisplayActionSheet("Settings", "Cancel", null, "Change Trainer Privileges");
+            var action = await Application.Current.MainPage.DisplayActionSheet("Settings", "Cancel", null, "Change Trainer Privileges", "Change Sex");
             if (action == "Change Trainer Privileges")
             {
                 string newRights = await Application.Current.MainPage.DisplayActionSheet(_changeMemberTypeTitle,

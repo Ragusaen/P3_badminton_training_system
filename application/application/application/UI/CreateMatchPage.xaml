@@ -34,7 +34,6 @@
                     <RowDefinition Height="40"/>
                     <RowDefinition Height="40"/>
                     <RowDefinition Height="40"/>
-                    <RowDefinition Height="40"/>
                     <RowDefinition Height="15"/>
                     <RowDefinition Height="40"/>
                     <RowDefinition Height="15"/>
@@ -44,31 +43,29 @@
                     <ColumnDefinition/>
                     <ColumnDefinition/>
                 </Grid.ColumnDefinitions>
-                <Label Grid.Row="0" Grid.Column="0" Text="Team" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
-                <Entry Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Placeholder="Enter team name" Text="{Binding TeamName}" VerticalOptions="Center"/>
-                <Label Grid.Row="1" Grid.Column="0" Text="Opponent" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
-                <Entry Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" Placeholder="Enter opponent team name" Text="{Binding OpponentName}" VerticalOptions="Center"/>
-                <Label Grid.Row="2" Grid.Column="0" Text="Date" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
-                <StackLayout Orientation="Horizontal" Grid.Row="2" Grid.Column="1">
+                <Label Grid.Row="0" Grid.Column="0" Text="Opponent" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
+                <Entry Grid.Row="0" Grid.Column="1" Grid.ColumnSpan="2" Placeholder="Enter opponent team name" Text="{Binding OpponentName}" VerticalOptions="Center"/>
+                <Label Grid.Row="1" Grid.Column="0" Text="Date" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
+                <StackLayout Orientation="Horizontal" Grid.Row="1" Grid.Column="1">
                     <DatePicker MinimumDate="{Binding MinDate}" Date="{Binding SelectedDateStart}"/>
                     <TimePicker Format="HH:mm" Time="{Binding SelectedTimeStart}" x:Name="StartDate"/>
                     <Label Text="-" VerticalOptions="Center"/>
                     <TimePicker Format="HH:mm" Time="{Binding SelectedTimeEnd}" x:Name="EndDate"/>
                 </StackLayout>
-                <Label Grid.Row="3" Grid.Column="0" Text="Captain" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
-                <Picker Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Title="Choose team captain" ItemsSource="{Binding Members}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding Captain}" VerticalOptions="Center"/>
-                <Label Grid.Row="4" Grid.Column="0" Text="Location" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
-                <Entry Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Location}"  Placeholder="Enter location" VerticalOptions="Center"/>
-                <Label Grid.Row="5" Grid.Column="0" Text="League" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
-                <Picker Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" ItemsSource="{Binding LeagueNames}" SelectedIndex="{Binding SelectedLeague, Converter={StaticResource IntLeagueEnumConverter}}"/>
-                <Label Grid.Row="6" Grid.Column="0" Text="Round" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
-                <Entry Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding LeagueRound}" Keyboard="Numeric" Placeholder="Enter league round" VerticalOptions="Center"/>
-                <Label Grid.Row="7" Grid.Column="0" Text="Season" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
-                <Entry Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Season}" Keyboard="Numeric" Placeholder="Enter season" VerticalOptions="Center"/>
-                <Label Grid.Row="8" Grid.Column="0" Text="Team Nr." FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
-                <Entry Grid.Row="8" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding TeamIndex}" Keyboard="Numeric" Placeholder="Enter team number" VerticalOptions="Center"/>
-                <Label Grid.Row="10" Grid.Column="0" Grid.ColumnSpan="2" Text="Lineup" FontSize="Title" HorizontalOptions="Start" VerticalOptions="Center"/>
-                <Label Grid.Row="11" Grid.Column="2" HorizontalOptions="End" Text="Reserve:" FontSize="12"/>
+                <Label Grid.Row="2" Grid.Column="0" Text="Captain" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
+                <Picker Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Title="Choose team captain" ItemsSource="{Binding Members}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding Captain}" VerticalOptions="Center"/>
+                <Label Grid.Row="3" Grid.Column="0" Text="Location" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
+                <Entry Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Location}"  Placeholder="Enter location" VerticalOptions="Center"/>
+                <Label Grid.Row="4" Grid.Column="0" Text="League" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
+                <Picker Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" ItemsSource="{Binding LeagueNames}" SelectedIndex="{Binding SelectedLeague, Converter={StaticResource IntLeagueEnumConverter}}"/>
+                <Label Grid.Row="5" Grid.Column="0" Text="Round" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
+                <Entry Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding LeagueRound}" Keyboard="Numeric" Placeholder="Enter league round" VerticalOptions="Center"/>
+                <Label Grid.Row="6" Grid.Column="0" Text="Season" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
+                <Entry Grid.Row="6" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Season}" Keyboard="Numeric" Placeholder="Enter season" VerticalOptions="Center"/>
+                <Label Grid.Row="7" Grid.Column="0" Text="Team Nr." FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
+                <Entry Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding TeamIndex}" Keyboard="Numeric" Placeholder="Enter team number" VerticalOptions="Center"/>
+                <Label Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" Text="Lineup" FontSize="Title" HorizontalOptions="Start" VerticalOptions="Center"/>
+                <Label Grid.Row="10" Grid.Column="2" HorizontalOptions="End" Text="Reserve:" FontSize="12"/>
             </Grid>
 
 

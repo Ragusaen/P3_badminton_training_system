@@ -57,9 +57,6 @@
     <Compile Update="UI\CreatePracticePage.xaml.cs">
       <DependentUpon>CreatePracticePage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="UI\EditUserInfoPage.xaml.cs">
-      <DependentUpon>EditUserInfoPage.xaml</DependentUpon>
-    </Compile>
     <Compile Update="UI\LoginPage.xaml.cs">
       <DependentUpon>LoginPage.xaml</DependentUpon>
     </Compile>
@@ -109,9 +106,6 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="UI\FocusPointPopupPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
-    <EmbeddedResource Update="UI\EditUserInfoPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="UI\AdministratorPage.xaml">
