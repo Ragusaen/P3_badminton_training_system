@@ -19,56 +19,56 @@
 
                 <Frame>
                     <StackLayout>
-                        <Label x:Name="Label1" Text="How ready did you feel to train today?" FontSize="Small" TextColor="Black" HorizontalTextAlignment="Center"/>
+                        <Label x:Name="Label1" FontSize="Small" TextColor="Black" HorizontalTextAlignment="Center"/>
                         <Slider x:Name="Slider1" Minimum="-2" Maximum="2" HeightRequest="30" Margin="0,0,0,15" Value="{Binding Feedback.ReadyQuestion}" ValueChanged="Slider1_ValueChanged" ThumbColor="Red" MaximumTrackColor="IndianRed" MinimumTrackColor="IndianRed"/>
                     </StackLayout>
                 </Frame>
 
                 <Frame>
                     <StackLayout>
-                        <Label x:Name="Label2" Text="How was your effort today taking into account how ready you felt?" FontSize="Small" TextColor="Black" HorizontalTextAlignment="Center"/>
+                        <Label x:Name="Label2" FontSize="Small" TextColor="Black" HorizontalTextAlignment="Center"/>
                         <Slider x:Name="Slider2" Minimum="-2" Maximum="2" Value="{Binding Feedback.EffortQuestion}" HeightRequest="30" Margin="0,0,0,15" ValueChanged="Slider2_ValueChanged" ThumbColor="Red" MaximumTrackColor="IndianRed" MinimumTrackColor="IndianRed"/>
                     </StackLayout>
                 </Frame>
 
                 <Frame>
                     <StackLayout>
-                        <Label x:Name="Label3" Text="How were you challenged today in relation to the exercises?" FontSize="Small" TextColor="Black" HorizontalTextAlignment="Center"/>
+                        <Label x:Name="Label3" FontSize="Small" TextColor="Black" HorizontalTextAlignment="Center"/>
                         <Slider x:Name="Slider3" Minimum="-2" Maximum="2" Value="{Binding Feedback.ChallengeQuestion}" HeightRequest="30" Margin="0,0,0,15" ValueChanged="Slider3_ValueChanged" ThumbColor="Red" MaximumTrackColor="IndianRed" MinimumTrackColor="IndianRed" />
                     </StackLayout>
                 </Frame>
 
                 <Frame>
                     <StackLayout>
-                        <Label x:Name="Label4" Text="To what extent were you absorbed by the training today?" FontSize="Small" TextColor="Black" HorizontalTextAlignment="Center"/>
+                        <Label x:Name="Label4" FontSize="Small" TextColor="Black" HorizontalTextAlignment="Center"/>
                         <Slider x:Name="Slider4" Minimum="-2" Maximum="2" Value="{Binding Feedback.AbsorbQuestion}" HeightRequest="30" Margin="0,0,0,0" ValueChanged="Slider4_ValueChanged" ThumbColor="Red" MaximumTrackColor="IndianRed" MinimumTrackColor="IndianRed"/>
                     </StackLayout>
                 </Frame>
 
                 <Frame CornerRadius="5" HasShadow="True" Margin="0,10,0,0">
                     <StackLayout>
-                        <Label Text="What helped make the training good today?" FontSize="Small" FontAttributes="Bold" TextColor="Black" HorizontalTextAlignment="Center"/>
+                        <Label x:Name="Label5" FontSize="Small" FontAttributes="Bold" TextColor="Black" HorizontalTextAlignment="Center"/>
                         <Editor x:Name="Quest1" Placeholder="Enter here" FontSize="Small" AutoSize ="TextChanges" Text="{Binding Feedback.GoodQuestion}"/>
                     </StackLayout>
                 </Frame>
 
                 <Frame CornerRadius="5" HasShadow="True" Margin="0,10,0,0">
                     <StackLayout>
-                        <Label Text="Were there any issues with the training today?" FontSize="Small" FontAttributes="Bold" TextColor="Black" HorizontalTextAlignment="Center"/>
+                        <Label x:Name="Label6" FontSize="Small" FontAttributes="Bold" TextColor="Black" HorizontalTextAlignment="Center"/>
                         <Editor x:Name="Quest2" Placeholder="Enter here" FontSize="Small" AutoSize ="TextChanges" Text="{Binding Feedback.BadQuestion}"/>
                     </StackLayout>
                 </Frame>
 
                 <Frame CornerRadius="5" HasShadow="True" Margin="0,10,0,0">
                     <StackLayout>
-                        <Label Text="What were the main focus points for you today?" FontSize="Small" FontAttributes="Bold" TextColor="Black" HorizontalTextAlignment="Center"/>
+                        <Label x:Name="Label7" FontSize="Small" FontAttributes="Bold" TextColor="Black" HorizontalTextAlignment="Center"/>
                         <Editor x:Name="Quest3" Placeholder="Enter here" FontSize="Small" AutoSize ="TextChanges" Text="{Binding Feedback.FocusPointQuestion}"/>
                     </StackLayout>
                 </Frame>
 
                 <Frame CornerRadius="5" HasShadow="True" Margin="0,10,0,0">
                     <StackLayout>
-                        <Label Text="How has your day been today?" FontSize="Small" FontAttributes="Bold" TextColor="Black" HorizontalTextAlignment="Center"/>
+                        <Label x:Name="Label8" FontSize="Small" FontAttributes="Bold" TextColor="Black" HorizontalTextAlignment="Center"/>
                         <Editor x:Name="Quest4" Placeholder="Briefly describe why your day has been this way" FontSize="Small" AutoSize ="TextChanges" Text="{Binding Feedback.DayQuestion}"/>
                     </StackLayout>
                 </Frame>

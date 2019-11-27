@@ -28,6 +28,28 @@ namespace application.UI
             Quest1.Completed += (s, a) => Quest2.Focus();
             Quest2.Completed += (s, a) => Quest3.Focus();
             Quest3.Completed += (s, a) => Quest4.Focus();
+            if (playsession is PracticeSession)
+            {
+                Label1.Text = "How ready did you feel to train today?";
+                Label2.Text = "How was your effort today taking into account how ready you felt?";
+                Label3.Text = "How were you challenged today in relation to the exercises?";
+                Label4.Text = "To what extent were you absorbed by the training today?";
+                Label5.Text = "What helped make the training good today?";
+                Label6.Text = "Were there any issues with the training today?";
+                Label7.Text = "What were the main focus points for you today?";
+                Label8.Text = "How has your day been today?";
+            }
+            if (playsession is TeamMatch)
+            {
+                Label1.Text = "How ready did you feel play a match today?";
+                Label2.Text = "How was your effort today taking into account how ready you felt?";
+                Label3.Text = "How were you challenged today?";
+                Label4.Text = "To what extent were you absorbed by the match today?";
+                Label5.Text = "What helped make the match good today?";
+                Label6.Text = "Were there any issues with the match today?";
+                Label7.Text = "What were the main focus points for you today?";
+                Label8.Text = "How has your day been today?";
+            }
         }
 
         private void Slider1_ValueChanged(object sender, ValueChangedEventArgs e)
