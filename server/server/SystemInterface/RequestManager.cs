@@ -4,6 +4,7 @@ using Common;
 using Common.Serialization;
 using Server.Controller;
 using Server.DAL;
+using Server.Function.Handlers;
 using Server.SystemInterface.Requests.Handlers;
 
 namespace Server.SystemInterface.Requests
@@ -50,6 +51,7 @@ namespace Server.SystemInterface.Requests
                 {RequestType.GetExercises, new GetExerciseHandler() },
                 {RequestType.GetMember, new GetMemberHandler() },
                 {RequestType.GetFocusPointDescriptor, new GetFocusPointDescriptorHandler() },
+                {RequestType.GetTrainerPracticeTeams, new GetTrainerPracticeTeamsHandler() },
                 //Setters below
                 {RequestType.SetPlayer, new SetPlayerHandler() },
                 {RequestType.SetPlayerFocusPoints, new AddPlayerFocusPointHandler() },
