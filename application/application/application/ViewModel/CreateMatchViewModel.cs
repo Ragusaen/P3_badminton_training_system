@@ -13,17 +13,6 @@ namespace application.ViewModel
 {
     class CreateMatchViewModel : BaseViewModel
     {
-        private string _teamName;
-        public string TeamName
-        {
-            get { return _teamName; }
-            set
-            {
-                if (SetProperty(ref _teamName, value))
-                    SaveMatchClickCommand.RaiseCanExecuteChanged();
-            }
-        }
-
         private string _opponentName;
 
         public string OpponentName
@@ -353,8 +342,7 @@ namespace application.ViewModel
 
         private bool CanExecuteSaveMatchClick(object param)
         {
-            if (string.IsNullOrEmpty(TeamName) || 
-                (string.IsNullOrEmpty(Location)) || 
+            if ((string.IsNullOrEmpty(Location)) || 
                 (string.IsNullOrEmpty(OpponentName)) || 
                 Captain == null ||
                 LeagueRound == 0 || Season == 0 || TeamIndex == 0)
