@@ -19,10 +19,10 @@ namespace application.ViewModel
 
         public CreateAccountViewModel()
         {
-            ShownPlayerList = new ObservableCollection<Player>();
-            SearchText = "";
             _availablePlayers = RequestCreator.GetPlayersWithNoAccount();
+            SearchText = "";
             UpdatePlayerList();
+            SearchText = "";
         }
 
         #region Properties
@@ -74,14 +74,7 @@ namespace application.ViewModel
             set
             {
                 SetProperty(ref _searchText, value);
-                if (string.IsNullOrEmpty(_searchText))
-                    ShownPlayerList = new ObservableCollection<Player>(ShownPlayerList.OrderByDescending(p => p.Member.Name).ToList());
-                else
-                {
-                    ShownPlayerList = new ObservableCollection<Player>(_shownPlayerList.OrderByDescending(
-                            x => StringExtension.LongestCommonSubsequence(x.Member.Name.ToLower(), SearchText.ToLower()))
-                        .ThenBy(x => x.Member.Name.Length).ToList());
-                }
+                UpdatePlayerList();
             }
         }
 
@@ -138,7 +131,7 @@ namespace application.ViewModel
 
         private List<Player> _availablePlayers;
 
-        private ObservableCollection<Player> _shownPlayerList;
+        private ObservableCollection<Player> _shownPlayerList = new ObservableCollection<Player>();
         public ObservableCollection<Player> ShownPlayerList
         {
             get => _shownPlayerList;

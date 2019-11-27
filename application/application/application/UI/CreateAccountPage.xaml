@@ -19,11 +19,11 @@
                 <StackLayout>
                     <Label x:Name="UsernameError" IsVisible="{Binding UsernameErrorVisibility}" Text="Username already taken" TextColor="Red"></Label>
                     <Label Text="Username" FontSize="18"/>
-                    <Entry x:Name="Username" ReturnType="Next" Placeholder="Enter a username" Text="{Binding Username}"/>
+                    <Entry x:Name="Username" ReturnType="Next" Placeholder="Enter a username" PlaceholderColor="#CCCCCC" Text="{Binding Username}"/>
                     <Label Text="Password" FontSize="18"/>
-                    <Entry x:Name="Password" ReturnType="Next" Placeholder="Enter a password" IsPassword="True" Text="{Binding Password}"/>
+                    <Entry x:Name="Password" ReturnType="Next" Placeholder="Enter a password" PlaceholderColor="#BBBBBB" IsPassword="True" Text="{Binding Password}"/>
                     <Label Text="Confirm password" FontSize="18"/>
-                    <Entry x:Name="ConfirmPassword" ReturnType="Next" Placeholder="Enter password again" IsPassword="True" Text="{Binding ConfirmPassword}"/>
+                    <Entry x:Name="ConfirmPassword" ReturnType="Next" Placeholder="Enter password again" PlaceholderColor="#AAAAAA" IsPassword="True" Text="{Binding ConfirmPassword}"/>
                     <Label x:Name="ConfirmPasswordErrorText" Text="Passwords do not match" IsVisible="False" TextColor="Red" FontSize="Small"/>
                 </StackLayout>
             </Frame>

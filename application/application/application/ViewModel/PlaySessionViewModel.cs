@@ -17,13 +17,6 @@ namespace application.ViewModel
         public PracticeSession PracticeSession { get; set; }
         public TeamMatch TeamMatch { get; set; }
 
-        private ObservableCollection<ExerciseItem> _exercises;
-
-        public ObservableCollection<ExerciseItem> Exercises
-        {
-            get => _exercises;
-            set => SetProperty(ref _exercises, value);
-        }
         private bool _practiceFeedbackIsVisible;
 
         public bool PracticeFeedbackIsVisible
@@ -31,6 +24,14 @@ namespace application.ViewModel
             get => _practiceFeedbackIsVisible;
             set => SetProperty(ref _practiceFeedbackIsVisible, value);
         }
+
+        private double _focusPointListHeight;
+        public double FocusPointListHeight
+        {
+            get => _focusPointListHeight;
+            set => SetProperty(ref _focusPointListHeight, value);
+        }
+
 
 
         public PlaySessionViewModel(PlaySession playSession)
@@ -41,7 +42,10 @@ namespace application.ViewModel
                 PracticeFeedbackIsVisible = true;
 
             if (PlaySession is PracticeSession practice)
+            {
                 PracticeSession = practice;
+                _focusPointListHeight = PracticeSession.FocusPoints.Count * 45;
+            }
             else if (PlaySession is TeamMatch match)
                 TeamMatch = match;
         }

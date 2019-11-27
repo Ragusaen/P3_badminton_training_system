@@ -6,38 +6,46 @@
              mc:Ignorable="d"
              x:Class="application.UI.PracticeTeamPage" x:Name="rootpage">
     <ContentPage.Content>
-        <StackLayout Margin="10,10,10,10">
-            <Label Text="{Binding PracticeTeam.Name}" FontAttributes="Bold" FontSize="Large"/>
-            <StackLayout Orientation="Horizontal" Margin="0,0,0,10">
-                <Label x:Name="Trainer" Text="{Binding Trainer.Member.Name}" VerticalOptions="Center" FontSize="Medium">
-                    <Label.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding TrainerViewCommand}" />
-                    </Label.GestureRecognizers>
-                </Label>
-                <ImageButton Source="" x:Name="SwapPerson" VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand" Command="{Binding NewTrainerCommand}" BackgroundColor="Transparent" HeightRequest="30" Margin="10,0,0,0"/>
-            </StackLayout>
-            <StackLayout Orientation="Horizontal">
-                <Label Text="Players" FontAttributes="Bold" FontSize="Medium"/>
-                <ImageButton Source="" x:Name="AddPlayerButton" VerticalOptions="CenterAndExpand" HorizontalOptions="EndAndExpand" Command="{Binding AddPlayerCommand}" BackgroundColor="Transparent" HeightRequest="30" Margin="10,0,0,0"/>
-            </StackLayout>
-            <SearchBar Placeholder="Search Player" Text="{Binding SearchText}"/>
-            <Frame HasShadow="false" CornerRadius="5">
-                <ListView x:Name="PlayerList" ItemsSource="{Binding Players}" VerticalScrollBarVisibility="Default" ItemSelected="ListView_OnItemSelected" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding PlayerListHeight}">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <Grid Padding="0" Margin="0" RowSpacing="0">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="8*"/>
-                                        <ColumnDefinition Width="1*"/>
-                                    </Grid.ColumnDefinitions>
-                                    <Label Grid.Column="0" Text="{Binding Member.Name}" VerticalOptions="Center"/>
-                                    <Button Grid.Column="1" Text="❌" BackgroundColor="White" WidthRequest="50" VerticalOptions="End" Command="{Binding BindingContext.RemovePlayerCommand, Source={x:Reference rootpage}}" CommandParameter="{Binding}"/>
-                                </Grid>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+        <StackLayout Padding="10,10,10,10">
+            <Frame HasShadow="true" CornerRadius="5">
+                <StackLayout>
+                    <Label Text="{Binding PracticeTeam.Name}" FontAttributes="Bold" FontSize="Large"/>
+                    <StackLayout Orientation="Horizontal" Margin="0,0,0,10">
+                        <Label x:Name="Trainer" Text="{Binding Trainer.Member.Name}" VerticalOptions="Center" FontSize="Medium">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding TrainerViewCommand}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <ImageButton Source="" x:Name="SwapPerson" VerticalOptions="CenterAndExpand" HorizontalOptions="StartAndExpand" Command="{Binding NewTrainerCommand}" BackgroundColor="white" HeightRequest="40" Margin="10,0,0,0" Padding="5"/>
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
+            <Frame HasShadow="True" CornerRadius="5">
+                <StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label Text="Players" FontAttributes="Bold" FontSize="Medium"/>
+                        <ImageButton Source="" x:Name="AddPlayerButton" VerticalOptions="CenterAndExpand" HorizontalOptions="EndAndExpand" Command="{Binding AddPlayerCommand}" BackgroundColor="White" HeightRequest="40" Margin="10,0,0,0" Padding="5"/>
+                    </StackLayout>
+                    <SearchBar Placeholder="Search Player" Text="{Binding SearchText}"/>
+                    <Frame HasShadow="false" CornerRadius="5" Padding="5">
+                        <ListView x:Name="PlayerList" ItemsSource="{Binding Players}" VerticalScrollBarVisibility="Default" ItemSelected="ListView_OnItemSelected" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding PlayerListHeight}">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <ViewCell>
+                                        <Grid Padding="0" Margin="0" RowSpacing="0">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="7*"/>
+                                                <ColumnDefinition Width="1*"/>
+                                            </Grid.ColumnDefinitions>
+                                            <Label Grid.Column="0" Text="{Binding Member.Name}" VerticalOptions="Center"/>
+                                            <Button Grid.Column="1" Text="❌" BackgroundColor="White" WidthRequest="50" VerticalOptions="End" Command="{Binding BindingContext.RemovePlayerCommand, Source={x:Reference rootpage}}" CommandParameter="{Binding}"/>
+                                        </Grid>
+                                    </ViewCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </Frame>
+                </StackLayout>
             </Frame>
         </StackLayout>
     </ContentPage.Content>

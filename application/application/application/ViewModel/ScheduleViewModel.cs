@@ -56,9 +56,11 @@ namespace application.ViewModel
                 SetSelectedEvents();
             }
         }
+        public bool IsTrainer { get; set; }
 
         public ScheduleViewModel()
         {
+            IsTrainer = ((RequestCreator.LoggedInMember.MemberType & MemberType.Trainer) == MemberType.Trainer);
             SelectedDate = DateTime.Today;
             _month = DateTime.Today.Month;
             _year = DateTime.Today.Year;

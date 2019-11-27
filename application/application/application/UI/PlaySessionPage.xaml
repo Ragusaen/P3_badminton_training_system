@@ -8,61 +8,44 @@
     <ContentPage.Content>
         <ScrollView>
         <StackLayout>
-            <Label x:Name="Name" Text="name" FontSize="Large" HorizontalOptions="Center"/>
-            <Label x:Name="Date" Text="date" />
-            <Label x:Name="Time" Text="time" />
-            <Label x:Name="Location" Text="{Binding PlaySession.Location}"/>
             
+            <StackLayout Margin="15,15,15,15">
+                <Label x:Name="Name" Text="name" FontSize="28" HorizontalOptions="Center"/>
+                <Label x:Name="Date" Text="date" FontSize="16"/>
+                <Label x:Name="Time" Text="time" FontSize="16"/>
+                <Label x:Name="Location" Text="{Binding PlaySession.Location}" FontSize="16"/>
+            </StackLayout>
+
             <StackLayout x:Name="PracticeRelevant">
                 <Frame CornerRadius="4" HasShadow="True" Margin="15,0,15,0">
-                    <StackLayout>
-                        <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
-                            <Image Source="" x:Name="BullsEyeIcon" HeightRequest="40"/>
-                            <Label Text="Focus Points" FontSize="Title" VerticalOptions="Center"/>
+                     <StackLayout>
+                            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
+                                <Image Source="" x:Name="BullsEyeIcon" HeightRequest="40"/>
+                                <Label Text="Focus Points" FontSize="Title" VerticalOptions="Center"/>
+                            </StackLayout>
+                            <Label x:Name="MainFocusPoint" FontAttributes="Bold" FontSize="20" Text="{Binding PracticeSession.MainFocusPoint.Descriptor.Name}"/>
+                            <ListView IsVisible="False" x:Name="FocusPointList" VerticalScrollBarVisibility="Never" ItemsSource="{Binding PracticeSession.FocusPoints}" ItemSelected="ListView_OnItemSelected" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding FocusPointListHeight}" SelectedItem="{Binding Practice.MainFocusPoint}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ViewCell>
+                                            <Label Grid.Column="0" Text="{Binding Descriptor.Name}" FontSize="18" VerticalOptions="Center"/>
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+                            </ListView>
                         </StackLayout>
-                        <Label x:Name="MainFocusPoint" FontAttributes="Bold" Text="{Binding PracticeSession.MainFocusPoint.Descriptor.Name}"/>
-                        <ListView x:Name="FocusPointList" VerticalScrollBarVisibility="Never" ItemsSource="{Binding PracticeSession.FocusPoints}" ItemSelected="ListView_OnItemSelected" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding FocusPointListHeight}" SelectedItem="{Binding Practice.MainFocusPoint}">
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <ViewCell>
-                                        <Label Grid.Column="0" Text="{Binding Descriptor.Name}" VerticalOptions="Center"/>
-                                    </ViewCell>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
+                    </Frame>
+
+                    <StackLayout IsVisible="False" x:Name="ExerciseStack" VerticalOptions="FillAndExpand">
+                        <Label Text="Exercises" FontSize="20" TextDecorations="Underline" HorizontalOptions="Center"/>
                     </StackLayout>
-                </Frame>
+                </StackLayout>
 
-                <Label Text="Exercises" FontSize="20" TextDecorations="Underline" HorizontalOptions="Center"/>
-                <ListView x:Name="ExerciseList" HasUnevenRows="true" SelectionMode="None" ItemsSource="{Binding PracticeSession.Exercises}" Margin="15,0,15,0" HeightRequest="{Binding PlanHeight}" VerticalScrollBarVisibility="Never" SeparatorVisibility="None">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <Frame CornerRadius="5" HasShadow="True" Margin="0,10,0,10">
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition Height="40"/>
-                                            <RowDefinition Height="Auto"/>
-                                        </Grid.RowDefinitions>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="1*"/>
-                                            <ColumnDefinition Width="9*"/>
-                                        </Grid.ColumnDefinitions>
-                                        <Label Grid.Row="0" Grid.Column="0" Text="{Binding Minutes}" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" HorizontalTextAlignment="End" FontSize="20"/>
-                                        <Label Grid.Row="0" Grid.Column="1" Text="{Binding ExerciseDescriptor.Name}"  HorizontalOptions="Start" VerticalOptions="CenterAndExpand"  FontSize="18"/>
-                                        <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" FontSize="18" Text="{Binding ExerciseDescriptor.Description}" VerticalOptions="Fill" SizeChanged="ExerciseDescription_SizeChanged"/>
-                                    </Grid>
-                                </Frame>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-                <Button Text="Submit feedback for this practice" Command="{Binding FeedbackCommand}" IsVisible="{Binding PracticeFeedbackIsVisable}"/>
-            </StackLayout>
+                <StackLayout x:Name="TeamMatchRelevant">
 
-            <StackLayout x:Name="TeamMatchRelevant">
+                </StackLayout>
+                <Button x:Name="FeedBackButton" Text="Submit feedback for this practice" Command="{Binding FeedbackCommand}" IsVisible="{Binding PracticeFeedbackIsVisable}"/>
 
-            </StackLayout>
         </StackLayout>
         </ScrollView>
     </ContentPage.Content>

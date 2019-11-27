@@ -22,5 +22,5 @@ namespace application.UI
             BindingContext = vm;
             vm.Navigation = Navigation;
         }
-     }
+    }
 }

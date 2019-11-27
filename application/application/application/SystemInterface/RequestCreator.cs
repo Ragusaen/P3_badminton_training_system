@@ -257,6 +257,22 @@ namespace application.SystemInterface
 
             return response.Team;
         }
+
+        public static List<PracticeTeam> GetTrainerPracticeTeams(Trainer trainer)
+        {
+            var request = new GetTrainerPracticeTeamsRequest
+            {
+                Trainer = trainer
+            };
+
+            var response =
+                SimpleRequest<GetTrainerPracticeTeamsRequest, GetTrainerPracticeTeamsResponse>(
+                    RequestType.GetTrainerPracticeTeams, request);
+
+            return response.PracticeTeams;
+
+        }
+
         // Setters below
         public static void SetPlayer(Player player)
         {

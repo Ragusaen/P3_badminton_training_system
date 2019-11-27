@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using Common.Model;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.Linq;
 using application.Controller;
 using Rg.Plugins.Popup.Services;
@@ -31,7 +32,6 @@ namespace application.ViewModel
                     SaveCreatedPracticeClickCommand.RaiseCanExecuteChanged();
             }
         }
-
 
         private TimeSpan _selectedTimeStart;
 
@@ -125,15 +125,26 @@ namespace application.ViewModel
             }
         }
 
+        private string _teamName;
+
+        public string TeamName
+        {
+            get => _teamName;
+            set
+            {
+                SetProperty(ref _teamName, value);
+            }
+        }
+
         //Ctor
         public CreatePracticeViewModel(DateTime startDate)
         {
             SelectedDateStart = startDate;
-            Practice.PracticeTeam = new PracticeTeam() { Name = "Choose Team" };
+            TeamName = "Choose Team";
             FocusPoints = new ObservableCollection<FocusPointItem>();
             Trainers = RequestCreator.GetAllTrainers();
             PlanElement = new ObservableCollection<ExerciseItem>();
-            PlanHeight = 0;
+            PlanHeight = 10;
         }
         //Save
         private RelayCommand _saveCreatedPracticeClickCommand;
@@ -168,47 +179,24 @@ namespace application.ViewModel
                 i++;
             }
             RequestCreator.SetPracticeSession(Practice);
+            Navigation.PopAsync();
         }
 
-
-
-
-        //Add
-        private RelayCommand _addNewPlanElementClickCommand;
-
-        public RelayCommand AddNewPlanElementClickCommand
+        public async void AddNewPlanElement(EventHandler<ExerciseDescriptor> eventHandler)
         {
-            get
-            {
-                return _addNewPlanElementClickCommand ?? (_addNewPlanElementClickCommand = new RelayCommand(param => ExecuteAddNewPlanElementClick(param), param => CanExecuteAddNewPlanElementClick(param)));
-            }
-        }
-
-        private bool CanExecuteAddNewPlanElementClick(object param)
-        {
-            return true;
-        }
-
-        private async void ExecuteAddNewPlanElementClick(object param)
-        {
+            Debug.WriteLine("SOMWHERE");
             string action = await Application.Current.MainPage.DisplayActionSheet("Settings", "Cancel", null,"Add Existing Exercise", "Make New Exercise");
 
             if (action == "Add Existing Exercise")
             {
                 var page = new ExercisePopupPage(Practice);
-                page.CallBackEvent += ExercisePage_CallBackEvent;
+                page.CallBackEvent += eventHandler;
                 await PopupNavigation.Instance.PushAsync(page);
             }
             else if (action == "Make New Exercise")
                 await PopupNavigation.Instance.PushAsync(new CreateExercisePopupPage());
         }
 
-        private void ExercisePage_CallBackEvent(object sender, ExerciseDescriptor e)
-        {
-            ExerciseItem item = new ExerciseItem() { ExerciseDescriptor = e };
-            PlanElement.Add(item);
-            PlanHeight = PlanElement.Count * 235;
-        }
         private RelayCommand _addNewFocusPointCommand;
 
         public RelayCommand AddNewFocusPointCommand
@@ -250,6 +238,7 @@ namespace application.ViewModel
         private void TeamPage_CallBackEvent(object sender, PracticeTeam e)
         {
             Practice.PracticeTeam = e;
+            TeamName = e.Name;
         }
         //Delete
         private RelayCommand _deletePlanItemCommand;
