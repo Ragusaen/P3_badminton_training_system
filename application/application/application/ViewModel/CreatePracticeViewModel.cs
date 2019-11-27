@@ -32,7 +32,6 @@ namespace application.ViewModel
             }
         }
 
-
         private TimeSpan _selectedTimeStart;
 
         public TimeSpan SelectedTimeStart
@@ -125,15 +124,26 @@ namespace application.ViewModel
             }
         }
 
+        private string _teamName;
+
+        public string TeamName
+        {
+            get => _teamName;
+            set
+            {
+                SetProperty(ref _teamName, value);
+            }
+        }
+
         //Ctor
         public CreatePracticeViewModel(DateTime startDate)
         {
             SelectedDateStart = startDate;
-            Practice.PracticeTeam = new PracticeTeam() { Name = "Choose Team" };
+            TeamName = "Choose Team";
             FocusPoints = new ObservableCollection<FocusPointItem>();
             Trainers = RequestCreator.GetAllTrainers();
             PlanElement = new ObservableCollection<ExerciseItem>();
-            PlanHeight = 0;
+            PlanHeight = 10;
         }
         //Save
         private RelayCommand _saveCreatedPracticeClickCommand;
@@ -168,6 +178,7 @@ namespace application.ViewModel
                 i++;
             }
             RequestCreator.SetPracticeSession(Practice);
+            Navigation.PopAsync();
         }
 
 
@@ -250,6 +261,7 @@ namespace application.ViewModel
         private void TeamPage_CallBackEvent(object sender, PracticeTeam e)
         {
             Practice.PracticeTeam = e;
+            TeamName = e.Name;
         }
         //Delete
         private RelayCommand _deletePlanItemCommand;

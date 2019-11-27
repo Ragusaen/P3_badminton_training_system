@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using Common.Serialization;
 using application.SystemInterface;
+using Rg.Plugins.Popup.Services;
 
 namespace application.ViewModel
 {
@@ -26,6 +27,7 @@ namespace application.ViewModel
         private void CreateNewExerciseClick(object param)
         {
             RequestCreator.SetExerciseDiscriptor(Exercise);
+            PopupNavigation.Instance.PopAsync();
         }
     }
 }
