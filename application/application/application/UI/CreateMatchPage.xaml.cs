@@ -13,10 +13,13 @@ namespace application.UI
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CreateMatchPage : ContentPage
     {
-        public CreateMatchPage()
+        public CreateMatchPage(DateTime time)
         {
             InitializeComponent();
-            CreateMatchViewModel vm = new CreateMatchViewModel();
+            if (time < DateTime.Today)
+                time = DateTime.Today;
+
+            CreateMatchViewModel vm = new CreateMatchViewModel(time);
             BindingContext = vm;
             vm.Navigation = Navigation;
             SaveIcon.Source = ImageSource.FromResource("application.Images.saveicon.png");

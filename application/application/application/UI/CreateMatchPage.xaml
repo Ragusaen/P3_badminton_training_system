@@ -68,8 +68,7 @@
                 <Label Grid.Row="10" Grid.Column="2" HorizontalOptions="End" Text="Reserve:" FontSize="12"/>
             </Grid>
 
-
-            <ListView x:Name="LineupList" RowHeight="110" ItemsSource="{Binding Positions}" HeightRequest="{Binding LineupHeight}">
+            <ListView x:Name="LineupList" SelectionMode="None" RowHeight="120" ItemsSource="{Binding Positions}" HeightRequest="{Binding LineupHeight}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>

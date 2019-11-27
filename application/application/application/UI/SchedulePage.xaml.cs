@@ -45,7 +45,7 @@ namespace application.UI
             if (action == "Add New Practice")
                 await Navigation.PushAsync(new CreatePracticePage(_vm.SelectedDate));
             else if (action == "Add New Match")
-                await Navigation.PushAsync(new CreateMatchPage());
+                await Navigation.PushAsync(new CreateMatchPage(_vm.SelectedDate));
         }
         protected override void OnAppearing()
         {
