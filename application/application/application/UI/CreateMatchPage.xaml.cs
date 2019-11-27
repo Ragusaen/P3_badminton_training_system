@@ -13,6 +13,8 @@ namespace application.UI
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CreateMatchPage : ContentPage
     {
+        private CreateMatchViewModel _vm;
+
         public CreateMatchPage() : this(DateTime.Today)
         {
 
@@ -20,13 +22,25 @@ namespace application.UI
 
         public CreateMatchPage(DateTime time)
         {
-            InitializeComponent();
             if (time < DateTime.Today)
                 time = DateTime.Today;
 
-            CreateMatchViewModel vm = new CreateMatchViewModel(time);
-            BindingContext = vm;
-            vm.Navigation = Navigation;
+            Init(()=> new CreateMatchViewModel(time));
+        }
+
+        public CreateMatchPage(TeamMatch teamMatch)
+        {
+            Init(() => new CreateMatchViewModel(teamMatch));
+        }
+
+        private void Init(Func<CreateMatchViewModel> ctor)
+        {
+
+            InitializeComponent();
+
+            _vm = ctor();
+            BindingContext = _vm;
+            _vm.Navigation = Navigation;
             SaveIcon.Source = ImageSource.FromResource("application.Images.saveicon.png");
         }
 
