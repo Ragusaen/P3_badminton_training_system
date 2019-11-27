@@ -494,5 +494,15 @@ namespace application.SystemInterface
 
             SimpleRequest<SetPracticeTeamRequest, SetPracticeTeamResponse>(RequestType.SetPracticeTeam, request);
         }
+
+        public static void DeleteTeamMatch(int id)
+        {
+            var request = new DeleteTeamMatchRequest
+            {
+                Id = id,
+            };
+
+            SimpleRequest<DeleteTeamMatchRequest, DeleteTeamMatchResponse>(RequestType.DeleteTeamMatch, request);
+        }
     }
 }
