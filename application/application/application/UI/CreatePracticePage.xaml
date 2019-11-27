@@ -90,7 +90,7 @@
                                         <ColumnDefinition Width="4*"/>
                                         <ColumnDefinition Width="1*"/>
                                     </Grid.ColumnDefinitions>
-                                    <Entry Grid.Row="0" Grid.Column="0" Text="{Binding Minutes}" KeyBoard="Numeric" Placeholder="Minutes" HorizontalOptions="Start" HorizontalTextAlignment="End"/>
+                                    <Entry Grid.Row="0" Grid.Column="0" Text="{Binding Minutes}" Keyboard="Numeric" Placeholder="Minutes" HorizontalOptions="Start" HorizontalTextAlignment="End"/>
                                     <Label Grid.Row="0" Grid.Column="1" Text="{Binding ExerciseDescriptor.Name}" VerticalOptions="Center" FontSize="18"/>
                                     <Button Grid.Row="0" Grid.Column="2" Text="❌" VerticalOptions="Center" HorizontalOptions="End" BackgroundColor="White" Command="{Binding BindingContext.DeletePlanItemCommand, Source={x:Reference rootpage}}" CommandParameter="{Binding}"/>
                                     <Label Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3" FontSize="18" Text="{Binding ExerciseDescriptor.Description}" VerticalOptions="Fill"/>

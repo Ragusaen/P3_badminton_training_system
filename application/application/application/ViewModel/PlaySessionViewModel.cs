@@ -17,13 +17,6 @@ namespace application.ViewModel
         public PracticeSession PracticeSession { get; set; }
         public TeamMatch TeamMatch { get; set; }
 
-        private ObservableCollection<ExerciseItem> _exercises;
-
-        public ObservableCollection<ExerciseItem> Exercises
-        {
-            get => _exercises;
-            set => SetProperty(ref _exercises, value);
-        }
         private bool _practiceFeedbackIsVisible;
 
         public bool PracticeFeedbackIsVisible
