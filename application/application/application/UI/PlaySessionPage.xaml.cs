@@ -88,7 +88,7 @@ namespace application.UI
                     ColumnDefinitions = new ColumnDefinitionCollection()
                     {
                         new ColumnDefinition {Width = 40},
-                        new ColumnDefinition {Width = GridLength.Auto}
+                        new ColumnDefinition {Width = GridLength.Star}
                     }
                 };
 
@@ -103,16 +103,5 @@ namespace application.UI
                 ExerciseStack.Children.Add(frame);
             }
         }
-
-        /*
-        private void ExerciseDescription_SizeChanged(object sender, EventArgs e)
-        {
-            Debug.WriteLine("CHANGED SIZE!!!!");
-
-            var label = (Label) sender;
-            var grid = (Grid) label.Parent;
-
-            grid.RowDefinitions[1].Height = label.Height;
-        }*/
     }
 }
