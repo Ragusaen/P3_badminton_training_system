@@ -5,10 +5,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
              mc:Ignorable="d"
-             x:Class="application.UI.StringAndHeaderPopup" Padding="40,150,40,150">
-    <StackLayout BackgroundColor="White" Padding="20,20,20,20">
+             x:Class="application.UI.StringAndHeaderPopup" >
+
+    <StackLayout Padding="24" Spacing="24" Margin="12">
+        <StackLayout BackgroundColor="White" Padding="20,20,20,20">
         <Label Text="{Binding Header}" FontAttributes="Bold"/>
         <BoxView BackgroundColor="#BBBBBB" HeightRequest="1"/>
         <Label Text="{Binding Content}" />
+    </StackLayout>
     </StackLayout>
 </pages:PopupPage>
