@@ -25,6 +25,14 @@ namespace application.ViewModel
             set => SetProperty(ref _practiceFeedbackIsVisible, value);
         }
 
+        private double _focusPointListHeight;
+        public double FocusPointListHeight
+        {
+            get => _focusPointListHeight;
+            set => SetProperty(ref _focusPointListHeight, value);
+        }
+
+
 
         public PlaySessionViewModel(PlaySession playSession)
         {
@@ -34,7 +42,10 @@ namespace application.ViewModel
                 PracticeFeedbackIsVisible = true;
 
             if (PlaySession is PracticeSession practice)
+            {
                 PracticeSession = practice;
+                _focusPointListHeight = PracticeSession.FocusPoints.Count * 45;
+            }
             else if (PlaySession is TeamMatch match)
                 TeamMatch = match;
         }
