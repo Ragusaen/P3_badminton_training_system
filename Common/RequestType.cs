@@ -37,6 +37,7 @@ namespace Common
         ChangeTrainerPrivileges,
         SetNonPrivateFocusPoint,
         SetPracticeTeamTrainer,
+        SetMemberSex,
         //Deleters below
         DeletePlayerFocusPoint,
         DeletePlayerPracticeTeam,

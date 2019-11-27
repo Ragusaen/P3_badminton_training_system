@@ -229,6 +229,7 @@
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Function\Handlers\GetTrainerPracticeTeamsHandler.cs" />
+    <Compile Include="Function\Handlers\SetMemberSexHandler.cs" />
     <Compile Include="Function\Rules\DoubleSamePlayerRule.cs" />
     <Compile Include="Function\Rules\EmptyPositionRule.cs" />
     <Compile Include="Function\Rules\HalfEmptyLineupRule.cs" />

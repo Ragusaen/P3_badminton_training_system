@@ -22,6 +22,7 @@
                     <StackLayout BackgroundColor="#F0F0F0" >
                         <Label Text="{Binding Member.Name}" FontSize="Large" HorizontalOptions="CenterAndExpand" VerticalOptions="Start"/>
                         <Label Text="{Binding StringMemberType}" FontSize="Small" HorizontalOptions="CenterAndExpand"/>
+                        <Label x:Name="NoSexLabel" IsVisible="False" Text="This player has no assigned sex!" TextColor="Red" HorizontalTextAlignment="Center"/>
                     </StackLayout>
                 </Frame>
                 <StackLayout x:Name="BothRelevant"></StackLayout> <!--Currently nothing-->
