@@ -33,7 +33,7 @@
                     <RowDefinition Height="50"/>
                     <RowDefinition Height="50"/>
                     <RowDefinition Height="50"/>
-                    <RowDefinition Height="90"/>
+                    <RowDefinition Height="50"/>
                     <RowDefinition Height="15"/>
                     <RowDefinition Height="40"/>
                     <RowDefinition Height="15"/>
@@ -68,7 +68,7 @@
                 <Label Grid.Row="10" Grid.Column="2" HorizontalOptions="End" Text="Reserve:" FontSize="12"/>
             </Grid>
 
-            <ListView x:Name="LineupList" SelectionMode="None" RowHeight="120" ItemsSource="{Binding Positions}" HeightRequest="{Binding LineupHeight}">
+            <ListView x:Name="LineupList" SelectionMode="None" RowHeight="150" ItemsSource="{Binding Positions}" HeightRequest="{Binding LineupHeight}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
