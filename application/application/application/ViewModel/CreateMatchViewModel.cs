@@ -168,10 +168,10 @@ namespace application.ViewModel
             {
                 if (SetProperty(ref _selectedLeague, value))
                 {
+                    SetLineupTemplate(_selectedLeague);
                     ReservesVisible = _selectedLeague == TeamMatch.Leagues.BadmintonLeague ||
                                       _selectedLeague == TeamMatch.Leagues.Division1;
                 }
-                SetLineupTemplate(_selectedLeague);
             }
         }
 
@@ -197,7 +197,9 @@ namespace application.ViewModel
             set
             {
                 if (SetProperty(ref _positions, value))
+                {
                     LineupHeight = _positions.Count * 150;
+                }
             }
         }
 
@@ -217,20 +219,20 @@ namespace application.ViewModel
             set { SetProperty(ref _members, value); }
         }
 
-        private int _matchToDeleteId;
         private bool isEdit = false;
+        private int _matchId = 0;
 
         //Ctor
         private CreateMatchViewModel()
         {
             Members = new ObservableCollection<Member>(RequestCreator.GetAllMembers().OrderBy(p => p.Name));
             Players = new ObservableCollection<Player>(RequestCreator.GetAllPlayers().OrderBy(p => p.Member.Name));
+            SelectedLeague = TeamMatch.Leagues.DenmarksSeries;
         }
 
         public CreateMatchViewModel(DateTime startDate) : this()
         {
             SelectedDateStart = startDate;
-            SelectedLeague = TeamMatch.Leagues.BadmintonLeague;
             Location = "Stjernevej 5, 9200 Aalborg";
         }
 
@@ -247,9 +249,9 @@ namespace application.ViewModel
             TeamIndex = match.TeamIndex;
 
             isEdit = true;
-            _matchToDeleteId = match.Id;
+            _matchId = match.Id;
         }
-        
+
         public void SetUILineup(Lineup lineup)
         {
             foreach (var group in lineup)
@@ -303,8 +305,12 @@ namespace application.ViewModel
                 Season = (int)Season,
                 LeagueRound = (int)LeagueRound,
                 TeamIndex = (int)TeamIndex,
+                League = SelectedLeague,
                 Lineup = ConvertPositionDictionaryToLineup(Positions)
             };
+            if (_matchId != 0) 
+                match.Id = _matchId;
+            
             List<RuleBreak> ruleBreaks = RequestCreator.VerifyLineup(match);
 
             foreach (var position in Positions)
@@ -396,6 +402,14 @@ namespace application.ViewModel
             Positions = newPositions;
         }
 
+        private double _saveButtonOpacity;
+
+        public double SaveButtonOpacity
+        {
+            get => _saveButtonOpacity; 
+            set => SetProperty(ref _saveButtonOpacity, value); 
+        }
+
         private RelayCommand _saveMatchClickCommand;
 
         public RelayCommand SaveMatchClickCommand
@@ -408,12 +422,19 @@ namespace application.ViewModel
 
         private bool CanExecuteSaveMatchClick(object param)
         {
-            return !((string.IsNullOrEmpty(Location)) ||
-                     (string.IsNullOrEmpty(OpponentName)) ||
-                     Captain == null ||
-                     LeagueRound == null || LeagueRound < 0 ||
-                     Season == null || Season < 0 ||
-                     TeamIndex == null || TeamIndex < 0);
+            if (((string.IsNullOrEmpty(Location)) ||
+                  (string.IsNullOrEmpty(OpponentName)) ||
+                  Captain == null ||
+                  LeagueRound == null || LeagueRound < 0 ||
+                  Season == null || Season < 0 ||
+                  TeamIndex == null || TeamIndex < 0))
+            {
+                SaveButtonOpacity = 0.5;
+                return false;
+            }
+
+            SaveButtonOpacity = 1;
+            return true;
         }
 
         private void ExecuteSaveMatchClick(object param)
@@ -434,7 +455,7 @@ namespace application.ViewModel
             RemoveSamePlayerDouble(match.Lineup);
 
             if (isEdit)
-                RequestCreator.DeleteTeamMatch(_matchToDeleteId);
+                RequestCreator.DeleteTeamMatch(_matchId);
             RequestCreator.SetTeamMatch(match);
 
             //Navigate back

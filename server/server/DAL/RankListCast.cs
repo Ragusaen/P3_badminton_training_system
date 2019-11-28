@@ -17,7 +17,8 @@ namespace Server.DAL
                 DoublesPoints = r.DoublesPoints,
                 MixPoints = r.MixPoints,
                 Level = (PlayerRanking.LevelGroup) r.Level,
-                LevelPoints = r.LevelPoints
+                LevelPoints = r.LevelPoints,
+                Age = (PlayerRanking.AgeGroup)r.AgeGroup
             };
         }
     }

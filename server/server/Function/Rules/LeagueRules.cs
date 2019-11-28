@@ -3,19 +3,6 @@ using System.Collections.Generic;
 
 namespace Server.Function.Rules
 {
-    public enum RankingCompareType
-    {
-        CategoryOne,
-        CategoryBoth,
-        Level
-    }
-
-    public enum PlayersToCompare
-    {
-        SameCategories,
-        SameSex
-    }
-
     static class LeagueRules
     {
 
@@ -29,7 +16,7 @@ namespace Server.Function.Rules
                 new LineupPointsRule(50, 100, new List<PlayerRanking.AgeGroup>(){PlayerRanking.AgeGroup.U17}),
                 new MaxPlayerOccurrencesRule(2),
                 new MinAgeRule(PlayerRanking.AgeGroup.U17),
-                new MultipleLineupsPointsRule(new List<PlayerRanking.AgeGroup>() {PlayerRanking.AgeGroup.U17}, RankingCompareType.CategoryOne, PlayersToCompare.SameSex),
+                new MultipleLineupsPointsRule(new List<PlayerRanking.AgeGroup>() {PlayerRanking.AgeGroup.U17}),
                 new ReservesRule(),
                 new SamePositionType(),
                 new SexRule(),
@@ -42,7 +29,7 @@ namespace Server.Function.Rules
                 new LineupPointsRule(50, 100, new List<PlayerRanking.AgeGroup>(){PlayerRanking.AgeGroup.U17}),
                 new MaxPlayerOccurrencesRule(2),
                 new MinAgeRule(PlayerRanking.AgeGroup.U17),
-                new MultipleLineupsPointsRule(new List<PlayerRanking.AgeGroup>() {PlayerRanking.AgeGroup.U17}, RankingCompareType.CategoryOne, PlayersToCompare.SameSex),
+                new MultipleLineupsPointsRule(new List<PlayerRanking.AgeGroup>() {PlayerRanking.AgeGroup.U17}),
                 new ReservesRule(),
                 new SamePositionType(),
                 new SexRule(),
@@ -55,7 +42,7 @@ namespace Server.Function.Rules
                 new LineupPointsRule(50, 100, new List<PlayerRanking.AgeGroup>(){PlayerRanking.AgeGroup.U17}),
                 new MaxPlayerOccurrencesRule(2),
                 new MinAgeRule(PlayerRanking.AgeGroup.U17),
-                new MultipleLineupsPointsRule(new List<PlayerRanking.AgeGroup>() {PlayerRanking.AgeGroup.U17}, RankingCompareType.Level, PlayersToCompare.SameCategories),
+                new MultipleLineupsPointsRule(new List<PlayerRanking.AgeGroup>() {PlayerRanking.AgeGroup.U17}),
                 new ReservesRule(),
                 new SamePositionType(),
                 new SexRule(),
@@ -68,7 +55,7 @@ namespace Server.Function.Rules
                 new LineupPointsRule(50, 100, new List<PlayerRanking.AgeGroup>(){PlayerRanking.AgeGroup.U17}),
                 new MaxPlayerOccurrencesRule(2),
                 new MinAgeRule(PlayerRanking.AgeGroup.U17),
-                new MultipleLineupsPointsRule(new List<PlayerRanking.AgeGroup>() {PlayerRanking.AgeGroup.U17}, RankingCompareType.Level, PlayersToCompare.SameCategories),
+                new MultipleLineupsPointsRule(new List<PlayerRanking.AgeGroup>() {PlayerRanking.AgeGroup.U17}),
                 new ReservesRule(),
                 new SamePositionType(),
                 new SexRule(),
@@ -81,7 +68,7 @@ namespace Server.Function.Rules
                 new LineupPointsRule(50, 100, new List<PlayerRanking.AgeGroup>(){PlayerRanking.AgeGroup.U17}),
                 new MaxPlayerOccurrencesRule(2),
                 new MinAgeRule(PlayerRanking.AgeGroup.U17),
-                new MultipleLineupsPointsRule(new List<PlayerRanking.AgeGroup>() {PlayerRanking.AgeGroup.U17}, RankingCompareType.Level, PlayersToCompare.SameCategories),
+                new MultipleLineupsPointsRule(new List<PlayerRanking.AgeGroup>() {PlayerRanking.AgeGroup.U17}),
                 new ReservesRule(),
                 new SamePositionType(),
                 new SexRule(),
@@ -94,7 +81,7 @@ namespace Server.Function.Rules
                 new LineupPointsRule(50, 100, new List<PlayerRanking.AgeGroup>(){PlayerRanking.AgeGroup.U17}),
                 new MaxPlayerOccurrencesRule(2),
                 new MinAgeRule(PlayerRanking.AgeGroup.U17),
-                new MultipleLineupsPointsRule(new List<PlayerRanking.AgeGroup>() {PlayerRanking.AgeGroup.U17, PlayerRanking.AgeGroup.U15}, RankingCompareType.CategoryOne, PlayersToCompare.SameCategories),
+                new MultipleLineupsPointsRule(new List<PlayerRanking.AgeGroup>() {PlayerRanking.AgeGroup.U17, PlayerRanking.AgeGroup.U15}),
                 new ReservesRule(),
                 new SamePositionType(),
                 new SexRule(),
@@ -107,7 +94,7 @@ namespace Server.Function.Rules
                 new LineupPointsRule(50, 100, new List<PlayerRanking.AgeGroup>(){PlayerRanking.AgeGroup.U17}),
                 new MaxPlayerOccurrencesRule(2),
                 new MinAgeRule(PlayerRanking.AgeGroup.U17),
-                new MultipleLineupsPointsRule(new List<PlayerRanking.AgeGroup>() {PlayerRanking.AgeGroup.U17, PlayerRanking.AgeGroup.U15}, RankingCompareType.CategoryOne, PlayersToCompare.SameCategories),
+                new MultipleLineupsPointsRule(new List<PlayerRanking.AgeGroup>() {PlayerRanking.AgeGroup.U17, PlayerRanking.AgeGroup.U15}),
                 new ReservesRule(),
                 new SamePositionType(),
                 new SexRule(),

@@ -8,18 +8,27 @@ namespace Server.Function.Rules
 {
     class MultipleLineupsPointsRule : IRule
     {
-        public int Priority { get; set; } = 11;
+        enum PlayersToCompare
+        {
+            SameSex,
+            SameCategory
+        }
+
+        enum RankingCompareType
+        {
+            CategoryOne,
+            CategoryBoth,
+            Level
+        }
+
+        public int Priority { get; set; } = 13;
         private List<PlayerRanking.AgeGroup> _ignoreAgeGroups;
-        private RankingCompareType _rankingCompareType;
-        private PlayersToCompare _playersToCompare;
         private List<RuleBreak> _ruleBreaks = new List<RuleBreak>();
         
 
-        public MultipleLineupsPointsRule(List<PlayerRanking.AgeGroup> ignoredAgeGroups, RankingCompareType rankingCompareType, PlayersToCompare playersToCompare)
+        public MultipleLineupsPointsRule(List<PlayerRanking.AgeGroup> ignoredAgeGroups)
         {
             _ignoreAgeGroups = ignoredAgeGroups;
-            _rankingCompareType = rankingCompareType;
-            _playersToCompare = playersToCompare;
         }
 
         public List<RuleBreak> Rule(TeamMatch match)
@@ -40,78 +49,61 @@ namespace Server.Function.Rules
 
         private void CompareLineups(TeamMatch match, TeamMatch otherMatch)
         {
-            //If upper lineup is placed Division 1 or above, compare category. Else compare niveau.
             if (match.TeamIndex > otherMatch.TeamIndex)
             {
-                if (_rankingCompareType == RankingCompareType.Level)
-                    CompareLineupsLevel(match, otherMatch, true);
-                else
-                    CompareLineupsCategory(match, otherMatch, true);
+                CompareLineupByLeague(match, otherMatch, true);
             }
             else
             {
-                if (_rankingCompareType == RankingCompareType.Level)
-                    CompareLineupsLevel(otherMatch, match, false);
-                else
-                    CompareLineupsCategory(otherMatch, match, false);
+                CompareLineupByLeague(otherMatch, match, false);
             }
         }
 
-        private void CompareLineupsLevel(TeamMatch match, TeamMatch matchAbove, bool isLower)
+        private void CompareLineupByLeague(TeamMatch lower, TeamMatch higher, bool isLower)
         {
-            var matchPlayerPositions = GetPlayerPositions(match, false);
-            var matchAbovePlayerPositions = GetPlayerPositions(matchAbove, false);
-            
-            foreach (var playerPos in matchPlayerPositions)
+            switch (higher.League)
             {
-                Dictionary<Player, List<Lineup.PositionType>> playersToCompare = GetPlayerToCompare(playerPos, matchAbovePlayerPositions);
-
-                foreach (var abovePlayerPos in playersToCompare)
-                {
-                    if(!CheckPoints(playerPos.Key.Rankings.LevelPoints, abovePlayerPos.Key.Rankings.LevelPoints))
-                        AddRuleBreaks(match, playerPos.Key, matchAbove, abovePlayerPos.Key, isLower);
-                }
+                case TeamMatch.Leagues.BadmintonLeague:
+                case TeamMatch.Leagues.Division1:
+                    CompareLineups(lower, higher, isLower, PlayersToCompare.SameSex, RankingCompareType.CategoryOne);
+                    break;
+                case TeamMatch.Leagues.Division2:
+                case TeamMatch.Leagues.Division3:
+                case TeamMatch.Leagues.DenmarksSeries:
+                    CompareLineups(lower, higher, isLower, PlayersToCompare.SameCategory, RankingCompareType.Level);
+                    break;
+                case TeamMatch.Leagues.RegionalSeriesWest:
+                case TeamMatch.Leagues.Series1West:
+                    CompareLineups(lower, higher, isLower, PlayersToCompare.SameCategory, RankingCompareType.CategoryOne);
+                    break;
             }
         }
 
-        private bool CheckPoints(int points, int comparePoints)
+        private void CompareLineups(TeamMatch lower, TeamMatch higher, bool isLower, PlayersToCompare compare, RankingCompareType rankingType)
         {
-            return (points - comparePoints) <= 50;
-        }
+            var lowerPlayerPositions = GetPlayerPositions(lower, true);
+            var higherPlayerPositions = GetPlayerPositions(higher, true);
 
-        private void AddRuleBreaks(TeamMatch match, Player player, TeamMatch matchAbove, Player playerAbove, bool isLower)
-        {
-            if (isLower)
+            foreach (var lowerPlayerPosition in lowerPlayerPositions)
             {
-                foreach (var group in match.Lineup)
+                Dictionary<Player, List<Lineup.PositionType>> playersPositionsToCompare =
+                    GetPlayerPositionsToCompare(lowerPlayerPosition, higherPlayerPositions, compare);
+
+                foreach (var higherPlayerPos in playersPositionsToCompare)
                 {
-                    for (int i = 0; i < group.Positions.Count; i++)
+                    if (rankingType == RankingCompareType.Level)
                     {
-                        var pos = group.Positions[i];
-                        if (pos.Player.Member.Id == player.Member.Id)
-                            _ruleBreaks.Add(new RuleBreak((group.Type, i), 0, $"Player has too many points compared to {playerAbove.Member.Name} on lineup {matchAbove.TeamIndex}"));
-                        if (Lineup.PositionType.Double.HasFlag(group.Type) && pos.OtherPlayer.Member.Id == group.Positions.Count)
-                            _ruleBreaks.Add(new RuleBreak((group.Type, i), 1, $"Player has too many points compared to {playerAbove.Member.Name} on lineup {matchAbove.TeamIndex}"));
+                        if(!CheckPoints(lowerPlayerPosition.Key.Rankings.LevelPoints, higherPlayerPos.Key.Rankings.LevelPoints))
+                            AddRuleBreaks(lower, lowerPlayerPosition.Key, higher, higherPlayerPos.Key, isLower);
+                    }
+                    else
+                    {
+                        if(!CompareAbovePlayerPositions(lowerPlayerPosition, higherPlayerPos, rankingType))
+                            AddRuleBreaks(lower, lowerPlayerPosition.Key, higher, higherPlayerPos.Key, isLower);
                     }
                 }
             }
-            else
-            {
-                foreach (var group in matchAbove.Lineup)
-                {
-                    for (int i = 0; i < group.Positions.Count; i++)
-                    {
-                        var pos = group.Positions[i];
-                        if (pos.Player.Member.Id == playerAbove.Member.Id)
-                            _ruleBreaks.Add(new RuleBreak((group.Type, i), 0, $"Too little points compared to player {player.Member.Name} on lineup {match.TeamIndex}"));
-                        if (Lineup.PositionType.Double.HasFlag(group.Type) && pos.OtherPlayer.Member.Id == group.Positions.Count)
-                            _ruleBreaks.Add(new RuleBreak((group.Type, i), 1, $"Too little points compared to player {player.Member.Name} on lineup {match.TeamIndex}"));
-                    }
-                }
-            }
-            
         }
-
 
         private Dictionary<Player, List<Lineup.PositionType>> GetPlayerPositions(TeamMatch match, bool ignoreReserves)
         {
@@ -124,8 +116,8 @@ namespace Server.Function.Rules
                     {
                         if (!(ignoreReserves && pos.IsExtra))
                         {
-                            if (matchPlayerPositions.ContainsKey(pos.Player))
-                                matchPlayerPositions[pos.Player].Add(group.Type);
+                            if (matchPlayerPositions.Any(p => p.Key.Member.Id == pos.Player.Member.Id))
+                                matchPlayerPositions.FirstOrDefault(p => p.Key.Member.Id == pos.Player.Member.Id).Value.Add(group.Type);
                             else
                                 matchPlayerPositions.Add(pos.Player, new List<Lineup.PositionType>() { group.Type });
                         }
@@ -135,8 +127,8 @@ namespace Server.Function.Rules
                     {
                         if (!(ignoreReserves && pos.OtherIsExtra))
                         {
-                            if (matchPlayerPositions.ContainsKey(pos.OtherPlayer))
-                                matchPlayerPositions[pos.OtherPlayer].Add(group.Type);
+                            if (matchPlayerPositions.Any(p => p.Key.Member.Id == pos.OtherPlayer.Member.Id))
+                                matchPlayerPositions.FirstOrDefault(p => p.Key.Member.Id == pos.OtherPlayer.Member.Id).Value.Add(group.Type);
                             else
                                 matchPlayerPositions.Add(pos.OtherPlayer, new List<Lineup.PositionType>() { group.Type });
                         }
@@ -145,65 +137,88 @@ namespace Server.Function.Rules
             }
             return matchPlayerPositions;
         }
-        private bool ContainsIgnoredAgeGroup(PlayerRanking.AgeGroup age)
+
+        private Dictionary<Player, List<Lineup.PositionType>> GetPlayerPositionsToCompare(KeyValuePair<Player, List<Lineup.PositionType>> lowerPosition, Dictionary<Player, List<Lineup.PositionType>> higherPositions, PlayersToCompare compare)
         {
-            return _ignoreAgeGroups.Contains(age);
-        }
+            var playersToCompare = new Dictionary<Player, List<Lineup.PositionType>>();
 
-        private void CompareLineupsCategory(TeamMatch match, TeamMatch matchAbove, bool isLower)
-        {
-            var matchPlayerPositions = GetPlayerPositions(match, true);
-            var matchAbovePlayerPositions = GetPlayerPositions(matchAbove, true);
-
-            foreach (var playerPos in matchPlayerPositions)
-            {
-                Dictionary<Player, List<Lineup.PositionType>> playersToCompare = GetPlayerToCompare(playerPos, matchAbovePlayerPositions);
-
-                foreach (var playerCompare in playersToCompare)
-                {
-                    if (!CompareAbovePlayerPositions(playerPos, playerCompare))
-                    {
-                        AddRuleBreaks(match, playerPos.Key, matchAbove, playerCompare.Key, isLower);
-                    }
-                }
-            }
-        }
-
-        private Dictionary<Player, List<Lineup.PositionType>> GetPlayerToCompare(KeyValuePair<Player, List<Lineup.PositionType>> playerPos, Dictionary<Player, List<Lineup.PositionType>> matchAbovePlayerPositions)
-        {
-            Dictionary<Player, List<Lineup.PositionType>> playersToCompare = new Dictionary<Player, List<Lineup.PositionType>>();
-
-            if (_playersToCompare == PlayersToCompare.SameSex)
-                playersToCompare = matchAbovePlayerPositions.Where(p => p.Key.Sex == playerPos.Key.Sex)
+            if (compare == PlayersToCompare.SameSex)
+                playersToCompare = higherPositions.Where(p => p.Key.Sex == lowerPosition.Key.Sex)
                     .ToDictionary(pair => pair.Key, pair => pair.Value);
-            else
-                playersToCompare = matchAbovePlayerPositions.Where(p => playerPos.Value.Count(q => p.Value.Contains(q)) > 1).ToDictionary(pair => pair.Key, pair => pair.Value); ;
+            else if (compare == PlayersToCompare.SameCategory)
+                playersToCompare = higherPositions.Where(p => lowerPosition.Value.Count(q => p.Value.Contains(q)) > 1)
+                    .ToDictionary(pair => pair.Key, pair => pair.Value);
+
             return playersToCompare;
         }
 
-        private bool CompareAbovePlayerPositions(KeyValuePair<Player, List<Lineup.PositionType>> playerPos, KeyValuePair<Player, List<Lineup.PositionType>> playerCompare)
+        private bool CheckPoints(int lowerPoints, int higherPoints)
+        {
+            return (lowerPoints - higherPoints) <= 50;
+        }
+        
+        private bool CompareAbovePlayerPositions(KeyValuePair<Player, List<Lineup.PositionType>> lowerPos, KeyValuePair<Player, List<Lineup.PositionType>> higherPos, RankingCompareType compareType)
         {
             int count = 0;
-            foreach (var comparePositionType in playerCompare.Value)
+            foreach (var comparePositionType in higherPos.Value)
             {
-                if (ComparePlayerPointsType(playerPos.Key, playerCompare.Key, comparePositionType))
+                if (ComparePlayerPointsType(lowerPos.Key, higherPos.Key, comparePositionType))
                     count++;
             }
 
-            if (_rankingCompareType == RankingCompareType.CategoryOne)
+            if (compareType == RankingCompareType.CategoryOne)
                 return count >= 1;
-            if (_rankingCompareType == RankingCompareType.CategoryBoth)
+            if (compareType == RankingCompareType.CategoryBoth)
                 return count >= 2;
             return true;
         }
 
-        private bool ComparePlayerPointsType(Player player, Player comparePlayer, Lineup.PositionType comparePositionType)
+        private bool ComparePlayerPointsType(Player lowerPlayer, Player higherPlayer, Lineup.PositionType comparePositionType)
         {
             if (comparePositionType == Lineup.PositionType.MixDouble)
-                return CheckPoints(player.Rankings.MixPoints, comparePlayer.Rankings.MixPoints);
+                return CheckPoints(lowerPlayer.Rankings.MixPoints, higherPlayer.Rankings.MixPoints);
             if (Lineup.PositionType.Double.HasFlag(comparePositionType))
-                return CheckPoints(player.Rankings.DoublesPoints, comparePlayer.Rankings.DoublesPoints);
-            return CheckPoints(player.Rankings.SinglesPoints, comparePlayer.Rankings.SinglesPoints);
+                return CheckPoints(lowerPlayer.Rankings.DoublesPoints, higherPlayer.Rankings.DoublesPoints);
+            
+            return CheckPoints(lowerPlayer.Rankings.SinglesPoints, higherPlayer.Rankings.SinglesPoints);
+        }
+
+        private void AddRuleBreaks(TeamMatch lowerMatch, Player lowerPlayer, TeamMatch higherMatch, Player higherPlayer, bool isLower)
+        {
+            if (isLower)
+            {
+                foreach (var group in lowerMatch.Lineup)
+                {
+                    for (int i = 0; i < group.Positions.Count; i++)
+                    {
+                        var pos = group.Positions[i];
+                        if (pos.Player != null && pos.Player.Member.Id == lowerPlayer.Member.Id)
+                            _ruleBreaks.Add(new RuleBreak((group.Type, i), 0, $"Player has too many points compared to {higherPlayer.Member.Name} on lineup {higherMatch.TeamIndex}"));
+                        if (Lineup.PositionType.Double.HasFlag(group.Type) && pos.OtherPlayer != null && pos.OtherPlayer.Member.Id == group.Positions.Count)
+                            _ruleBreaks.Add(new RuleBreak((group.Type, i), 1, $"Player has too many points compared to {higherPlayer.Member.Name} on lineup {higherMatch.TeamIndex}"));
+                    }
+                }
+            }
+            else
+            {
+                foreach (var group in higherMatch.Lineup)
+                {
+                    for (int i = 0; i < group.Positions.Count; i++)
+                    {
+                        var pos = group.Positions[i];
+                        if (pos.Player.Member.Id == higherPlayer.Member.Id)
+                            _ruleBreaks.Add(new RuleBreak((group.Type, i), 0, $"Too little points compared to player {lowerPlayer.Member.Name} on lineup {lowerMatch.TeamIndex}"));
+                        if (Lineup.PositionType.Double.HasFlag(group.Type) && pos.OtherPlayer.Member.Id == group.Positions.Count)
+                            _ruleBreaks.Add(new RuleBreak((group.Type, i), 1, $"Too little points compared to player {lowerPlayer.Member.Name} on lineup {lowerMatch.TeamIndex}"));
+                    }
+                }
+            }
+
+        }
+
+        private bool ContainsIgnoredAgeGroup(PlayerRanking.AgeGroup age)
+        {
+            return _ignoreAgeGroups.Contains(age);
         }
     }
 }

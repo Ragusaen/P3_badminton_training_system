@@ -9,7 +9,7 @@
     <NavigationPage.TitleView>
         <StackLayout Orientation="Horizontal" Spacing="10">
             <Label Text="Team Match" FontAttributes="Bold" FontSize="30" TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
-            <ImageButton x:Name="SaveIcon" Command="{Binding SaveMatchClickCommand}" HeightRequest="35" Padding="5" VerticalOptions="CenterAndExpand" HorizontalOptions="End" Margin="0,0,15,0" BackgroundColor="Red"/>
+            <ImageButton x:Name="SaveIcon" Command="{Binding SaveMatchClickCommand}" Opacity="{Binding SaveButtonOpacity}" HeightRequest="35" Padding="5" VerticalOptions="CenterAndExpand" HorizontalOptions="End" Margin="0,0,15,0" BackgroundColor="Red"/>
         </StackLayout>
     </NavigationPage.TitleView>
 
