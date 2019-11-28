@@ -22,5 +22,11 @@ namespace application.UI
             vm = new CreateFocusPointPopupViewModel(canCreatePrivateFocusPoint);
             BindingContext = vm;
         }
+        public CreateFocusPointPopupPage(bool canCreatePrivateFocusPoint, FocusPointDescriptor fp)
+        {
+            InitializeComponent();
+            vm = new CreateFocusPointPopupViewModel(canCreatePrivateFocusPoint, fp);
+            BindingContext = vm;
+        }
     }
 }

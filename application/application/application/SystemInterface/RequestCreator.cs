@@ -545,5 +545,15 @@ namespace application.SystemInterface
             SimpleRequest<DeletePracticeSessionRequest, DeletePracticeSessionResponse>(
                 RequestType.DeletePracticeSession, request);
         }
+
+        public static void EditFocusPoint(FocusPointDescriptor fp)
+        {
+            var request = new EditFocusPointRequest
+            {
+                FP = fp,
+            };
+
+            SimpleRequest<EditFocusPointRequest, EditFocusPointResponse>(RequestType.EditFocusPoint, request);
+        }
     }
 }
