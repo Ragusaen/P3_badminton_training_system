@@ -37,9 +37,9 @@ namespace application.ViewModel
             set => SetProperty(ref _players, value);
         }
 
-        public ChooseLineupPlayerPopupViewModel()
+        public ChooseLineupPlayerPopupViewModel(List<Player> players)
         {
-            Players = new ObservableCollection<Player>(RequestCreator.GetAllPlayers());
+            Players = new ObservableCollection<Player>(players);
             SearchText = null;
         }
     }

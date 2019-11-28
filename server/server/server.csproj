@@ -234,8 +234,9 @@
     <Compile Include="Function\Handlers\GetTrainerPracticeTeamsHandler.cs" />
     <Compile Include="Function\Handlers\SetMemberSexHandler.cs" />
     <Compile Include="Function\Rules\DoubleSamePlayerRule.cs" />
-    <Compile Include="Function\Rules\EmptyPositionRule.cs" />
+    <Compile Include="Function\Rules\BelowEmptyPositionRule.cs" />
     <Compile Include="Function\Rules\HalfEmptyLineupRule.cs" />
+    <Compile Include="Function\Rules\ReservesRule.cs" />
     <Compile Include="Function\Rules\SamePositionType.cs" />
     <Compile Include="Function\Handlers\ChangeTrainerPrivilegesHandler.cs" />
     <Compile Include="Function\Handlers\CreateFocusPointDescriptorHandler.cs" />
@@ -265,7 +266,6 @@
     <Compile Include="Function\Rules\MaxPlayerOccurrencesRule.cs" />
     <Compile Include="Function\Rules\MinAgeRule.cs" />
     <Compile Include="Function\Rules\MultipleLineupPointsRule.cs" />
-    <Compile Include="Function\Rules\ReservesRule.cs" />
     <Compile Include="Function\Rules\SexRule.cs" />
     <Compile Include="SystemInterface\Network\Connection.cs" />
     <Compile Include="SystemInterface\Network\SslTcpServer.cs" />

@@ -18,7 +18,7 @@ namespace application.UI
         public ConnectionFailedPage()
         {
             InitializeComponent();
-
+            //Click to reconnect navigates to LoginPage
             ReconnectButton.Clicked += (s, a) =>
             {
                 try

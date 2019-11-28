@@ -9,7 +9,7 @@
     <NavigationPage.TitleView>
         <StackLayout Orientation="Horizontal" Spacing="10">
             <Label Text="Team Match" FontAttributes="Bold" FontSize="30" TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
-            <ImageButton x:Name="SaveIcon" Command="{Binding SaveMatchClickCommand}" HeightRequest="25" VerticalOptions="CenterAndExpand" HorizontalOptions="End" Margin="0,0,15,0" BackgroundColor="Red"/>
+            <ImageButton x:Name="SaveIcon" Command="{Binding SaveMatchClickCommand}" HeightRequest="35" Padding="5" VerticalOptions="CenterAndExpand" HorizontalOptions="End" Margin="0,0,15,0" BackgroundColor="Red"/>
         </StackLayout>
     </NavigationPage.TitleView>
 
@@ -65,7 +65,7 @@
                 <Label Grid.Row="7" Grid.Column="0" Text="Team Nr." FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
                 <Entry Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding TeamIndex}" Keyboard="Numeric" Placeholder="Enter team number" VerticalOptions="Center"/>
                 <Label Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" Text="Lineup" FontSize="Title" HorizontalOptions="Start" VerticalOptions="Center"/>
-                <Label Grid.Row="10" Grid.Column="2" HorizontalOptions="End" Text="Reserve:" FontSize="12"/>
+                <Label Grid.Row="10" Grid.Column="2" IsVisible="{Binding ReservesVisible}" HorizontalOptions="End" Text="Reserve:" FontSize="12"/>
             </Grid>
 
             <ListView x:Name="LineupList" SelectionMode="None" RowHeight="150" ItemsSource="{Binding Positions}" HeightRequest="{Binding LineupHeight}">
@@ -99,11 +99,11 @@
                                         </Label.GestureRecognizers>
                                     </Label>
                                     <BoxView Grid.Row="1" Grid.Column="0" Color="Black"/>
-                                    <CheckBox IsChecked="{Binding Value.IsExtra}" Grid.Column="1" Grid.Row="0" VerticalOptions="Center" HorizontalOptions="Center"/>
+                                    <CheckBox IsVisible="{Binding BindingContext.ReservesVisible, Source={x:Reference rootpage}}" IsChecked="{Binding Value.IsExtra}" Grid.Column="1" Grid.Row="0" VerticalOptions="Center" HorizontalOptions="Center"/>
                                     <Label Grid.Column="0" Grid.Row="2" TextColor="Red" FontSize="8" Text="{Binding Value.Error}" VerticalOptions="Start"/>
                                 </Grid>
-                                
-                                <Grid Grid.Row="1" Grid.Column="1">
+
+                                <Grid Grid.Row="1" Grid.Column="1" IsVisible="{Binding Key, Converter={StaticResource IsPositionDoubleConverter}}">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="6*"/>
                                         <ColumnDefinition Width="*"/>
@@ -118,8 +118,8 @@
                                             <TapGestureRecognizer Command="{Binding BindingContext.SelectDoublePlayerCommand, Source={x:Reference rootpage}}" CommandParameter="{Binding Key}" />
                                         </Label.GestureRecognizers>
                                     </Label>
-                                    <BoxView Grid.Row="1" Grid.Column="0" Color="Black" IsVisible="{Binding Key, Converter={StaticResource IsPositionDoubleConverter}}"/>
-                                    <CheckBox IsVisible="{Binding Key, Converter={StaticResource IsPositionDoubleConverter}}" IsChecked="{Binding Value.OtherIsExtra}" Grid.Column="1" Grid.Row="0" HorizontalOptions="CenterAndExpand"/>
+                                    <BoxView Grid.Row="1" Grid.Column="0" Color="Black"/>
+                                    <CheckBox IsVisible="{Binding BindingContext.ReservesVisible, Source={x:Reference rootpage}}" IsChecked="{Binding Value.OtherIsExtra}" Grid.Column="1" Grid.Row="0" HorizontalOptions="CenterAndExpand"/>
                                     <Label Grid.Column="0" Grid.Row="2" TextColor="Red" FontSize="8" Text="{Binding Value.OtherError}" VerticalOptions="Start"/>
                                 </Grid>
                             </Grid>

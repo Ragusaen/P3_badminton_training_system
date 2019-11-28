@@ -7,7 +7,7 @@
              mc:Ignorable="d"
              x:Class="application.UI.CreateFocusPointPopupPage">
     
-    <StackLayout Padding="24" Spacing="24" Margin="12">
+    <StackLayout Margin="36">
     <StackLayout BackgroundColor="White" Padding="15,15,15,15" >
         <Label Text="Name"/>
         <Entry Text="{Binding FocusPoint.Name}" Keyboard="Chat"/>
@@ -20,6 +20,8 @@
             <Label Text="Private"/>
         </StackLayout>
         <Button Text="Done" Command="{Binding CreateFocusPointCommand}"/>
+        <Button x:Name="CancelButton" Text="CANCEL" TextColor="#BB0000" BackgroundColor="#FFEEEE" Clicked="Dismiss" CornerRadius="15" Margin="10,20,10,10"/>
     </StackLayout>
+        <StackLayout x:Name="OuterStack" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"></StackLayout>
     </StackLayout>
 </pages:PopupPage>
