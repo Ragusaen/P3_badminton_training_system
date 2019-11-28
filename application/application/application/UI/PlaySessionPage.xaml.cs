@@ -56,11 +56,15 @@ namespace application.UI
         {
             Name.Text = _vm.PracticeSession.PracticeTeam.Name;
 
-            var MFPTapGest = new TapGestureRecognizer();
-            MFPTapGest.Tapped += (s, a) => GoToFocusPoint(_vm.PracticeSession.MainFocusPoint.Descriptor);
-            MainFocusPoint.GestureRecognizers.Add(MFPTapGest);
 
-            PracticeRelevant.IsVisible = true;
+            if (_vm.PracticeSession.MainFocusPoint != null)
+            {
+                var MFPTapGest = new TapGestureRecognizer();
+                MFPTapGest.Tapped += (s, a) => GoToFocusPoint(_vm.PracticeSession.MainFocusPoint.Descriptor);
+                MainFocusPoint.GestureRecognizers.Add(MFPTapGest);
+            }
+
+                PracticeRelevant.IsVisible = true;
 
             if (RequestCreator.LoggedInMember.MemberType.HasFlag(MemberType.Trainer))
             {

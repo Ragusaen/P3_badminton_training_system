@@ -31,6 +31,9 @@ namespace application.UI
         public CreateMatchPage(TeamMatch teamMatch)
         {
             Init(() => new CreateMatchViewModel(teamMatch));
+
+            _vm.SetUILineup(teamMatch.Lineup);
+            CaptainPicker.SelectedItem = _vm.Members.FirstOrDefault(m => m.Id == teamMatch.Captain.Id);
         }
 
         private void Init(Func<CreateMatchViewModel> ctor)
