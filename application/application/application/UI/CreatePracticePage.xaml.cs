@@ -26,10 +26,54 @@ namespace application.UI
             if (time < DateTime.Today)
                 time = DateTime.Today;
 
+            Init(() => new CreatePracticeViewModel(time));
+        }
+
+        public CreatePracticePage(PracticeSession ps)
+        {
+            Init(() => new CreatePracticeViewModel(ps));
+            if (ps.MainFocusPoint != null)
+                FocusPointList.SelectedItem = _vm.FocusPoints[0];
+            SetExercises();
+        }
+
+        private void Init(Func<CreatePracticeViewModel> CreateViewModelFunc)
+        {
             InitializeComponent();
-            _vm = new CreatePracticeViewModel(time);
+            _vm = CreateViewModelFunc();
             BindingContext = _vm;
             _vm.Navigation = Navigation;
+
+            FocusPointList.ItemSelected += (s, e) =>
+            {
+                if (e.SelectedItem == null)
+                    return;
+
+                bool resetAll = false;
+                if (_vm.Practice.MainFocusPoint == (FocusPointItem)e.SelectedItem)
+                {
+                    _vm.Practice.MainFocusPoint = null;
+                    resetAll = true;
+                }
+
+                for (int i = 0; i < FocusPointList.TemplatedItems.Count; i++)
+                {
+                    FontAttributes fa = FontAttributes.None;
+                    if (i == e.SelectedItemIndex && !resetAll)
+                    {
+                        fa = FontAttributes.Bold;
+                        _vm.Practice.MainFocusPoint = (FocusPointItem)e.SelectedItem;
+                    }
+
+                    ((Label)FocusPointList.TemplatedItems[i].FindByName("FocusPointName")).FontAttributes = fa;
+                }
+
+                FocusPointList.SelectedItem = null;
+            };
+
+            if (_vm.Practice.MainFocusPoint != null)
+                FocusPointList.SelectedItem = _vm.FocusPoints[0];
+
 
             SaveIcon.Source = ImageSource.FromResource("application.Images.saveicon.png");
             BullsEyeIcon.Source = ImageSource.FromResource("application.Images.bullseyeicon.png");
@@ -69,7 +113,7 @@ namespace application.UI
                     HorizontalTextAlignment = TextAlignment.End
                 };
                 minutesEntry.BindingContext = _vm;
-                minutesEntry.SetBinding(Label.TextProperty, "Minutes");
+                minutesEntry.Completed += (s, a) => e.Minutes = Int32.Parse(minutesEntry.Text);
                 grid.Children.Add(minutesEntry, 0, 0); 
 
                 grid.Children.Add(new Label() { Text = e.ExerciseDescriptor.Name, HorizontalOptions = LayoutOptions.FillAndExpand, FontSize = 18 }, 1, 0);

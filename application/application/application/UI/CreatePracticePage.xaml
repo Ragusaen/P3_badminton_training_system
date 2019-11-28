@@ -53,7 +53,7 @@
                         <Label Text="Focus Points" FontSize="Title" VerticalOptions="Center"/>
                     </StackLayout>
                     <Label Text="Select Main Focus Point" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
-                    <ListView VerticalScrollBarVisibility="Never" ItemsSource="{Binding FocusPoints}" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding FocusPointListHeight}" SelectedItem="{Binding Practice.MainFocusPoint}">
+                    <ListView x:Name="FocusPointList" VerticalScrollBarVisibility="Never" ItemsSource="{Binding FocusPoints}" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding FocusPointListHeight}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <ViewCell>
@@ -62,7 +62,7 @@
                                         <ColumnDefinition Width="7*"/>
                                         <ColumnDefinition Width="1*"/>
                                     </Grid.ColumnDefinitions>
-                                    <Label Grid.Column="0" Text="{Binding Descriptor.Name}" VerticalOptions="Center"/>
+                                    <Label x:Name="FocusPointName" Grid.Column="0" Text="{Binding Descriptor.Name}" VerticalOptions="Center"/>
                                     <Button Grid.Column="1" Text="❌" VerticalOptions="Center" HorizontalOptions="End" BackgroundColor="White" Command="{Binding BindingContext.DeleteFocusPointItemCommand, Source={x:Reference rootpage}}" CommandParameter="{Binding}"/>
                                 </Grid>
                                 </ViewCell>

@@ -33,6 +33,10 @@ namespace application.UI
             ShownOnlyRelevantInfo();
 
             Settingsicon.Source = ImageSource.FromResource("application.Images.settingsicon.jpg");
+
+
+            if (_vm.Player != null && _vm.Player.Sex == Sex.Unknown)
+                NoSexLabel.IsVisible = true;
         }
 
         private void ShownOnlyRelevantInfo()

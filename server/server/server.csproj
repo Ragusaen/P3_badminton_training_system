@@ -231,6 +231,7 @@
     <Compile Include="Function\Handlers\DeletePracticeSessionHandler.cs" />
     <Compile Include="Function\Handlers\DeleteTeamMatchHandler.cs" />
     <Compile Include="Function\Handlers\GetTrainerPracticeTeamsHandler.cs" />
+    <Compile Include="Function\Handlers\SetMemberSexHandler.cs" />
     <Compile Include="Function\Rules\DoubleSamePlayerRule.cs" />
     <Compile Include="Function\Rules\EmptyPositionRule.cs" />
     <Compile Include="Function\Rules\HalfEmptyLineupRule.cs" />

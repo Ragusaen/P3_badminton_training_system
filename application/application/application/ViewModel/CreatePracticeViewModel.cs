@@ -17,6 +17,8 @@ namespace application.ViewModel
     {
         public PracticeSession Practice { get; set; } = new PracticeSession();
 
+        private bool IsEdit = false;
+
         //Date
 
         public DateTime MinDate { get; set; } = DateTime.Today;
@@ -97,16 +99,9 @@ namespace application.ViewModel
                 FocusPointListHeight = FocusPoints.Count * 45;
             }
         }
-        //Height
-        private int _planHeight;
-        public int PlanHeight
-        {
-            get => _planHeight;
-            set => SetProperty(ref _planHeight, value);
-        }
+        
 
         private int _focusPointListHeight;
-
         public int FocusPointListHeight
         {
             get { return _focusPointListHeight; }
@@ -144,8 +139,24 @@ namespace application.ViewModel
             FocusPoints = new ObservableCollection<FocusPointItem>();
             Trainers = RequestCreator.GetAllTrainers();
             PlanElement = new ObservableCollection<ExerciseItem>();
-            PlanHeight = 10;
         }
+
+        public CreatePracticeViewModel(PracticeSession ps)
+        {
+            Practice = ps;
+            TeamName = ps.PracticeTeam.Name;
+            SelectedDateStart = ps.Start;
+            SelectedTimeStart = ps.Start.TimeOfDay;
+            SelectedTimeEnd = ps.End.TimeOfDay;
+            PlanElement = new ObservableCollection<ExerciseItem>(ps.Exercises);
+            FocusPoints = new ObservableCollection<FocusPointItem>(ps.FocusPoints);
+            if (ps.MainFocusPoint != null)
+                FocusPoints.Insert(0, ps.MainFocusPoint);
+            FocusPointListHeight = FocusPoints.Count * 45;
+
+            IsEdit = true;
+        }
+
         //Save
         private RelayCommand _saveCreatedPracticeClickCommand;
 
@@ -171,13 +182,16 @@ namespace application.ViewModel
             if (string.IsNullOrEmpty(Practice.Location))
                 Practice.Location = "Stjernevej 5, 9200 Aalborg";
             Practice.Exercises = PlanElement.ToList();
-            Practice.FocusPoints = FocusPoints.ToList();
+            Practice.FocusPoints = FocusPoints?.ToList();
             int i = 0;
             foreach (ExerciseItem exerciseitem in Practice.Exercises) 
             {
                 exerciseitem.Index = i;
                 i++;
             }
+            if (IsEdit)
+                RequestCreator.DeletePracticeSession(Practice.Id);
+
             RequestCreator.SetPracticeSession(Practice);
             Navigation.PopAsync();
         }
@@ -254,7 +268,6 @@ namespace application.ViewModel
         {
             ExerciseItem exercise = param as ExerciseItem;
             PlanElement.Remove(exercise);
-            PlanHeight = PlanElement.Count * 235;
         }
         private RelayCommand _deleteFocusPointItemCommand;
 

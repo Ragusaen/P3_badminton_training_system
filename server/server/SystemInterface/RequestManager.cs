@@ -59,6 +59,7 @@ namespace Server.SystemInterface.Requests
                 {RequestType.SetPlayerPracticeTeam, new SetPlayerPracticeTeamHandler() },
                 {RequestType.ChangeTrainerPrivileges, new ChangeTrainerPrivilegesHandler() },
                 {RequestType.SetPracticeTeamTrainer, new SetPracticeTeamTrainerHandler() },
+                {RequestType.SetMemberSex, new SetMemberSexHandler() },
                 //Deleters below
                 {RequestType.DeletePlayerFocusPoint, new DeletePlayerFocusPointsHandler() },
                 {RequestType.DeletePlayerPracticeTeam, new DeletePlayerPracticeTeamHandler() },

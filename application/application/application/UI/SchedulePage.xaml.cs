@@ -28,7 +28,8 @@ namespace application.UI
             if (e.SelectedItem == null)
                 return;
 
-            Navigation.PushAsync(new PlaySessionPage(((ScheduleViewModel.PlaySessionEvent) e.SelectedItem).PlaySession));
+            var page = new PlaySessionPage(((ScheduleViewModel.PlaySessionEvent) e.SelectedItem).PlaySession);
+            Navigation.PushAsync(page);
 
             ((ListView) sender).SelectedItem = null;
         }
@@ -42,9 +43,20 @@ namespace application.UI
         {
             string action = await Application.Current.MainPage.DisplayActionSheet("Choose what you want to add:", "Cancel", null, "Add New Practice", "Add New Match");
 
+            Page page;
             if (action == "Add New Practice")
-                await Navigation.PushAsync(new CreatePracticePage(_vm.SelectedDate));
+                page = new CreatePracticePage();
             else if (action == "Add New Match")
+                page = new CreateMatchPage();
+            else
+                return;
+
+            page.Disappearing += (s, a) =>
+            {
+                Navigation.InsertPageBefore(this, new SchedulePage());
+                Navigation.PopAsync();
+            };
+            await Navigation.PushAsync(page);
                 await Navigation.PushAsync(new CreateMatchPage(_vm.SelectedDate));
         }
         protected override void OnAppearing()

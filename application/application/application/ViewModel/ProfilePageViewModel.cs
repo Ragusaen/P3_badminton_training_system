@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using application.Controller;
 using application.SystemInterface;
 using application.UI;
@@ -222,68 +223,66 @@ namespace application.ViewModel
         private readonly string _changeMemberTypeQuery = "Make Trainer";
         private async void ExecuteProfileSettingTap(object param)
         {
-            var action = await Application.Current.MainPage.DisplayActionSheet("Settings", "Cancel", null, "Change Trainer Privileges");
+            var action = await Application.Current.MainPage.DisplayActionSheet("Settings", "Cancel", null, "Change Trainer Privileges", "Change Sex");
             if (action == "Change Trainer Privileges")
             {
-                string newRights = await Application.Current.MainPage.DisplayActionSheet(_changeMemberTypeTitle,
-                    "Cancel", null, _changeMemberTypeQuery);
-
-                if (newRights == "Make Trainer")
-                {
-                    Member.MemberType |= MemberType.Trainer;
-
-                }
-                else if (newRights == "Unmake Trainer")
-                {
-                    Member.MemberType &= ~MemberType.Trainer;
-                }
-                else
-                {
-                    goto here;
-                }
-
-                RequestCreator.ChangeTrainerPrivileges(Member);
-                RequestCreator.LoggedInMember =
-                    RequestCreator
-                        .GetLoggedInMember(); // reload logged in member, because membertype might have changed
-                Navigation.InsertPageBefore(new ProfilePage(Member.Id), Navigation.NavigationStack.Last());
-                await Navigation.PopAsync();
-                here: ;
-            }
-
-            /*if(RequestCreator.LoggedInMember.MemberType.HasFlag(MemberType.Trainer)) // No support for change password, thus commented away
+                await ChangeTrainerPrivileges();
+            } 
+            else if (action == "Change Sex")
             {
-                action = await Application.Current.MainPage.DisplayActionSheet("Settings", "Cancel", null, "Change Member Type");
+                await ChangeSex();
             }
             else
             {
-                action = await Application.Current.MainPage.DisplayActionSheet("Settings", "Cancel", null, "Change Password");
+                return;
             }
 
-            if (action == "Change Password")
-                await Navigation.PushAsync(new EditUserInfoPage(Member));
-            else if (action == "Change Member Type")
+            RequestCreator.LoggedInMember = RequestCreator.GetLoggedInMember(); // reload logged in member, because changes
+            Navigation.InsertPageBefore(new ProfilePage(Member.Id), Navigation.NavigationStack.Last());
+            await Navigation.PopAsync();
+        }
+
+        private async Task ChangeSex()
+        {
+            string newSexSelection = await Application.Current.MainPage.DisplayActionSheet("Set Sex", "Cancel", null, "Male", "Female");
+
+            Sex newSex;
+
+            if (newSexSelection == "Male")
             {
-                string newRights = await Application.Current.MainPage.DisplayActionSheet(_changeMemberTypeTitle, "Cancel", null, _changeMemberTypeQuery);
+                newSex = Sex.Male;
+            } else if (newSexSelection == "Female")
+            {
+                newSex = Sex.Female;
+            }
+            else
+            {
+                return;
+            }
 
-                if (newRights == "Make Trainer")
-                {
-                    Member.MemberType |= MemberType.Trainer;
+            RequestCreator.SetMemberSex(newSex, Player);
+        }
 
-                }
-                else if (newRights == "Unmake Trainer")
-                {
-                    Member.MemberType &= ~MemberType.Trainer;
-                }
-                else
-                {
-                    goto here;
-                }
-                RequestCreator.ChangeTrainerPrivileges(Member);
-                Navigation.InsertPageBefore(new ProfilePage(Member), Navigation.NavigationStack.Last());
-                Navigation.PopAsync();
-                here: ;
-            }*/
+        private async Task ChangeTrainerPrivileges()
+        {
+            string newRights = await Application.Current.MainPage.DisplayActionSheet(_changeMemberTypeTitle,
+                "Cancel", null, _changeMemberTypeQuery);
+
+            if (newRights == "Make Trainer")
+            {
+                Member.MemberType |= MemberType.Trainer;
+
+            }
+            else if (newRights == "Unmake Trainer")
+            {
+                Member.MemberType &= ~MemberType.Trainer;
+            }
+            else
+            {
+                return;
+            }
+
+            RequestCreator.ChangeTrainerPrivileges(Member);
         }
 
         private RelayCommand _viewFeedbackCommand;

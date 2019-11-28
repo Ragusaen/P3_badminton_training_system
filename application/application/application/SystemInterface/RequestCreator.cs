@@ -495,6 +495,18 @@ namespace application.SystemInterface
             SimpleRequest<SetPracticeTeamRequest, SetPracticeTeamResponse>(RequestType.SetPracticeTeam, request);
         }
 
+
+        public static void SetMemberSex(Sex newSex, Player player)
+        {
+            var request = new SetMemberSexRequest()
+            {
+                Player = player,
+                NewSex = newSex
+            };
+
+            var response = SimpleRequest<SetMemberSexRequest, SetMemberSexResponse>(RequestType.SetMemberSex, request);
+        }
+
         public static void DeleteTeamMatch(int id)
         {
             var request = new DeleteTeamMatchRequest
