@@ -11,7 +11,7 @@
         <StackLayout BackgroundColor="White">
         <SearchBar Placeholder="Search Player" Text="{Binding SearchText}"/>
 
-        <Grid>
+        <Grid HeightRequest="50">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="150"/>
                 <ColumnDefinition Width="40"/>

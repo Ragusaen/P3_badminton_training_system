@@ -25,7 +25,6 @@ namespace application.ViewModel
             }
         }
 
-
         public DateTime MinDate { get; set; } = DateTime.Today;
 
         private DateTime _selectedDateStart;
@@ -95,9 +94,9 @@ namespace application.ViewModel
             }
         }
 
-        private int _season;
+        private int? _season;
 
-        public int Season
+        public int? Season
         {
             get { return _season; }
             set
@@ -110,9 +109,9 @@ namespace application.ViewModel
             }
         }
 
-        private int _leagueRound;
+        private int? _leagueRound;
 
-        public int LeagueRound
+        public int? LeagueRound
         {
             get { return _leagueRound; }
             set 
@@ -125,9 +124,9 @@ namespace application.ViewModel
             }
         }
 
-        private int _teamIndex;
+        private int? _teamIndex;
 
-        public int TeamIndex
+        public int? TeamIndex
         {
             get { return _teamIndex; }
             set
@@ -274,16 +273,18 @@ namespace application.ViewModel
 
         private bool CanExecuteVerifyLineup(object param)
         {
-            return LeagueRound != 0 && Season != 0 && TeamIndex != 0;
+            return LeagueRound != null && LeagueRound > 0 && 
+                   Season != null && Season > 0 && 
+                   TeamIndex != null && TeamIndex > 0;
         }
 
         private void ExecuteVerifyLineup(object param)
         {
             TeamMatch match = new TeamMatch()
             { 
-                Season = Season,
-                LeagueRound = LeagueRound,
-                TeamIndex = TeamIndex,
+                Season = (int)Season,
+                LeagueRound = (int)LeagueRound,
+                TeamIndex = (int)TeamIndex,
                 Lineup = ConvertPositionDictionaryToLineup(Positions)
             };
             List<RuleBreak> ruleBreaks = RequestCreator.VerifyLineup(match);
@@ -392,7 +393,9 @@ namespace application.ViewModel
             if ((string.IsNullOrEmpty(Location)) || 
                 (string.IsNullOrEmpty(OpponentName)) || 
                 Captain == null ||
-                LeagueRound == 0 || Season == 0 || TeamIndex == 0)
+                LeagueRound == null || LeagueRound < 0 || 
+                Season == null || Season < 0 || 
+                TeamIndex == null || TeamIndex < 0)
                 return false;
             else
                 return true;
@@ -407,12 +410,11 @@ namespace application.ViewModel
                 End = SelectedDateStart.Date + Convert.ToDateTime(SelectedTimeEnd.ToString()).TimeOfDay,
                 League = SelectedLeague,
                 Lineup = ConvertPositionDictionaryToLineup(Positions),
-                LeagueRound = LeagueRound,
+                LeagueRound = (int)LeagueRound,
                 Location = Location,
                 OpponentName = OpponentName,
-                Season = Season,
-                TeamIndex = TeamIndex,
-                Id = id,
+                Season = (int)Season,
+                TeamIndex = (int)TeamIndex
             };
             RemoveSamePlayerDouble(match.Lineup);
 
