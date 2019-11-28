@@ -12,12 +12,16 @@ using Server.DAL;
 
 namespace Server.Controller
 {
+    /// <summary>
+    /// This class is used to scrape the rank list information from badmintonplayer.dk
+    /// </summary>
     class RankListScraper
     {
         private static Logger _log = LogManager.GetCurrentClassLogger();
 
         public const string RankingListElementClassName = "RankingListGrid";
 
+        // The ranklist categories, this uses bitflags
         [Flags]
         public enum Category { 
             Level = 1, 
@@ -30,6 +34,7 @@ namespace Server.Controller
             Mens = MS | MD | MXD,
             Womens = WS | WD | WXD,
         }
+
         public static int RankingsCount = 7;
         public static string RankingRootUrl = "https://www.badmintonplayer.dk/DBF/Ranglister/#287,2019,,0,,,1492,0,,,,15,,,,0,,,,,,";
         public static string[] Categories = { "Level", "MS", "WS", "MD", "WD", "MXD", "WXD" };
@@ -39,55 +44,71 @@ namespace Server.Controller
         public void UpdatePlayers()
         {
             _log.Debug("UpdatePlayers started");
+
+            // Start the chrome driver
             var chromeOptions = new ChromeOptions();
             chromeOptions.AddArguments("--headless"); 
             chromeOptions.AddUserProfilePreference("profile.default_content_setting_values.images", 2);
             IWebDriver browser = new ChromeDriver(chromeOptions);
             FindRootRankList(browser);
 
+            // Set all the members in the database to not be on the ranklist, this will be changed
+            // as they are found again
             foreach (var dbMember in _db.members)
             {
                 dbMember.OnRankList = false;
             }
 
+            // Start scraping from rank lists
             var players = new List<Player>();
             for (int i = 0; i < RankingsCount; i++)
             {
                 _log.Debug("Scraping category: {category}", Categories[i]);
+
+                // Find the category and click on it
                 string nextCategoryXPath = $"/html/body/form/div[4]/div[1]/div[5]/div/div[{i + 1}]/a";
                 browser.FindElement(By.XPath(nextCategoryXPath)).Click();
                 WaitForPageLoad();
 
+                // Scrape the raw data from this list
                 List<IWebElement> rawRanking = ScrapeRankingsTable(browser);
 
+                // Parse the data and assign it to the players
                 DistributeRankings(players, rawRanking, 1 << i);
 
-                try // Checking for next page
+                // Try to parse second page, throws exception if page doesn't exist
+                try
                 {
                     var nextPage = browser.FindElement(By.XPath("/html/body/form/div[4]/div[1]/div[5]/table/tbody/tr[102]/td/a"));
                     nextPage.Click();
                     WaitForPageLoad();
                     _log.Debug("Scraping page 2 for category: {category}", Categories[i]);
 
+                    // Scrape the raw data from this list
                     rawRanking = ScrapeRankingsTable(browser);
+
+                    // Parse the data and assign it to the players
                     DistributeRankings(players, rawRanking, 1 << i);
                 }
-                // ReSharper disable once EmptyGeneralCatchClause
                 catch (Exception) { }
             }
+
+            // Close the browser
             browser.Quit();
 
+            // Write the players to the database
             UpdatePlayersInDatabase(players);
             _log.Debug("UpdatePlayers finished");
         }
 
-        private void DistributeRankings(List<Player> players, List<IWebElement> rawRanking, int i)
+        private void DistributeRankings(List<Player> players, List<IWebElement> rawRanking, int rankListIndex)
         {
-            Category category = (Category) i;
+            Category category = (Category) rankListIndex;
 
-            // skips first row to avoid the title
-            for (int j = 1; j < rawRanking.Count; j++)
+            // Go through all the rows from the raw ranking
+            for (int j = 1; j < rawRanking.Count; j++) // Skips first row to avoid the title
             {
+                // Try and find the player id, if not found skip this row
                 var currentRow = rawRanking[j];
                 try
                 {
@@ -95,50 +116,64 @@ namespace Server.Controller
                 }
                 catch (Exception) { continue;}
                 
-                // Fetches information from the current row
+                // Fetch information from the current row
                 string rawPlayerId = currentRow.FindElement(By.ClassName("playerid")).GetAttribute("innerHTML");
                 int badmintonPlayerId = RemoveFalseHyphen(rawPlayerId);
                 int points = FetchPointsFromRow(currentRow);
                 string ageAndLevel = FetchSkillLevelFromRow(currentRow);
-
-                Server.DAL.member dbPlayer = _db.members.SingleOrDefault(p => p.BadmintonPlayerID == badmintonPlayerId);
+                
+                // The current player; will be set in if block below
                 Player player;
-                if (players.Exists(p => p.BadmintonPlayerId == badmintonPlayerId))
+                // If it is scraping the Level ranklist, find the player in the database or create a new one
+                if (category == Category.Level)
                 {
-                    player = players.Single(p => p.BadmintonPlayerId == badmintonPlayerId);
-
-                    if ((category & Category.Womens) > 0)
-                        player.Sex = Sex.Female;
-                    else if((category & Category.Mens) > 0)
-                        player.Sex = Sex.Male;
-                    else
-                        player.Sex = Sex.Unknown;
-                }
-                else if (dbPlayer != null)
-                {
-                    player = (Common.Model.Player)dbPlayer;
-                    players.Add(player);
-                }
-                else
-                {
-                    string name = new string(currentRow.FindElement(By.ClassName("name")).Text.TakeWhile(p => p != ',').ToArray());
-                    var playerRanking = new PlayerRanking();
-
-                    player = new Player
+                    // Try finding the player in the database
+                    member dbPlayer = _db.members.SingleOrDefault(p => p.BadmintonPlayerID == badmintonPlayerId);
+                    if (dbPlayer != null) // If the player was found, add it
                     {
-                        BadmintonPlayerId = badmintonPlayerId,
-                        Rankings = playerRanking,
-                        Member = new Member
+                        player = (Common.Model.Player)dbPlayer;
+                        players.Add(player);
+                    }
+                    else // Create a new player and add them to the player list
+                    {
+                        string name = new string(currentRow.FindElement(By.ClassName("name")).Text.TakeWhile(p => p != ',').ToArray());
+
+                        player = new Player
                         {
-                            Name = name,
-                        }
-                    };
+                            BadmintonPlayerId = badmintonPlayerId,
+                            Rankings = new PlayerRanking(),
+                            Member = new Member
+                            {
+                                Name = name,
+                            }
+                        };
 
-                    _log.Debug($"New player found in Ranklist: {player.Member.Name} BadmintonId: {player.BadmintonPlayerId}");
-                    players.Add(player);
+                        _log.Debug($"New player found in Ranklist: {player.Member.Name} BadmintonId: {player.BadmintonPlayerId}");
+                        players.Add(player);
+                    }
                 }
-
+                else // If it is on sexed rank list
+                {
+                    player = players.SingleOrDefault(p => p.BadmintonPlayerId == badmintonPlayerId);
+                    if (player != null) // If player has been found on the rank list
+                    {
+                        if (Category.Womens.HasFlag(category))
+                            player.Sex = Sex.Female;
+                        else if ((category & Category.Mens) != 0)
+                            player.Sex = Sex.Male;
+                        else
+                            player.Sex = Sex.Unknown;
+                    }
+                    else // If the player wasn't found on the Level list, they are a mistake
+                    {
+                        continue;
+                    }
+                }
+                        
+                // Update the players rankings
                 UpdateRankingsFromRow(player.Rankings, points, category);
+
+                // If it is the level list then also add the age and level
                 if (category == Category.Level)
                 {
                     player.Rankings.Age = FetchAgeGroup(ageAndLevel);
@@ -147,6 +182,9 @@ namespace Server.Controller
             }
         }
 
+        /// <summary>
+        /// Updates the provided rankings based on the points and the category
+        /// </summary>
         private void UpdateRankingsFromRow(PlayerRanking pr, int points, Category category)
         {
             switch (category)
@@ -171,6 +209,9 @@ namespace Server.Controller
             }
         }
 
+        /// <summary>
+        /// Updates the found players in the database
+        /// </summary>
         private void UpdatePlayersInDatabase(List<Player> players)
         {
             foreach (var p in players)
@@ -204,12 +245,19 @@ namespace Server.Controller
             _db.SaveChanges();
         }
 
+
+        /// <summary>
+        /// Gets the skill level string from the given row
+        /// </summary>
         private string FetchSkillLevelFromRow(IWebElement elem)
         {
             return elem.FindElement(By.ClassName("clas")).GetAttribute("innerHTML");
         }
 
-        private PlayerRanking.AgeGroup FetchAgeGroup(string a)
+        /// <summary>
+        /// Gets the age group enum from a string
+        /// </summary>
+        private PlayerRanking.AgeGroup FetchAgeGroup(string ageGroupString)
         {
             var ageDict = new Dictionary<string, PlayerRanking.AgeGroup>
             {
@@ -221,7 +269,7 @@ namespace Server.Controller
                 {"U19", PlayerRanking.AgeGroup.U19},
                 {"SEN", PlayerRanking.AgeGroup.Senior}
             };
-            string res = a.Split(' ').FirstOrDefault();
+            string res = ageGroupString.Split(' ').FirstOrDefault();
 
             if (res == null)
                 return PlayerRanking.AgeGroup.Unknown;
@@ -229,7 +277,7 @@ namespace Server.Controller
             return ageDict[res]; 
         }
 
-        private PlayerRanking.LevelGroup FetchLevelGroup(string a)
+        private PlayerRanking.LevelGroup FetchLevelGroup(string levelGroupString)
         {
             var levelDict = new Dictionary<string, PlayerRanking.LevelGroup>
             {
@@ -245,7 +293,7 @@ namespace Server.Controller
                 {"E-M", PlayerRanking.LevelGroup.EM},
                 {"E", PlayerRanking.LevelGroup.E},
             };
-            string res = a.Split(' ').LastOrDefault();
+            string res = levelGroupString.Split(' ').LastOrDefault();
 
             if (res == null)
                 return PlayerRanking.LevelGroup.Unknown;
@@ -264,6 +312,9 @@ namespace Server.Controller
             return int.Parse(elem.FindElement(By.ClassName("points")).GetAttribute("innerHTML"));
         }
 
+        /// <summary>
+        /// Remove weird hyphen symbol and convert to int
+        /// </summary>
         private int RemoveFalseHyphen(string s)
         {
             byte[] bytes = Encoding.UTF8.GetBytes(s);
@@ -278,6 +329,8 @@ namespace Server.Controller
 
             return Int32.Parse(Encoding.UTF8.GetString(newBytes));
         }
+
+
         private void FindRootRankList(IWebDriver browser)
         {
             browser.Navigate().GoToUrl(RankingRootUrl);

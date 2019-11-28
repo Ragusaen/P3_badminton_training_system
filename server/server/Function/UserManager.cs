@@ -18,25 +18,35 @@ namespace Server.Controller
 {
     class UserManager
     {
-        private const int Pbkdf2Iterations = 100000;
+        private static Logger _log = LogManager.GetCurrentClassLogger();
+
+        // Defines how thorough the hashing function should be
+        private const int Pbkdf2Iterations = 100000; 
+
+        // Sizes of data
         public const int HashSize = 32;
         public const int SaltSize = 128;
         public const int TokenSize = 64;
 
-        private static Logger _log = LogManager.GetCurrentClassLogger();
-
-        #region Login
+        /// <summary>
+        /// Logs in the user given a username and password.
+        /// </summary>
+        /// <returns> a valid access token if user exists and password is correct; otherwise an empty byte array</returns>
         public byte[] Login(string username, string password)
         {
             var db = new DatabaseEntities();
+
+            // Find the account with the given username
             var account = db.accounts.Find(username);
 
-            // Check if account was found
+            // Check if account was found and if the password matches
             if (account != null &&
                 VerifyPassword(password, account.PasswordSalt, account.PasswordHash))
             {
+                // Generate and access token
                 var token = GenerateLoginToken();
 
+                // Add the new token to database
                 db.tokens.Add(new token()
                 {
                     account = account,
@@ -50,17 +60,21 @@ namespace Server.Controller
             return new byte[0];
         }
 
+        /// <summary>
+        /// Generates cryptographically random bytes to be used as a login token
+        /// </summary>
         private byte[] GenerateLoginToken()
         {
-            // Generate a random token for the user to login with
             var rng = new RNGCryptoServiceProvider();
             byte[] token = new byte[TokenSize];
             rng.GetBytes(token);
             return token;
         }
-        #endregion
 
-        #region Create
+        /// <summary>
+        /// Create a new user with the given username and password
+        /// </summary>
+        /// <returns>true, if the username is not already taken and the user was created; otherwise, false</returns>
         public bool Create(string username, string password)
         {
             var db = new DatabaseEntities();
@@ -72,6 +86,7 @@ namespace Server.Controller
             // Generate a hash and salt for the new user
             var pw_info = GenerateHashedPasswordAndSalt(password);
             
+            // Create the account in the database
             var account = new account()
             {
                 Username = username,
@@ -83,7 +98,7 @@ namespace Server.Controller
 
             return true;
         }
-        #endregion
+
 
         public member GetMemberFromToken(byte[] token)
         {
