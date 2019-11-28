@@ -129,7 +129,7 @@
                         </ListView.ItemTemplate>
                     </ListView>
                 </StackLayout>
-                <Button x:Name="FeedBackButton" Text="Submit feedback for this session" Command="{Binding FeedbackCommand}"/>
+                <Button x:Name="FeedBackButton" Text="Submit feedback for this session" Command="{Binding FeedbackCommand}" IsVisible="{Binding PracticeFeedbackIsVisible}"/>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>

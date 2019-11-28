@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using Common.Model;
 using Xamarin.Forms;
 using application.SystemInterface;
+using System.Linq;
 
 namespace application.ViewModel
 {
@@ -55,6 +56,7 @@ namespace application.ViewModel
             Player.Feedbacks = RequestCreator.GetPlayerFeedback(Player.Member);
             Feedbacks = new ObservableCollection<FB>();
 
+
             foreach (Feedback fb in Player.Feedbacks)
             {
                 if (fb.PlaySession is PracticeSession)
@@ -81,7 +83,7 @@ namespace application.ViewModel
                 Label7 = "What were the main focus points for you today?",
                 Label8 = "How has your day been today?"
             });
-
+            Feedbacks = new ObservableCollection<FB>(Feedbacks.OrderByDescending(p => p.PlaySession.Start.Date).ThenByDescending(p => p.PlaySession.Start.TimeOfDay).ToList());
 
             }
         }
