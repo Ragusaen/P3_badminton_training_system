@@ -31,11 +31,13 @@ namespace Server.Function.Handlers
                 team.practicesessions.Remove(prac);
 
                 db.practicesessionexercises.RemoveRange(prac.practicesessionexercises);
-                db.focuspoints.RemoveRange(prac.subfocuspoints);
+                prac.subfocuspoints.Clear();
                 prac.mainfocuspoint = null;
 
                 if (ps != null)
                 {
+                    db.feedbacks.RemoveRange(ps.feedbacks);
+
                     db.playsessions.Remove(ps);
                 }
             }

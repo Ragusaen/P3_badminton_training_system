@@ -182,6 +182,10 @@ namespace application.ViewModel
             if (string.IsNullOrEmpty(Practice.Location))
                 Practice.Location = "Stjernevej 5, 9200 Aalborg";
             Practice.Exercises = PlanElement.ToList();
+
+            if (Practice.MainFocusPoint != null)
+                FocusPoints?.Remove(Practice.MainFocusPoint);
+
             Practice.FocusPoints = FocusPoints?.ToList();
             int i = 0;
             foreach (ExerciseItem exerciseitem in Practice.Exercises) 

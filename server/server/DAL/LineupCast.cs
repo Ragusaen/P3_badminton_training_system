@@ -14,8 +14,9 @@ namespace Server.DAL
 
             Lineup lineup = new Lineup();
 
-            foreach (position dbPos in positions)
+            for (int i = 0; i < positions.Count; i++)
             {
+                var dbPos = positions[i];
                 if (lineup.All(l => l.Type != (Lineup.PositionType) dbPos.Type))
                     lineup.Add( new Lineup.Group() {
                         Type = (Lineup.PositionType)dbPos.Type,
@@ -32,9 +33,12 @@ namespace Server.DAL
 
                 if (Lineup.PositionType.Double.HasFlag(((Lineup.PositionType)dbPos.Type)))
                 {
-                    var otherPos = positions.Find(s => s.Type == dbPos.Type && s.Order == dbPos.Order && s != dbPos);
-                    newPosition.OtherPlayer = otherPos == null ? null : (Player) otherPos.member;
-                    newPosition.OtherIsExtra = otherPos == null ? false : otherPos.IsExtra;
+                    var otherPosIndex = positions.FindIndex(s => s.Type == dbPos.Type && s.Order == dbPos.Order && s != dbPos);
+                    var otherPlayer = positions[otherPosIndex];
+                    newPosition.OtherPlayer = (Player) otherPlayer.member;
+                    newPosition.OtherIsExtra = otherPlayer.IsExtra;
+
+                    positions.RemoveAt(otherPosIndex);
                 }
 
                 var posList = lineup.Find(l => l.Type == (Lineup.PositionType) dbPos.Type).Positions;

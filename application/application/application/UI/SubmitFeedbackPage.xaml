@@ -55,21 +55,21 @@
                 <Frame CornerRadius="5" HasShadow="True" Margin="0,10,0,0">
                     <StackLayout>
                         <Label x:Name="Label6" FontSize="Small" FontAttributes="Bold" TextColor="Black" HorizontalTextAlignment="Center"/>
-                        <Editor x:Name="Quest2" Placeholder="Enter here" FontSize="Small" AutoSize ="TextChanges" Text="{Binding Feedback.BadQuestion}"/>
+                        <Editor x:Name="Quest2" Placeholder="Enter here" FontSize="Small" AutoSize ="TextChanges" Text="{Binding Feedback.BadQuestion}" Keyboard="Chat"/>
                     </StackLayout>
                 </Frame>
 
                 <Frame CornerRadius="5" HasShadow="True" Margin="0,10,0,0">
                     <StackLayout>
                         <Label x:Name="Label7" FontSize="Small" FontAttributes="Bold" TextColor="Black" HorizontalTextAlignment="Center"/>
-                        <Editor x:Name="Quest3" Placeholder="Enter here" FontSize="Small" AutoSize ="TextChanges" Text="{Binding Feedback.FocusPointQuestion}"/>
+                        <Editor x:Name="Quest3" Placeholder="Enter here" FontSize="Small" AutoSize ="TextChanges" Text="{Binding Feedback.FocusPointQuestion}" Keyboard="Chat"/>
                     </StackLayout>
                 </Frame>
 
                 <Frame CornerRadius="5" HasShadow="True" Margin="0,10,0,0">
                     <StackLayout>
                         <Label x:Name="Label8" FontSize="Small" FontAttributes="Bold" TextColor="Black" HorizontalTextAlignment="Center"/>
-                        <Editor x:Name="Quest4" Placeholder="Briefly describe why your day has been this way" FontSize="Small" AutoSize ="TextChanges" Text="{Binding Feedback.DayQuestion}"/>
+                        <Editor x:Name="Quest4" Placeholder="Briefly describe why your day has been this way" FontSize="Small" AutoSize ="TextChanges" Text="{Binding Feedback.DayQuestion}" Keyboard="Chat"/>
                     </StackLayout>
                 </Frame>
 
