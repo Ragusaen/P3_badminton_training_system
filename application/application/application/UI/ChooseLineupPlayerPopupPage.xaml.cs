@@ -16,7 +16,7 @@ namespace application.UI
     public partial class ChooseLineupPlayerPopupPage : PopupPage
     {
         //Sets BindingContext ViewModel
-        public ChooseLineupPlayerPopupPage()
+        public ChooseLineupPlayerPopupPage(List<Player> players)
         {
             InitializeComponent();
             ChooseLineupPlayerPopupViewModel vm = new ChooseLineupPlayerPopupViewModel(players);
