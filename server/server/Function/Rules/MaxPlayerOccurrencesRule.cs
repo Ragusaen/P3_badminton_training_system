@@ -7,7 +7,7 @@ namespace Server.Function.Rules
 {
     class MaxPlayerOccurrencesRule : IRule
     {
-        public int Priority { get; set; } = 7;
+        public int Priority { get; set; } = 9;
         private int _max;
         private List<RuleBreak> _ruleBreaks = new List<RuleBreak>();
 

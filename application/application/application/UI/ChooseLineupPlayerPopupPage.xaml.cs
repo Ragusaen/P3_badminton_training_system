@@ -15,10 +15,10 @@ namespace application.UI
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ChooseLineupPlayerPopupPage : PopupPage
     {
-        public ChooseLineupPlayerPopupPage()
+        public ChooseLineupPlayerPopupPage(List<Player> players)
         {
             InitializeComponent();
-            ChooseLineupPlayerPopupViewModel vm = new ChooseLineupPlayerPopupViewModel();
+            ChooseLineupPlayerPopupViewModel vm = new ChooseLineupPlayerPopupViewModel(players);
             BindingContext = vm;
         }
 

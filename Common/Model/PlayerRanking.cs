@@ -7,7 +7,7 @@ namespace Common.Model
         [Flags]
         public enum AgeGroup
         {
-            Unknown, U09, U11, U13, U15, U17, U19, Senior
+            Unknown = 0, U09 = 1, U11 = 2, U13 = 4, U15 = 8, U17 = 16, U19 = 32, Senior = 64
         }
 
         [Flags]
