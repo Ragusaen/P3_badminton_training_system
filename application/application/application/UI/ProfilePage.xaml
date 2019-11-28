@@ -100,11 +100,11 @@
                 </StackLayout>
                     <Frame HasShadow="True" CornerRadius="5">
                         <StackLayout>
-                            <Label Text="Comments" FontSize="Medium"/>
+                            <Label Text="Comment" FontSize="Medium"/>
                             <Frame HasShadow="False" CornerRadius="2" BorderColor="#FFBBBB">
                             <StackLayout>
                                 <Label x:Name="Comment" TextColor="Black" Text="{Binding CommentText}" FontSize="Medium" IsVisible="True"></Label>
-                                <Editor x:Name="CommentEntry" IsVisible="False" Placeholder="Enter a comment" AutoSize="TextChanges" Keyboard="Chat"/>
+                                <Editor x:Name="CommentEntry" IsVisible="False" Placeholder="Enter a comment" AutoSize="TextChanges"/>
                             </StackLayout>
                         </Frame>
                     </StackLayout>
