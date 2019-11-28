@@ -89,11 +89,17 @@
                             <Button Text="Add Focus Point" Command="{Binding AddFocusPointCommand}" HeightRequest="50"/>
                         </StackLayout>
                     </Frame>
-                    <Label Text="Feedback graph" FontSize="Medium"/>
-                    <forms:ChartView  Chart="{Binding Chart}" HeightRequest="300" Margin="-80, 0, -80, 0"/>
-                    <Button Text="View Feedback" Command="{Binding ViewFeedbackCommand}"/>
+                    <Frame HasShadow="True" CornerRadius="5">
+                        <StackLayout>
+                            <Label Text="Feedback graph" FontSize="Medium"/>
+
+                            <forms:ChartView  Chart="{Binding Chart}" HeightRequest="300" Margin="0"/>
+
+                <Button Text="View Feedback" Command="{Binding ViewFeedbackCommand}"/>
                     <Button Text="View all Feedback graph" Command="{Binding ViewFeedbackGraphCommand}"/>
-                    </StackLayout>
+                        </StackLayout>
+                    </Frame>
+                </StackLayout>
                     <Frame HasShadow="True" CornerRadius="5">
                         <StackLayout>
                             <Label Text="Comments" FontSize="Medium"/>
