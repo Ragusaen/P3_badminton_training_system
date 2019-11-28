@@ -36,6 +36,9 @@ namespace Server.Function.Handlers
 
                 if (ps != null)
                 {
+                    var fb = ps.feedbacks;
+                    db.feedbacks.RemoveRange(fb);
+
                     db.playsessions.Remove(ps);
                 }
             }

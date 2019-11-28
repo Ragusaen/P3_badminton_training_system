@@ -206,6 +206,9 @@ namespace application.ViewModel
             set { SetProperty(ref _members, value); }
         }
 
+        private int id;
+        private bool isEdit;
+
         //Ctor
         public CreateMatchViewModel(DateTime startDate)
         {
@@ -228,7 +231,8 @@ namespace application.ViewModel
             LeagueRound = match.LeagueRound;
             Season = match.Season;
             TeamIndex = match.TeamIndex;
-
+            id = match.Id;
+            isEdit = true;
             Positions = new Dictionary<(Lineup.PositionType, int), PositionError>();
 
             foreach (var group in match.Lineup)
@@ -238,8 +242,6 @@ namespace application.ViewModel
                     Positions.Add((group.Type, i), new PositionError(group.Positions[i]));
                 }
             }
-
-
         }
 
         private void RemoveSamePlayerDouble(Lineup lineup)
@@ -409,9 +411,13 @@ namespace application.ViewModel
                 Location = Location,
                 OpponentName = OpponentName,
                 Season = Season,
-                TeamIndex = TeamIndex
+                TeamIndex = TeamIndex,
+                Id = id,
             };
             RemoveSamePlayerDouble(match.Lineup);
+
+            if (isEdit)
+                RequestCreator.DeleteTeamMatch(match.Id);
             RequestCreator.SetTeamMatch(match);
 
             //Navigate back
