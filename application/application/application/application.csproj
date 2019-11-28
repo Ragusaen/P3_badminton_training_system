@@ -69,8 +69,8 @@
     <Compile Update="UI\ProfilePage.xaml.cs">
       <DependentUpon>ProfilePage.xaml</DependentUpon>
     </Compile>
-    <Compile Update="UI\StringAndHeaderPopup.xaml.cs">
-      <DependentUpon>StringAndHeaderPopup.xaml</DependentUpon>
+    <Compile Update="UI\ViewFocusPointDetails.xaml.cs">
+      <DependentUpon>ViewFocusPointDetails.xaml</DependentUpon>
     </Compile>
     <Compile Update="UI\PracticeTeamPage.xaml.cs">
       <DependentUpon>PracticeTeamPage.xaml</DependentUpon>
@@ -123,7 +123,7 @@
     <EmbeddedResource Update="UI\PlaySessionPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="UI\StringAndHeaderPopup.xaml">
+    <EmbeddedResource Update="UI\ViewFocusPointDetails.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="UI\PracticeTeamPage.xaml">
@@ -136,6 +136,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="UI\SubmitFeedbackPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="UI\UnhandledExceptionPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="UI\ViewDetailedFeedbackPage.xaml">

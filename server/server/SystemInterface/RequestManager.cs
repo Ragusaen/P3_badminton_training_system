@@ -60,6 +60,7 @@ namespace Server.SystemInterface.Requests
                 {RequestType.ChangeTrainerPrivileges, new ChangeTrainerPrivilegesHandler() },
                 {RequestType.SetPracticeTeamTrainer, new SetPracticeTeamTrainerHandler() },
                 {RequestType.SetMemberSex, new SetMemberSexHandler() },
+                {RequestType.EditFocusPoint, new EditFocusPointHandler() },
                 //Deleters below
                 {RequestType.DeletePlayerFocusPoint, new DeletePlayerFocusPointsHandler() },
                 {RequestType.DeletePlayerPracticeTeam, new DeletePlayerPracticeTeamHandler() },

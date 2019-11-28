@@ -9,10 +9,10 @@
      mc:Ignorable="d"
      x:Class="application.UI.FocusPointPopupPage">
 
-    <StackLayout Padding="24" Spacing="24" Margin="12">
+    <StackLayout Margin="36">
         <StackLayout BackgroundColor="White">
         <SearchBar Placeholder="Search Focus Point" Text="{Binding SearchText}"/>
-        <ListView VerticalScrollBarVisibility="Always" ItemSelected="ListView_ItemSelected" ItemsSource="{Binding FocusPoints}" SeparatorVisibility="None">
+            <ListView VerticalScrollBarVisibility="Always" BackgroundColor="#F0F0F0" ItemSelected="ListView_ItemSelected" ItemsSource="{Binding FocusPoints}" SeparatorVisibility="None">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
@@ -22,6 +22,7 @@
             </ListView.ItemTemplate>
         </ListView>
         <Button Text="Create New" Command="{Binding CreateNewFocusPointDescriptorClick}"/>
-    </StackLayout>
+        <Button x:Name="CancelButton" Text="CANCEL" TextColor="#BB0000" BackgroundColor="#FFEEEE" Clicked="Dismiss" CornerRadius="15" Margin="10,20,10,10"/>
+        </StackLayout>
     </StackLayout>
 </pages:PopupPage>

@@ -23,6 +23,12 @@ namespace application.UI
             _vm = new ChooseTrainerPopupViewModel();
             BindingContext = _vm;
         }
+
+        async void Dismiss(object sender, EventArgs args)
+        {
+            await PopupNavigation.Instance.PopAsync();
+        }
+
         //Clickes on Trainer and returns the Trainer in CallBackEvent
         public event EventHandler<Trainer> CallBackEvent;
         private void ListView_OnItemSelected(object sender, SelectedItemChangedEventArgs e)

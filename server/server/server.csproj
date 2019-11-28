@@ -230,6 +230,7 @@
     </Compile>
     <Compile Include="Function\Handlers\DeletePracticeSessionHandler.cs" />
     <Compile Include="Function\Handlers\DeleteTeamMatchHandler.cs" />
+    <Compile Include="Function\Handlers\EditFocusPointHandler.cs" />
     <Compile Include="Function\Handlers\GetTrainerPracticeTeamsHandler.cs" />
     <Compile Include="Function\Handlers\SetMemberSexHandler.cs" />
     <Compile Include="Function\Rules\DoubleSamePlayerRule.cs" />
@@ -266,10 +267,7 @@
     <Compile Include="Function\Rules\MultipleLineupPointsRule.cs" />
     <Compile Include="Function\Rules\ReservesRule.cs" />
     <Compile Include="Function\Rules\SexRule.cs" />
-    <Compile Include="SystemInterface\Network\ClientConnection.cs" />
     <Compile Include="SystemInterface\Network\Connection.cs" />
-    <Compile Include="SystemInterface\Network\NetworkException.cs" />
-    <Compile Include="SystemInterface\Network\SslTcpClient.cs" />
     <Compile Include="SystemInterface\Network\SslTcpServer.cs" />
     <Compile Include="Function\Handlers\CreateAccountHandler.cs" />
     <Compile Include="Function\Handlers\GetAllFocusPointDescriptorsHandler.cs" />

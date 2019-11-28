@@ -20,16 +20,48 @@ namespace Server.SystemInterface.Requests.Handlers
     {
         protected Member RequestMember;
         protected static Logger _log = LogManager.GetCurrentClassLogger();
-        protected byte[] OuterHandle<TRequest, TResponse>(byte[] data, Func<TRequest, member, TResponse> innerHandle) where TRequest : Request where TResponse : Response
+        protected byte[] OuterHandle<TRequest, TResponse>(byte[] data, Func<TRequest, member, TResponse> innerHandle) where TRequest : Request where TResponse : Response, new()
         {
             var serializer = new Serializer();
+            TRequest request;
+            TResponse response;
 
-            TRequest request = serializer.Deserialize<TRequest>(data);
+            try
+            {
+                request = serializer.Deserialize<TRequest>(data);
+            }
+            catch (XmlException)
+            {
+                _log.Error("Error deserializing request:\n" + Encoding.ASCII.GetString(data));
+
+                return serializer.Serialize(new TResponse()
+                {
+                    Error = "Unknown deserialization error"
+                });
+            }
+
             member member = null;
             if (request is PermissionRequest pr)
                 member = GetMember(pr);
-            
-            TResponse response = innerHandle(request, member);
+
+            try
+            {
+                response = innerHandle(request, member);
+            }
+            catch (Exception e)
+            {
+                string msg = "";
+                foreach (var fi in typeof(TRequest).GetFields())
+                {
+                    msg += fi.Name + ": " + fi.GetValue(request) + "\n";
+                }
+                _log.Error("Unknown error handling request:\nFull Name: " + typeof(TRequest).FullName + "\n" + e.Message + "\n" + e.InnerException?.Message);
+
+                return serializer.Serialize(new TResponse()
+                {
+                    Error = "Unknown error handling request"
+                });
+            }
 
 
             LogAccess(response, member);
@@ -47,7 +79,10 @@ namespace Server.SystemInterface.Requests.Handlers
                 }
                 _log.Error(msg);
 
-                throw;
+                return serializer.Serialize(new TResponse()
+                {
+                    Error = "Error serializing response"
+                });
             }
         }
 
@@ -78,7 +113,7 @@ namespace Server.SystemInterface.Requests.Handlers
         public abstract byte[] Handle(byte[] data);
     }
 
-    abstract class MiddleRequestHandler<TRequest, TResponse> : RequestHandler where TRequest : Request where TResponse : Response
+    abstract class MiddleRequestHandler<TRequest, TResponse> : RequestHandler where TRequest : Request where TResponse : Response, new()
     {
         protected abstract TResponse InnerHandle(TRequest request, member requester);
 

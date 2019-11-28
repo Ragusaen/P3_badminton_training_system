@@ -76,7 +76,7 @@ namespace application.UI
 
         private void GoToFocusPoint(FocusPointDescriptor fpd)
         {
-            PopupNavigation.Instance.PushAsync(new StringAndHeaderPopup(fpd));
+            PopupNavigation.Instance.PushAsync(new ViewFocusPointDetails(fpd));
         }
 
         private void ListView_OnItemSelected(object sender, SelectedItemChangedEventArgs e)

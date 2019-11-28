@@ -31,8 +31,6 @@ namespace Server.Controller
             var db = new DatabaseEntities();
             var account = db.accounts.Find(username);
 
-            _log.Debug($"User {username}, {password} : {account != null}");
-
             // Check if account was found
             if (account != null &&
                 VerifyPassword(password, account.PasswordSalt, account.PasswordHash))

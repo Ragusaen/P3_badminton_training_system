@@ -22,6 +22,16 @@ namespace application.UI
             _vm = new AdministratorViewModel();
             _vm.Navigation = Navigation;
             BindingContext = _vm;
+
+            FocusPointList.ItemAppearing += (s, r) => LoadEditIcons();
+        }
+
+        private void LoadEditIcons()
+        {
+            foreach (var templatedItem in FocusPointList.TemplatedItems)
+            {
+                ((ImageButton)templatedItem.FindByName("EditButton")).Source = ImageSource.FromResource("application.Images.editicon.png");
+            }
         }
 
         //Click on Member navigates to Members ProfilePage

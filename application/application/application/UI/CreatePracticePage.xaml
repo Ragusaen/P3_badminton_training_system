@@ -10,7 +10,7 @@
     <NavigationPage.TitleView>
         <StackLayout Orientation="Horizontal" Spacing="10">
             <Label Text="Practice Session" FontAttributes="Bold" FontSize="30" TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
-            <ImageButton Source="" x:Name="SaveIcon" Command="{Binding SaveCreatedPracticeClickCommand}" HeightRequest="25" VerticalOptions="CenterAndExpand" HorizontalOptions="End" Margin="0,0,15,0" BackgroundColor="Red"/>
+            <ImageButton Source="" x:Name="SaveIcon" Command="{Binding SaveCreatedPracticeClickCommand}" HeightRequest="35" Padding="5" VerticalOptions="CenterAndExpand" HorizontalOptions="End" Margin="0,0,15,0" BackgroundColor="Red"/>
         </StackLayout>
     </NavigationPage.TitleView>
 
@@ -18,31 +18,31 @@
     <StackLayout>
         <Grid Margin="15,15,15,10">
             <Grid.RowDefinitions>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-                <RowDefinition Height="40"/>
-                    <RowDefinition Height="40"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
+                <RowDefinition Height="50"/>
                 </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="1.5*"/>
                 <ColumnDefinition Width="5*"/>
             </Grid.ColumnDefinitions>
-            <Label Grid.Row="0" Grid.Column="0" Text="Team" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
+                <Label Grid.Row="0" Grid.Column="0" Text="Team" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
                 <Label Grid.Row="0" Grid.Column="1" VerticalOptions="Center" Text="{Binding TeamName}" FontSize="18">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding TeamCommand}"/>
                     </Label.GestureRecognizers>
                 </Label>
-                    <Label Grid.Row="1" Grid.Column="0" Text="Date" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
-                <StackLayout Orientation="Horizontal" Grid.Row="1" Grid.Column="1">
-                    <DatePicker MinimumDate="{Binding MinDate}" Date="{Binding SelectedDateStart}"/>
-                    <TimePicker Format="HH:mm" Time="{Binding SelectedTimeStart}" x:Name="StartDate"/>
+                <Label Grid.Row="1" Grid.Column="0" Text="Date" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
+                <StackLayout Orientation="Horizontal" Grid.Row="1" Grid.Column="1" HeightRequest="70">
+                    <DatePicker MinimumDate="{Binding MinDate}" Date="{Binding SelectedDateStart}" VerticalOptions="Center"/>
+                    <TimePicker Format="HH:mm" Time="{Binding SelectedTimeStart}" x:Name="StartDate" VerticalOptions="Center"/>
                     <Label Text="-" VerticalOptions="Center"/>
-                    <TimePicker Format="HH:mm" Time="{Binding SelectedTimeEnd}" x:Name="EndDate"/>
-                </StackLayout>
+                    <TimePicker Format="HH:mm" Time="{Binding SelectedTimeEnd}" x:Name="EndDate" VerticalOptions="Center"/>
+                </StackLayout> 
 
                 <Label Grid.Row="2" Grid.Column="0" Text="Trainer" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
-                <Picker Grid.Row="2" Grid.Column="1" SelectedItem="{Binding Practice.Trainer}"  ItemDisplayBinding="{Binding Member.Name}" VerticalOptions="Center" ItemsSource="{Binding Trainers}"/>
+                <Picker Grid.Row="2" Grid.Column="1" SelectedItem="{Binding Practice.Trainer}" ItemDisplayBinding="{Binding Member.Name}" VerticalOptions="Center" ItemsSource="{Binding Trainers}"/>
                 <Label Grid.Row="3" Grid.Column="0" Text="Location" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
                 <Entry Grid.Row="3" Grid.Column="1" Text="{Binding Practice.Location}"  Placeholder="Stjernevej 5, 9200 Aalborg" VerticalOptions="Center"/>
             </Grid>
@@ -78,7 +78,7 @@
             <StackLayout x:Name="ExerciseStack">
 
             </StackLayout>
-            <Button Text="Add new element to practice plan" Clicked="AddNewElementButton_OnClicked"/>
+            <Button Text="Add Exercise" Clicked="AddNewElementButton_OnClicked"/>
 
     </StackLayout>
     </ScrollView>

@@ -9,10 +9,10 @@
              mc:Ignorable="d"
              x:Class="application.UI.ExercisePopupPage">
 
-    <StackLayout Padding="24" Spacing="24" Margin="12">
+    <StackLayout Margin="36">
         <StackLayout BackgroundColor="White">
         <SearchBar Placeholder="Enter your focus point" Text="{Binding SearchText}"/>
-        <ListView VerticalScrollBarVisibility="Always" ItemSelected="ListView_ItemSelected" ItemsSource="{Binding Exercises}" SeparatorVisibility="None">
+            <ListView VerticalScrollBarVisibility="Always" BackgroundColor="#F0F0F0" ItemSelected="ListView_ItemSelected" ItemsSource="{Binding Exercises}" SeparatorVisibility="None">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
@@ -21,6 +21,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-    </StackLayout>
+        <Button x:Name="CancelButton" Text="CANCEL" TextColor="#BB0000" BackgroundColor="#FFEEEE" Clicked="Dismiss" CornerRadius="15" Margin="10"/>
+        </StackLayout>
     </StackLayout>
 </pages:PopupPage>
