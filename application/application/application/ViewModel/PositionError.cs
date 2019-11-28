@@ -61,6 +61,19 @@ namespace application.ViewModel
             }
         }
 
+        public PositionError()
+        {
+
+        }
+
+        public PositionError(Position position)
+        {
+            Player = position.Player;
+            IsExtra = position.IsExtra;
+            OtherPlayer = position.OtherPlayer;
+            OtherIsExtra = position.OtherIsExtra;
+        }
+
         public event PropertyChangedEventHandler PropertyChanged;
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
         {

@@ -25,10 +25,16 @@ namespace Server.Function.Handlers
             {
                 var positions = match.positions.ToList();
                 var captain = match.captain;
+                var ps = match.playsession;
                 captain.teammatches.Remove(match);
                 db.positions.RemoveRange(positions);
                 db.teammatches.Remove(match);
-                db.playsessions.Remove(db.playsessions.Find(request.Id));
+                if (ps != null)
+                {
+                    var fb = ps.feedbacks;
+                    db.feedbacks.RemoveRange(fb);
+                    db.playsessions.Remove(ps);
+                }
             }
 
             db.SaveChanges();

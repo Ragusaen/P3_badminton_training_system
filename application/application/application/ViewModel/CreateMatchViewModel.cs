@@ -205,6 +205,10 @@ namespace application.ViewModel
             set { SetProperty(ref _members, value); }
         }
 
+        private int id;
+        private bool isEdit;
+
+        //Ctor
         public CreateMatchViewModel(DateTime startDate)
         {
             Members = new ObservableCollection<Member>(RequestCreator.GetAllMembers().OrderBy(p => p.Name));
@@ -212,6 +216,31 @@ namespace application.ViewModel
             SelectedDateStart = startDate;
             SelectedLeague = TeamMatch.Leagues.BadmintonLeague;
             Location = "Stjernevej 5, 9200 Aalborg";
+        }
+
+        public CreateMatchViewModel(TeamMatch match)
+        {
+            OpponentName = match.OpponentName;
+            SelectedDateStart = match.Start.Date;
+            SelectedTimeStart = match.Start.TimeOfDay;
+            SelectedTimeEnd = match.End.TimeOfDay;
+            Location = match.Location;
+            Captain = match.Captain;
+            SelectedLeague = match.League;
+            LeagueRound = match.LeagueRound;
+            Season = match.Season;
+            TeamIndex = match.TeamIndex;
+            id = match.Id;
+            isEdit = true;
+            Positions = new Dictionary<(Lineup.PositionType, int), PositionError>();
+
+            foreach (var group in match.Lineup)
+            {
+                for (int i = 0; i < group.Positions.Count; i++)
+                {
+                    Positions.Add((group.Type, i), new PositionError(group.Positions[i]));
+                }
+            }
         }
 
         private void RemoveSamePlayerDouble(Lineup lineup)
@@ -388,6 +417,9 @@ namespace application.ViewModel
                 TeamIndex = (int)TeamIndex
             };
             RemoveSamePlayerDouble(match.Lineup);
+
+            if (isEdit)
+                RequestCreator.DeleteTeamMatch(match.Id);
             RequestCreator.SetTeamMatch(match);
 
             //Navigate back

@@ -41,7 +41,7 @@ namespace application.UI
             BullsEyeIcon.Source = ImageSource.FromResource("application.Images.bullseyeicon.png");
             EditButton.Source = ImageSource.FromResource("application.Images.editicon.png");
 
-            EditButton.Clicked += (s,a) => _vm.EditButtonClicked();
+            EditButton.Clicked += (s,a) => _vm.EditButtonClicked(this);
         }
 
         private void SetPracticeVisibility()

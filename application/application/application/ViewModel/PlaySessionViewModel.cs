@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using application.Controller;
+using application.SystemInterface;
 using application.UI;
 using Common.Model;
 using Common.Serialization;
@@ -117,31 +118,40 @@ namespace application.ViewModel
             Navigation.PushAsync(new SubmitFeedbackPage(PlaySession));
         }
 
-        public async void EditButtonClicked()
+        public async void EditButtonClicked(Page currentPage)
         {
-            string edit = await Application.Current.MainPage.DisplayActionSheet("Options", "Cancel", null, "Edit", "Remove");
+            string edit = await Application.Current.MainPage.DisplayActionSheet("Options", "Cancel", null, "Edit", "Delete");
 
             if (edit == "Edit")
             {
+                Page page;
                 if (PracticeSession != null)
-                {
-                    var page = new CreatePracticePage(PracticeSession);
-                    page.Disappearing += (s, a) => Navigation.PopAsync();
-
-                    await Navigation.PushAsync(page);
-                }
+                    page = new CreatePracticePage(PracticeSession);
                 else if (TeamMatch != null)
-                    ;// Create Team match
+                    page = new CreateMatchPage(TeamMatch); // Create Team match
+                else
+                    return;
 
-            } else if (edit == "Remove")
+                page.Disappearing += (s, a) => Navigation.PopAsync();
+                await Navigation.PushAsync(page);
+
+            } else if (edit == "Delete")
             {
 
-            }
-            else
-            {
-                return;
-            }
+                bool answer = await Application.Current.MainPage.DisplayAlert("Delete", $"Are you sure you want to delete this?", "yes", "no");
+                if (answer)
+                {
+                    if (PracticeSession != null)
+                        RequestCreator.DeletePracticeSession(PracticeSession.Id);
+                    else if (TeamMatch != null)
+                        RequestCreator.DeleteTeamMatch(TeamMatch.Id);
+                    else return;
 
+                    Navigation.RemovePage(currentPage);
+                    await Navigation.PopAsync();
+                }
+            }
+            else return;
         }
     }
 }
