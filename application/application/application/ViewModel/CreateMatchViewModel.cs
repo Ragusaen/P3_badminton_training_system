@@ -13,6 +13,14 @@ namespace application.ViewModel
 {
     class CreateMatchViewModel : BaseViewModel
     {
+        private bool _reservesVisible;
+
+        public bool ReservesVisible
+        {
+            get { return _reservesVisible; }
+            set { SetProperty(ref _reservesVisible, value); }
+        }
+
         private string _opponentName;
 
         public string OpponentName
@@ -158,7 +166,11 @@ namespace application.ViewModel
             get { return _selectedLeague; }
             set
             {
-                SetProperty(ref _selectedLeague, value);
+                if (SetProperty(ref _selectedLeague, value))
+                {
+                    ReservesVisible = _selectedLeague == TeamMatch.Leagues.BadmintonLeague ||
+                                      _selectedLeague == TeamMatch.Leagues.Division1;
+                }
                 SetLineupTemplate(_selectedLeague);
             }
         }
@@ -185,7 +197,7 @@ namespace application.ViewModel
             set
             {
                 if (SetProperty(ref _positions, value))
-                    LineupHeight = _positions.Count * 120;
+                    LineupHeight = _positions.Count * 150;
             }
         }
 
@@ -362,7 +374,7 @@ namespace application.ViewModel
         {
             var pos = ((Lineup.PositionType, int))param;
 
-            ChooseLineupPlayerPopupPage page = new ChooseLineupPlayerPopupPage();
+            ChooseLineupPlayerPopupPage page = new ChooseLineupPlayerPopupPage(Players.ToList());
             page.CallBackEvent += (sender, e) => SetChosenPlayer(sender, e, pos, index);
             PopupNavigation.Instance.PushAsync(page);
         }
