@@ -230,6 +230,7 @@
     </Compile>
     <Compile Include="Function\Handlers\DeletePracticeSessionHandler.cs" />
     <Compile Include="Function\Handlers\DeleteTeamMatchHandler.cs" />
+    <Compile Include="Function\Handlers\EditFocusPointHandler.cs" />
     <Compile Include="Function\Handlers\GetTrainerPracticeTeamsHandler.cs" />
     <Compile Include="Function\Handlers\SetMemberSexHandler.cs" />
     <Compile Include="Function\Rules\DoubleSamePlayerRule.cs" />

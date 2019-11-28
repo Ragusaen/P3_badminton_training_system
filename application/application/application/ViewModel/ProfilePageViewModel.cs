@@ -187,7 +187,7 @@ namespace application.ViewModel
         // Focus Point Section
         public void PopupFocusPoint(FocusPointItem focusPoint)
         {
-            StringAndHeaderPopup popup = new StringAndHeaderPopup(focusPoint.Descriptor);
+            var popup = new ViewFocusPointDetails(focusPoint.Descriptor);
             PopupNavigation.Instance.PushAsync(popup);
         }
 
