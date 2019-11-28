@@ -51,13 +51,8 @@ namespace application.UI
             else
                 return;
 
-            page.Disappearing += (s, a) =>
-            {
-                Navigation.InsertPageBefore(this, new SchedulePage());
-                Navigation.PopAsync();
-            };
+
             await Navigation.PushAsync(page);
-                await Navigation.PushAsync(new CreateMatchPage(_vm.SelectedDate));
         }
         protected override void OnAppearing()
         {
