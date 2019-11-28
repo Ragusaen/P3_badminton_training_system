@@ -25,7 +25,6 @@ namespace application.ViewModel
             }
         }
 
-
         public DateTime MinDate { get; set; } = DateTime.Today;
 
         private DateTime _selectedDateStart;
@@ -95,9 +94,9 @@ namespace application.ViewModel
             }
         }
 
-        private int _season;
+        private int? _season;
 
-        public int Season
+        public int? Season
         {
             get { return _season; }
             set
@@ -110,9 +109,9 @@ namespace application.ViewModel
             }
         }
 
-        private int _leagueRound;
+        private int? _leagueRound;
 
-        public int LeagueRound
+        public int? LeagueRound
         {
             get { return _leagueRound; }
             set 
@@ -125,9 +124,9 @@ namespace application.ViewModel
             }
         }
 
-        private int _teamIndex;
+        private int? _teamIndex;
 
-        public int TeamIndex
+        public int? TeamIndex
         {
             get { return _teamIndex; }
             set
@@ -206,40 +205,46 @@ namespace application.ViewModel
             set { SetProperty(ref _members, value); }
         }
 
-        private int id;
-        private bool isEdit;
+        private int _matchToDeleteId;
+        private bool isEdit = false;
 
         //Ctor
-        public CreateMatchViewModel(DateTime startDate)
+        private CreateMatchViewModel()
         {
             Members = new ObservableCollection<Member>(RequestCreator.GetAllMembers().OrderBy(p => p.Name));
             Players = new ObservableCollection<Player>(RequestCreator.GetAllPlayers().OrderBy(p => p.Member.Name));
+        }
+
+        public CreateMatchViewModel(DateTime startDate) : this()
+        {
             SelectedDateStart = startDate;
             SelectedLeague = TeamMatch.Leagues.BadmintonLeague;
             Location = "Stjernevej 5, 9200 Aalborg";
         }
 
-        public CreateMatchViewModel(TeamMatch match)
+        public CreateMatchViewModel(TeamMatch match) : this()
         {
             OpponentName = match.OpponentName;
             SelectedDateStart = match.Start.Date;
             SelectedTimeStart = match.Start.TimeOfDay;
             SelectedTimeEnd = match.End.TimeOfDay;
             Location = match.Location;
-            Captain = match.Captain;
             SelectedLeague = match.League;
             LeagueRound = match.LeagueRound;
             Season = match.Season;
             TeamIndex = match.TeamIndex;
-            id = match.Id;
-            isEdit = true;
-            Positions = new Dictionary<(Lineup.PositionType, int), PositionError>();
 
-            foreach (var group in match.Lineup)
+            isEdit = true;
+            _matchToDeleteId = match.Id;
+        }
+        
+        public void SetUILineup(Lineup lineup)
+        {
+            foreach (var group in lineup)
             {
                 for (int i = 0; i < group.Positions.Count; i++)
                 {
-                    Positions.Add((group.Type, i), new PositionError(group.Positions[i]));
+                    Positions[(group.Type, i)] = new PositionError(group.Positions[i]);
                 }
             }
         }
@@ -274,16 +279,18 @@ namespace application.ViewModel
 
         private bool CanExecuteVerifyLineup(object param)
         {
-            return LeagueRound != 0 && Season != 0 && TeamIndex != 0;
+            return LeagueRound != null && LeagueRound > 0 && 
+                   Season != null && Season > 0 && 
+                   TeamIndex != null && TeamIndex > 0;
         }
 
         private void ExecuteVerifyLineup(object param)
         {
             TeamMatch match = new TeamMatch()
             { 
-                Season = Season,
-                LeagueRound = LeagueRound,
-                TeamIndex = TeamIndex,
+                Season = (int)Season,
+                LeagueRound = (int)LeagueRound,
+                TeamIndex = (int)TeamIndex,
                 Lineup = ConvertPositionDictionaryToLineup(Positions)
             };
             List<RuleBreak> ruleBreaks = RequestCreator.VerifyLineup(match);
@@ -389,13 +396,12 @@ namespace application.ViewModel
 
         private bool CanExecuteSaveMatchClick(object param)
         {
-            if ((string.IsNullOrEmpty(Location)) || 
-                (string.IsNullOrEmpty(OpponentName)) || 
-                Captain == null ||
-                LeagueRound == 0 || Season == 0 || TeamIndex == 0)
-                return false;
-            else
-                return true;
+            return !((string.IsNullOrEmpty(Location)) ||
+                     (string.IsNullOrEmpty(OpponentName)) ||
+                     Captain == null ||
+                     LeagueRound == null || LeagueRound < 0 ||
+                     Season == null || Season < 0 ||
+                     TeamIndex == null || TeamIndex < 0);
         }
 
         private void ExecuteSaveMatchClick(object param)
@@ -407,17 +413,16 @@ namespace application.ViewModel
                 End = SelectedDateStart.Date + Convert.ToDateTime(SelectedTimeEnd.ToString()).TimeOfDay,
                 League = SelectedLeague,
                 Lineup = ConvertPositionDictionaryToLineup(Positions),
-                LeagueRound = LeagueRound,
+                LeagueRound = (int)LeagueRound,
                 Location = Location,
                 OpponentName = OpponentName,
-                Season = Season,
-                TeamIndex = TeamIndex,
-                Id = id,
+                Season = (int)Season,
+                TeamIndex = (int)TeamIndex
             };
             RemoveSamePlayerDouble(match.Lineup);
 
             if (isEdit)
-                RequestCreator.DeleteTeamMatch(match.Id);
+                RequestCreator.DeleteTeamMatch(_matchToDeleteId);
             RequestCreator.SetTeamMatch(match);
 
             //Navigate back
