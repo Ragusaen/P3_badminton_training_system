@@ -31,6 +31,8 @@ namespace application.UI
         public CreateMatchPage(TeamMatch teamMatch)
         {
             Init(() => new CreateMatchViewModel(teamMatch));
+
+            _vm.SetUILineup(teamMatch.Lineup);
         }
 
         private void Init(Func<CreateMatchViewModel> ctor)
