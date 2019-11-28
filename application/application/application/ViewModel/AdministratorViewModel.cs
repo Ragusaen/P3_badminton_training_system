@@ -35,8 +35,6 @@ namespace application.ViewModel
             set => SetProperty(ref _focusPointList, value); 
         }
 
-        
-
         private string _searchFocusPointText;
         public string SearchFocusPointText
         {

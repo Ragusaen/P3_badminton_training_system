@@ -22,6 +22,11 @@ namespace application.UI
             BindingContext = vm;
         }
 
+        async void Dismiss(object sender, EventArgs args)
+        {
+            await PopupNavigation.Instance.PopAsync();
+        }
+
         public event EventHandler<Player> CallBackEvent;
         private void ListView_OnItemSelected(object sender, SelectedItemChangedEventArgs e)
         {

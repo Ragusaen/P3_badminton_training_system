@@ -24,6 +24,11 @@ namespace application.UI
             BindingContext = vm;
         }
 
+        async void Dismiss(object sender, EventArgs args)
+        {
+            await PopupNavigation.Instance.PopAsync();
+        }
+
         public void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             ((FocusPointPopupViewModel)BindingContext).FocusPointSelected(e.SelectedItem as FocusPointDescriptor);

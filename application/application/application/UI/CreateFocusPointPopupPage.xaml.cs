@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using application.SystemInterface;
 using application.ViewModel;
 using Common.Model;
+using Rg.Plugins.Popup.Services;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -22,6 +23,12 @@ namespace application.UI
             vm = new CreateFocusPointPopupViewModel(canCreatePrivateFocusPoint);
             BindingContext = vm;
         }
+
+        async void Dismiss(object sender, EventArgs args)
+        {
+            await PopupNavigation.Instance.PopAsync();
+        }
+
         public CreateFocusPointPopupPage(bool canCreatePrivateFocusPoint, FocusPointDescriptor fp)
         {
             InitializeComponent();

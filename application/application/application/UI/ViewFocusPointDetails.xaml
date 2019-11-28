@@ -5,10 +5,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
              mc:Ignorable="d"
-             x:Class="application.UI.ViewFocusPointDetails" >
-
-    <StackLayout Padding="24" Spacing="24" Margin="12">
-        <StackLayout BackgroundColor="White" Padding="20,20,20,20">
+             x:Class="application.UI.ViewFocusPointDetails">
+    
+    <StackLayout Margin="36">
+        <StackLayout BackgroundColor="White" Padding="20,20,20,20" VerticalOptions="Start">
             <Label Text="{Binding Name}" FontAttributes="Bold"/>
             <BoxView BackgroundColor="#BBBBBB" HeightRequest="1"/>
             <Label Text="{Binding Description}" />
@@ -24,5 +24,6 @@
                 </Label.FormattedText>
             </Label>
         </StackLayout>
+        <StackLayout x:Name="OuterStack" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"></StackLayout>
     </StackLayout>
 </pages:PopupPage>

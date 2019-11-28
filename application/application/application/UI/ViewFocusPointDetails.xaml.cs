@@ -25,6 +25,15 @@ namespace application.UI
             {
                 Command = new Command(LinkClicked)
             });
+
+            var tapper = new TapGestureRecognizer();
+            tapper.Tapped += (s, a) => PopupNavigation.Instance.PopAsync();
+            OuterStack.GestureRecognizers.Add(tapper);
+        }
+
+        async void Dismiss(object sender, EventArgs args)
+        {
+            await PopupNavigation.Instance.PopAsync();
         }
 
         private void LinkClicked()
