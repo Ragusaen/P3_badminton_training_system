@@ -207,23 +207,26 @@ namespace application.ViewModel
         }
 
         //Ctor
-        public CreateMatchViewModel(DateTime startDate)
+        private CreateMatchViewModel()
         {
             Members = new ObservableCollection<Member>(RequestCreator.GetAllMembers().OrderBy(p => p.Name));
             Players = new ObservableCollection<Player>(RequestCreator.GetAllPlayers().OrderBy(p => p.Member.Name));
+        }
+
+        public CreateMatchViewModel(DateTime startDate) : this()
+        {
             SelectedDateStart = startDate;
             SelectedLeague = TeamMatch.Leagues.BadmintonLeague;
             Location = "Stjernevej 5, 9200 Aalborg";
         }
 
-        public CreateMatchViewModel(TeamMatch match)
+        public CreateMatchViewModel(TeamMatch match) : this()
         {
             OpponentName = match.OpponentName;
             SelectedDateStart = match.Start.Date;
             SelectedTimeStart = match.Start.TimeOfDay;
             SelectedTimeEnd = match.End.TimeOfDay;
             Location = match.Location;
-            Captain = match.Captain;
             SelectedLeague = match.League;
             LeagueRound = match.LeagueRound;
             Season = match.Season;

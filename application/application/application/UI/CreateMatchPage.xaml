@@ -53,7 +53,7 @@
                     <TimePicker Format="HH:mm" Time="{Binding SelectedTimeEnd}" x:Name="EndDate"/>
                 </StackLayout>
                 <Label Grid.Row="2" Grid.Column="0" Text="Captain" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
-                <Picker Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Title="Choose team captain" ItemsSource="{Binding Members}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding Captain}" VerticalOptions="Center"/>
+                <Picker x:Name="CaptainPicker" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Title="Choose team captain" ItemsSource="{Binding Members}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding Captain}" VerticalOptions="Center"/>
                 <Label Grid.Row="3" Grid.Column="0" Text="Location" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
                 <Entry Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Location}"  Placeholder="Enter location" VerticalOptions="Center"/>
                 <Label Grid.Row="4" Grid.Column="0" Text="League" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
