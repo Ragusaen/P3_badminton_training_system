@@ -105,11 +105,17 @@ namespace application.ViewModel
                     PlayerPracticeTeamsListHeight = PlayerPracticeTeams.Count * 45;
 
                     List<Feedback> feedbacks = RequestCreator.GetPlayerFeedback(Member);
+                    feedbacks = feedbacks.OrderByDescending(p => p.PlaySession.Start.Date).ThenByDescending(p => p.PlaySession.Start.TimeOfDay).ToList();
                     List<Entry> entries = new List<Entry>();
+                    int i = 0;
                     foreach (Feedback fb in feedbacks)
                     {
+                        if (i == 15)
+                            break;
                         entries.Add(new Entry(((float)fb.ReadyQuestion + (float)fb.EffortQuestion + (float)fb.ChallengeQuestion + (float)fb.AbsorbQuestion) / 4) { Color = SKColor.Parse("#33ccff"), ValueLabel = fb.PlaySession.Start.Date.ToString("dd/MM-yyyy") });
+                        i++;
                     }
+                    entries.Reverse();
                     Chart = new LineChart { Entries = entries, LineMode = LineMode.Straight, PointMode = PointMode.Circle, LabelTextSize = 25, PointSize = 12, MaxValue = 2, MinValue = -2 };
                 }
                 if (Member.MemberType.HasFlag(MemberType.Trainer))

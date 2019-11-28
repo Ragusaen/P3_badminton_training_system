@@ -6,6 +6,7 @@ using Microcharts;
 using SkiaSharp;
 using application.SystemInterface;
 using Common.Model;
+using System.Linq;
 
 namespace application.ViewModel
 {
@@ -55,19 +56,29 @@ namespace application.ViewModel
         public ViewFeedbackViewModel(Player player) 
         {
             List<Feedback> feedbacks = RequestCreator.GetPlayerFeedback(player.Member);
+            feedbacks = feedbacks.OrderByDescending(p => p.PlaySession.Start.Date).ThenByDescending(p => p.PlaySession.Start.TimeOfDay).ToList();
             List<Entry> entries = new List<Entry>();
             List<Entry> entries1 = new List<Entry>();
             List<Entry> entries2 = new List<Entry>();
             List<Entry> entries3 = new List<Entry>();
-            //fix feedback submit date
+
+            int i = 0;
             foreach (Feedback fb in feedbacks) 
-            { 
+            {
+                if (i == 15)
+                    break;
                 entries.Add(new Entry((float)fb.ReadyQuestion) { Color = SKColor.Parse("#33ccff"), ValueLabel = fb.PlaySession.Start.Date.ToString("dd/MM-yyyy") });
                 entries1.Add(new Entry((float)fb.EffortQuestion) { Color = SKColor.Parse("#33ccff"), ValueLabel = fb.PlaySession.Start.Date.ToString("dd/MM-yyyy") });
                 entries2.Add(new Entry((float)fb.ChallengeQuestion) { Color = SKColor.Parse("#33ccff"), ValueLabel = fb.PlaySession.Start.Date.ToString("dd/MM-yyyy") });
-                entries3.Add(new Entry((float)fb.AbsorbQuestion) { Color = SKColor.Parse("#33ccff"), ValueLabel = fb.PlaySession.Start.Date.ToString("dd/MM-yyyy") });  
+                entries3.Add(new Entry((float)fb.AbsorbQuestion) { Color = SKColor.Parse("#33ccff"), ValueLabel = fb.PlaySession.Start.Date.ToString("dd/MM-yyyy") });
+                i++;
+                
             }
-  
+            entries.Reverse();
+            entries1.Reverse();
+            entries2.Reverse();
+            entries3.Reverse();
+
             Chart = new LineChart { Entries = entries, LineMode = LineMode.Straight, PointMode = PointMode.Circle, LabelTextSize = 25, PointSize = 12, MaxValue = 2, MinValue = -2 };
             Chart1 = new LineChart { Entries = entries1, LineMode = LineMode.Straight, PointMode = PointMode.Square, LabelTextSize = 25, PointSize = 12, MaxValue = 2, MinValue = -2 };
             Chart2 = new LineChart { Entries = entries2, LineMode = LineMode.Straight, PointMode = PointMode.Square, LabelTextSize = 25, PointSize = 12, MaxValue = 2, MinValue = -2 };

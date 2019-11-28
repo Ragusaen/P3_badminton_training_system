@@ -22,28 +22,28 @@
                     <Frame CornerRadius="5" HasShadow="True">
                         <StackLayout>
                             <Label Text="How ready did you feel today?" TextColor="Black" FontSize="Small" VerticalTextAlignment="Center"/>
-                            <microcharts:ChartView Chart="{Binding Chart}" HeightRequest="300" Margin="-80, 0, -80, 0"/>
+                            <microcharts:ChartView Chart="{Binding Chart}" HeightRequest="300" Margin="0"/>
                         </StackLayout>
                     </Frame>
 
                     <Frame CornerRadius="5" HasShadow="True">
                         <StackLayout>
                             <Label Text="How was your effort today taking into account how ready you felt?" TextColor="Black" FontSize="Small" VerticalTextAlignment="Center"/>
-                            <microcharts:ChartView Chart="{Binding Chart1}" HeightRequest="300" Margin="-80, 0, -80, 0"/>
+                            <microcharts:ChartView Chart="{Binding Chart1}" HeightRequest="300" Margin="0"/>
                         </StackLayout>
                     </Frame>
                     
                     <Frame CornerRadius="5" HasShadow="True">
                         <StackLayout>
                             <Label Text="How were you challenged today" TextColor="Black" FontSize="Small" VerticalTextAlignment="Center"/>
-                            <microcharts:ChartView Chart="{Binding Chart2}" HeightRequest="300" Margin="-80, 0, -80, 0"/>
+                            <microcharts:ChartView Chart="{Binding Chart2}" HeightRequest="300" Margin="0"/>
                         </StackLayout>
                     </Frame>
                     
                     <Frame CornerRadius="5" HasShadow="True">
                         <StackLayout>
                             <Label Text="To what extent were you absorbed?" TextColor="Black" FontSize="Small" VerticalTextAlignment="Center"/>
-                            <microcharts:ChartView Chart="{Binding Chart3}" HeightRequest="300" Margin="-80, 0, -80, 0"/>
+                            <microcharts:ChartView Chart="{Binding Chart3}" HeightRequest="300" Margin="0"/>
                         </StackLayout>
                     </Frame>
                 </StackLayout>
