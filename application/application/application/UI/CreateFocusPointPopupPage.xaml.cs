@@ -15,6 +15,7 @@ namespace application.UI
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CreateFocusPointPopupPage : PopupPage
     {
+        //Sets BindingContext ViewModel
         private CreateFocusPointPopupViewModel vm;
         public CreateFocusPointPopupPage(bool canCreatePrivateFocusPoint)
         {

@@ -18,14 +18,18 @@ namespace application.UI
         {
             InitializeComponent();
 
+            //Automatically go to next loginstep
             Username.Completed += (s, a) => Password.Focus();
             Password.Completed += (s, a) => ConfirmPassword.Focus();
             ConfirmPassword.Completed += (s, a) => NameSearch.Focus();
 
+            //Show error message if Password and ConfirmPassword is not the same
             ConfirmPassword.TextChanged += (s, a) => ConfirmPasswordErrorText.IsVisible = (Password.Text != ConfirmPassword.Text);
 
+            //Calls NotOnListCheckChanged if Checkbox is clicked
             NotOnList.CheckedChanged += (s, a) => NotOnListCheckChanged(NotOnList.IsChecked);
 
+            //If Username is taken Username gets focus
             CreateAccountButton.Clicked += (s,a) =>
             {
                 UsernameError.Focus();
@@ -37,19 +41,23 @@ namespace application.UI
             notOnListLabelTap.Tapped += (s, a) => NotOnList.IsChecked = !NotOnList.IsChecked;
             NotOnListLabel.GestureRecognizers.Add(notOnListLabelTap);
 
+            //If search text is changed the selected player is unselected
             NameSearch.TextChanged += (s, a) => _vm.PlayerUnselect();
 
+            //Sets BindingContext ViewModel
             _vm = new CreateAccountViewModel();
             BindingContext = _vm;
             _vm.Navigation = Navigation;
         }
 
+        //Player selected
         private void ListView_OnItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             NameSearch.Text = ((Player) e.SelectedItem).Member.Name;
             _vm.PlayerSelected((Player) e.SelectedItem);
         }
 
+        //PLayerList visibility changed 
         private void NotOnListCheckChanged(bool newState)
         {
             PlayerList.IsVisible = !newState;

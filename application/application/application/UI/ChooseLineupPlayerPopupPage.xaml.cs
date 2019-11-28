@@ -15,13 +15,14 @@ namespace application.UI
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ChooseLineupPlayerPopupPage : PopupPage
     {
+        //Sets BindingContext ViewModel
         public ChooseLineupPlayerPopupPage()
         {
             InitializeComponent();
             ChooseLineupPlayerPopupViewModel vm = new ChooseLineupPlayerPopupViewModel();
             BindingContext = vm;
         }
-
+        //Clickes on Player and returns the Player in CallBackEvent
         public event EventHandler<Player> CallBackEvent;
         private void ListView_OnItemSelected(object sender, SelectedItemChangedEventArgs e)
         {

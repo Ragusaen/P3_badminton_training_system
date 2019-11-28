@@ -15,6 +15,7 @@ namespace application.UI
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ChooseTrainerPopupPage : PopupPage
     {
+        //Sets BindingContext ViewModel
         private ChooseTrainerPopupViewModel _vm;
         public ChooseTrainerPopupPage()
         {
@@ -22,7 +23,7 @@ namespace application.UI
             _vm = new ChooseTrainerPopupViewModel();
             BindingContext = _vm;
         }
-
+        //Clickes on Trainer and returns the Trainer in CallBackEvent
         public event EventHandler<Trainer> CallBackEvent;
         private void ListView_OnItemSelected(object sender, SelectedItemChangedEventArgs e)
         {

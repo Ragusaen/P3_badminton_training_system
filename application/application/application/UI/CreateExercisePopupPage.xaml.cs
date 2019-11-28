@@ -14,6 +14,7 @@ namespace application.UI
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class CreateExercisePopupPage : PopupPage
     {
+        //Sets BindingContext ViewModel
         public CreateExercisePopupPage()
         {
             InitializeComponent();
