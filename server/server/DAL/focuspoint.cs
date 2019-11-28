@@ -17,9 +17,9 @@ namespace Server.DAL
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public focuspoint()
         {
-            this.practicesessions = new HashSet<practicesession>();
+            this.practicesessionsmain = new HashSet<practicesession>();
             this.members = new HashSet<member>();
-            this.practicesessions1 = new HashSet<practicesession>();
+            this.practicesessionssub = new HashSet<practicesession>();
         }
     
         public int ID { get; set; }
@@ -29,10 +29,10 @@ namespace Server.DAL
         public string VideoURL { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<practicesession> practicesessions { get; set; }
+        public virtual ICollection<practicesession> practicesessionsmain { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<member> members { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<practicesession> practicesessions1 { get; set; }
+        public virtual ICollection<practicesession> practicesessionssub { get; set; }
     }
 }

@@ -24,6 +24,7 @@ namespace application.UI
             BindingContext = _vm;
 
             FocusPointList.ItemAppearing += (s, r) => LoadEditIcons();
+            FocusPointList.ItemDisappearing += (s, r) => LoadEditIcons();
         }
 
         private void LoadEditIcons()

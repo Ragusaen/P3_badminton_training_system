@@ -585,9 +585,9 @@
           <Property Name="IsPrivate" Type="Boolean" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
           <Property Name="VideoURL" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="practicesessions" Relationship="Self.practicesession_ibfk_3" FromRole="focuspoint" ToRole="practicesession" />
+          <NavigationProperty Name="practicesessionsmain" Relationship="Self.practicesession_ibfk_3" FromRole="focuspoint" ToRole="practicesession" />
           <NavigationProperty Name="members" Relationship="Self.memberfocuspoint" FromRole="focuspoint" ToRole="member" />
-          <NavigationProperty Name="practicesessions1" Relationship="Self.practicesessionfocuspoint" FromRole="focuspoint" ToRole="practicesession" />
+          <NavigationProperty Name="practicesessionssub" Relationship="Self.practicesessionfocuspoint" FromRole="focuspoint" ToRole="practicesession" />
         </EntityType>
         <EntityType Name="member">
           <Key>
