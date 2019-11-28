@@ -9,10 +9,10 @@
     mc:Ignorable="d"
     x:Class="application.UI.ChooseTrainerPopupPage" >
 
-    <StackLayout Padding="24" Spacing="24" Margin="12">
+    <StackLayout Margin="36">
         <StackLayout BackgroundColor="White">
         <SearchBar Placeholder="Search Trainer" Text="{Binding SearchText}"/>
-        <ListView x:Name="TrainerList" ItemsSource="{Binding Trainers}" VerticalScrollBarVisibility="Default" ItemSelected="ListView_OnItemSelected" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding TrainerListHeight}">
+            <ListView x:Name="TrainerList" ItemsSource="{Binding Trainers}" BackgroundColor="#F0F0F0" VerticalScrollBarVisibility="Default" ItemSelected="ListView_OnItemSelected" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding TrainerListHeight}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
@@ -21,6 +21,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-    </StackLayout>
+        <Button x:Name="CancelButton" Text="CANCEL" TextColor="#BB0000" BackgroundColor="#FFEEEE" Clicked="Dismiss" CornerRadius="15" Margin="10"/>
+        </StackLayout>
     </StackLayout>
 </pages:PopupPage>

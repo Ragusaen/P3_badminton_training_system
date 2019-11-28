@@ -17,6 +17,7 @@ namespace application.UI
     public partial class PlaySessionPage : ContentPage
     {
         private PlaySessionViewModel _vm;
+        PlaySession PlaySession;
 
         public PlaySessionPage(PlaySession playSession)
         {
@@ -24,7 +25,7 @@ namespace application.UI
             _vm = new PlaySessionViewModel(playSession);
             BindingContext = _vm;
             _vm.Navigation = Navigation;
-
+            PlaySession = playSession;
             Time.Text = _vm.PlaySession.Start.ToString("hh:mm") + " - " + _vm.PlaySession.End.ToString("hh:mm");
             Date.Text = _vm.PlaySession.Start.ToString("dddd, d MMMM");
             Location.Text = _vm.PlaySession.Location;
@@ -43,16 +44,27 @@ namespace application.UI
 
             EditButton.Clicked += (s,a) => _vm.EditButtonClicked(this);
         }
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            _vm = new PlaySessionViewModel(PlaySession);
+            BindingContext = _vm;
+            _vm.Navigation = Navigation;
+        }
 
         private void SetPracticeVisibility()
         {
             Name.Text = _vm.PracticeSession.PracticeTeam.Name;
 
-            var MFPTapGest = new TapGestureRecognizer();
-            MFPTapGest.Tapped += (s, a) => GoToFocusPoint(_vm.PracticeSession.MainFocusPoint.Descriptor);
-            MainFocusPoint.GestureRecognizers.Add(MFPTapGest);
 
-            PracticeRelevant.IsVisible = true;
+            if (_vm.PracticeSession.MainFocusPoint != null)
+            {
+                var MFPTapGest = new TapGestureRecognizer();
+                MFPTapGest.Tapped += (s, a) => GoToFocusPoint(_vm.PracticeSession.MainFocusPoint.Descriptor);
+                MainFocusPoint.GestureRecognizers.Add(MFPTapGest);
+            }
+
+                PracticeRelevant.IsVisible = true;
 
             if (RequestCreator.LoggedInMember.MemberType.HasFlag(MemberType.Trainer))
             {
@@ -64,7 +76,7 @@ namespace application.UI
 
         private void GoToFocusPoint(FocusPointDescriptor fpd)
         {
-            PopupNavigation.Instance.PushAsync(new StringAndHeaderPopup(fpd));
+            PopupNavigation.Instance.PushAsync(new ViewFocusPointDetails(fpd));
         }
 
         private void ListView_OnItemSelected(object sender, SelectedItemChangedEventArgs e)

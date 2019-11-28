@@ -15,6 +15,7 @@ namespace application.UI
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ChoosePlayerPopupPage : PopupPage
     {
+        //Sets BindingContext ViewModel
         private ChoosePlayerPopupViewModel _vm;
         public ChoosePlayerPopupPage(List<Player> doNotShow)
         {
@@ -23,6 +24,13 @@ namespace application.UI
             BindingContext = _vm;
         }
 
+
+        async void Dismiss(object sender, EventArgs args)
+        {
+            await PopupNavigation.Instance.PopAsync();
+        }
+
+        //Clickes on Player and returns the Player in CallBackEvent
         public event EventHandler<Player> CallBackEvent;
         private void ListView_OnItemSelected(object sender, SelectedItemChangedEventArgs e)
         {

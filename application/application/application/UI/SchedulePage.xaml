@@ -11,7 +11,7 @@
     <NavigationPage.TitleView>
         <StackLayout Orientation="Horizontal" Spacing="10" x:Name="Navigationbar">
             <Label Text="Schedule" FontAttributes="Bold" FontSize="30" TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
-            <ImageButton Source="" x:Name="Plusicon" HeightRequest="25" VerticalOptions="CenterAndExpand" HorizontalOptions="End" Margin="0,0,15,0" Clicked="AddPlaysession_OnClicked" BackgroundColor="Red" IsVisible="{Binding IsTrainer}"/>
+            <ImageButton Source="" x:Name="Plusicon" HeightRequest="40" VerticalOptions="CenterAndExpand" HorizontalOptions="End" Padding="7" Margin="0,0,15,0" Clicked="AddPlaysession_OnClicked" BackgroundColor="Red" IsVisible="{Binding IsTrainer}"/>
         </StackLayout>
     </NavigationPage.TitleView>
 

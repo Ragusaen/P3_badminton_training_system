@@ -40,10 +40,20 @@ namespace application.ViewModel
 
         public PlaySessionViewModel(PlaySession playSession)
         {
-            PlaySession = playSession;
+            bool hasNotFeedbacked = true;
+            List<Feedback> feedbacks = RequestCreator.GetPlayerFeedback(RequestCreator.LoggedInMember);
+            foreach (Feedback fb in feedbacks) 
+            {
+                if (fb.PlaySession.Id == playSession.Id)
+                    hasNotFeedbacked = false;
+            }
 
-            if (PlaySession.Start < DateTime.Now && DateTime.Now < PlaySession.Start.AddDays(7))
+            PlaySession = playSession;
+            DateTime feedbackexdate = PlaySession.Start.AddDays(7);
+            if (DateTime.Compare(PlaySession.Start, DateTime.Now) <= 0 && DateTime.Compare(DateTime.Now, feedbackexdate) <= 0 && hasNotFeedbacked)
                 PracticeFeedbackIsVisible = true;
+            else
+                PracticeFeedbackIsVisible = false;
 
             if (PlaySession is PracticeSession practice)
             {

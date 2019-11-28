@@ -2,6 +2,7 @@
 using Common.Model;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -32,8 +33,6 @@ namespace application.UI
         public CreatePracticePage(PracticeSession ps)
         {
             Init(() => new CreatePracticeViewModel(ps));
-            if (ps.MainFocusPoint != null)
-                FocusPointList.SelectedItem = _vm.FocusPoints[0];
             SetExercises();
         }
 
@@ -56,28 +55,35 @@ namespace application.UI
                     resetAll = true;
                 }
 
-                for (int i = 0; i < FocusPointList.TemplatedItems.Count; i++)
-                {
-                    FontAttributes fa = FontAttributes.None;
-                    if (i == e.SelectedItemIndex && !resetAll)
-                    {
-                        fa = FontAttributes.Bold;
-                        _vm.Practice.MainFocusPoint = (FocusPointItem)e.SelectedItem;
-                    }
-
-                    ((Label)FocusPointList.TemplatedItems[i].FindByName("FocusPointName")).FontAttributes = fa;
-                }
+                SetFocusPointBoldness(e.SelectedItemIndex, (FocusPointItem)e.SelectedItem, resetAll);
 
                 FocusPointList.SelectedItem = null;
             };
 
             if (_vm.Practice.MainFocusPoint != null)
-                FocusPointList.SelectedItem = _vm.FocusPoints[0];
+                SetFocusPointBoldness(0, _vm.Practice.MainFocusPoint, false);
 
+
+            throw new Exception("Test exception");
 
             SaveIcon.Source = ImageSource.FromResource("application.Images.saveicon.png");
             BullsEyeIcon.Source = ImageSource.FromResource("application.Images.bullseyeicon.png");
             //DeleteIcon.Source = ImageSource.FromResource("application.Images.deleteicon.png");
+        }
+
+        private void SetFocusPointBoldness(int index, FocusPointItem fpi, bool resetAll)
+        {
+            for (int i = 0; i < FocusPointList.TemplatedItems.Count; i++)
+            {
+                FontAttributes fa = FontAttributes.None;
+                if (i == index && !resetAll)
+                {
+                    fa = FontAttributes.Bold;
+                    _vm.Practice.MainFocusPoint = fpi;
+                }
+
+                ((Label)FocusPointList.TemplatedItems[i].FindByName("FocusPointName")).FontAttributes = fa;
+            }
         }
 
         private void SetExercises()
@@ -112,8 +118,21 @@ namespace application.UI
                     Keyboard = Keyboard.Numeric, Placeholder = "Min", HorizontalOptions = LayoutOptions.Start,
                     HorizontalTextAlignment = TextAlignment.End
                 };
-                minutesEntry.BindingContext = _vm;
-                minutesEntry.Completed += (s, a) => e.Minutes = Int32.Parse(minutesEntry.Text);
+                minutesEntry.Completed += (s, a) =>
+                {
+                    if (Double.TryParse(minutesEntry.Text, out double d))
+                    {
+                        e.Minutes = (int) Math.Round(d);
+                        minutesEntry.Text = e.Minutes.ToString();
+                    }
+                    else
+                    {
+                        minutesEntry.Text = "";
+                    }
+
+                };
+                minutesEntry.Focused += (s, a) => minutesEntry.Text = "";
+                minutesEntry.Text = e.Minutes.ToString();
                 grid.Children.Add(minutesEntry, 0, 0); 
 
                 grid.Children.Add(new Label() { Text = e.ExerciseDescriptor.Name, HorizontalOptions = LayoutOptions.FillAndExpand, FontSize = 18 }, 1, 0);

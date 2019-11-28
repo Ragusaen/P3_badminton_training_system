@@ -19,7 +19,6 @@ namespace application.UI
         public SchedulePage()
         {
             InitializeComponent();
-
             Plusicon.Source = ImageSource.FromResource("application.Images.plusicon.jpg");
         }
 
@@ -41,23 +40,18 @@ namespace application.UI
 
         private async void DisplayAddPlaySessionActionSheet()
         {
-            string action = await Application.Current.MainPage.DisplayActionSheet("Choose what you want to add:", "Cancel", null, "Add New Practice", "Add New Match");
+            string action = await Application.Current.MainPage.DisplayActionSheet("Add Play Session to Schedule:", "Cancel", null, "New Practice Session", "New Team Match");
 
             Page page;
-            if (action == "Add New Practice")
+            if (action == "New Practice Session")
                 page = new CreatePracticePage();
-            else if (action == "Add New Match")
+            else if (action == "New Team Match")
                 page = new CreateMatchPage();
             else
                 return;
 
-            page.Disappearing += (s, a) =>
-            {
-                Navigation.InsertPageBefore(this, new SchedulePage());
-                Navigation.PopAsync();
-            };
+
             await Navigation.PushAsync(page);
-                await Navigation.PushAsync(new CreateMatchPage(_vm.SelectedDate));
         }
         protected override void OnAppearing()
         {

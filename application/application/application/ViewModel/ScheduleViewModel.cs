@@ -8,7 +8,9 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using application.Controller;
 using application.SystemInterface;
+using application.UI.Converter;
 using Xamarin.Forms;
 using Xamarin.Plugin.Calendar.Controls;
 using Xamarin.Plugin.Calendar.Models;
@@ -124,7 +126,8 @@ namespace application.ViewModel
                 }
                 else if (ps is TeamMatch tm)
                 {
-                    psEvent.Name = Enum.GetName(typeof(TeamMatch.Leagues), tm.League);
+                    string leagueString = Enum.GetName(typeof(TeamMatch.Leagues), (TeamMatch.Leagues) tm.League);
+                    psEvent.Name = StringExtension.SplitCamelCase(leagueString);
                     psEvent.Detail = tm.OpponentName;
                     psEvent.Color = Color.CornflowerBlue;
                 }

@@ -13,6 +13,7 @@ namespace application.ViewModel
     {
         public bool IsPrivateChecked { get; set; }
         public bool PrivateCheckBoxIsVisible { get; set; }
+        private bool isEdit = false;
         public FocusPointDescriptor FocusPoint { get; set; }
         public CreateFocusPointPopupViewModel(bool canCreatePrivateFocusPoint)
         {
@@ -37,21 +38,33 @@ namespace application.ViewModel
 
             FocusPoint = new FocusPointDescriptor {IsPrivate = IsPrivateChecked};
         }
+
+
+        public CreateFocusPointPopupViewModel(bool canCreatePrivateFocusPoint, FocusPointDescriptor fp) : this(canCreatePrivateFocusPoint)
+        {
+            FocusPoint = new FocusPointDescriptor
+            {
+                Name = fp.Name,
+                Id = fp.Id,
+                Description = fp.Description,
+                VideoURL = fp.VideoURL,
+            };
+
+            isEdit = true;
+        }
         
         private RelayCommand _createFocusPointCommand;
 
-        public RelayCommand CreateFocusPointCommand
-        {
-            get
-            {
-                return _createFocusPointCommand ?? (_createFocusPointCommand = new RelayCommand(param => CreateFocusPointClick(param)));
-            }
-        }
+        public RelayCommand CreateFocusPointCommand => _createFocusPointCommand ?? (_createFocusPointCommand = new RelayCommand(CreateFocusPointClick));
+
         private void CreateFocusPointClick(object param)
         {
             if (FocusPoint.Name != null)
             {
-                FocusPoint = RequestCreator.CreateFocusPointDescriptor(FocusPoint);
+                if (isEdit)
+                    RequestCreator.EditFocusPoint(FocusPoint);
+                else
+                    FocusPoint = RequestCreator.CreateFocusPointDescriptor(FocusPoint);
                 CallBackEvent?.Invoke(this, FocusPoint);
                 PopupNavigation.Instance.PopAsync();
             }

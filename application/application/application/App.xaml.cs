@@ -6,6 +6,7 @@ using application.SystemInterface.Network;
 using application.SystemInterface;
 using System.Diagnostics;
 using application.ViewModel;
+using SkiaSharp;
 
 namespace application
 {
@@ -19,6 +20,7 @@ namespace application
 
         protected override void OnStart()
         {
+
             try
             {
                 RequestCreator.Connect();
@@ -27,7 +29,9 @@ namespace application
             {
                 MainPage = new ConnectionFailedPage();
             }
+
         }
+    
 
         protected override void OnSleep()
         {
