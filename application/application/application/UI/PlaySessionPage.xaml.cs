@@ -17,6 +17,7 @@ namespace application.UI
     public partial class PlaySessionPage : ContentPage
     {
         private PlaySessionViewModel _vm;
+        PlaySession PlaySession;
 
         public PlaySessionPage(PlaySession playSession)
         {
@@ -24,7 +25,7 @@ namespace application.UI
             _vm = new PlaySessionViewModel(playSession);
             BindingContext = _vm;
             _vm.Navigation = Navigation;
-
+            PlaySession = playSession;
             Time.Text = _vm.PlaySession.Start.ToString("hh:mm") + " - " + _vm.PlaySession.End.ToString("hh:mm");
             Date.Text = _vm.PlaySession.Start.ToString("dddd, d MMMM");
             Location.Text = _vm.PlaySession.Location;
@@ -42,6 +43,13 @@ namespace application.UI
             EditButton.Source = ImageSource.FromResource("application.Images.editicon.png");
 
             EditButton.Clicked += (s,a) => _vm.EditButtonClicked(this);
+        }
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            _vm = new PlaySessionViewModel(PlaySession);
+            BindingContext = _vm;
+            _vm.Navigation = Navigation;
         }
 
         private void SetPracticeVisibility()
