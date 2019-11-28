@@ -232,14 +232,6 @@ namespace application.ViewModel
             {
                 await ChangeSex();
             }
-            else
-            {
-                return;
-            }
-
-            RequestCreator.LoggedInMember = RequestCreator.GetLoggedInMember(); // reload logged in member, because changes
-            Navigation.InsertPageBefore(new ProfilePage(Member.Id), Navigation.NavigationStack.Last());
-            await Navigation.PopAsync();
         }
 
         private async Task ChangeSex()
@@ -261,6 +253,9 @@ namespace application.ViewModel
             }
 
             RequestCreator.SetMemberSex(newSex, Player);
+            RequestCreator.LoggedInMember = RequestCreator.GetLoggedInMember(); // reload logged in member, because changes
+            Navigation.InsertPageBefore(new ProfilePage(Member.Id), Navigation.NavigationStack.Last());
+            await Navigation.PopAsync();
         }
 
         private async Task ChangeTrainerPrivileges()
@@ -283,6 +278,9 @@ namespace application.ViewModel
             }
 
             RequestCreator.ChangeTrainerPrivileges(Member);
+            RequestCreator.LoggedInMember = RequestCreator.GetLoggedInMember(); // reload logged in member, because changes
+            Navigation.InsertPageBefore(new ProfilePage(Member.Id), Navigation.NavigationStack.Last());
+            await Navigation.PopAsync();
         }
 
         private RelayCommand _viewFeedbackCommand;

@@ -4,13 +4,23 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
+using System.Xml;
+using application.UI;
 using Common;
 using Common.Model;
 using Common.Serialization;
+using Xamarin.Forms;
 
 
 namespace application.SystemInterface
 {
+    public class RequestFailedException : Exception {
+        public RequestFailedException(string msg) : base(msg)
+        {
+
+        }
+    }
+
     static class RequestCreator
     {
         private static ServerConnection _connection = new ServerConnection();
@@ -25,7 +35,8 @@ namespace application.SystemInterface
             return _connection.Connect();
         }
 
-        private static TResponse SimpleRequest<TRequest, TResponse>(RequestType requestType, TRequest request) where TRequest : Request where TResponse : Response
+        private static TResponse SimpleRequest<TRequest, TResponse>(RequestType requestType, TRequest request)
+            where TRequest : Request where TResponse : Response
         {
             //Add access token
             if (request is PermissionRequest permissionRequest)
@@ -33,18 +44,25 @@ namespace application.SystemInterface
 
             // Serialize request
             Serializer serializer = new Serializer();
+
             byte[] requestBytes = serializer.Serialize(request);
 
             // Add request type
             byte[] messageBytes = new byte[requestBytes.Length + 1];
-            messageBytes[0] = (byte)requestType;
+            messageBytes[0] = (byte) requestType;
             Array.Copy(requestBytes, 0, messageBytes, 1, requestBytes.Length);
+
 
             // Send request and get response
             byte[] responseBytes = _connection.SendRequest(messageBytes);
 
             // Deserialize response
             TResponse response = serializer.Deserialize<TResponse>(responseBytes);
+
+            if (response.Error != null)
+            {
+                throw new RequestFailedException(response.Error);
+            }
 
             return response;
         }

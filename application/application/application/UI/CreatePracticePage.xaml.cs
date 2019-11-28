@@ -64,6 +64,8 @@ namespace application.UI
                 SetFocusPointBoldness(0, _vm.Practice.MainFocusPoint, false);
 
 
+            throw new Exception("Test exception");
+
             SaveIcon.Source = ImageSource.FromResource("application.Images.saveicon.png");
             BullsEyeIcon.Source = ImageSource.FromResource("application.Images.bullseyeicon.png");
             //DeleteIcon.Source = ImageSource.FromResource("application.Images.deleteicon.png");
