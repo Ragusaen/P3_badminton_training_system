@@ -15,11 +15,13 @@ namespace application.UI
     {
         private CreateMatchViewModel _vm;
 
+        //Future works
         public CreateMatchPage() : this(DateTime.Today)
         {
 
         }
 
+        //Sets time to the selected date if its after current time
         public CreateMatchPage(DateTime time)
         {
             if (time < DateTime.Today)
@@ -28,6 +30,7 @@ namespace application.UI
             Init(()=> new CreateMatchViewModel(time));
         }
 
+        //Edit mode for team match 
         public CreateMatchPage(TeamMatch teamMatch)
         {
             Init(() => new CreateMatchViewModel(teamMatch));
@@ -36,6 +39,7 @@ namespace application.UI
             CaptainPicker.SelectedItem = _vm.Members.FirstOrDefault(m => m.Id == teamMatch.Captain.Id);
         }
 
+        //Sets BindingContext ViewModel and a image
         private void Init(Func<CreateMatchViewModel> ctor)
         {
 

@@ -19,10 +19,13 @@ namespace application.UI
         public MenuPage()
         {
             InitializeComponent();
+
+            //Sets BindingContext ViewModel
             MenuViewModel vm = new MenuViewModel();
             BindingContext = vm;
             vm.Navigation = Navigation;
 
+            //Putting items in the BurgerMenu
             MenuList = new List<MasterPageItem>();
 
             MenuList.Add(new MasterPageItem() { Title = "Schedule", TargetType = typeof(SchedulePage) }); //Set icons
@@ -52,6 +55,7 @@ namespace application.UI
             }
         }
 
+        //Logs out of app 
         private void Logout_Clicked(object sender, EventArgs e)
         {
             Application.Current.MainPage = new NavigationPage(new LoginPage());

@@ -16,7 +16,7 @@ namespace application.UI
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class FocusPointPopupPage : PopupPage
     {
-
+        //Sets BindingContext ViewModel
         public FocusPointPopupPage(List<FocusPointItem> focusPointItems, Player player)
         {
             InitializeComponent();
@@ -24,11 +24,13 @@ namespace application.UI
             BindingContext = vm;
         }
 
+        //Cancel
         async void Dismiss(object sender, EventArgs args)
         {
             await PopupNavigation.Instance.PopAsync();
         }
 
+        //Calls method in ViewModel
         public void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
             ((FocusPointPopupViewModel)BindingContext).FocusPointSelected(e.SelectedItem as FocusPointDescriptor);

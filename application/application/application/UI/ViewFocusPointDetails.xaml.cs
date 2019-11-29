@@ -17,6 +17,7 @@ namespace application.UI
     {
         public ViewFocusPointDetails(FocusPointDescriptor focusPoint)
         {
+            //Sets BindingContext ViewModel
             InitializeComponent();
             var vm = new ViewModel.ViewFocusPointDetailsViewModel(focusPoint);
             BindingContext = vm;

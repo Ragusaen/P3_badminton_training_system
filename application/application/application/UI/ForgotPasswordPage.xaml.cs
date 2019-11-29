@@ -13,6 +13,7 @@ namespace application.UI
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ForgotPasswordPage : ContentPage
     {
+        //Sets BindingContext ViewModel
         public ForgotPasswordPage()
         {
             InitializeComponent();
