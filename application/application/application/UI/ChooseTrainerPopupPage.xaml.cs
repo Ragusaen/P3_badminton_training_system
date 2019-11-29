@@ -23,7 +23,8 @@ namespace application.UI
             _vm = new ChooseTrainerPopupViewModel();
             BindingContext = _vm;
         }
-
+        
+        //Cancel
         async void Dismiss(object sender, EventArgs args)
         {
             await PopupNavigation.Instance.PopAsync();

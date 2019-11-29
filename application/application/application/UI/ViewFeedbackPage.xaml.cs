@@ -16,8 +16,7 @@ namespace application.UI
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ViewFeedbackPage : ContentPage
     {
-
-
+        //Sets BindingContext ViewModel
         public ViewFeedbackPage(Player player)
         {
             InitializeComponent();

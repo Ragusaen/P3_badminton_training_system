@@ -44,9 +44,9 @@ namespace application.UI
 
             Page page;
             if (action == "New Practice Session")
-                page = new CreatePracticePage();
+                page = new CreatePracticePage(_vm.SelectedDate);
             else if (action == "New Team Match")
-                page = new CreateMatchPage();
+                page = new CreateMatchPage(_vm.SelectedDate);
             else
                 return;
 

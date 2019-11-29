@@ -24,17 +24,18 @@ namespace application.UI
             vm = new CreateFocusPointPopupViewModel(canCreatePrivateFocusPoint);
             BindingContext = vm;
         }
-
-        async void Dismiss(object sender, EventArgs args)
-        {
-            await PopupNavigation.Instance.PopAsync();
-        }
-
+        //Edit FocusPoint constructor
         public CreateFocusPointPopupPage(bool canCreatePrivateFocusPoint, FocusPointDescriptor fp)
         {
             InitializeComponent();
             vm = new CreateFocusPointPopupViewModel(canCreatePrivateFocusPoint, fp);
             BindingContext = vm;
+        }
+
+        //Cancel
+        async void Dismiss(object sender, EventArgs args)
+        {
+            await PopupNavigation.Instance.PopAsync();
         }
     }
 }
