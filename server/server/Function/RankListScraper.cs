@@ -60,7 +60,7 @@ namespace Server.Function
             for (int i = 0; i < RankingsCount; i++)
             {
                 _log.Debug("Scraping category: {category}", Categories[i]);
-
+                
                 // Find the category and click on it
                 string nextCategoryXPath = $"/html/body/form/div[4]/div[1]/div[5]/div/div[{i + 1}]/a";
                 browser.FindElement(By.XPath(nextCategoryXPath)).Click();
@@ -72,7 +72,7 @@ namespace Server.Function
                 // Parse the data and assign it to the players
                 DistributeRankings(players, rawRanking, 1 << i);
 
-                // Try to parse second page, throws exception if page doesn't exist
+                // Try to scrape second page, throws exception if page doesn't exist
                 try
                 {
                     var nextPage = browser.FindElement(By.XPath("/html/body/form/div[4]/div[1]/div[5]/table/tbody/tr[102]/td/a"));
