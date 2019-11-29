@@ -69,9 +69,9 @@
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
+                    <Button Text="Add new FocusPoint" Command="{Binding AddNewFocusPointCommand}"/>
                     </StackLayout>
                 </Frame>
-            <Button Text="Add new FocusPoint" Command="{Binding AddNewFocusPointCommand}"/>
 
 
             <Label Text="Practice Plan" TextColor="White" FontSize="Title" FontAttributes="Bold" HorizontalTextAlignment="Center" BackgroundColor="Red" HorizontalOptions="FillAndExpand" Margin="0,10,0,0"/>

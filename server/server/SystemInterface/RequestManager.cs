@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using Common;
-using Common.Serialization;
-using Server.Controller;
-using Server.DAL;
 using Server.Function.Handlers;
-using Server.SystemInterface.Requests.Handlers;
 
-namespace Server.SystemInterface.Requests
+namespace Server.SystemInterface
 {
     class InvalidRequestException : Exception
     {

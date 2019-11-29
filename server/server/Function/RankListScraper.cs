@@ -1,16 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Text;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium;
 using System.Threading;
 using Common.Model;
 using NLog;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
 using Server.DAL;
 
-namespace Server.Controller
+namespace Server.Function
 {
     class RankListScraper
     {
