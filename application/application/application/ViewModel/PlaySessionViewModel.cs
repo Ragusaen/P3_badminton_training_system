@@ -36,7 +36,13 @@ namespace application.ViewModel
             set => SetProperty(ref _focusPointListHeight, value);
         }
 
+        private bool _reservesVisible;
 
+        public bool ReservesVisible
+        {
+            get => _reservesVisible;
+            set => SetProperty(ref _reservesVisible, value);
+        }
 
         public PlaySessionViewModel(PlaySession playSession)
         {
@@ -63,6 +69,8 @@ namespace application.ViewModel
             else if (PlaySession is TeamMatch match)
             {
                 TeamMatch = match;
+                ReservesVisible = (match.League == TeamMatch.Leagues.BadmintonLeague ||
+                                   match.League == TeamMatch.Leagues.Division1);
                 SetLineupTemplate(match.League);
                 SetPositionsFromLineup(match.Lineup);
             }

@@ -14,9 +14,8 @@ namespace Common.Model
             Division2,
             Division3,
             DenmarksSeries,
-            RegionalSeriesNordjylland,
-            Series1Nordjylland,
-            Series2Nordjylland
+            RegionalSeriesWest,
+            Series1West,
         }
 
         public int Season { get; set; }

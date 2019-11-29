@@ -7,7 +7,7 @@ using Common.Model;
 
 namespace Server.Function.Rules
 {
-    class EmptyPositionRule : IRule
+    class BelowEmptyPositionRule : IRule
     {
         public int Priority { get; set; } = 4;
         private List<RuleBreak> _ruleBreaks = new List<RuleBreak>();

@@ -23,18 +23,17 @@ namespace application.UI
         public ProfilePage(int profileId)
         {
             InitializeComponent();
-
             SetupCommentEvents();
 
             _vm = new ProfilePageViewModel(profileId);
             BindingContext = _vm;
             _vm.Navigation = Navigation;
 
+            if (_vm.Player != null)
+                FeedbackSection.IsVisible = _vm.Player.Feedbacks.Count > 0;
+
             ShownOnlyRelevantInfo();
-
             Settingsicon.Source = ImageSource.FromResource("application.Images.settingsicon.jpg");
-
-
             if (_vm.Player != null && _vm.Player.Sex == Sex.Unknown)
                 NoSexLabel.IsVisible = true;
         }
