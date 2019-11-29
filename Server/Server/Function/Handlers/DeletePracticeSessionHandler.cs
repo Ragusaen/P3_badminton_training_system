@@ -27,7 +27,7 @@ namespace Server.Function.Handlers
                 var captain = prac.trainer;
                 var team = prac.practiceteam;
                 var ps = db.playsessions.Find(prac.PlaySessionID);
-                captain.practicesessions.Remove(prac);
+                captain?.practicesessions.Remove(prac);
                 team.practicesessions.Remove(prac);
 
                 db.practicesessionexercises.RemoveRange(prac.practicesessionexercises);

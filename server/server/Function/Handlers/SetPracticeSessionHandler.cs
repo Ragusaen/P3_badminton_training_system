@@ -32,7 +32,7 @@ namespace Server.SystemInterface.Requests.Handlers
             var dbPS = new practicesession
             {
                 playsession = playsession,
-                trainer= db.members.Find(e.Trainer.Member.Id),
+                trainer = e.Trainer == null ? null : db.members.Find(e.Trainer.Member.Id),
                 practiceteam = db.practiceteams.Find(e.PracticeTeam.Id),
                 practicesessionexercises = e.Exercises.Select(p => new practicesessionexercise { exercise = db.exercises.Find(p.ExerciseDescriptor.Id), Minutes = p.Minutes, ExerciseIndex = p.Index }).ToList(),
                 mainfocuspoint = e.MainFocusPoint == null ? null : db.focuspoints.Find(e.MainFocusPoint.Descriptor.Id),

@@ -17,7 +17,6 @@
         <cvtr:IntLeagueEnumConverter x:Key="IntLeagueEnumConverter"/>
         <cvtr:LineupPositionToStringConverter x:Key="LineupPositionConverter"/>
         <cvtr:IsPositionDoubleConverter x:Key="IsPositionDoubleConverter"/>
-        <cvtr:IsDoubleRowSpanConverter x:Key="IsDoubleRowSpanConverter"/>
         <cvtr:ErrorMessageColorConverter x:Key="ErrorMessageColorConverter"/>
         <cvtr:PlayerNameOrDefaultConverter x:Key="PlayerNameOrDefaultConverter"/>
     </ContentPage.Resources>
@@ -127,7 +126,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Button Text="Verify Lineup!" Command="{Binding VerifyLineupCommand}"/>            
+            <Button Text="Verify Lineup!" Command="{Binding VerifyLineupCommand}" BackgroundColor="{Binding VerifyButtonColor}"/>            
         </StackLayout>
     </ScrollView>
 </ContentPage>

@@ -36,7 +36,8 @@ namespace application.UI
             Init(() => new CreateMatchViewModel(teamMatch));
 
             _vm.SetUILineup(teamMatch.Lineup);
-            CaptainPicker.SelectedItem = _vm.Members.FirstOrDefault(m => m.Id == teamMatch.Captain.Id);
+            if(teamMatch.Captain != null)
+                CaptainPicker.SelectedItem = _vm.Members.FirstOrDefault(m => m.Id == teamMatch.Captain.Id);
         }
 
         //Sets BindingContext ViewModel and a image

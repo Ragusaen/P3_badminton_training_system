@@ -22,9 +22,9 @@ namespace Server.DAL
         }
     
         public int PlaySessionID { get; set; }
-        public int TrainerID { get; set; }
+        public Nullable<int> TrainerID { get; set; }
         public Nullable<int> MainFocusPointID { get; set; }
-        public Nullable<int> TeamID { get; set; }
+        public int TeamID { get; set; }
     
         public virtual focuspoint mainfocuspoint { get; set; }
         public virtual member trainer { get; set; }

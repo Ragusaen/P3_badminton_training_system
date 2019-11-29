@@ -10,7 +10,7 @@
     <NavigationPage.TitleView>
         <StackLayout Orientation="Horizontal" Spacing="10">
             <Label Text="Practice Session" FontAttributes="Bold" FontSize="30" TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
-            <ImageButton Source="" x:Name="SaveIcon" Command="{Binding SaveCreatedPracticeClickCommand}" HeightRequest="35" Padding="5" VerticalOptions="CenterAndExpand" HorizontalOptions="End" Margin="0,0,15,0" BackgroundColor="Red"/>
+            <ImageButton Source="" Opacity="{Binding SaveOpacity}" x:Name="SaveIcon" Command="{Binding SaveCreatedPracticeClickCommand}" HeightRequest="35" Padding="5" VerticalOptions="CenterAndExpand" HorizontalOptions="End" Margin="0,0,15,0" BackgroundColor="Red"/>
         </StackLayout>
     </NavigationPage.TitleView>
 
