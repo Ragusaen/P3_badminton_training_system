@@ -1,6 +1,9 @@
 ﻿
 namespace Common
 {
+    /// <summary>
+    /// A enum of all types of request
+    /// </summary>
     public enum RequestType {
         Login,
         CreateAccount,

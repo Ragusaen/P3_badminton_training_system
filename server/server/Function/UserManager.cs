@@ -99,7 +99,9 @@ namespace Server.Controller
             return true;
         }
 
-
+        /// <summary>
+        /// Gets the database member that is associated with an access token
+        /// </summary>
         public member GetMemberFromToken(byte[] token)
         {
             var db = new DatabaseEntities();
@@ -110,6 +112,10 @@ namespace Server.Controller
             return r;
         }
 
+        /// <summary>
+        /// Generates the hashed password and a salt to go with it. This method should be used when setting a new password.
+        /// The hashed password is computed by hash( password + salt ), so the salt should be saved for password verification.
+        /// </summary>
         private (byte[] password, byte[] salt) GenerateHashedPasswordAndSalt(string password)
         {
             // Generate a new salt
@@ -124,6 +130,13 @@ namespace Server.Controller
             return (passwordHash, salt);
         }
 
+        /// <summary>
+        /// Verifies that the given password matches the one that was used to create the password hash.
+        /// </summary>
+        /// <param name="inputPw">The raw password to test against</param>
+        /// <param name="salt"> The salt to append to the raw password</param>
+        /// <param name="hashedPw"> The stored hashed password</param>
+        /// <returns>true, if password is the same as the one originally used for the stored hashed password; otherwise, false</returns>
         private bool VerifyPassword(string inputPw, byte[] salt, byte[] hashedPw)
         {
             var pbkdf2 = new Rfc2898DeriveBytes(inputPw, salt, Pbkdf2Iterations);

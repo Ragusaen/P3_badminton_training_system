@@ -15,6 +15,7 @@ namespace Server.SystemInterface.Requests.Handlers
         protected override AddPlayerFocusPointResponse InnerHandle(AddPlayerFocusPointRequest request,
             member requester)
         {
+            // Only allow request if it is a trainer or the player itself
             if (!(((Common.Model.MemberType) requester.MemberType).HasFlag(MemberType.Trainer) ||
                   requester.ID == request.Player.Member.Id))
             {
@@ -28,7 +29,7 @@ namespace Server.SystemInterface.Requests.Handlers
             var dbPlayer = db.members.Find(request.Player.Member.Id);
             db.SaveChanges();
 
-            if (dbFp == null) // if focus point is completely new
+            if (dbFp == null) // if focus point is completely new create a new one
             {
                 dbFp = new focuspoint
                 {
@@ -42,7 +43,7 @@ namespace Server.SystemInterface.Requests.Handlers
                 _log.Debug($"New FocusPointDescriptor: {dbFp.Name}: {dbFp.Description}");
                 db.SaveChanges();
             }
-            else
+            else // otherwise add the existing one
             {
                 dbPlayer.focuspoints.Add(dbFp);
             }
