@@ -1,13 +1,9 @@
-﻿using Common.Model;
+﻿using System.Linq;
+using Common.Model;
 using Common.Serialization;
 using Server.DAL;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace Server.SystemInterface.Requests.Handlers
+namespace Server.Function.Handlers
 {
     class GetAllTrainersHandler : MiddleRequestHandler<GetAllTrainersRequest, GetAllTrainersResponse>
     {

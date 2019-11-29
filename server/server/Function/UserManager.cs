@@ -1,20 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Security.Cryptography;
-using System.Data;
-using System.Data.Entity;
 using System.Diagnostics;
-using Common.Model;
-using Microsoft.Extensions.Logging;
+using System.Linq;
+using System.Security.Cryptography;
 using NLog;
-using NLog.LayoutRenderers;
-using Remotion.Linq.Clauses;
 using Server.DAL;
 
-namespace Server.Controller
+namespace Server.Function
 {
     class UserManager
     {

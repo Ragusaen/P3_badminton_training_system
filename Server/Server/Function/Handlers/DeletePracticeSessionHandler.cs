@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Common.Model;
 using Common.Serialization;
 using Server.DAL;
-using Server.SystemInterface.Requests.Handlers;
 
 namespace Server.Function.Handlers
 {

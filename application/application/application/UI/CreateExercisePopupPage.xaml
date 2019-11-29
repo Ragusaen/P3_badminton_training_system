@@ -13,8 +13,8 @@
         <StackLayout BackgroundColor="White">
         <Frame CornerRadius="5" HasShadow="True" Margin="5,10,5,10">
             <StackLayout>
-            <Entry Grid.Row="0" Grid.Column="1" Text="{Binding Exercise.Name}" Placeholder="Exercise Theme" HorizontalOptions="Fill"/>
-                <Editor Placeholder="Descibe exercises here..." Text="{Binding Exercise.Description}" FontSize="16" AutoSize="TextChanges" VerticalOptions="Fill"/>
+                <Entry Grid.Row="0" Grid.Column="1" Text="{Binding Exercise.Name}" Keyboard="Chat" Placeholder="Exercise Theme" HorizontalOptions="Fill"/>
+                <Editor Placeholder="Describe exercises here..." Keyboard="Chat" Text="{Binding Exercise.Description}" FontSize="16" AutoSize="TextChanges" VerticalOptions="Fill"/>
             </StackLayout>
         </Frame>
         <Button Text="Done" Command="{Binding CreateNewExerciseCommand}"/>
