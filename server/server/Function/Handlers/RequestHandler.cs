@@ -1,20 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.InteropServices;
-using System.Security.Cryptography.X509Certificates;
 using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 using Common.Model;
 using Common.Serialization;
 using NLog;
-using Server.Controller;
 using Server.DAL;
 
-namespace Server.SystemInterface.Requests.Handlers
+namespace Server.Function.Handlers
 {
     abstract class RequestHandler
     {

@@ -7,7 +7,6 @@ using System.Security.Authentication;
 using System.Security.Cryptography.X509Certificates;
 using System.IO;
 using System.Security;
-using Server.Controller;
 using System.Threading;
 using System.Collections.Generic;
 using NLog;

@@ -1,14 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.ServiceModel.Dispatcher;
-using System.Text;
-using System.Threading.Tasks;
 using Common.Model;
 using Common.Serialization;
 using Server.DAL;
 
-namespace Server.SystemInterface.Requests.Handlers
+namespace Server.Function.Handlers
 {
     class GetScheduleHandler : MiddleRequestHandler<GetScheduleRequest, GetScheduleResponse>
     {

@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Common.Model;
+﻿using Common.Model;
 using Common.Serialization;
 using Server.DAL;
 
-namespace Server.SystemInterface.Requests.Handlers
+namespace Server.Function.Handlers
 {
     class SetCommentHandler : MiddleRequestHandler<SetCommentRequest, SetCommentResponse>
     {

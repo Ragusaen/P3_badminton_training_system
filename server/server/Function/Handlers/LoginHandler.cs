@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Common.Serialization;
-using Server.Controller;
+﻿using Common.Serialization;
 using Server.DAL;
 
-namespace Server.SystemInterface.Requests.Handlers
+namespace Server.Function.Handlers
 {
     class LoginHandler : MiddleRequestHandler<LoginRequest, LoginResponse>
     {
