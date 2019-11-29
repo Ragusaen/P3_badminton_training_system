@@ -18,7 +18,7 @@ namespace application.UI
     {
         CreatePracticeViewModel _vm;
 
-        //Future works
+        //Future works, constructor uses date from today
         public CreatePracticePage() : this(DateTime.Today)
         {
 
@@ -118,13 +118,14 @@ namespace application.UI
                 {
                     RowDefinitions = new RowDefinitionCollection()
                     {
-                        new RowDefinition() {Height = 40},
-                        new RowDefinition() {Height = GridLength.Auto}
+                        new RowDefinition() {Height = 50},
+                        new RowDefinition() {Height = GridLength.Auto},
                     },
                     ColumnDefinitions = new ColumnDefinitionCollection()
                     {
                         new ColumnDefinition {Width = 40},
-                        new ColumnDefinition {Width = GridLength.Star}
+                        new ColumnDefinition {Width = GridLength.Star},
+                        new ColumnDefinition {Width = 40}
                     }
                 };
 
@@ -147,12 +148,73 @@ namespace application.UI
                     }
 
                 };
-
+                minutesEntry.Unfocused += (s,a) => minutesEntry.SendCompleted();
                 minutesEntry.Focused += (s, a) => minutesEntry.Text = "";
+
+                //Makes the move exercise up button
+                Button upBtn = new Button
+                {
+                    Text = "⬆️",
+                    BackgroundColor = Color.White,
+                    WidthRequest = 50,
+                    VerticalOptions = LayoutOptions.End,
+                };
+
+                //Makes the click even to exercise up
+                upBtn.Clicked += (s, r) =>
+                {
+                    int indexOld = _vm.PlanElement.IndexOf(e);
+                    _vm.PlanElement.Move(indexOld, indexOld - 1);
+                    SetExercises();
+                };
+
+                //Makes the move exercise up button
+                Button downBtn = new Button
+                {
+                    Text = "⬇",
+                    BackgroundColor = Color.White,
+                    WidthRequest = 50,
+                    VerticalOptions = LayoutOptions.End,
+                };
+
+                //Makes the click even to exercise up
+                downBtn.Clicked += (s, r) =>
+                {
+                    int indexOld = _vm.PlanElement.IndexOf(e);
+                    _vm.PlanElement.Move(indexOld, indexOld + 1);
+                    SetExercises();
+                };
+
+                //Makes the delete button
+                Button deleteBtn = new Button
+                {
+                    Text = "❌",
+                    BackgroundColor = Color.White,
+                    WidthRequest = 50,
+                    VerticalOptions = LayoutOptions.End,
+                };
+
+                //Makes the click event for deleting exercise
+                deleteBtn.Clicked += (s, r) =>
+                {
+                    _vm.PlanElement.Remove(e); 
+                    SetExercises();
+                };
+
+                //Makes stacklayout for up and down buttons
+                StackLayout upAndDownStack = new StackLayout();
+                if (e != _vm.PlanElement.FirstOrDefault())
+                    upAndDownStack.Children.Add(upBtn);
+                if (e != _vm.PlanElement.LastOrDefault())
+                    upAndDownStack.Children.Add(downBtn);
+
+                //Add buttons to grid
+                grid.Children.Add(deleteBtn, 2, 0);
+                grid.Children.Add(upAndDownStack, 2, 1);
 
                 //Add Entry To grid
                 minutesEntry.Text = e.Minutes.ToString();
-                grid.Children.Add(minutesEntry, 0, 0); 
+                grid.Children.Add(minutesEntry, 0, 0);
 
                 //Add Labels Exercise name and Exercise Description
                 grid.Children.Add(new Label() { Text = e.ExerciseDescriptor.Name, HorizontalOptions = LayoutOptions.FillAndExpand, FontSize = 18 }, 1, 0);
@@ -167,6 +229,7 @@ namespace application.UI
                 ExerciseStack.Children.Add(frame);
             }
         }
+
         //Adds Exercise to list and update UI
         private void AddNewElementButton_OnClicked(object sender, EventArgs e)
         {

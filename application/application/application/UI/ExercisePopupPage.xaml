@@ -11,7 +11,7 @@
 
     <StackLayout Margin="36">
         <StackLayout BackgroundColor="White">
-        <SearchBar Placeholder="Enter your focus point" Text="{Binding SearchText}"/>
+        <SearchBar Placeholder="Enter Your Exercise" Text="{Binding SearchText}"/>
             <ListView VerticalScrollBarVisibility="Always" BackgroundColor="#F0F0F0" ItemSelected="ListView_ItemSelected" ItemsSource="{Binding Exercises}" SeparatorVisibility="None">
             <ListView.ItemTemplate>
                 <DataTemplate>
