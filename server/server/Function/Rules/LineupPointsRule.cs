@@ -6,7 +6,7 @@ namespace Server.Function.Rules
 {
     class LineupPointsRule : IRule
     {
-        public int Priority { get; set; } = 10;
+        public int Priority { get; set; } = 12;
         private int _maxSingleDiff;
         private int _maxDoubleDiff;
         private List<PlayerRanking.AgeGroup> _ignoreAgeGroups;

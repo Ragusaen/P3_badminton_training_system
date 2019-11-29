@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Security.Cryptography.X509Certificates;
 
 namespace Common.Model
 {
@@ -27,13 +26,13 @@ namespace Common.Model
         public static Dictionary<TeamMatch.Leagues, Dictionary<PositionType, int>> LeaguePositions =
             new Dictionary<TeamMatch.Leagues, Dictionary<PositionType, int>>()
             {
-                { TeamMatch.Leagues.BadmintonLeague, new Dictionary<PositionType, int>() {{PositionType.MensDouble, 2}, {PositionType.MensSingle, 2}, {PositionType.WomensSingle, 2}, {PositionType.WomensDouble, 1}, {PositionType.MixDouble, 2}} },
-                { TeamMatch.Leagues.Division1, new Dictionary<PositionType, int>() {{PositionType.MensDouble, 2}, {PositionType.MensSingle, 2}, {PositionType.WomensSingle, 2}, {PositionType.WomensDouble, 1}, {PositionType.MixDouble, 2}} },
-                { TeamMatch.Leagues.Division2, new Dictionary<PositionType, int>() {{PositionType.MensDouble, 3}, {PositionType.MensSingle, 4}, {PositionType.WomensSingle, 2}, {PositionType.WomensDouble, 2}, {PositionType.MixDouble, 2}} },
-                { TeamMatch.Leagues.Division3, new Dictionary<PositionType, int>() {{PositionType.MensDouble, 3}, {PositionType.MensSingle, 4}, {PositionType.WomensSingle, 2}, {PositionType.WomensDouble, 2}, {PositionType.MixDouble, 2}} },
-                { TeamMatch.Leagues.DenmarksSeries, new Dictionary<PositionType, int>() {{PositionType.MensDouble, 3}, {PositionType.MensSingle, 4}, {PositionType.WomensSingle, 2}, {PositionType.WomensDouble, 2}, {PositionType.MixDouble, 2}} },
-                { TeamMatch.Leagues.RegionalSeriesWest, new Dictionary<PositionType, int>() {{PositionType.MensDouble, 3}, {PositionType.MensSingle, 4}, {PositionType.WomensSingle, 2}, {PositionType.WomensDouble, 2}, {PositionType.MixDouble, 2}} },
-                { TeamMatch.Leagues.Series1West, new Dictionary<PositionType, int>() {{PositionType.MensDouble, 2}, {PositionType.MensSingle, 4}, {PositionType.WomensSingle, 2}, {PositionType.WomensDouble, 1}, {PositionType.MixDouble, 2}} },
+                { TeamMatch.Leagues.BadmintonLeague, new Dictionary<PositionType, int>() {{PositionType.MixDouble, 2}, {PositionType.WomensSingle, 2}, {PositionType.MensSingle, 2}, {PositionType.WomensDouble, 1}, {PositionType.MensDouble, 2}} },
+                { TeamMatch.Leagues.Division1, new Dictionary<PositionType, int>() {{PositionType.MixDouble, 2}, {PositionType.WomensSingle, 2}, {PositionType.MensSingle, 2}, {PositionType.WomensDouble, 1}, {PositionType.MensDouble, 2}} },
+                { TeamMatch.Leagues.Division2, new Dictionary<PositionType, int>() {{PositionType.MixDouble, 2}, {PositionType.WomensSingle, 2}, {PositionType.MensSingle, 4}, {PositionType.WomensDouble, 2}, {PositionType.MensDouble, 3}} },
+                { TeamMatch.Leagues.Division3, new Dictionary<PositionType, int>() {{PositionType.MixDouble, 2}, {PositionType.WomensSingle, 2}, {PositionType.MensSingle, 4}, {PositionType.WomensDouble, 2}, {PositionType.MensDouble, 3}} },
+                { TeamMatch.Leagues.DenmarksSeries, new Dictionary<PositionType, int>() {{PositionType.MixDouble, 2}, {PositionType.WomensSingle, 2}, {PositionType.MensSingle, 4}, {PositionType.WomensDouble, 2}, {PositionType.MensDouble, 3}} },
+                { TeamMatch.Leagues.RegionalSeriesWest, new Dictionary<PositionType, int>() {{PositionType.MixDouble, 2}, {PositionType.WomensSingle, 2}, {PositionType.MensSingle, 4}, {PositionType.WomensDouble, 2}, {PositionType.MensDouble, 3}} },
+                { TeamMatch.Leagues.Series1West, new Dictionary<PositionType, int>() {{PositionType.MixDouble, 2}, {PositionType.WomensSingle, 2}, {PositionType.MensSingle, 4}, {PositionType.WomensDouble, 1}, {PositionType.MensDouble, 2}} },
             };
     }
 }

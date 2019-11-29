@@ -23,7 +23,7 @@ namespace application.UI
             BindingContext = vm;
         }
 
-
+        //Cancel
         async void Dismiss(object sender, EventArgs args)
         {
             await PopupNavigation.Instance.PopAsync();

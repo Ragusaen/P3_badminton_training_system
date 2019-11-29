@@ -26,7 +26,7 @@ namespace application.UI
             FocusPointList.ItemAppearing += (s, r) => LoadEditIcons();
             FocusPointList.ItemDisappearing += (s, r) => LoadEditIcons();
         }
-
+        //Loads Icon
         private void LoadEditIcons()
         {
             foreach (var templatedItem in FocusPointList.TemplatedItems)

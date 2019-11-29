@@ -16,6 +16,7 @@ namespace application.UI
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class ExercisePopupPage : PopupPage
     {
+        //Sets BindingContext ViewModel
         public ExercisePopupPage(PracticeSession practice)
         {
             InitializeComponent();
@@ -23,11 +24,13 @@ namespace application.UI
             BindingContext = vm;
         }
 
+        //Cancel
         async void Dismiss(object sender, EventArgs args)
         {
             await PopupNavigation.Instance.PopAsync();
         }
 
+        //Clickes on Exercise and returns the Exercise in CallBackEvent
         public event EventHandler<ExerciseDescriptor> CallBackEvent;
 
         private void ListView_ItemSelected(object sender, SelectedItemChangedEventArgs e)

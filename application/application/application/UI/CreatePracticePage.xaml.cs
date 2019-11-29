@@ -17,11 +17,14 @@ namespace application.UI
     public partial class CreatePracticePage : ContentPage
     {
         CreatePracticeViewModel _vm;
+
+        //Future works
         public CreatePracticePage() : this(DateTime.Today)
         {
 
         }
 
+        //Sets time to the selected date if its after current time
         public CreatePracticePage(DateTime time)
         {
             if (time < DateTime.Today)
@@ -30,24 +33,29 @@ namespace application.UI
             Init(() => new CreatePracticeViewModel(time));
         }
 
+        //Edit mode for PracticeSession
         public CreatePracticePage(PracticeSession ps)
         {
             Init(() => new CreatePracticeViewModel(ps));
             SetExercises();
         }
 
+
         private void Init(Func<CreatePracticeViewModel> CreateViewModelFunc)
         {
             InitializeComponent();
+            //Sets BindingContext ViewModel
             _vm = CreateViewModelFunc();
             BindingContext = _vm;
             _vm.Navigation = Navigation;
 
+            //Happens when FocusPoint on list is selected
             FocusPointList.ItemSelected += (s, e) =>
             {
                 if (e.SelectedItem == null)
                     return;
 
+                //Checks if selected FocusPoint is already MainFocusPoint
                 bool resetAll = false;
                 if (_vm.Practice.MainFocusPoint == (FocusPointItem)e.SelectedItem)
                 {
@@ -55,17 +63,18 @@ namespace application.UI
                     resetAll = true;
                 }
 
+                //Makes font bold if new MainFocusPoint
                 SetFocusPointBoldness(e.SelectedItemIndex, (FocusPointItem)e.SelectedItem, resetAll);
 
+                //Unselect
                 FocusPointList.SelectedItem = null;
             };
 
+            //Initiate MainFocusPoint
             if (_vm.Practice.MainFocusPoint != null)
                 SetFocusPointBoldness(0, _vm.Practice.MainFocusPoint, false);
 
-
-            throw new Exception("Test exception");
-
+            //Initiate Icons
             SaveIcon.Source = ImageSource.FromResource("application.Images.saveicon.png");
             BullsEyeIcon.Source = ImageSource.FromResource("application.Images.bullseyeicon.png");
             //DeleteIcon.Source = ImageSource.FromResource("application.Images.deleteicon.png");
@@ -73,6 +82,7 @@ namespace application.UI
 
         private void SetFocusPointBoldness(int index, FocusPointItem fpi, bool resetAll)
         {
+            //Sets MainFocusPoint and makes it bold
             for (int i = 0; i < FocusPointList.TemplatedItems.Count; i++)
             {
                 FontAttributes fa = FontAttributes.None;
@@ -88,10 +98,14 @@ namespace application.UI
 
         private void SetExercises()
         {
+            //Clear stack layout ExerciseStack
             ExerciseStack.Children.Clear();
             Debug.WriteLine($"Found {_vm.PlanElement.Count} exercises");
+
+            //Create Exercises
             foreach (ExerciseItem e in _vm.PlanElement)
             {
+                //Makes Frame
                 Frame frame = new Frame()
                 {
                     CornerRadius = 5,
@@ -99,6 +113,7 @@ namespace application.UI
                     Margin = new Thickness(0, 10, 0, 10),
                 };
 
+                //Define Grid
                 Grid grid = new Grid()
                 {
                     RowDefinitions = new RowDefinitionCollection()
@@ -113,6 +128,7 @@ namespace application.UI
                     }
                 };
 
+                //Makes Entry only for int 
                 var minutesEntry = new Entry
                 {
                     Keyboard = Keyboard.Numeric, Placeholder = "Min", HorizontalOptions = LayoutOptions.Start,
@@ -131,21 +147,27 @@ namespace application.UI
                     }
 
                 };
+
                 minutesEntry.Focused += (s, a) => minutesEntry.Text = "";
+
+                //Add Entry To grid
                 minutesEntry.Text = e.Minutes.ToString();
                 grid.Children.Add(minutesEntry, 0, 0); 
 
+                //Add Labels Exercise name and Exercise Description
                 grid.Children.Add(new Label() { Text = e.ExerciseDescriptor.Name, HorizontalOptions = LayoutOptions.FillAndExpand, FontSize = 18 }, 1, 0);
                 var descriptionLabel = new Label() { Text = e.ExerciseDescriptor.Description, LineBreakMode = LineBreakMode.WordWrap, HorizontalOptions = LayoutOptions.FillAndExpand };
                 grid.Children.Add(descriptionLabel, 0, 1);
                 Grid.SetColumnSpan(descriptionLabel, 2);
 
+                //Puts Grid in Frame
                 frame.Content = grid;
 
+                //Adds Frame to StackLayout
                 ExerciseStack.Children.Add(frame);
             }
         }
-
+        //Adds Exercise to list and update UI
         private void AddNewElementButton_OnClicked(object sender, EventArgs e)
         {
             _vm.AddNewPlanElement((s, ex) =>

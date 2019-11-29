@@ -17,6 +17,14 @@ namespace application.ViewModel
     {
         public PracticeSession Practice { get; set; } = new PracticeSession();
 
+        private double _saveOpacity;
+
+        public double SaveOpacity
+        {
+            get { return _saveOpacity; }
+            set { SetProperty(ref _saveOpacity, value); }
+        }
+
         private bool IsEdit = false;
 
         //Date
@@ -127,7 +135,10 @@ namespace application.ViewModel
             get => _teamName;
             set
             {
-                SetProperty(ref _teamName, value);
+                if (SetProperty(ref _teamName, value))
+                {
+                    SaveCreatedPracticeClickCommand.RaiseCanExecuteChanged();
+                }
             }
         }
 
@@ -169,7 +180,14 @@ namespace application.ViewModel
         }
         
         private bool CanExecuteSaveCreatedPracticeClick(object param)
-        { 
+        {
+            if (Practice.PracticeTeam == null || string.IsNullOrEmpty(Practice.PracticeTeam.Name) || Practice.PracticeTeam.Name == "Choose Team")
+            {
+                SaveOpacity = 0.5;
+                return false;
+            }
+
+            SaveOpacity = 1;
             return true;
         }
 

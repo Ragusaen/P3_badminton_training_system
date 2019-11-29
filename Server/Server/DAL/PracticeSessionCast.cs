@@ -18,11 +18,11 @@ namespace Server.DAL
                 Location = ps.playsession.Location,
                 Start = ps.playsession.StartDate,
                 End = ps.playsession.EndDate,
-                Trainer = (Trainer)db.members.Find(ps.TrainerID),
+                Trainer = ps.trainer == null ? null : (Trainer)db.members.Find(ps.TrainerID),
                 FocusPoints = ps.subfocuspoints.ToList().Select(fp => new FocusPointItem() {Descriptor = (FocusPointDescriptor)fp}).ToList(),
                 Exercises = ps.practicesessionexercises.ToList().Select(e => (ExerciseItem)e).ToList(),
                 MainFocusPoint = ps.MainFocusPointID == null ? null : new FocusPointItem {Descriptor = (FocusPointDescriptor)ps.mainfocuspoint},
-                PracticeTeam = ps.practiceteam == null ? null : (PracticeTeam)ps.practiceteam,
+                PracticeTeam = (PracticeTeam)ps.practiceteam,
             };
         }
     }

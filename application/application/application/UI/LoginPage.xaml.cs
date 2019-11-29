@@ -18,20 +18,18 @@ namespace application.UI
         {
             InitializeComponent();
 
+            //automatically goes to next Login phase
             Username.Completed += (s,a) => Password.Focus();
             Password.Completed += (s, a) => LoginButton.SendClicked();
 
+            //Sets BindingContext ViewModel
             LoginPageViewModel vm = new LoginPageViewModel();
             BindingContext = vm;
             vm.Navigation = Navigation;
             
+            //initiates images
             RedLogo.Source = ImageSource.FromResource("application.Images.TritonLogo.png");
             NaviLogo.Source = ImageSource.FromResource("application.Images.logo.gif");
-        }
-
-        private void ContentPage_Appearing(object sender, EventArgs e)
-        {
-
         }
     }
 }

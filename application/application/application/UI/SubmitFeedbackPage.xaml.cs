@@ -16,6 +16,8 @@ namespace application.UI
         public SubmitFeedbackPage(PlaySession playsession)
         {
             InitializeComponent();
+
+            //Sets BindingContext ViewModel
             SubmitFeedbackViewModel vm = new SubmitFeedbackViewModel(playsession);
             BindingContext = vm;
             vm.Navigation = Navigation;
