@@ -26,7 +26,7 @@ namespace Server.Function.Handlers
                 var positions = match.positions.ToList();
                 var captain = match.captain;
                 var ps = match.playsession;
-                captain.teammatches.Remove(match);
+                captain?.teammatches.Remove(match);
                 db.positions.RemoveRange(positions);
                 db.teammatches.Remove(match);
                 if (ps != null)

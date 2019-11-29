@@ -15,7 +15,7 @@ namespace Server.DAL
             return new TeamMatch()
             {
                 Id = tm.PlaySessionID,
-                Captain = (Member)db.members.First(p => p.ID == tm.CaptainID),
+                Captain = tm.captain == null ? null : (Member)db.members.First(p => p.ID == tm.CaptainID),
                 End = tm.playsession.EndDate,
                 Start = tm.playsession.StartDate,
                 League = (TeamMatch.Leagues)tm.League,

@@ -121,7 +121,7 @@ namespace application.ViewModel
                 if (ps is PracticeSession practice)
                 {
                     psEvent.Name = practice.PracticeTeam.Name;
-                    psEvent.Detail = practice.Trainer.Member.Name;
+                    psEvent.Detail = practice.Trainer == null ? null : practice.Trainer.Member.Name;
                     psEvent.Color = Color.DarkSeaGreen;
                 }
                 else if (ps is TeamMatch tm)

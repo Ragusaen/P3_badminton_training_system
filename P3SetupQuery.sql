@@ -68,11 +68,11 @@ EndDate datetime not null
 create table PracticeSession(
 PlaySessionID int primary key,
 foreign key(PlaySessionID) references PlaySession(ID),
-TrainerID int not null,
+TrainerID int,
 foreign key(TrainerID) references `Member`(ID),
 MainFocusPointID int,
 foreign key (MainFocusPointID) references focuspoint(ID),
-TeamID int,
+TeamID int not null,
 foreign key (TeamId) references practiceteam(ID)
 );
 

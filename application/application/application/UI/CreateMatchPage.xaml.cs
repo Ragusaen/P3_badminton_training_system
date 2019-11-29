@@ -33,7 +33,8 @@ namespace application.UI
             Init(() => new CreateMatchViewModel(teamMatch));
 
             _vm.SetUILineup(teamMatch.Lineup);
-            CaptainPicker.SelectedItem = _vm.Members.FirstOrDefault(m => m.Id == teamMatch.Captain.Id);
+            if(teamMatch.Captain != null)
+                CaptainPicker.SelectedItem = _vm.Members.FirstOrDefault(m => m.Id == teamMatch.Captain.Id);
         }
 
         private void Init(Func<CreateMatchViewModel> ctor)

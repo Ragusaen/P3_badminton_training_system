@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="DatabaseModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="8.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="DatabaseModel.Store" Provider="MySql.Data.MySqlClient" ProviderManifestToken="8.0" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="account">
           <Key>
             <PropertyRef Name="Username" />
@@ -96,9 +96,9 @@
             <PropertyRef Name="PlaySessionID" />
           </Key>
           <Property Name="PlaySessionID" Type="int" Nullable="false" />
-          <Property Name="TrainerID" Type="int" Nullable="false" />
+          <Property Name="TrainerID" Type="int" />
           <Property Name="MainFocusPointID" Type="int" />
-          <Property Name="TeamID" Type="int" />
+          <Property Name="TeamID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="practicesessionexercise">
           <Key>
@@ -262,7 +262,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="practicesession_ibfk_2">
-          <End Role="member" Type="Self.member" Multiplicity="1" />
+          <End Role="member" Type="Self.member" Multiplicity="0..1" />
           <End Role="practicesession" Type="Self.practicesession" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="member">
@@ -286,7 +286,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="practicesession_ibfk_4">
-          <End Role="practiceteam" Type="Self.practiceteam" Multiplicity="0..1" />
+          <End Role="practiceteam" Type="Self.practiceteam" Multiplicity="1" />
           <End Role="practicesession" Type="Self.practicesession" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="practiceteam">
@@ -535,7 +535,8 @@
             <End Role="token" EntitySet="token" />
           </AssociationSet>
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="DatabaseModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -644,9 +645,9 @@
             <PropertyRef Name="PlaySessionID" />
           </Key>
           <Property Name="PlaySessionID" Type="Int32" Nullable="false" />
-          <Property Name="TrainerID" Type="Int32" Nullable="false" />
+          <Property Name="TrainerID" Type="Int32" />
           <Property Name="MainFocusPointID" Type="Int32" />
-          <Property Name="TeamID" Type="Int32" />
+          <Property Name="TeamID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="mainfocuspoint" Relationship="Self.practicesession_ibfk_3" FromRole="practicesession" ToRole="focuspoint" />
           <NavigationProperty Name="trainer" Relationship="Self.practicesession_ibfk_2" FromRole="practicesession" ToRole="member" />
           <NavigationProperty Name="playsession" Relationship="Self.practicesession_ibfk_1" FromRole="practicesession" ToRole="playsession" />
@@ -798,7 +799,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="practicesession_ibfk_2">
-          <End Role="member" Type="Self.member" Multiplicity="1" />
+          <End Role="member" Type="Self.member" Multiplicity="0..1" />
           <End Role="practicesession" Type="Self.practicesession" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="member">
@@ -882,7 +883,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="practicesession_ibfk_4">
-          <End Role="practiceteam" Type="Self.practiceteam" Multiplicity="0..1" />
+          <End Role="practiceteam" Type="Self.practiceteam" Multiplicity="1" />
           <End Role="practicesession" Type="Self.practicesession" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="practiceteam">

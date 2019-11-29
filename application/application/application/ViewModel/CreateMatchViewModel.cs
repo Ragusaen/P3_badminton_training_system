@@ -8,6 +8,7 @@ using application.Controller;
 using application.SystemInterface;
 using System.Collections.ObjectModel;
 using Rg.Plugins.Popup.Services;
+using Xamarin.Forms;
 
 namespace application.ViewModel
 {
@@ -19,6 +20,14 @@ namespace application.ViewModel
         {
             get { return _reservesVisible; }
             set { SetProperty(ref _reservesVisible, value); }
+        }
+
+        private Color _verifyButtonColor;
+
+        public Color VerifyButtonColor
+        {
+            get { return _verifyButtonColor; }
+            set { SetProperty(ref _verifyButtonColor, value); }
         }
 
         private string _opponentName;
@@ -228,6 +237,12 @@ namespace application.ViewModel
             Members = new ObservableCollection<Member>(RequestCreator.GetAllMembers().OrderBy(p => p.Name));
             Players = new ObservableCollection<Player>(RequestCreator.GetAllPlayers().OrderBy(p => p.Member.Name));
             SelectedLeague = TeamMatch.Leagues.DenmarksSeries;
+            if (!isEdit)
+            {
+                Season = DateTime.Now.Year;
+                if (DateTime.Now.Month <= 6)
+                    Season--;
+            }
         }
 
         public CreateMatchViewModel(DateTime startDate) : this()
@@ -312,6 +327,8 @@ namespace application.ViewModel
                 match.Id = _matchId;
             
             List<RuleBreak> ruleBreaks = RequestCreator.VerifyLineup(match);
+
+            VerifyButtonColor = ruleBreaks.Count > 0 ? Color.Red : Color.Green;
 
             foreach (var position in Positions)
             {
@@ -424,7 +441,6 @@ namespace application.ViewModel
         {
             if (((string.IsNullOrEmpty(Location)) ||
                   (string.IsNullOrEmpty(OpponentName)) ||
-                  Captain == null ||
                   LeagueRound == null || LeagueRound < 0 ||
                   Season == null || Season < 0 ||
                   TeamIndex == null || TeamIndex < 0))
