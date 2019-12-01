@@ -28,10 +28,9 @@ namespace Server.Function.Handlers
                 if ((PlaySession.Type) DBps.Type == PlaySession.Type.Practice)
                 {
                     response.PlaySessions.Add((PracticeSession)db.practicesessions.Find(DBps.ID));
-                    response.IsRelevantForMember.Add(
-                        requester.practiceteamsplayer.Any(p => p.ID == DBps.practicesession.practiceteam.ID) ||
-                        DBps.practicesession.TrainerID == requester.ID
-                        );
+                    var a = requester.practiceteamsplayer.Any(p => p.ID == DBps.practicesession.practiceteam.ID);
+                    var b = DBps.practicesession.TrainerID == requester.ID;
+                    response.IsRelevantForMember.Add( a || b);
                 }
                 else if ((PlaySession.Type) DBps.Type == PlaySession.Type.Match)
                 {
