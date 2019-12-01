@@ -45,11 +45,8 @@ namespace Server.Function
             _log.Debug("UpdatePlayers started");
 
             // Start the chrome driver
-            var chromeOptions = new ChromeOptions();
-            chromeOptions.AddArguments("--headless"); 
-            chromeOptions.AddUserProfilePreference("profile.default_content_setting_values.images", 2);
-            IWebDriver browser = new ChromeDriver(chromeOptions);
-            FindRootRankList(browser);
+            var browser = StartBrowser();
+            NavigateCorrectVersion(browser);  
 
             // Set all the members in the database to not be on the ranklist, this will be changed
             // as they are found again
@@ -63,7 +60,7 @@ namespace Server.Function
             for (int i = 0; i < RankingsCount; i++)
             {
                 _log.Debug("Scraping category: {category}", Categories[i]);
-
+                
                 // Find the category and click on it
                 string nextCategoryXPath = $"/html/body/form/div[4]/div[1]/div[5]/div/div[{i + 1}]/a";
                 browser.FindElement(By.XPath(nextCategoryXPath)).Click();
@@ -75,7 +72,7 @@ namespace Server.Function
                 // Parse the data and assign it to the players
                 DistributeRankings(players, rawRanking, 1 << i);
 
-                // Try to parse second page, throws exception if page doesn't exist
+                // Try to scrape second page, throws exception if page doesn't exist
                 try
                 {
                     var nextPage = browser.FindElement(By.XPath("/html/body/form/div[4]/div[1]/div[5]/table/tbody/tr[102]/td/a"));
@@ -94,6 +91,7 @@ namespace Server.Function
 
             // Close the browser
             browser.Quit();
+            browser.Dispose();
 
             // Write the players to the database
             UpdatePlayersInDatabase(players);
@@ -329,12 +327,22 @@ namespace Server.Function
             return Int32.Parse(Encoding.UTF8.GetString(newBytes));
         }
 
+        private IWebDriver StartBrowser()
+        { 
+            var chromeOptions = new ChromeOptions();
+            chromeOptions.AddArguments("--headless");
+            chromeOptions.AddUserProfilePreference("profile.default_content_setting_values.images", 2);
+            IWebDriver browser = new ChromeDriver(chromeOptions);
 
-        private void FindRootRankList(IWebDriver browser)
-        {
+            // Navigate to the clubs rankings
             browser.Navigate().GoToUrl(RankingRootUrl);
             WaitForPageLoad();
 
+            return browser;
+        }
+
+        private void NavigateCorrectVersion(IWebDriver browser)
+        {
             string xpath = null;
             bool correctVersion = false;
             int i = 0;
