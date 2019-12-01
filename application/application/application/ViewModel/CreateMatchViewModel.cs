@@ -51,8 +51,13 @@ namespace application.ViewModel
             get { return _selectedDateStart; }
             set
             {
-                if (SetProperty(ref _selectedDateStart, value)) { }
+                if (SetProperty(ref _selectedDateStart, value))
+                {
+                    Season = value.Year;
+                    if (value.Month <= 6)
+                        Season--;
                     SaveMatchClickCommand.RaiseCanExecuteChanged();
+                }
             }
         }
 
@@ -237,12 +242,6 @@ namespace application.ViewModel
             Members = new ObservableCollection<Member>(RequestCreator.GetAllMembers().OrderBy(p => p.Name));
             Players = new ObservableCollection<Player>(RequestCreator.GetAllPlayers().OrderBy(p => p.Member.Name));
             SelectedLeague = TeamMatch.Leagues.DenmarksSeries;
-            if (!isEdit)
-            {
-                Season = DateTime.Now.Year;
-                if (DateTime.Now.Month <= 6)
-                    Season--;
-            }
         }
 
         public CreateMatchViewModel(DateTime startDate) : this()
@@ -455,27 +454,60 @@ namespace application.ViewModel
 
         private void ExecuteSaveMatchClick(object param)
         {
-            TeamMatch match = new TeamMatch()
+            if (ValidateUserInput())
             {
-                Captain = Captain,
-                Start = SelectedDateStart.Date + Convert.ToDateTime(SelectedTimeStart.ToString()).TimeOfDay,
-                End = SelectedDateStart.Date + Convert.ToDateTime(SelectedTimeEnd.ToString()).TimeOfDay,
-                League = SelectedLeague,
-                Lineup = ConvertPositionDictionaryToLineup(Positions),
-                LeagueRound = (int)LeagueRound,
-                Location = Location,
-                OpponentName = OpponentName,
-                Season = (int)Season,
-                TeamIndex = (int)TeamIndex
-            };
-            RemoveSamePlayerDouble(match.Lineup);
+                TeamMatch match = new TeamMatch()
+                {
+                    Captain = Captain,
+                    Start = SelectedDateStart.Date + Convert.ToDateTime(SelectedTimeStart.ToString()).TimeOfDay,
+                    End = SelectedDateStart.Date + Convert.ToDateTime(SelectedTimeEnd.ToString()).TimeOfDay,
+                    League = SelectedLeague,
+                    Lineup = ConvertPositionDictionaryToLineup(Positions),
+                    LeagueRound = (int)LeagueRound,
+                    Location = Location,
+                    OpponentName = OpponentName,
+                    Season = (int)Season,
+                    TeamIndex = (int)TeamIndex
+                };
+                RemoveSamePlayerDouble(match.Lineup);
 
-            if (isEdit)
-                RequestCreator.DeleteTeamMatch(_matchId);
-            RequestCreator.SetTeamMatch(match);
+                if (isEdit)
+                    RequestCreator.DeleteTeamMatch(_matchId);
+                RequestCreator.SetTeamMatch(match);
 
-            //Navigate back
-            Navigation.PopAsync();
+                //Navigate back
+                Navigation.PopAsync();
+            }
+        }
+
+        private bool ValidateUserInput()
+        {
+            if (LeagueRound < 0 || LeagueRound > 100)
+            {
+                Application.Current.MainPage.DisplayAlert("Invalid input", "League round must be between 0 and 100", "Ok");
+                return false;
+            }
+            if (TeamIndex < 0 || TeamIndex > 100)
+            {
+                Application.Current.MainPage.DisplayAlert("Invalid input", "Team index must be between 0 and 100", "Ok");
+                return false;
+            }
+            if (Season < 2000 || Season > 3000)
+            {
+                Application.Current.MainPage.DisplayAlert("Invalid input", "Season must be between 2000 and 3000", "Ok");
+                return false;
+            }
+            if (Location.Length > 256)
+            {
+                Application.Current.MainPage.DisplayAlert("Invalid input", "Location can not contain more than 256 characters", "Ok");
+                return false;
+            }
+            if (OpponentName.Length > 64)
+            {
+                Application.Current.MainPage.DisplayAlert("Invalid input", "Opponent name can not contain more than 64 characters", "Ok");
+                return false;
+            }
+            return true;
         }
     }
 }

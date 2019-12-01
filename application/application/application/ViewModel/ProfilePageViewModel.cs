@@ -375,9 +375,15 @@ namespace application.ViewModel
             set => SetProperty(ref _commentText, value);
         }
 
-        public void SetComment(string comment)
+        public bool SetComment(string comment)
         {
+            if (comment.Length > 512)
+            {
+                Application.Current.MainPage.DisplayAlert("Invalid input", "Comment can not contain more than 512 characters", "Ok");
+                return false;
+            }
             RequestCreator.SetComment(Member, comment);
+            return true;
         }
     }
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Mime;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ using application.SystemInterface;
 using Common.Model;
 using application.Controller;
 using Common.Serialization;
+using Xamarin.Forms;
 
 namespace application.ViewModel
 {
@@ -117,6 +119,7 @@ namespace application.ViewModel
             }
             else
             {
+                if (!ValidateUserInput()) return;
                 success = RequestCreator.CreateAccountRequest(Username, Password, 0, SearchText);
             }
 
@@ -127,6 +130,22 @@ namespace application.ViewModel
             {
                 UsernameErrorVisibility = true;
             }
+        }
+
+        private bool ValidateUserInput()
+        {
+            if (Username.Length > 32)
+            {
+                Application.Current.MainPage.DisplayAlert("Invalid input", "Username can not contain more than 32 characters", "Ok");
+                return false;
+            }
+
+            if (SearchText.Length > 256)
+            {
+                Application.Current.MainPage.DisplayAlert("Invalid input", "Name can not contain more than 256 characters", "Ok");
+                return false;
+            }
+            return true;
         }
 
         private List<Player> _availablePlayers;

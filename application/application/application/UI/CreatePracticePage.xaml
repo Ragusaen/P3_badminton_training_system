@@ -46,6 +46,7 @@
                 <Label Grid.Row="3" Grid.Column="0" Text="Location" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
                 <Entry Grid.Row="3" Grid.Column="1" Text="{Binding Practice.Location}"  Placeholder="Stjernevej 5, 9200 Aalborg" VerticalOptions="Center"/>
             </Grid>
+
             <Frame CornerRadius="4" HasShadow="True" Margin="15,0,15,0">
                     <StackLayout>
                     <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center">
