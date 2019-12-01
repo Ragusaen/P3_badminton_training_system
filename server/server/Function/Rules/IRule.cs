@@ -3,6 +3,9 @@ using System.Collections.Generic;
 
 namespace Server.Function.Rules
 {
+    /// <summary>
+    /// This interface specifies the requirements for each rule
+    /// </summary>
     interface IRule
     {
         int Priority { get; set; }

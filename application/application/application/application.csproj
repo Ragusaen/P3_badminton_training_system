@@ -11,6 +11,7 @@
     <None Remove="Images\deleteicon.png" />
     <None Remove="Images\editicon.png" />
     <None Remove="Images\editicon2.png" />
+    <None Remove="Images\filter.png" />
     <None Remove="Images\logo.gif" />
     <None Remove="Images\menuicon.jpg" />
     <None Remove="Images\plusicon.jpg" />
@@ -27,6 +28,7 @@
     <EmbeddedResource Include="Images\deleteicon.png" />
     <EmbeddedResource Include="Images\editicon.png" />
     <EmbeddedResource Include="Images\editicon2.png" />
+    <EmbeddedResource Include="Images\filter.png" />
     <EmbeddedResource Include="Images\logo.gif" />
     <EmbeddedResource Include="Images\menuicon.jpg" />
     <EmbeddedResource Include="Images\plusicon.jpg" />

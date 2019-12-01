@@ -16,14 +16,25 @@ namespace Server.Function.Handlers
             }
 
             var db = new DatabaseEntities();
-            db.members.Find(request.Member.Id).MemberType = (int)request.Member.MemberType;
+            var dbMember = db.members.Find(request.Member.Id);
 
+            if (dbMember == null)
+                return new ChangeTrainerPrivilegesResponse()
+                {
+                    Error = "Trainer did not exist"
+                };
+
+            // Update the membertype in the database
+            dbMember.MemberType = (int)request.Member.MemberType;
+
+            // Check if it was made trainer or was unmade trainer
             if (request.Member.MemberType.HasFlag(MemberType.Trainer))
             {
                 _log.Debug($"Member: {request.Member.Name} has been made Trainer Type");
             }
             else
             {
+                // Remove the member as trainer from all practices
                 foreach (var practiceteam in db.practiceteams.Where(p => p.trainer.ID == request.Member.Id))
                 {
                     practiceteam.trainer = null;

@@ -20,6 +20,7 @@ namespace Server.Function.Handlers
                 };
             }
 
+            // Check wether the user should be added as an existing player or a new member
             var db = new DatabaseEntities();
             if (request.AddAsPlayer)
             {

@@ -8,16 +8,16 @@ using Common.Model;
 namespace Common.Serialization
 {
     [XmlRoot]
-    public class GetScheduleRequest : Request
+    public class GetScheduleRequest : PermissionRequest
     {
         public DateTime StartDate;
         public DateTime EndDate;
     }
 
     [XmlRoot]
-    public class GetScheduleResponse : Response
+    public class GetScheduleResponse : PermissionResponse
     {
-        public List<PracticeSession> PracticeSessions;
-        public List<TeamMatch> Matches;
+        public List<PlaySession> PlaySessions;
+        public List<bool> IsRelevantForMember;
     }
 }

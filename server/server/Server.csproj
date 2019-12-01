@@ -284,7 +284,7 @@
     <Compile Include="Function\Handlers\GetTeamMatchPositionsHandler.cs" />
     <Compile Include="Function\Handlers\GetTokenMemberHandler.cs" />
     <Compile Include="Function\Handlers\LoginHandler.cs" />
-    <Compile Include="Function\Handlers\RequestHandler.cs" />
+    <Compile Include="Function\RequestHandler.cs" />
     <Compile Include="Function\Handlers\SetCommentHandler.cs" />
     <Compile Include="Function\Handlers\SetExerciseDescriptorHandler.cs" />
     <Compile Include="Function\Handlers\SetFeedbackHandler.cs" />

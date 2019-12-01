@@ -241,6 +241,7 @@ namespace application.ViewModel
         {
             Members = new ObservableCollection<Member>(RequestCreator.GetAllMembers().OrderBy(p => p.Name));
             Players = new ObservableCollection<Player>(RequestCreator.GetAllPlayers().OrderBy(p => p.Member.Name));
+            Players.ToList().RemoveAll(p => !p.OnRankList);
             SelectedLeague = TeamMatch.Leagues.DenmarksSeries;
         }
 

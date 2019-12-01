@@ -211,7 +211,7 @@ namespace application.SystemInterface
             return response.PracticeTeams;
         }
 
-        public static List<PlaySession> GetSchedule(DateTime start, DateTime end)
+        public static (List<PlaySession> playSessions, List<bool> relevance) GetSchedule(DateTime start, DateTime end)
         {
             var request = new GetScheduleRequest()
             {
@@ -221,11 +221,7 @@ namespace application.SystemInterface
 
             var response = SimpleRequest<GetScheduleRequest, GetScheduleResponse>(RequestType.GetSchedule, request);
 
-            var list = new List<PlaySession>();
-            list.AddRange(response.Matches);
-            list.AddRange(response.PracticeSessions);
-
-            return list;
+            return (response.PlaySessions, response.IsRelevantForMember);
         }
 
         public static (List<Member> members, List<PracticeTeam> practiceTeams, List<FocusPointDescriptor> focusPoints)

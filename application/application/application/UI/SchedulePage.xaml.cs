@@ -20,6 +20,23 @@ namespace application.UI
         {
             InitializeComponent();
             Plusicon.Source = ImageSource.FromResource("application.Images.plusicon.jpg");
+            FilterButton.Source = ImageSource.FromResource("application.Images.filter.png");
+            FilterButton.Clicked += (s, a) => Filter();
+        }
+
+        private async void Filter()
+        {
+            string action =
+                await Application.Current.MainPage.DisplayActionSheet("Filter", "Cancel", null, "Show all",
+                    "Only relevant");
+
+            if (action == "Show all")
+            {
+                _vm.RelevantOnly = false;
+            } else if (action == "Only relevant")
+            {
+                _vm.RelevantOnly = true;
+            }
         }
 
         private void ListView_OnItemSelected(object sender, SelectedItemChangedEventArgs e)

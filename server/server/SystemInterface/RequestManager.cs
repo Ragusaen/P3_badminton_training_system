@@ -15,9 +15,12 @@ namespace Server.SystemInterface
 
     delegate TResponse RequestHandlerDelegate<out TResponse, in TRequest>(TRequest request);
 
+    /// <summary>
+    /// This class is for managing requests. This connects the raw data from the client with the correct request handler.
+    /// </summary>
     class RequestManager
     {
-
+        // Dictionary to match each request type to a request handler
         private Dictionary<RequestType, RequestHandler> _requestDictionary =
             new Dictionary<RequestType, RequestHandler>()
             {
@@ -73,14 +76,20 @@ namespace Server.SystemInterface
                 {RequestType.SetNonPrivateFocusPoint, new SetNonPrivateFocusPointHandler() },
                 {RequestType.SetPracticeTeam, new SetPracticeTeamHandler() },
             }; 
-
+        
+        /// <summary>
+        /// Parse the request and call the request handler
+        /// </summary>
         public byte[] Parse(byte[] request)
         {
+            // The first byte is the request type
             byte type = request[0];
 
+            // Extract the request data (remaining bytes)
             byte[] data = new byte[request.Length - 1];
             Array.Copy(request, 1, data, 0, data.Length);
             
+            // Handle the request and get a response
             var response = _requestDictionary[(RequestType) type].Handle(data);
 
             return response;

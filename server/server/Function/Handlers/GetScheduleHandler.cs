@@ -19,16 +19,27 @@ namespace Server.Function.Handlers
             
             GetScheduleResponse response = new GetScheduleResponse()
             {
-                Matches = new List<TeamMatch>(),
-                PracticeSessions = new List<PracticeSession>()
+                PlaySessions = new List<PlaySession>(),
+                IsRelevantForMember = new List<bool>()
             };
 
             foreach (var DBps in s)
             {
-                if ((PlaySession.Type)DBps.Type == PlaySession.Type.Practice)
-                    response.PracticeSessions.Add((PracticeSession)db.practicesessions.Find(DBps.ID));
-                else if ((PlaySession.Type)DBps.Type == PlaySession.Type.Match)
-                    response.Matches.Add((TeamMatch)db.teammatches.Find(DBps.ID));
+                if ((PlaySession.Type) DBps.Type == PlaySession.Type.Practice)
+                {
+                    response.PlaySessions.Add((PracticeSession)db.practicesessions.Find(DBps.ID));
+                    var a = requester.practiceteamsplayer.Any(p => p.ID == DBps.practicesession.practiceteam.ID);
+                    var b = DBps.practicesession.TrainerID == requester.ID;
+                    response.IsRelevantForMember.Add( a || b);
+                }
+                else if ((PlaySession.Type) DBps.Type == PlaySession.Type.Match)
+                {
+                    response.PlaySessions.Add((TeamMatch)db.teammatches.Find(DBps.ID));
+                    response.IsRelevantForMember.Add(
+                        DBps.teammatch.CaptainID == requester.ID ||
+                        DBps.teammatch.positions.Any(pos => pos.MemberID == requester.ID)
+                        );
+                }
                 else
                     Console.WriteLine("Invalid type");
             }

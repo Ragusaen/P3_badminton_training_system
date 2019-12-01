@@ -9,25 +9,35 @@ namespace Server.Function
 {
     class UserManager
     {
-        private const int Pbkdf2Iterations = 100000;
+        private static Logger _log = LogManager.GetCurrentClassLogger();
+
+        // Defines how thorough the hashing function should be
+        private const int Pbkdf2Iterations = 100000; 
+
+        // Sizes of data
         public const int HashSize = 32;
         public const int SaltSize = 128;
         public const int TokenSize = 64;
 
-        private static Logger _log = LogManager.GetCurrentClassLogger();
-
-        #region Login
+        /// <summary>
+        /// Logs in the user given a username and password.
+        /// </summary>
+        /// <returns> a valid access token if user exists and password is correct; otherwise an empty byte array</returns>
         public byte[] Login(string username, string password)
         {
             var db = new DatabaseEntities();
+
+            // Find the account with the given username
             var account = db.accounts.Find(username);
 
-            // Check if account was found
+            // Check if account was found and if the password matches
             if (account != null &&
                 VerifyPassword(password, account.PasswordSalt, account.PasswordHash))
             {
+                // Generate and access token
                 var token = GenerateLoginToken();
 
+                // Add the new token to database
                 db.tokens.Add(new token()
                 {
                     account = account,
@@ -41,17 +51,21 @@ namespace Server.Function
             return new byte[0];
         }
 
+        /// <summary>
+        /// Generates cryptographically random bytes to be used as a login token
+        /// </summary>
         private byte[] GenerateLoginToken()
         {
-            // Generate a random token for the user to login with
             var rng = new RNGCryptoServiceProvider();
             byte[] token = new byte[TokenSize];
             rng.GetBytes(token);
             return token;
         }
-        #endregion
 
-        #region Create
+        /// <summary>
+        /// Create a new user with the given username and password
+        /// </summary>
+        /// <returns>true, if the username is not already taken and the user was created; otherwise, false</returns>
         public bool Create(string username, string password)
         {
             var db = new DatabaseEntities();
@@ -63,6 +77,7 @@ namespace Server.Function
             // Generate a hash and salt for the new user
             var pw_info = GenerateHashedPasswordAndSalt(password);
             
+            // Create the account in the database
             var account = new account()
             {
                 Username = username,
@@ -74,8 +89,10 @@ namespace Server.Function
 
             return true;
         }
-        #endregion
 
+        /// <summary>
+        /// Gets the database member that is associated with an access token
+        /// </summary>
         public member GetMemberFromToken(byte[] token)
         {
             var db = new DatabaseEntities();
@@ -86,6 +103,10 @@ namespace Server.Function
             return r;
         }
 
+        /// <summary>
+        /// Generates the hashed password and a salt to go with it. This method should be used when setting a new password.
+        /// The hashed password is computed by hash( password + salt ), so the salt should be saved for password verification.
+        /// </summary>
         private (byte[] password, byte[] salt) GenerateHashedPasswordAndSalt(string password)
         {
             // Generate a new salt
@@ -100,6 +121,13 @@ namespace Server.Function
             return (passwordHash, salt);
         }
 
+        /// <summary>
+        /// Verifies that the given password matches the one that was used to create the password hash.
+        /// </summary>
+        /// <param name="inputPw">The raw password to test against</param>
+        /// <param name="salt"> The salt to append to the raw password</param>
+        /// <param name="hashedPw"> The stored hashed password</param>
+        /// <returns>true, if password is the same as the one originally used for the stored hashed password; otherwise, false</returns>
         private bool VerifyPassword(string inputPw, byte[] salt, byte[] hashedPw)
         {
             var pbkdf2 = new Rfc2898DeriveBytes(inputPw, salt, Pbkdf2Iterations);
