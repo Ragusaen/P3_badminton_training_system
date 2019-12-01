@@ -17,7 +17,7 @@ namespace Common.Serialization
     [XmlRoot]
     public class GetScheduleResponse : Response
     {
-        public List<PracticeSession> PracticeSessions;
-        public List<TeamMatch> Matches;
+        public List<PlaySession> PlaySessions;
+        public List<bool> IsRelevantForMember;
     }
 }
