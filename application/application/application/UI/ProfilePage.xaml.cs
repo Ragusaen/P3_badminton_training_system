@@ -67,8 +67,8 @@ namespace application.UI
                 if (CommentEntry?.Text?.Length > 0)
                 {
                     Comment.Text = CommentEntry.Text;
-                    _vm.SetComment(CommentEntry.Text);
-                    _vm.Member.Comment = CommentEntry.Text;
+                    if(_vm.SetComment(CommentEntry.Text))
+                        _vm.Member.Comment = CommentEntry.Text;
                 }
             };
         }

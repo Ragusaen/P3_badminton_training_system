@@ -11,6 +11,7 @@ using System.Text;
 using application.Controller;
 using application.SystemInterface;
 using application.UI.Converter;
+using Common.Serialization;
 using Xamarin.Forms;
 using Xamarin.Plugin.Calendar.Controls;
 using Xamarin.Plugin.Calendar.Models;
@@ -95,15 +96,35 @@ namespace application.ViewModel
             public PlaySession PlaySession;
         }
 
+        private bool _relevantOnly = false;
+        public bool RelevantOnly
+        {
+            get => _relevantOnly;
+            set
+            {
+                _relevantOnly = value;
+                Events = new EventCollection();
+                LoadEvents();
+            }
+        }
+
         private void LoadEvents()
         {
             DateTime start = new DateTime(_year, _month, 1);
             DateTime end = start.AddMonths(1);
 
-            List<PlaySession> playSessions = RequestCreator.GetSchedule(start, end);
+            var scheduleData = RequestCreator.GetSchedule(start, end);
 
-            foreach (PlaySession ps in playSessions)
+            List<PlaySession> playSessions = scheduleData.playSessions;
+            List<bool> isMemberRelevant = scheduleData.relevance;
+
+            for (int i = 0; i < playSessions.Count; i++)
             {
+                var ps = playSessions[i];
+
+                if (RelevantOnly && !isMemberRelevant[i])
+                    continue;
+
                 // Add entry to dictionary if it doesn't exist
                 if (!Events.ContainsKey(ps.Start.Date))
                     Events.Add(ps.Start.Date, new List<PlaySessionEvent>());
