@@ -157,11 +157,10 @@ namespace application.ViewModel
         }
 
         private int _lineupHeight;
-
         public int LineupHeight
         {
-            get { return _lineupHeight; }
-            set { SetProperty(ref _lineupHeight, value); }
+            get => _lineupHeight;
+            set => SetProperty(ref _lineupHeight, value);
         }
 
         public List<string> LeagueNames
@@ -172,7 +171,7 @@ namespace application.ViewModel
         private TeamMatch.Leagues _selectedLeague;
         public TeamMatch.Leagues SelectedLeague
         {
-            get { return _selectedLeague; }
+            get => _selectedLeague;
             set
             {
                 if (SetProperty(ref _selectedLeague, value))
@@ -202,7 +201,7 @@ namespace application.ViewModel
 
         public Dictionary<(Lineup.PositionType, int), PositionError> Positions
         {
-            get { return _positions; }
+            get => _positions;
             set
             {
                 if (SetProperty(ref _positions, value))
@@ -213,23 +212,21 @@ namespace application.ViewModel
         }
 
         private ObservableCollection<Player> _players;
-
         public ObservableCollection<Player> Players
         {
-            get { return _players; }
-            set { SetProperty(ref _players, value); }
+            get => _players;
+            set => SetProperty(ref _players, value);
         }
 
         private ObservableCollection<Member> _members;
-
         public ObservableCollection<Member> Members
         {
-            get { return _members; }
-            set { SetProperty(ref _members, value); }
+            get => _members;
+            set => SetProperty(ref _members, value);
         }
 
-        private bool isEdit = false;
-        private int _matchId = 0;
+        private readonly bool _isEdit = false;
+        private readonly int _matchId = 0;
 
         //Ctor
         private CreateMatchViewModel()
@@ -238,7 +235,7 @@ namespace application.ViewModel
             Players = new ObservableCollection<Player>(RequestCreator.GetAllPlayers().OrderBy(p => p.Member.Name));
             Players.ToList().RemoveAll(p => !p.OnRankList);
             SelectedLeague = TeamMatch.Leagues.DenmarksSeries;
-            if (!isEdit)
+            if (!_isEdit)
             {
                 Season = DateTime.Now.Year;
                 if (DateTime.Now.Month <= 6)
@@ -264,7 +261,7 @@ namespace application.ViewModel
             Season = match.Season;
             TeamIndex = match.TeamIndex;
 
-            isEdit = true;
+            _isEdit = true;
             _matchId = match.Id;
         }
 
@@ -471,7 +468,7 @@ namespace application.ViewModel
             };
             RemoveSamePlayerDouble(match.Lineup);
 
-            if (isEdit)
+            if (_isEdit)
                 RequestCreator.DeleteTeamMatch(_matchId);
             RequestCreator.SetTeamMatch(match);
 

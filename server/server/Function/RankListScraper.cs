@@ -70,7 +70,7 @@ namespace Server.Function
                 List<IWebElement> rawRanking = ScrapeRankingsTable(browser);
 
                 // Parse the data and assign it to the players
-                DistributeRankings(players, rawRanking, 1 << i);
+                DistributeRankings(players, rawRanking, (Category)(1 << i));
 
                 // Try to scrape second page, throws exception if page doesn't exist
                 try
@@ -84,7 +84,7 @@ namespace Server.Function
                     rawRanking = ScrapeRankingsTable(browser);
 
                     // Parse the data and assign it to the players
-                    DistributeRankings(players, rawRanking, 1 << i);
+                    DistributeRankings(players, rawRanking, (Category)(1 << i));
                 }
                 catch (Exception) { }
             }
@@ -98,10 +98,8 @@ namespace Server.Function
             _log.Debug("UpdatePlayers finished");
         }
 
-        private void DistributeRankings(List<Player> players, List<IWebElement> rawRanking, int rankListIndex)
+        private void DistributeRankings(List<Player> players, List<IWebElement> rawRanking, Category category)
         {
-            Category category = (Category) rankListIndex;
-
             // Go through all the rows from the raw ranking
             for (int j = 1; j < rawRanking.Count; j++) // Skips first row to avoid the title
             {
@@ -111,7 +109,10 @@ namespace Server.Function
                 {
                     currentRow.FindElement(By.ClassName("playerid")).GetAttribute("innerHTML");
                 }
-                catch (Exception) { continue;}
+                catch (Exception)
+                {
+                    continue;
+                }
                 
                 // Fetch information from the current row
                 string rawPlayerId = currentRow.FindElement(By.ClassName("playerid")).GetAttribute("innerHTML");
@@ -298,10 +299,10 @@ namespace Server.Function
             return levelDict[res]; 
         }
 
-        private List<IWebElement> ScrapeRankingsTable(IWebDriver driver)
+        private List<IWebElement> ScrapeRankingsTable(IWebDriver browser)
         {
             WaitForPageLoad();
-            return driver.FindElement(By.ClassName(RankingListElementClassName)).FindElements(By.TagName("tr")).ToList();
+            return browser.FindElement(By.ClassName(RankingListElementClassName)).FindElements(By.TagName("tr")).ToList();
         }
 
         private int FetchPointsFromRow(IWebElement elem)
