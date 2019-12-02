@@ -59,19 +59,42 @@ namespace application.ViewModel
 
         private void CreateFocusPointClick(object param)
         {
-            if (FocusPoint.Name != null)
+            if (!string.IsNullOrEmpty(FocusPoint.Name))
             {
-                if (isEdit)
-                    RequestCreator.EditFocusPoint(FocusPoint);
-                else
-                    FocusPoint = RequestCreator.CreateFocusPointDescriptor(FocusPoint);
-                CallBackEvent?.Invoke(this, FocusPoint);
-                PopupNavigation.Instance.PopAsync();
+                if (ValidateUserInput())
+                {
+                    if (isEdit)
+                        RequestCreator.EditFocusPoint(FocusPoint);
+                    else
+                        FocusPoint = RequestCreator.CreateFocusPointDescriptor(FocusPoint);
+                    CallBackEvent?.Invoke(this, FocusPoint);
+                    PopupNavigation.Instance.PopAsync();
+                }
             }
             else
             {
-                Application.Current.MainPage.DisplayAlert("Alert", "Please enter a name", "OK");
+                Application.Current.MainPage.DisplayAlert("Alert", "Please enter a name", "Ok");
             }
+        }
+
+        private bool ValidateUserInput()
+        {
+            if (FocusPoint.Name.Length > 64)
+            {
+                Application.Current.MainPage.DisplayAlert("Invalid input", "Name can not contain more than 64 characters", "Ok");
+                return false;
+            }
+            if (FocusPoint.Description != null && FocusPoint.Description.Length > 1024)
+            {
+                Application.Current.MainPage.DisplayAlert("Invalid input", "Description can not contain more than 1024 characters", "Ok");
+                return false;
+            }
+            if (FocusPoint.VideoURL != null && FocusPoint.VideoURL.Length > 256)
+            {
+                Application.Current.MainPage.DisplayAlert("Invalid input", "Video link can not contain more than 256 characters", "Ok");
+                return false;
+            }
+            return true;
         }
 
         public event EventHandler<FocusPointDescriptor> CallBackEvent;

@@ -128,6 +128,11 @@ namespace application.ViewModel
 
         private void NewPracticeTeamClick(object param)
         {
+            if (NewPracticeTeam.Length > 64)
+            {
+                Application.Current.MainPage.DisplayAlert("Invalid input", "Practice team name can not contain more than 64 characters", "Ok");
+                return;
+            }
             var team = new PracticeTeam {Name = NewPracticeTeam};
             RequestCreator.SetPracticeTeam(team);
             PracticeTeamList = new ObservableCollection<PracticeTeam>(RequestCreator.GetAllPracticeTeams());

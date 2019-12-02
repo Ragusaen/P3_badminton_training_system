@@ -193,29 +193,42 @@ namespace application.ViewModel
 
         private void ExecuteSaveCreatedPracticeClick(object param)
         {
-            Practice.Start = SelectedDateStart.Date + Convert.ToDateTime(SelectedTimeStart.ToString()).TimeOfDay;
-            Practice.End = SelectedDateStart.Date + Convert.ToDateTime(SelectedTimeEnd.ToString()).TimeOfDay;
-            if (Practice.PracticeTeam.Name == "Choose Team")
-                Practice.PracticeTeam.Name = "";
-            if (string.IsNullOrEmpty(Practice.Location))
-                Practice.Location = "Stjernevej 5, 9200 Aalborg";
-            Practice.Exercises = PlanElement.ToList();
-
-            if (Practice.MainFocusPoint != null)
-                FocusPoints?.Remove(Practice.MainFocusPoint);
-
-            Practice.FocusPoints = FocusPoints?.ToList();
-            int i = 0;
-            foreach (ExerciseItem exerciseitem in Practice.Exercises) 
+            if (ValidateUserInput())
             {
-                exerciseitem.Index = i;
-                i++;
-            }
-            if (IsEdit)
-                RequestCreator.DeletePracticeSession(Practice.Id);
+                Practice.Start = SelectedDateStart.Date + Convert.ToDateTime(SelectedTimeStart.ToString()).TimeOfDay;
+                Practice.End = SelectedDateStart.Date + Convert.ToDateTime(SelectedTimeEnd.ToString()).TimeOfDay;
+                if (Practice.PracticeTeam.Name == "Choose Team")
+                    Practice.PracticeTeam.Name = "";
+                if (string.IsNullOrEmpty(Practice.Location))
+                    Practice.Location = "Stjernevej 5, 9200 Aalborg";
+                Practice.Exercises = PlanElement.ToList();
 
-            RequestCreator.SetPracticeSession(Practice);
-            Navigation.PopAsync();
+                if (Practice.MainFocusPoint != null)
+                    FocusPoints?.Remove(Practice.MainFocusPoint);
+
+                Practice.FocusPoints = FocusPoints?.ToList();
+                int i = 0;
+                foreach (ExerciseItem exerciseitem in Practice.Exercises)
+                {
+                    exerciseitem.Index = i;
+                    i++;
+                }
+                if (IsEdit)
+                    RequestCreator.DeletePracticeSession(Practice.Id);
+
+                RequestCreator.SetPracticeSession(Practice);
+                Navigation.PopAsync();
+            }
+        }
+
+        private bool ValidateUserInput()
+        {
+            if (Practice.Location != null && Practice.Location.Length > 256)
+            {
+                Application.Current.MainPage.DisplayAlert("Invalid input", "Location can not contain more than 256 characters", "Ok");
+                return false;
+            }
+            return true;
         }
 
         public async void AddNewPlanElement(EventHandler<ExerciseDescriptor> eventHandler)
