@@ -124,7 +124,7 @@ namespace Server.Function.Handlers
         /// </summary>
         private Server.DAL.member GetMember(PermissionRequest pr)
         {
-            var um = new UserManager();
+            var um = new AccountManager();
             return um.GetMemberFromToken(pr.Token);
         }
 

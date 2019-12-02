@@ -10,7 +10,7 @@ namespace Server.Function.Handlers
 
         protected override CreateAccountResponse InnerHandle(CreateAccountRequest request, member requester)
         {
-            UserManager userManager = new UserManager();
+            AccountManager userManager = new AccountManager();
 
             if (!userManager.Create(request.Username, request.Password))
             {

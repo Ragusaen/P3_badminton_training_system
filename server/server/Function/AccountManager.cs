@@ -7,7 +7,7 @@ using Server.DAL;
 
 namespace Server.Function
 {
-    class UserManager
+    class AccountManager
     {
         private static Logger _log = LogManager.GetCurrentClassLogger();
 
