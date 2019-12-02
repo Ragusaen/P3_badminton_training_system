@@ -110,6 +110,7 @@ namespace application.ViewModel
                     {
                         feedbacks = feedbacks.OrderByDescending(p => p.PlaySession.Start.Date)
                             .ThenByDescending(p => p.PlaySession.Start.TimeOfDay).ToList();
+                        Player.Feedbacks = feedbacks;
                         List<Entry> entries = new List<Entry>();
                         int i = 0;
                         foreach (Feedback fb in feedbacks)
