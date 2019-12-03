@@ -7,7 +7,7 @@ namespace Server.Function.Handlers
     {
         protected override LoginResponse InnerHandle(LoginRequest request, member requester)
         {
-            UserManager userManager = new UserManager();
+            AccountManager userManager = new AccountManager();
             var response = new LoginResponse();
 
             // Attempt to login

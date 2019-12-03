@@ -298,7 +298,7 @@
     <Compile Include="Function\Handlers\SetPracticeTeamHandler.cs" />
     <Compile Include="Function\Handlers\VerifyLineupHandler.cs" />
     <Compile Include="SystemInterface\RequestManager.cs" />
-    <Compile Include="Function\UserManager.cs" />
+    <Compile Include="Function\AccountManager.cs" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Constants.cs" />
