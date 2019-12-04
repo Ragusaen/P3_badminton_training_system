@@ -70,7 +70,7 @@ namespace Server.Function
                 List<IWebElement> rawRanking = ScrapeRankingsTable(browser);
 
                 // Parse the data and assign it to the players
-                DistributeRankings(players, rawRanking, 1 << i);
+                DistributeRankings(players, rawRanking, (Category)(1 << i));
 
                 // Try to scrape second page, throws exception if page doesn't exist
                 try
@@ -84,7 +84,7 @@ namespace Server.Function
                     rawRanking = ScrapeRankingsTable(browser);
 
                     // Parse the data and assign it to the players
-                    DistributeRankings(players, rawRanking, 1 << i);
+                    DistributeRankings(players, rawRanking, (Category)(1 << i));
                 }
                 catch (Exception) { }
             }
@@ -98,10 +98,8 @@ namespace Server.Function
             _log.Debug("UpdatePlayers finished");
         }
 
-        private void DistributeRankings(List<Player> players, List<IWebElement> rawRanking, int rankListIndex)
+        private void DistributeRankings(List<Player> players, List<IWebElement> rawRanking, Category category)
         {
-            Category category = (Category) rankListIndex;
-
             // Go through all the rows from the raw ranking
             for (int j = 1; j < rawRanking.Count; j++) // Skips first row to avoid the title
             {
@@ -111,30 +109,27 @@ namespace Server.Function
                 {
                     currentRow.FindElement(By.ClassName("playerid")).GetAttribute("innerHTML");
                 }
-                catch (Exception) { continue;}
+                catch (Exception)
+                {
+                    continue;
+                }
                 
-                // Fetch information from the current row
-                string rawPlayerId = currentRow.FindElement(By.ClassName("playerid")).GetAttribute("innerHTML");
-                int badmintonPlayerId = RemoveFalseHyphen(rawPlayerId);
-                int points = FetchPointsFromRow(currentRow);
-                string ageAndLevel = FetchSkillLevelFromRow(currentRow);
+                // Fetch BadmintonID from the current row
+                int badmintonPlayerId = RemoveFalseHyphen(currentRow.FindElement(By.ClassName("playerid")).GetAttribute("innerHTML"));
                 
                 // The current player; will be set in if block below
                 Player player;
-                // If it is scraping the Level ranklist, find the player in the database or create a new one
+                // If it is scraping the Level rank list, find the player in the database or create a new one
                 if (category == Category.Level)
                 {
                     // Try finding the player in the database
                     member dbPlayer = _db.members.SingleOrDefault(p => p.BadmintonPlayerID == badmintonPlayerId);
-                    if (dbPlayer != null) // If the player was found, add it
-                    {
+                    if (dbPlayer != null) // If the player was found, add it    
                         player = (Common.Model.Player)dbPlayer;
-                        players.Add(player);
-                    }
+                    
                     else // Create a new player and add them to the player list
                     {
                         string name = new string(currentRow.FindElement(By.ClassName("name")).Text.TakeWhile(p => p != ',').ToArray());
-
                         player = new Player
                         {
                             BadmintonPlayerId = badmintonPlayerId,
@@ -144,10 +139,13 @@ namespace Server.Function
                                 Name = name,
                             }
                         };
-
                         _log.Debug($"New player found in Ranklist: {player.Member.Name} BadmintonId: {player.BadmintonPlayerId}");
-                        players.Add(player);
                     }
+
+                    string ageAndLevel = currentRow.FindElement(By.ClassName("clas")).GetAttribute("innerHTML");
+                    player.Rankings.Age = FetchAgeGroup(ageAndLevel);
+                    player.Rankings.Level = FetchLevelGroup(ageAndLevel);
+                    players.Add(player);
                 }
                 else // If it is on sexed rank list
                 {
@@ -168,14 +166,7 @@ namespace Server.Function
                 }
                         
                 // Update the players rankings
-                UpdateRankingsFromRow(player.Rankings, points, category);
-
-                // If it is the level list then also add the age and level
-                if (category == Category.Level)
-                {
-                    player.Rankings.Age = FetchAgeGroup(ageAndLevel);
-                    player.Rankings.Level = FetchLevelGroup(ageAndLevel);
-                }
+                UpdateRankingsFromRow(player.Rankings, FetchPointsFromRow(currentRow), category);
             }
         }
 
@@ -214,7 +205,7 @@ namespace Server.Function
             foreach (var p in players)
             {
                 Server.DAL.member dbMember;
-                ranklist dbRankList;
+                Server.DAL.ranklist dbRankList;
 
                 if (p.Member.Id > 0)
                 {
@@ -240,15 +231,6 @@ namespace Server.Function
                 dbRankList.SinglesPoints = p.Rankings.SinglesPoints;
             }
             _db.SaveChanges();
-        }
-
-
-        /// <summary>
-        /// Gets the skill level string from the given row
-        /// </summary>
-        private string FetchSkillLevelFromRow(IWebElement elem)
-        {
-            return elem.FindElement(By.ClassName("clas")).GetAttribute("innerHTML");
         }
 
         /// <summary>
@@ -298,10 +280,9 @@ namespace Server.Function
             return levelDict[res]; 
         }
 
-        private List<IWebElement> ScrapeRankingsTable(IWebDriver driver)
+        private List<IWebElement> ScrapeRankingsTable(IWebDriver browser)
         {
-            WaitForPageLoad();
-            return driver.FindElement(By.ClassName(RankingListElementClassName)).FindElements(By.TagName("tr")).ToList();
+            return browser.FindElement(By.ClassName(RankingListElementClassName)).FindElements(By.TagName("tr")).ToList();
         }
 
         private int FetchPointsFromRow(IWebElement elem)
