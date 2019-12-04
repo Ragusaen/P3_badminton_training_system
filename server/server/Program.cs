@@ -25,7 +25,7 @@ namespace Server
                 RankListScraper scraper = new RankListScraper();
                 scraper.UpdatePlayers();
             }
-            
+
             try
             {
 
