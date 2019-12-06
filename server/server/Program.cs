@@ -28,7 +28,6 @@ namespace Server
 
             try
             {
-
                 _log.Debug("Server started");
                 SslTcpServer sslTcpServer = new SslTcpServer("cert.pfx");
                 sslTcpServer.RunServer();
