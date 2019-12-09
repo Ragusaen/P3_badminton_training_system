@@ -48,7 +48,7 @@ namespace Server.Function
             var browser = StartBrowser();
             NavigateCorrectVersion(browser);  
 
-            // Set all the members in the database to not be on the ranklist, this will be changed
+            // Set all the members in the database to not be on the rank list, this will be changed
             // as they are found again
             foreach (var dbMember in _db.members)
             {
