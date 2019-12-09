@@ -233,8 +233,7 @@ namespace application.ViewModel
 
         public async void AddNewPlanElement(EventHandler<ExerciseDescriptor> eventHandler)
         {
-            Debug.WriteLine("SOMWHERE");
-            string action = await Application.Current.MainPage.DisplayActionSheet("Settings", "Cancel", null,"Add Existing Exercise", "Make New Exercise");
+            string action = await Application.Current.MainPage.DisplayActionSheet("Exercise", "Cancel", null,"Add Existing Exercise", "Make New Exercise");
 
             if (action == "Add Existing Exercise")
             {

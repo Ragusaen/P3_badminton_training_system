@@ -26,7 +26,7 @@ namespace application.UI
             BindingContext = _vm;
             _vm.Navigation = Navigation;
             PlaySession = playSession;
-            Time.Text = _vm.PlaySession.Start.ToString("hh:mm") + " - " + _vm.PlaySession.End.ToString("hh:mm");
+            Time.Text = _vm.PlaySession.Start.ToString("HH:mm") + " - " + _vm.PlaySession.End.ToString("HH:mm");
             Date.Text = _vm.PlaySession.Start.ToString("dddd, d MMMM");
             Location.Text = _vm.PlaySession.Location;
 
@@ -64,7 +64,7 @@ namespace application.UI
                 MainFocusPoint.GestureRecognizers.Add(MFPTapGest);
             }
 
-                PracticeRelevant.IsVisible = true;
+            PracticeRelevant.IsVisible = true;
 
             if (RequestCreator.LoggedInMember.MemberType.HasFlag(MemberType.Trainer))
             {

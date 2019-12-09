@@ -29,7 +29,7 @@ namespace application.UI
             MenuList = new List<MasterPageItem>();
 
             MenuList.Add(new MasterPageItem() { Title = "Schedule", TargetType = typeof(SchedulePage) }); //Set icons
-            MenuList.Add(new MasterPageItem() { Title = "Profile", TargetType = typeof(ProfilePage) }); //Set icons
+            MenuList.Add(new MasterPageItem() { Title = "Your Profile", TargetType = typeof(ProfilePage) }); //Set icons
             if((RequestCreator.LoggedInMember.MemberType & MemberType.Trainer) == MemberType.Trainer)
             MenuList.Add(new MasterPageItem() { Title = "Administrator", TargetType = typeof(AdministratorPage) }); //Set icons
 

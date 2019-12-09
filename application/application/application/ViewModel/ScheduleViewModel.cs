@@ -135,7 +135,7 @@ namespace application.ViewModel
                 var psEvent = new PlaySessionEvent()
                 {
                     Location = ps.Location,
-                    Time = ps.Start.ToString("hh:mm"),
+                    Time = ps.Start.ToString("HH:mm"),
                     PlaySession = ps
                 };
 
