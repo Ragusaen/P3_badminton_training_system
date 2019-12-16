@@ -55,7 +55,7 @@ namespace application.ViewModel
             }
 
             PlaySession = playSession;
-            DateTime feedbackexdate = PlaySession.Start.AddDays(7);
+            DateTime feedbackexdate = PlaySession.End.AddDays(7);
             if (DateTime.Compare(PlaySession.Start, DateTime.Now) <= 0 && DateTime.Compare(DateTime.Now, feedbackexdate) <= 0 && hasNotFeedbacked)
                 PracticeFeedbackIsVisible = true;
             else
