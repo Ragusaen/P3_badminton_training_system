@@ -1,5 +1,6 @@
 ﻿using Common.Model;
 using System.Collections.Generic;
+using Common;
 
 namespace Server.Function.Rules
 {
