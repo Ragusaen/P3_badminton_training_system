@@ -5,6 +5,7 @@ using System.Net.Security;
 using System.Net.Sockets;
 using System.Security.Authentication;
 using System.Security.Cryptography.X509Certificates;
+using System.Threading.Tasks;
 
 namespace application.SystemInterface.Network
 {
@@ -12,6 +13,7 @@ namespace application.SystemInterface.Network
     {
         private readonly IPAddress _machineName = new IPAddress(new byte[] {192, 168, 42, 170});
         private readonly string _serverName = "Triton";
+
         private TcpClient _tcpClient = null;
         private SslStream _sslStream = null;
 

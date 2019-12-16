@@ -64,7 +64,7 @@ namespace Server.Function.Handlers
                 {
                     msg += fi.Name + ": " + fi.GetValue(request) + "\n";
                 }
-                _log.Error("Unknown error handling request:\nFull Name: " + typeof(TRequest).FullName + "\n" + e.Message + "\n" + e.InnerException?.Message);
+                _log.Error("Unknown error handling request:\nFull Name: " + typeof(TRequest).FullName + "\n" + e.Message + "\n" + e.InnerException?.Message + "\n" + msg);
 
                 // Return an error
                 return serializer.Serialize(new TResponse()

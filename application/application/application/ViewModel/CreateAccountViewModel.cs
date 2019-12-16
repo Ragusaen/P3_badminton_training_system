@@ -115,11 +115,12 @@ namespace application.ViewModel
             bool success;
             if (!NotOnList)
             {
+                if (!ValidateUserInput(NotOnList)) return;
                 success = RequestCreator.CreateAccountRequest(Username, Password, _selectedBadmintonId.Value, null);
             }
             else
             {
-                if (!ValidateUserInput()) return;
+                if (!ValidateUserInput(NotOnList)) return;
                 success = RequestCreator.CreateAccountRequest(Username, Password, 0, SearchText);
             }
 
@@ -127,12 +128,10 @@ namespace application.ViewModel
                 //Navigate back
                 Navigation.PopAsync();
             else
-            {
                 UsernameErrorVisibility = true;
-            }
         }
 
-        private bool ValidateUserInput()
+        private bool ValidateUserInput(bool notOnList)
         {
             if (Username.Length > 32)
             {
@@ -140,7 +139,13 @@ namespace application.ViewModel
                 return false;
             }
 
-            if (SearchText.Length > 256)
+            if (Password.Length < 6)
+            {
+                Application.Current.MainPage.DisplayAlert("Invalid input", "Password must contain at least than 6 characters", "Ok");
+                return false;
+            }
+
+            if (notOnList && SearchText.Length > 256)
             {
                 Application.Current.MainPage.DisplayAlert("Invalid input", "Name can not contain more than 256 characters", "Ok");
                 return false;

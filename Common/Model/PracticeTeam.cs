@@ -7,6 +7,5 @@ namespace Common.Model
         public int Id { get; set; }
         public string Name { get; set; }
         public Trainer Trainer { get; set; }
-        public List<Player> Players { get; set; }
     }
 }

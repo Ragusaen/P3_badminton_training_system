@@ -13,15 +13,13 @@ namespace Server.SystemInterface
         }
     }
 
-    delegate TResponse RequestHandlerDelegate<out TResponse, in TRequest>(TRequest request);
-
     /// <summary>
     /// This class is for managing requests. This connects the raw data from the client with the correct request handler.
     /// </summary>
     class RequestManager
     {
         // Dictionary to match each request type to a request handler
-        private Dictionary<RequestType, RequestHandler> _requestDictionary =
+        private readonly Dictionary<RequestType, RequestHandler> _requestDictionary =
             new Dictionary<RequestType, RequestHandler>()
             {
                 {RequestType.Login, new LoginHandler() },

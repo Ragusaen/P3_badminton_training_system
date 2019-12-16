@@ -10,7 +10,7 @@ namespace Server.Function.Handlers
     {
         protected override GetPlayerFeedbackResponse InnerHandle(GetPlayerFeedbackRequest request, member requester)
         {
-            if ((MemberType)requester.MemberType != MemberType.Trainer && requester.ID != request.MemberId)
+            if (!((MemberType)requester.MemberType).HasFlag(MemberType.Trainer) && requester.ID != request.MemberId)
                 return new GetPlayerFeedbackResponse()
                 {
                     AccessDenied = true
