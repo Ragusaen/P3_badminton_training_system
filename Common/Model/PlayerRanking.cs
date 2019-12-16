@@ -13,7 +13,8 @@ namespace Common.Model
         [Flags]
         public enum LevelGroup
         {
-            Unknown, D, CD, C, BC, B, AB, A, MA, M, EM, E
+            Unknown = 0, D = 1, C = 2, B = 4, A = 8, M = 16, E = 32,
+            CD = D | C, BC = C | B, AB = B | A, MA = A | M, EM = M | E,
         }
 
         public AgeGroup Age { get; set; }
@@ -22,10 +23,5 @@ namespace Common.Model
         public int SinglesPoints { get; set; }
         public int DoublesPoints { get; set; }
         public int MixPoints { get; set; }
-
-        public override string ToString()
-        {
-            return $"LVL: {Age} {Level}, Level: {LevelPoints}, Singles: {SinglesPoints}, Doubles: {DoublesPoints} , Mixed: {MixPoints}";
-        }
     }
 }
