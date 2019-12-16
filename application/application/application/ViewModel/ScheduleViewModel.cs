@@ -80,11 +80,10 @@ namespace application.ViewModel
         private void SetSelectedEvents()
         {
             if (Events.ContainsKey(SelectedDate))
-                SelectedEvents = new ObservableCollection<PlaySessionEvent>((List<PlaySessionEvent>)Events[SelectedDate]);
+                SelectedEvents = new ObservableCollection<PlaySessionEvent>(((List<PlaySessionEvent>)Events[SelectedDate]).OrderBy(p => p.Time));
             else
                 SelectedEvents = new ObservableCollection<PlaySessionEvent>();
         }
-
 
         public class PlaySessionEvent
         {
@@ -105,6 +104,7 @@ namespace application.ViewModel
                 _relevantOnly = value;
                 Events = new EventCollection();
                 LoadEvents();
+                SetSelectedEvents();
             }
         }
 

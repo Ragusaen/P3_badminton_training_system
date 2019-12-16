@@ -242,7 +242,11 @@ namespace application.ViewModel
                 await PopupNavigation.Instance.PushAsync(page);
             }
             else if (action == "Make New Exercise")
-                await PopupNavigation.Instance.PushAsync(new CreateExercisePopupPage());
+            {
+                var page = new CreateExercisePopupPage();
+                ((CreateExercisePopupViewModel) page.BindingContext).CallBackEvent += eventHandler;
+                await PopupNavigation.Instance.PushAsync(page);
+            }
         }
 
         private RelayCommand _addNewFocusPointCommand;
@@ -279,7 +283,7 @@ namespace application.ViewModel
         private void TeamClick(object param)
         {
             PracticeTeamPopupPage page = new PracticeTeamPopupPage(new List<PracticeTeam>());
-            page.CallBackEvent += TeamPage_CallBackEvent; ;
+            page.CallBackEvent += TeamPage_CallBackEvent;
             PopupNavigation.Instance.PushAsync(page);
         }
 
