@@ -12,11 +12,11 @@ namespace Server.Function
         private static Logger _log = LogManager.GetCurrentClassLogger();
 
         // Defines how thorough the hashing function should be
-        private const int Pbkdf2Iterations = 100000; 
+        private const int Pbkdf2Iterations = 15000; 
 
         // Sizes of data
         public const int HashSize = 32;
-        public const int SaltSize = 128;
+        public const int SaltSize = 32;
         public const int TokenSize = 64;
 
         /// <summary>
@@ -52,7 +52,7 @@ namespace Server.Function
         }
 
         /// <summary>
-        /// Generates cryptographically random bytes to be used as a login token
+        /// Generates cryptographically secure random bytes to be used as a login token
         /// </summary>
         private byte[] GenerateLoginToken()
         {
@@ -116,6 +116,7 @@ namespace Server.Function
 
             // Hash password with salt
             var pbkdf2 = new Rfc2898DeriveBytes(password, salt, Pbkdf2Iterations);
+
             byte[] passwordHash = pbkdf2.GetBytes(HashSize);
 
             return (passwordHash, salt);
@@ -124,16 +125,22 @@ namespace Server.Function
         /// <summary>
         /// Verifies that the given password matches the one that was used to create the password hash.
         /// </summary>
-        /// <param name="inputPw">The raw password to test against</param>
+        /// <param name="loginPassword">The raw password to test against</param>
         /// <param name="salt"> The salt to append to the raw password</param>
-        /// <param name="hashedPw"> The stored hashed password</param>
+        /// <param name="hashedPassword"> The stored hashed password</param>
         /// <returns>true, if password is the same as the one originally used for the stored hashed password; otherwise, false</returns>
-        private bool VerifyPassword(string inputPw, byte[] salt, byte[] hashedPw)
+        private bool VerifyPassword(string loginPassword, byte[] salt, byte[] hashedPassword)
         {
-            var pbkdf2 = new Rfc2898DeriveBytes(inputPw, salt, Pbkdf2Iterations);
-            byte[] inputPwHash = pbkdf2.GetBytes(HashSize);
+            var pbkdf2 = new Rfc2898DeriveBytes(loginPassword, salt, Pbkdf2Iterations);
 
-            return inputPwHash.SequenceEqual(hashedPw);
+            var s = new Stopwatch();
+            s.Start();
+            byte[] inputPwHash = pbkdf2.GetBytes(HashSize);
+            s.Stop();
+
+            Console.WriteLine($"PBKDF2 took {s.ElapsedMilliseconds} ms");
+
+            return inputPwHash.SequenceEqual(hashedPassword);
         }
     }
 }

@@ -69,7 +69,7 @@ namespace Server.Function
                 // Scrape the raw data from this list
                 List<IWebElement> rawRanking = ScrapeRankingsTable(browser);
 
-                // Parse the data and assign it to the players
+                // ParseAndHandle the data and assign it to the players
                 DistributeRankings(players, rawRanking, (Category)(1 << i));
 
                 // Try to scrape second page, throws exception if page doesn't exist
@@ -83,7 +83,7 @@ namespace Server.Function
                     // Scrape the raw data from this list
                     rawRanking = ScrapeRankingsTable(browser);
 
-                    // Parse the data and assign it to the players
+                    // ParseAndHandle the data and assign it to the players
                     DistributeRankings(players, rawRanking, (Category)(1 << i));
                 }
                 catch (Exception) { }

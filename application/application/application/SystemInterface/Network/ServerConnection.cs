@@ -10,7 +10,7 @@ namespace application.SystemInterface.Network
 {
     class ServerConnection
     {
-        private readonly IPAddress _machineName = new IPAddress(new byte[] {192, 168, 43, 240});
+        private readonly IPAddress _machineName = new IPAddress(new byte[] {192, 168, 42, 170});
         private readonly string _serverName = "Triton";
         private TcpClient _tcpClient = null;
         private SslStream _sslStream = null;
@@ -58,7 +58,7 @@ namespace application.SystemInterface.Network
             return IsConnected;
         }
 
-        public byte[] SendRequest(byte[] data)
+        public byte[] SendRequestData(byte[] data)
         {
             if (!IsConnected)
                 throw new NotConnectedToServerException("Couldn't send request as there was no connection to server.");
@@ -72,20 +72,20 @@ namespace application.SystemInterface.Network
             _sslStream.Write(request);
             Debug.WriteLine($"CLIENT: Wrote {request.Length} bytes");
 
-            byte[] received = ReadRequestData();
+            byte[] received = ReadResponseData();
 
             Debug.WriteLine($"CLIENT: Read {received.Length} bytes");
             return received;
         }
 
-        private byte[] ReadRequestData()
+        private byte[] ReadResponseData()
         {
             // Read first 4 bytes, which is the size of the request
             byte[] requestSizeBuffer = new byte[4];
             int bytes = _sslStream.Read(requestSizeBuffer, 0, requestSizeBuffer.Length);
             if (bytes != 4)
             {
-                throw new InvalidRequestException("Request was smaller than 4 bytes");
+                throw new InvalidRequestException("Response was smaller than 4 bytes");
             }
 
             // Convert to int (byte order is big endian)
@@ -99,7 +99,7 @@ namespace application.SystemInterface.Network
 
             if (bytesRead != requestSize)
             {
-                throw new InvalidRequestException("Request was not expected size");
+                throw new InvalidRequestException("Response was not expected size");
             }
 
             return buffer;

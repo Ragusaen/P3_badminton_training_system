@@ -100,7 +100,6 @@ namespace application.UI
         {
             //Clear stack layout ExerciseStack
             ExerciseStack.Children.Clear();
-            Debug.WriteLine($"Found {_vm.PlanElement.Count} exercises");
 
             //Create Exercises
             foreach (ExerciseItem e in _vm.PlanElement)

@@ -11,7 +11,6 @@ namespace Server.Function.Handlers
         {
             if (!((Common.Model.MemberType)requester.MemberType).HasFlag(MemberType.Trainer))
             {
-                RequestMember = request.Member;
                 return new ChangeTrainerPrivilegesResponse { AccessDenied = true };
             }
 

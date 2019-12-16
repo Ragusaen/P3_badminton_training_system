@@ -28,23 +28,30 @@ namespace Server.Function.Handlers
                 if ((PlaySession.Type) DBps.Type == PlaySession.Type.Practice)
                 {
                     response.PlaySessions.Add((PracticeSession)db.practicesessions.Find(DBps.ID));
-                    var a = requester.practiceteamsplayer.Any(p => p.ID == DBps.practicesession.practiceteam.ID);
-                    var b = DBps.practicesession.TrainerID == requester.ID;
-                    response.IsRelevantForMember.Add( a || b);
+                    response.IsRelevantForMember.Add(IsRelevant(requester, DBps.practicesession));
                 }
                 else if ((PlaySession.Type) DBps.Type == PlaySession.Type.Match)
                 {
                     response.PlaySessions.Add((TeamMatch)db.teammatches.Find(DBps.ID));
-                    response.IsRelevantForMember.Add(
-                        DBps.teammatch.CaptainID == requester.ID ||
-                        DBps.teammatch.positions.Any(pos => pos.MemberID == requester.ID)
-                        );
+                    response.IsRelevantForMember.Add(IsRelevant(requester, DBps.practicesession));
                 }
                 else
-                    Console.WriteLine("Invalid type");
+                    _log.Debug($"Found play session with invalid type {DBps.Type}. ID: {DBps.ID}");
             }
 
             return response;
+        }
+
+        private bool IsRelevant(member m, practicesession ps)
+        {
+            return m.practiceteamsplayer.Any(p => p.ID == ps.practiceteam.ID)
+                   || ps.TrainerID == m.ID;
+        }
+
+        private bool IsRelevant(member m, teammatch tm)
+        {
+            return tm.CaptainID == m.ID ||
+                   tm.positions.Any(pos => pos.MemberID == m.ID);
         }
     }
 }

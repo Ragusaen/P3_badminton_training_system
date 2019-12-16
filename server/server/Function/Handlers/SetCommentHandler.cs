@@ -11,7 +11,6 @@ namespace Server.Function.Handlers
             if (!(((Common.Model.MemberType)requester.MemberType).HasFlag(MemberType.Trainer) ||
                   requester.ID == request.Member.Id))
             {
-                RequestMember = request.Member;
                 return new SetCommentResponse { AccessDenied = true };
             }
 

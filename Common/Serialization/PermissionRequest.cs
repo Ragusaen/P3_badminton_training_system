@@ -6,13 +6,13 @@ using System.Text;
 namespace Common.Serialization
 {
     [Serializable]
-    public class PermissionRequest : Request
+    public abstract class PermissionRequest : Request
     {
         public byte[] Token;
     }
 
     [Serializable]
-    public class PermissionResponse : Response
+    public abstract class PermissionResponse : Response
     {
         public bool AccessDenied = false;
     }

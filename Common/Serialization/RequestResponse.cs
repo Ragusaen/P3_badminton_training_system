@@ -5,11 +5,11 @@ using System.Text;
 
 namespace Common.Serialization
 {
-    public class Request
+    public abstract class Request
     {
     }
 
-    public class Response
+    public abstract class Response 
     {
         // If not null it indicates an error
         public string Error = null;

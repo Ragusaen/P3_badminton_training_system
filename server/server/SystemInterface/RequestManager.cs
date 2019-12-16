@@ -78,9 +78,9 @@ namespace Server.SystemInterface
             }; 
         
         /// <summary>
-        /// Parse the request and call the request handler
+        /// ParseAndHandle the request and call the request handler
         /// </summary>
-        public byte[] Parse(byte[] request)
+        public byte[] ParseAndHandle(byte[] request)
         {
             // The first byte is the request type
             byte type = request[0];

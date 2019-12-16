@@ -14,11 +14,8 @@ namespace Server.Function.Handlers
     /// </summary>
     abstract class RequestHandler
     {
-        // The member that send the request
-        protected Member RequestMember;
-
         protected static Logger _log = LogManager.GetCurrentClassLogger();
-        
+
         /// <summary>
         /// Handle the overall data serialization and deserialization. This method handles the parts of request handling that is
         /// generic for all requests.
@@ -76,8 +73,8 @@ namespace Server.Function.Handlers
                 });
             }
 
-
-            LogAccess(response, member);
+            if (response is PermissionResponse pres && pres.AccessDenied)
+                LogAccess(member);
 
             try
             {
@@ -102,21 +99,10 @@ namespace Server.Function.Handlers
         }
 
         [Conditional("DEBUG")]
-        private void LogAccess(Response response, member member)
+        private void LogAccess(member member)
         {
-            if (response is PermissionResponse r && r.AccessDenied)
-            {
-                if (RequestMember == null)
-                {
-                    _log.Error($"{this.GetType().Name} Access Denied - requester type: {Enum.GetName(typeof(MemberType), member.MemberType)}. " +
-                               $"Requester id {member.ID} -> {member.Name}");
-                }
-                else
-                {
-                    _log.Error($"{this.GetType()} Access Denied - requester type: {Enum.GetName(typeof(MemberType), member.MemberType)}. " +
-                               $"Subject id: {RequestMember.Id} | Requester id {member.ID} -> {member.Name}");
-                }
-            }
+            _log.Error($"{this.GetType().Name} Access Denied - requester type: {Enum.GetName(typeof(MemberType), member.MemberType)}. " +
+                       $"Requester id {member.ID} -> {member.Name}");
         }
 
         /// <summary>

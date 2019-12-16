@@ -30,7 +30,6 @@ namespace application.ViewModel
             base.FocusPointQuestion = feedback.FocusPointQuestion;
             base.GoodQuestion = feedback.GoodQuestion;
             base.ReadyQuestion = feedback.ReadyQuestion;
-            base.Player = feedback.Player;
             base.PlaySession = feedback.PlaySession;
         }
     }

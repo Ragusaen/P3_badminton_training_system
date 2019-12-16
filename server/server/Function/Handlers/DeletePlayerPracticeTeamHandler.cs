@@ -11,7 +11,6 @@ namespace Server.Function.Handlers
             if (!(((Common.Model.MemberType)requester.MemberType).HasFlag(MemberType.Trainer) ||
                   requester.ID == request.Player.Member.Id))
             {
-                RequestMember = request.Player.Member;
                 return new DeletePlayerPracticeTeamResponse { AccessDenied = true };
             }
 

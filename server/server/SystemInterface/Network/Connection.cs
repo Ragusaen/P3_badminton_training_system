@@ -33,13 +33,13 @@ namespace Server.SystemInterface.Network
                 try
                 {
                     // Read a request
-                    request = ReadRequestData(); // Blocks until client writes
+                    request = ReadRequest(); // Blocks until client writes
 
-                    // Parse the request and handle it
-                    var response = requestManager.Parse(request);
+                    // ParseAndHandle the request and handle it
+                    var response = requestManager.ParseAndHandle(request);
 
                     // Send response to the client
-                    Respond(response);
+                    WriteResponse(response);
 
                 }
                 catch (InvalidRequestException e) // If the request type was unknown
@@ -60,22 +60,22 @@ namespace Server.SystemInterface.Network
         /// Send data to the client
         /// </summary>
         /// <param name="data"> Raw bytes to send to client</param>
-        private void Respond(byte[] data)
+        private void WriteResponse(byte[] data)
         {
             // Create the buffer for the data. Add 4 bytes to store the length of the request-
-            byte[] response = new byte[data.Length + 4];
+            byte[] responseBuffer = new byte[data.Length + 4];
 
             // Convert the request length (int 32 bit) into 4 bytes (8 bit)
             byte[] lengthBytes = BitConverter.GetBytes(data.Length);
 
             // Copy the 4 bytes that define the length of the request into the beginning of the request
-            Array.Copy(lengthBytes, 0, response, 0, lengthBytes.Length);
+            Array.Copy(lengthBytes, 0, responseBuffer, 0, lengthBytes.Length);
 
             // Copy the rest of the request data in afterwards
-            Array.Copy(data, 0, response, 4, data.Length);
+            Array.Copy(data, 0, responseBuffer, 4, data.Length);
 
             // Write the response to the ssl stream
-            _sslStream.Write(response);
+            _sslStream.Write(responseBuffer);
         }
 
         public void Close()
@@ -87,7 +87,7 @@ namespace Server.SystemInterface.Network
         /// <summary>
         /// Read raw data send from the ssl stream from the client.
         /// </summary>
-        private byte[] ReadRequestData()
+        private byte[] ReadRequest()
         {
             // Read first 4 bytes, which is the size of the request
             byte[] requestSizeBuffer = new byte[4];

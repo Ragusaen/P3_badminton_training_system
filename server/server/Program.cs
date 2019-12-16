@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Runtime.InteropServices;
+using System.Text;
 using Common.Model;
 using Common.Serialization;
 using Server.DAL;

@@ -13,10 +13,11 @@ namespace Common.Model
 
     public class Player : MemberRole
     {
-        public PlayerRanking Rankings { get; set; }
         public Sex Sex { get; set; }
         public int BadmintonPlayerId { get; set; }
         public bool OnRankList { get; set; }
+
+        public PlayerRanking Rankings { get; set; }
         public List<Feedback> Feedbacks { get; set; }
         public List<FocusPointItem> FocusPointItems { get; set; }
         public List<PracticeTeam> PracticeTeams { get; set; }
