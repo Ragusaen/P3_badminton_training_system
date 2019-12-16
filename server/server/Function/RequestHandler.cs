@@ -2,12 +2,13 @@
 using System.Diagnostics;
 using System.Text;
 using System.Xml;
+using Common;
 using Common.Model;
 using Common.Serialization;
 using NLog;
 using Server.DAL;
 
-namespace Server.Function.Handlers
+namespace Server.Function
 {
     /// <summary>
     /// This is the super-class for all request handlers

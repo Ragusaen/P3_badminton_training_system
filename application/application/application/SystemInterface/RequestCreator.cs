@@ -54,7 +54,7 @@ namespace application.SystemInterface
 
 
             // Send request and get response
-            byte[] responseBytes = _connection.SendRequestData(messageBytes);
+            byte[] responseBytes = _connection.WriteRequest(messageBytes);
 
             // Deserialize response
             TResponse response = serializer.Deserialize<TResponse>(responseBytes);

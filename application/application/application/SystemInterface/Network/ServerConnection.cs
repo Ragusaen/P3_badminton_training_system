@@ -60,7 +60,7 @@ namespace application.SystemInterface.Network
             return IsConnected;
         }
 
-        public byte[] SendRequestData(byte[] data)
+        public byte[] WriteRequest(byte[] data)
         {
             if (!IsConnected)
                 throw new NotConnectedToServerException("Couldn't send request as there was no connection to server.");
@@ -74,13 +74,13 @@ namespace application.SystemInterface.Network
             _sslStream.Write(request);
             Debug.WriteLine($"CLIENT: Wrote {request.Length} bytes");
 
-            byte[] received = ReadResponseData();
+            byte[] received = ReadResponse();
 
             Debug.WriteLine($"CLIENT: Read {received.Length} bytes");
             return received;
         }
 
-        private byte[] ReadResponseData()
+        private byte[] ReadResponse()
         {
             // Read first 4 bytes, which is the size of the request
             byte[] requestSizeBuffer = new byte[4];
