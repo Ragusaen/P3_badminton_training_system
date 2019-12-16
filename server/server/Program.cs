@@ -18,17 +18,16 @@ namespace Server
 
         public static void Main(string[] args)
         {
-            var db = new DatabaseEntities();
-
-            if (!db.members.Any())
-            {
-                RankListScraper scraper = new RankListScraper();
-                scraper.UpdatePlayers();
+            using(var db = new DatabaseEntities()) {
+                if (!db.members.Any())
+                {
+                    var scraper = new RankListScraper();
+                    scraper.UpdatePlayers();
+                }
             }
-            
+
             try
             {
-
                 _log.Debug("Server started");
                 SslTcpServer sslTcpServer = new SslTcpServer("cert.pfx");
                 sslTcpServer.RunServer();

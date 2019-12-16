@@ -10,7 +10,7 @@
     <NavigationPage.TitleView>
         <StackLayout Orientation="Horizontal">
             <Label x:Name="Name" Text="name" FontAttributes="Bold" FontSize="30" TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
-            <ImageButton Source="" x:Name="EditButton" HeightRequest="30" VerticalOptions="CenterAndExpand" HorizontalOptions="End" Margin="0,0,15,0" BackgroundColor="Red"/>
+            <ImageButton Source="" x:Name="EditButton" IsVisible="{Binding EditVisibility}" HeightRequest="30" VerticalOptions="CenterAndExpand" HorizontalOptions="End" Margin="0,0,15,0" BackgroundColor="Red"/>
         </StackLayout>
         </NavigationPage.TitleView>
 

@@ -48,7 +48,7 @@ namespace Server.Function
             var browser = StartBrowser();
             NavigateCorrectVersion(browser);  
 
-            // Set all the members in the database to not be on the ranklist, this will be changed
+            // Set all the members in the database to not be on the rank list, this will be changed
             // as they are found again
             foreach (var dbMember in _db.members)
             {
@@ -57,6 +57,7 @@ namespace Server.Function
 
             // Start scraping from rank lists
             var players = new List<Player>();
+            var foundPlayers = new List<Player>();
             for (int i = 0; i < RankingsCount; i++)
             {
                 _log.Debug("Scraping category: {category}", Categories[i]);
@@ -70,7 +71,8 @@ namespace Server.Function
                 List<IWebElement> rawRanking = ScrapeRankingsTable(browser);
 
                 // Parse the data and assign it to the players
-                DistributeRankings(players, rawRanking, (Category)(1 << i));
+                DistributeRankings(players, foundPlayers, rawRanking, (Category)(1 << i));
+                SetNotOnRankListPointsToZero(players, foundPlayers, (Category)(1 << i));
 
                 // Try to scrape second page, throws exception if page doesn't exist
                 try
@@ -84,9 +86,12 @@ namespace Server.Function
                     rawRanking = ScrapeRankingsTable(browser);
 
                     // Parse the data and assign it to the players
-                    DistributeRankings(players, rawRanking, (Category)(1 << i));
+                    DistributeRankings(players, foundPlayers, rawRanking, (Category)(1 << i));
+                    SetNotOnRankListPointsToZero(players, foundPlayers, (Category)(1 << i));
                 }
                 catch (Exception) { }
+
+                
             }
 
             // Close the browser
@@ -98,7 +103,7 @@ namespace Server.Function
             _log.Debug("UpdatePlayers finished");
         }
 
-        private void DistributeRankings(List<Player> players, List<IWebElement> rawRanking, Category category)
+        private void DistributeRankings(List<Player> players, List<Player> foundPlayers, List<IWebElement> rawRanking, Category category)
         {
             // Go through all the rows from the raw ranking
             for (int j = 1; j < rawRanking.Count; j++) // Skips first row to avoid the title
@@ -164,6 +169,7 @@ namespace Server.Function
                         continue;
                     }
                 }
+                foundPlayers.Add(player);
                         
                 // Update the players rankings
                 UpdateRankingsFromRow(player.Rankings, FetchPointsFromRow(currentRow), category);
@@ -278,6 +284,26 @@ namespace Server.Function
                 return PlayerRanking.LevelGroup.Unknown;
 
             return levelDict[res]; 
+        }
+
+        private void SetNotOnRankListPointsToZero(List<Player> players, List<Player> foundPlayers, Category category)
+        {
+            if (category != Category.Level)
+                foreach (var p in players)
+                {
+                    if (!foundPlayers.Contains(p))
+                    {
+                        if ((category & Category.Mens) > 0 && p.Sex == Sex.Male)
+                            UpdateRankingsFromRow(p.Rankings, 0, category);
+                        else if ((category & Category.Womens) > 0 && p.Sex == Sex.Female)
+                            UpdateRankingsFromRow(p.Rankings, 0, category);
+                        else if (p.Sex == Sex.Unknown) //If the sex is unknown then the player never appeared on any specialisation rank lists
+                            UpdateRankingsFromRow(p.Rankings, 0, category);
+                    }
+                    else
+                        p.OnRankList = true;
+                }
+            foundPlayers.Clear();
         }
 
         private List<IWebElement> ScrapeRankingsTable(IWebDriver browser)

@@ -33,6 +33,8 @@ namespace application.ViewModel
             set { SetProperty(ref _description, value); }
         }
 
+        public event EventHandler<ExerciseDescriptor> CallBackEvent;
+
         private RelayCommand _createNewExerciseCommand;
 
         public RelayCommand CreateNewExerciseCommand
@@ -59,6 +61,7 @@ namespace application.ViewModel
                 };
 
                 RequestCreator.SetExerciseDiscriptor(exercise);
+                CallBackEvent?.Invoke(this, exercise);
                 PopupNavigation.Instance.PopAsync();
             }
         }

@@ -106,7 +106,8 @@ namespace application.ViewModel
                     PlayerPracticeTeamsListHeight = PlayerPracticeTeams.Count * 45;
 
                     List<Feedback> feedbacks = RequestCreator.GetPlayerFeedback(Member);
-                    if (feedbacks.Count != 0)
+                    Player.Feedbacks = feedbacks;
+                    if (feedbacks.Count > 0)
                     {
                         feedbacks = feedbacks.OrderByDescending(p => p.PlaySession.Start.Date)
                             .ThenByDescending(p => p.PlaySession.Start.TimeOfDay).ToList();

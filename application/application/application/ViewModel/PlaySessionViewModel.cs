@@ -44,8 +44,18 @@ namespace application.ViewModel
             set => SetProperty(ref _reservesVisible, value);
         }
 
+        private bool _editVisibility;
+
+        public bool EditVisibility
+        {
+            get => _editVisibility;
+            set => SetProperty(ref _editVisibility, value);
+        }
+
+
         public PlaySessionViewModel(PlaySession playSession)
         {
+            EditVisibility = RequestCreator.LoggedInMember.MemberType.HasFlag(MemberType.Trainer);
             bool hasNotFeedbacked = true;
             List<Feedback> feedbacks = RequestCreator.GetPlayerFeedback(RequestCreator.LoggedInMember);
             foreach (Feedback fb in feedbacks) 
