@@ -52,10 +52,11 @@ namespace application.ViewModel
             set => SetProperty(ref _editVisibility, value);
         }
 
+        public PlaySessionViewModel(PlaySession playSession, bool relevant, RequestCreator requestCreator, INavigation navigation) : base(requestCreator, navigation)
 
-        public PlaySessionViewModel(PlaySession playSession, RequestCreator requestCreator, INavigation navigation) : base(requestCreator, navigation)
         {
             EditVisibility = RequestCreator.LoggedInMember.MemberType.HasFlag(MemberType.Trainer);
+            bool isPlayer = RequestCreator.LoggedInMember.MemberType.HasFlag(MemberType.Player);
             bool hasNotFeedbacked = true;
             List<Feedback> feedbacks = RequestCreator.GetPlayerFeedback(RequestCreator.LoggedInMember);
             foreach (Feedback fb in feedbacks) 
@@ -66,7 +67,7 @@ namespace application.ViewModel
 
             PlaySession = playSession;
             DateTime feedbackexdate = PlaySession.End.AddDays(7);
-            if (DateTime.Compare(PlaySession.Start, DateTime.Now) <= 0 && DateTime.Compare(DateTime.Now, feedbackexdate) <= 0 && hasNotFeedbacked)
+            if (DateTime.Compare(PlaySession.Start, DateTime.Now) <= 0 && DateTime.Compare(DateTime.Now, feedbackexdate) <= 0 && hasNotFeedbacked && relevant && isPlayer)
                 PracticeFeedbackIsVisible = true;
             else
                 PracticeFeedbackIsVisible = false;

@@ -6,26 +6,27 @@
              mc:Ignorable="d"
              x:Class="application.UI.MenuPage"
              xmlns:pages="clr-namespace:application.UI" NavigationPage.HasNavigationBar="False">
-    <MasterDetailPage.Master>
-        <ContentPage Title="Master" BackgroundColor="#e8e8e8" IconImageSource="menuicon.jpg">
-            <StackLayout Orientation="Vertical">
-                <StackLayout BackgroundColor="Red" HeightRequest="40">
-                    <Label Text="Menu" FontSize="20" VerticalOptions="CenterAndExpand" TextColor="White" HorizontalOptions="Center"/>
-                </StackLayout>
-                <ListView x:Name="NavigationList" RowHeight="60" SeparatorVisibility="None" BackgroundColor="#e8e8e8" ItemSelected="OnMenuItemSelected">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <StackLayout VerticalOptions="FillAndExpand" Orientation="Horizontal" Padding="20,10,0,10" Spacing="20">
-                                    <Image Source="{Binding Icon}" WidthRequest="40" HeightRequest="40" VerticalOptions="Center" />
-                                    <Label Text="{Binding Title}" FontSize="Medium" VerticalOptions="Center" TextColor="Black"/>
-                                </StackLayout>
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-                <Button Text="Sign out" Margin="0,20,0,10" Clicked="Logout_Clicked" BackgroundColor="#8b0000" TextColor="White"/>
-            </StackLayout>
-        </ContentPage>
-    </MasterDetailPage.Master>
+
+	<MasterDetailPage.Master>
+		<ContentPage Title="Master" BackgroundColor="#e8e8e8" IconImageSource="menuicon.jpg">
+			<StackLayout Orientation="Vertical">
+				<StackLayout BackgroundColor="Red" HeightRequest="40">
+					<Label Text="Menu" FontSize="20" VerticalOptions="CenterAndExpand" TextColor="White" HorizontalOptions="Center"/>
+				</StackLayout>
+				<ListView x:Name="NavigationList" RowHeight="60" SeparatorVisibility="None" BackgroundColor="#e8e8e8" ItemSelected="OnMenuItemSelected">
+					<ListView.ItemTemplate>
+						<DataTemplate>
+							<ViewCell>
+								<StackLayout VerticalOptions="FillAndExpand" Orientation="Horizontal" Padding="20,10,0,10" Spacing="20">
+									<Image Source="{Binding Icon}" WidthRequest="40" HeightRequest="40" VerticalOptions="Center" />
+									<Label Text="{Binding Title}" FontSize="Medium" VerticalOptions="Center" TextColor="Black"/>
+								</StackLayout>
+							</ViewCell>
+						</DataTemplate>
+					</ListView.ItemTemplate>
+				</ListView>
+				<Button Text="Sign out" Margin="0,20,0,10" Clicked="Logout_Clicked" BackgroundColor="#8b0000" TextColor="White"/>
+			</StackLayout>
+		</ContentPage>
+	</MasterDetailPage.Master>
 </pages:BaseMasterDetailPage>

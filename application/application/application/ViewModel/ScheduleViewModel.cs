@@ -93,6 +93,7 @@ namespace application.ViewModel
             public string Detail { get; set; }
             public Color Color { get; set; }
             public PlaySession PlaySession;
+            public bool Relevant;
         }
 
         private bool _relevantOnly = false;
@@ -131,12 +132,13 @@ namespace application.ViewModel
                 // Skip if the event already has been added
                 else if (((List<PlaySessionEvent>) Events[ps.Start]).Any(pse => pse.PlaySession.Id == ps.Id))
                     continue;
-                
+
                 var psEvent = new PlaySessionEvent()
                 {
                     Location = ps.Location,
                     Time = ps.Start.ToString("HH:mm"),
-                    PlaySession = ps
+                    PlaySession = ps,
+                    Relevant = isMemberRelevant[i]
                 };
 
                 if (ps is PracticeSession practice)

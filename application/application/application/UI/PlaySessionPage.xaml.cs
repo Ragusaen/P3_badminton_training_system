@@ -18,11 +18,13 @@ namespace application.UI
     {
         private PlaySessionViewModel _vm;
         PlaySession PlaySession;
+        bool Relevant;
 
-        public PlaySessionPage(PlaySession playSession, RequestCreator requestCreator) : base(requestCreator)
+        public PlaySessionPage(PlaySession playSession, bool relevant, RequestCreator requestCreator) : base(requestCreator)
         {
             InitializeComponent();
-            _vm = new PlaySessionViewModel(playSession, requestCreator, Navigation);
+            _vm = new PlaySessionViewModel(playSession, relevant, requestCreator, Navigation);
+            Relevant = relevant;
             BindingContext = _vm;
             _vm.Navigation = Navigation;
             PlaySession = playSession;
@@ -47,8 +49,7 @@ namespace application.UI
 
         protected override void OnAppearing()
         {
-            base.OnAppearing();
-            _vm = new PlaySessionViewModel(PlaySession, RequestCreator, Navigation);
+            _vm = new PlaySessionViewModel(PlaySession, Relevant, RequestCreator, Navigation);
             BindingContext = _vm;
             _vm.Navigation = Navigation;
         }

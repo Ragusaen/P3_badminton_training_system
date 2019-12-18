@@ -9,9 +9,16 @@
              x:Name="rootpage">
 
     <NavigationPage.TitleView>
-        <StackLayout Orientation="Horizontal" Spacing="10">
-            <Label Text="Administration" FontAttributes="Bold" FontSize="30" TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
-        </StackLayout>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.40*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Column="1" Text="Administration" FontAttributes="Bold" FontSize="30" TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+
+        </Grid>
     </NavigationPage.TitleView>
 
     <ContentPage.Content>

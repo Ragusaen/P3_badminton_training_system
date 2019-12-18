@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ui:BasePopupPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup"
+             xmlns:ui="clr-namespace:application.UI;assembly=application"
+             mc:Ignorable="d"
+             x:Class="application.UI.ViewFocusPointDetails">
+    
+    <StackLayout Margin="36">
+        <StackLayout BackgroundColor="White" Padding="20,20,20,20" VerticalOptions="Start">
+            <Label Text="{Binding Name}" FontAttributes="Bold"/>
+            <BoxView BackgroundColor="#BBBBBB" HeightRequest="1"/>
+            <Label Text="{Binding Description}" />
+            <Label x:Name="UrlLabel">
+            <Label.FormattedText>
+                <FormattedString>
+                    <Span Text="Link: " />
+                        <Span x:Name="UrlText" Text="{Binding VideoUrl}"
+                              TextColor="Blue"
+                              TextDecorations="Underline">
+                        </Span>
+                </FormattedString>
+                </Label.FormattedText>
+            </Label>
+        </StackLayout>
+        <StackLayout x:Name="OuterStack" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"></StackLayout>
+    </StackLayout>
+</ui:BasePopupPage>

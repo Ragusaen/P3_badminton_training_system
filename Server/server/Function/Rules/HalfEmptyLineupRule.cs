@@ -16,14 +16,20 @@ namespace Server.Function.Rules
         public List<RuleBreak> Rule(TeamMatch match)
         {
             _ruleBreaks = new List<RuleBreak>();
+            //Gets amount of positions
             int posCount = match.Lineup.Sum(p => p.Positions.Count);
+
+            //Gets amount of positions that are empty
             int nullPosCount = match.Lineup.Sum(p => p.Positions.Count(q => CheckPositionNull(q, p.Type)));
+
+            //If half the lineup or more is empty, add rulebreaks.
             if (nullPosCount > posCount / 2)
                 AddRuleBreaks(match);
 
             return _ruleBreaks;
         }
 
+        //Checks if position is empty.
         private bool CheckPositionNull(Position pos, Lineup.PositionType type)
         {
             if (pos.Player == null)
@@ -33,6 +39,7 @@ namespace Server.Function.Rules
             return false;
         }
 
+        //Add rulebreaks to empty positions.
         private void AddRuleBreaks(TeamMatch match)
         {
             foreach (var group in match.Lineup)

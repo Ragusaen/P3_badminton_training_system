@@ -21,37 +21,59 @@ namespace Server.Function.Rules
         public List<RuleBreak> Rule(TeamMatch match)
         {
             _ruleBreaks = new List<RuleBreak>();
-            List<Player> players = GetPlayersInLineup(match.Lineup);
+            var playersGroup = GetPlayersInLineup(match.Lineup);
 
-            //Find all players that appears more than _max times
-            var ids = players.GroupBy(p => p.Member.Id)
+            //Find all players that appears more than _max times.
+            var tooManyOccurrencesIds = playersGroup.players.GroupBy(p => p.Member.Id)
                 .Where(g => g.Count() > _max)
                 .Select(y => y.Key)
                 .ToList();
 
-            AddRulebreaksToIllegalPlayers(ids, match.Lineup);
+            //Add rulebreaks to players.
+            AddRulebreaksToIllegalPlayers(tooManyOccurrencesIds, match.Lineup, $"Player can not appear more than { _max} times on a lineup!");
+
+            //If lineup does not contain a reserve,
+            //get ids of players that appear less than _max times
+            //and add rulebreaks.
+            if (!playersGroup.reserveOnLineup)
+            {
+                var tooFewOccurrencesIds = playersGroup.players.GroupBy(p => p.Member.Id)
+                    .Where(g => g.Count() < _max)
+                    .Select(y => y.Key)
+                    .ToList();
+                AddRulebreaksToIllegalPlayers(tooFewOccurrencesIds, match.Lineup, $"Player must appear { _max} times on a lineup!");
+            }
             return _ruleBreaks;
         }
 
-        private List<Player> GetPlayersInLineup(Lineup lineup)
+        //Get all players in a lineup.
+        //Also returns if the lineup contains a reserve.
+        private (List<Player> players, bool reserveOnLineup) GetPlayersInLineup(Lineup lineup)
         {
-            List<Player> players = new List<Player>();
+            var players = new List<Player>();
+            bool reserveOnLineup = false;
 
             foreach (var group in lineup)
             {
                 foreach (var position in group.Positions)
                 {
-                    if(position.Player != null)
+                    if (position.Player != null)
+                    {
                         players.Add(position.Player);
+                        if (position.IsExtra) reserveOnLineup = true;
+                    }
                     if (Lineup.PositionType.Double.HasFlag(group.Type) && position.OtherPlayer != null)
+                    {
                         players.Add(position.OtherPlayer);
+                        if (position.OtherIsExtra) reserveOnLineup = true;
+                    }
                 }
             }
-
-            return players;
+            return (players, reserveOnLineup);
         }
 
-        private void AddRulebreaksToIllegalPlayers(List<int> ids, Lineup lineup)
+        //Add rulebreaks to players with certain ids on the lineup.
+        private void AddRulebreaksToIllegalPlayers(List<int> ids, Lineup lineup, string error)
         {
             foreach (var group in lineup)
             {
@@ -59,10 +81,10 @@ namespace Server.Function.Rules
                 {
                     var pos = group.Positions[i];
                     if (pos.Player != null && ids.Contains(pos.Player.Member.Id))
-                        _ruleBreaks.Add(new RuleBreak((group.Type, i), 0, $"Player can not appear more than {_max} times on a lineup!"));
+                        _ruleBreaks.Add(new RuleBreak((group.Type, i), 0, error));
                     
                     if (pos.OtherPlayer != null && Lineup.PositionType.Double.HasFlag(group.Type) && ids.Contains(pos.OtherPlayer.Member.Id))
-                        _ruleBreaks.Add(new RuleBreak((group.Type, i), 1, $"Player can not appear more than {_max} times on a lineup!"));
+                        _ruleBreaks.Add(new RuleBreak((group.Type, i), 1, error));
                 }
             }
         }
