@@ -139,9 +139,9 @@ namespace application.ViewModel
                 return false;
             }
 
-            if (Password.Length < 6)
+            if (Password.Length < 8)
             {
-                Application.Current.MainPage.DisplayAlert("Invalid input", "Password must contain at least than 6 characters", "Ok");
+                Application.Current.MainPage.DisplayAlert("Invalid input", "Password must contain at least than 8 characters", "Ok");
                 return false;
             }
 
