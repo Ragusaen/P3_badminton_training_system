@@ -6,6 +6,7 @@
              mc:Ignorable="d"
              x:Class="application.UI.MenuPage"
              xmlns:pages="clr-namespace:application.UI" NavigationPage.HasNavigationBar="False">
+
     <MasterDetailPage.Master>
         <ContentPage Title="Master" BackgroundColor="#e8e8e8" IconImageSource="menuicon.jpg">
             <StackLayout Orientation="Vertical">
@@ -28,4 +29,5 @@
             </StackLayout>
         </ContentPage>
     </MasterDetailPage.Master>
+
 </MasterDetailPage>

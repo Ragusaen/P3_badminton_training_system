@@ -9,10 +9,22 @@
              x:Name="rootpage">
 
     <NavigationPage.TitleView>
-        <StackLayout Orientation="Horizontal" Spacing="10">
-            <Label Text="Profile" FontAttributes="Bold" FontSize="30" TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
-            <ImageButton Source="" x:Name="Settingsicon" HeightRequest="36" Padding="3" VerticalOptions="CenterAndExpand" HorizontalOptions="End" Margin="0,0,15,0" Command="{Binding ProfileSettingCommand}" BackgroundColor="Red"/>
-        </StackLayout>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.55*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Column="1" Text="Profile" FontAttributes="Bold" FontSize="30" TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+            <Grid Grid.Column="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <ImageButton Grid.Column="1" x:Name="Settingsicon" HeightRequest="36" Padding="3" VerticalOptions="CenterAndExpand" HorizontalOptions="End" Margin="0,0,10,0" Command="{Binding ProfileSettingCommand}" BackgroundColor="Red"/>
+            </Grid>
+        </Grid>
     </NavigationPage.TitleView>
 
     <ContentPage.Content>

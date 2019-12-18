@@ -44,7 +44,7 @@ namespace application.UI
             if (e.SelectedItem == null)
                 return;
 
-            var page = new PlaySessionPage(((ScheduleViewModel.PlaySessionEvent) e.SelectedItem).PlaySession);
+            var page = new PlaySessionPage(((ScheduleViewModel.PlaySessionEvent) e.SelectedItem).PlaySession, ((ScheduleViewModel.PlaySessionEvent)e.SelectedItem).Relevant);
             Navigation.PushAsync(page);
 
             ((ListView) sender).SelectedItem = null;
