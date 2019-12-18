@@ -42,7 +42,7 @@
                 </StackLayout> 
 
                 <Label Grid.Row="2" Grid.Column="0" Text="Trainer" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
-                <Picker Grid.Row="2" Grid.Column="1" SelectedItem="{Binding Practice.Trainer}" ItemDisplayBinding="{Binding Member.Name}" VerticalOptions="Center" ItemsSource="{Binding Trainers}"/>
+                <Picker Grid.Row="2" Grid.Column="1" ItemDisplayBinding="{Binding Member.Name}" VerticalOptions="Center" ItemsSource="{Binding Trainers}" SelectedIndex="{Binding TrainerIndex, Mode=TwoWay}"/>
                 <Label Grid.Row="3" Grid.Column="0" Text="Location" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
                 <Entry Grid.Row="3" Grid.Column="1" Text="{Binding Practice.Location}"  Placeholder="Stjernevej 5, 9200 Aalborg" VerticalOptions="Center"/>
             </Grid>
