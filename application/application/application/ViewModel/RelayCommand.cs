@@ -11,8 +11,6 @@ namespace application.ViewModel
         private Func<object, bool> _canExecute;
 
         //Notifies command source when CanExecute has changed
-        //RequerySuggested raises event when it thinks that something has changed,
-        // that might affect the ability of the command to execute
         public event EventHandler CanExecuteChanged;
 
         public RelayCommand(Action<object> execute, Func<object, bool> canExecute = null)
