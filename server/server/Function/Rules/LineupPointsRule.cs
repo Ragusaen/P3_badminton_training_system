@@ -32,13 +32,15 @@ namespace Server.Function.Rules
             return _ruleBreaks;
         }
 
+        //Checks positions for rulebreaks.
         private bool CheckPositions(List<Position> positions, Lineup.PositionType type)
         {
             bool success = true;
             for (int i = 1; i < positions.Count; i++)
             {
-                for (int j = 0; j < i; j++)
+                for (int j = 0; j < i; j++) //Compare position with above positions.
                 {
+                    //If positions are in wrong order, add rulebreaks.
                     if (!ComparePositions(positions[i], positions[j], type))
                     {
                         success = false;
@@ -57,6 +59,7 @@ namespace Server.Function.Rules
             return success;
         }
 
+        //Compare if 2 positions are in the right order.
         private bool ComparePositions(Position lower, Position upper, Lineup.PositionType type)
         {
             //If single, positions is not empty and players age group is not ignored

@@ -16,7 +16,6 @@ namespace Server.Function.Rules
             _minAge = minAge;
         }
 
-
         public List<RuleBreak> Rule(TeamMatch match)
         {
             _ruleBreaks = new List<RuleBreak>();
@@ -24,6 +23,7 @@ namespace Server.Function.Rules
             {
                 for (int i = 0; i < group.Positions.Count; i++)
                 {
+                    //If position is not empty and age is illegal, add rulebreak.
                     var pos = group.Positions[i];
                     if (pos.Player != null && !CheckAge(pos.Player))
                         _ruleBreaks.Add(new RuleBreak((group.Type, i), 0, $"Player is too young; must be at least {_minAge.ToString()}"));
@@ -36,6 +36,7 @@ namespace Server.Function.Rules
             return _ruleBreaks;
         }
 
+        //Checks if age is legal
         private bool CheckAge(Player p)
         {
             return p.Rankings.Age >= _minAge;
