@@ -19,7 +19,7 @@ namespace application.ViewModel
     class CreateAccountViewModel : BaseViewModel
     {
 
-        public CreateAccountViewModel()
+        public CreateAccountViewModel(RequestCreator requestCreator, INavigation navigation) : base(requestCreator, navigation)
         {
             _availablePlayers = RequestCreator.GetPlayersWithNoAccount();
             SearchText = "";

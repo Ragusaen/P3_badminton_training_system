@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using application.Controller;
 using application.UI;
+using Common.Serialization;
 using Rg.Plugins.Popup.Services;
 using Xamarin.Forms;
 
@@ -61,7 +62,7 @@ namespace application.ViewModel
             set => SetProperty(ref _playerListHeight, value);
         }
 
-        public PracticeTeamViewModel(int id)
+        public PracticeTeamViewModel(int id, RequestCreator requestCreator, INavigation navigation) : base(requestCreator, navigation)
         {
             var teamResponse = RequestCreator.GetPracticeTeam(id);
             PracticeTeam = teamResponse.team;
@@ -96,7 +97,7 @@ namespace application.ViewModel
 
         private async void TrainerClick()
         {
-            await Navigation.PushAsync(new ProfilePage(Trainer.Member.Id));
+            await Navigation.PushAsync(new ProfilePage(Trainer.Member.Id, RequestCreator));
         }
 
         private RelayCommand _newTrainerCommand;
@@ -104,7 +105,7 @@ namespace application.ViewModel
 
         private async void NewTrainerClick(object param)
         {
-            var popup = new ChooseTrainerPopupPage();
+            var popup = new ChooseTrainerPopupPage(RequestCreator);
             popup.CallBackEvent += ChooseTrainerPopupPageCallback;
             await PopupNavigation.Instance.PushAsync(popup);
         }
@@ -112,7 +113,7 @@ namespace application.ViewModel
         private async void ChooseTrainerPopupPageCallback(object sender, Trainer e)
         {
             RequestCreator.SetPracticeTeamTrainer(PracticeTeam, e);
-            Navigation.InsertPageBefore(new PracticeTeamPage(PracticeTeam.Id), Navigation.NavigationStack.Last());
+            Navigation.InsertPageBefore(new PracticeTeamPage(PracticeTeam.Id, RequestCreator), Navigation.NavigationStack.Last());
             await Navigation.PopAsync();
         }
 
@@ -121,7 +122,7 @@ namespace application.ViewModel
 
         private async void AddPlayerClick(object param)
         {
-            var popup = new ChoosePlayerPopupPage(Players.ToList());
+            var popup = new ChoosePlayerPopupPage(Players.ToList(), RequestCreator);
             popup.CallBackEvent += ChoosePlayerPopupPageCallback;
             await PopupNavigation.Instance.PushAsync(popup);
         }
@@ -129,7 +130,7 @@ namespace application.ViewModel
         private async void ChoosePlayerPopupPageCallback(object sender, Player e)
         {
             RequestCreator.SetPlayerPracticeTeams(e, PracticeTeam);
-            Navigation.InsertPageBefore(new PracticeTeamPage(PracticeTeam.Id), Navigation.NavigationStack.Last());
+            Navigation.InsertPageBefore(new PracticeTeamPage(PracticeTeam.Id, RequestCreator), Navigation.NavigationStack.Last());
             await Navigation.PopAsync();
         }
     }

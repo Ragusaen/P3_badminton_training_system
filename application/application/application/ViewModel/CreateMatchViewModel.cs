@@ -235,7 +235,7 @@ namespace application.ViewModel
         private readonly int _matchId = 0;
 
         //Ctor
-        private CreateMatchViewModel()
+        private CreateMatchViewModel(RequestCreator requestCreator, INavigation navigation) : base(requestCreator, navigation)
         {
             Members = new ObservableCollection<Member>(RequestCreator.GetAllMembers().OrderBy(p => p.Name));
             Players = new ObservableCollection<Player>(RequestCreator.GetAllPlayers().OrderBy(p => p.Member.Name));
@@ -243,13 +243,13 @@ namespace application.ViewModel
             SelectedLeague = TeamMatch.Leagues.DenmarksSeries;
         }
 
-        public CreateMatchViewModel(DateTime startDate) : this()
+        public CreateMatchViewModel(DateTime startDate, RequestCreator requestCreator, INavigation navigation) : this(requestCreator, navigation)
         {
             SelectedDateStart = startDate;
             Location = "Stjernevej 5, 9200 Aalborg";
         }
 
-        public CreateMatchViewModel(TeamMatch match) : this()
+        public CreateMatchViewModel(TeamMatch match, RequestCreator requestCreator, INavigation navigation) : this(requestCreator, navigation)
         {
             OpponentName = match.OpponentName;
             SelectedDateStart = match.Start.Date;
@@ -395,7 +395,7 @@ namespace application.ViewModel
         {
             var pos = ((Lineup.PositionType, int))param;
 
-            ChooseLineupPlayerPopupPage page = new ChooseLineupPlayerPopupPage(Players.ToList());
+            ChooseLineupPlayerPopupPage page = new ChooseLineupPlayerPopupPage(Players.ToList(), RequestCreator);
             page.CallBackEvent += (sender, e) => SetChosenPlayer(sender, e, pos, index);
             PopupNavigation.Instance.PushAsync(page);
         }

@@ -52,10 +52,11 @@ namespace application.ViewModel
             set => SetProperty(ref _editVisibility, value);
         }
 
+        public PlaySessionViewModel(PlaySession playSession, bool relevant, RequestCreator requestCreator, INavigation navigation) : base(requestCreator, navigation)
 
-        public PlaySessionViewModel(PlaySession playSession)
         {
             EditVisibility = RequestCreator.LoggedInMember.MemberType.HasFlag(MemberType.Trainer);
+            bool isPlayer = RequestCreator.LoggedInMember.MemberType.HasFlag(MemberType.Player);
             bool hasNotFeedbacked = true;
             List<Feedback> feedbacks = RequestCreator.GetPlayerFeedback(RequestCreator.LoggedInMember);
             foreach (Feedback fb in feedbacks) 
@@ -66,7 +67,7 @@ namespace application.ViewModel
 
             PlaySession = playSession;
             DateTime feedbackexdate = PlaySession.End.AddDays(7);
-            if (DateTime.Compare(PlaySession.Start, DateTime.Now) <= 0 && DateTime.Compare(DateTime.Now, feedbackexdate) <= 0 && hasNotFeedbacked)
+            if (DateTime.Compare(PlaySession.Start, DateTime.Now) <= 0 && DateTime.Compare(DateTime.Now, feedbackexdate) <= 0 && hasNotFeedbacked && relevant && isPlayer)
                 PracticeFeedbackIsVisible = true;
             else
                 PracticeFeedbackIsVisible = false;
@@ -143,7 +144,7 @@ namespace application.ViewModel
 
         private void FeedbackClick(object param)
         {
-            Navigation.PushAsync(new SubmitFeedbackPage(PlaySession));
+            Navigation.PushAsync(new SubmitFeedbackPage(PlaySession, RequestCreator));
         }
 
         public async void EditButtonClicked(Page currentPage)
@@ -154,9 +155,9 @@ namespace application.ViewModel
             {
                 Page page;
                 if (PracticeSession != null)
-                    page = new CreatePracticePage(PracticeSession);
+                    page = new CreatePracticePage(PracticeSession, RequestCreator);
                 else if (TeamMatch != null)
-                    page = new CreateMatchPage(TeamMatch); // Create Team match
+                    page = new CreateMatchPage(TeamMatch, RequestCreator); // Create Team match
                 else
                     return;
 

@@ -11,6 +11,12 @@ namespace application.ViewModel
 {
     class CreateExercisePopupViewModel : BaseViewModel
     {
+        public CreateExercisePopupViewModel(RequestCreator requestCreator, INavigation navigation) : base(
+            requestCreator, navigation)
+        {
+
+        }
+
         private string _name;
 
         public string Name

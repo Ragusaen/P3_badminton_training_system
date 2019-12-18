@@ -11,7 +11,7 @@ namespace application.ViewModel
     {
         public Feedback Feedback { get; set; } = new Feedback();
 
-        public SubmitFeedbackViewModel(PlaySession playsession)
+        public SubmitFeedbackViewModel(PlaySession playsession, RequestCreator requestCreator, INavigation navigation) : base(requestCreator, navigation)
         {
             Feedback.PlaySession = playsession;
         }

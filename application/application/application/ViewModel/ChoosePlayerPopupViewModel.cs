@@ -7,6 +7,7 @@ using application.Controller;
 using application.SystemInterface;
 using Common.Model;
 using Rg.Plugins.Popup.Services;
+using Xamarin.Forms;
 
 namespace application.ViewModel
 {
@@ -38,7 +39,7 @@ namespace application.ViewModel
             set => SetProperty(ref _players, value);
         }
 
-        public ChoosePlayerPopupViewModel(List<Player> doNotShowPlayers)
+        public ChoosePlayerPopupViewModel(List<Player> doNotShowPlayers, RequestCreator requestCreator, INavigation navigation) : base(requestCreator, navigation)
         {
             var toRemove = doNotShowPlayers;
             var allPlayers = new ObservableCollection<Player>(RequestCreator.GetAllPlayers());

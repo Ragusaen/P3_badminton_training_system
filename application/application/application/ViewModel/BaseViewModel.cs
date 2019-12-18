@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
+using application.SystemInterface;
 using Xamarin.Forms;
 
 namespace application.ViewModel
@@ -11,7 +12,16 @@ namespace application.ViewModel
     {
         public INavigation Navigation { get; set; }
 
+        public RequestCreator RequestCreator;
+
         public event PropertyChangedEventHandler PropertyChanged;
+
+
+        public BaseViewModel(RequestCreator requestCreator, INavigation navigation)
+        {
+            RequestCreator = requestCreator;
+            Navigation = navigation;
+        }
 
         //Invokes PropertyChanged if not null. Updates UI for property.
         protected void OnPropertyChanged([CallerMemberName] string propertyName = null)

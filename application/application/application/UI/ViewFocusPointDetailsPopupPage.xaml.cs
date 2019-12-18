@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using application.SystemInterface;
 using application.ViewModel;
 using Common.Model;
 using Rg.Plugins.Popup.Pages;
@@ -13,13 +14,13 @@ using Xamarin.Forms.Xaml;
 namespace application.UI
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ViewFocusPointDetails : PopupPage
+    public partial class ViewFocusPointDetails
     {
-        public ViewFocusPointDetails(FocusPointDescriptor focusPoint)
+        public ViewFocusPointDetails(FocusPointDescriptor focusPoint, RequestCreator requestCreator) : base(requestCreator)
         {
             //Sets BindingContext ViewModel
             InitializeComponent();
-            var vm = new ViewModel.ViewFocusPointDetailsViewModel(focusPoint);
+            var vm = new ViewFocusPointDetailsViewModel(focusPoint, requestCreator, Navigation);
             BindingContext = vm;
 
             UrlText.GestureRecognizers.Add(new TapGestureRecognizer

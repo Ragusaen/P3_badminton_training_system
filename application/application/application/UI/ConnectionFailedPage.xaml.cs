@@ -13,9 +13,9 @@ using Xamarin.Forms.Xaml;
 namespace application.UI
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ConnectionFailedPage : ContentPage
+    public partial class ConnectionFailedPage
     {
-        public ConnectionFailedPage()
+        public ConnectionFailedPage(RequestCreator requestCreator) : base(requestCreator)
         {
             InitializeComponent();
             //Click to reconnect navigates to LoginPage
@@ -25,7 +25,7 @@ namespace application.UI
                 {
                     if (RequestCreator.Connect())
                     {
-                        Application.Current.MainPage = new NavigationPage(new LoginPage());
+                        Application.Current.MainPage = new NavigationPage(new LoginPage(RequestCreator));
                     }
                 }
                 catch (FailedToConnectToServerException) { }

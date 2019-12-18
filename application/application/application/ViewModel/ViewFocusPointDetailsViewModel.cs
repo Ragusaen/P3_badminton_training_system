@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
+using application.SystemInterface;
 using Common.Model;
 using Common.Serialization;
+using Xamarin.Forms;
 
 namespace application.ViewModel
 {
@@ -31,7 +33,7 @@ namespace application.ViewModel
             set => SetProperty(ref _videoUrl, value);
         }
 
-        public ViewFocusPointDetailsViewModel(FocusPointDescriptor focusPoint)
+        public ViewFocusPointDetailsViewModel(FocusPointDescriptor focusPoint, RequestCreator requestCreator, INavigation navigation) : base(requestCreator, navigation)
         {
             Name = focusPoint.Name;
             Description = focusPoint.Description;

@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using application.SystemInterface;
 using Microsoft.Win32.SafeHandles;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -14,29 +15,29 @@ using Xamarin.Forms.Xaml;
 namespace application.UI
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class CreatePracticePage : ContentPage
+    public partial class CreatePracticePage
     {
         CreatePracticeViewModel _vm;
 
-        //Future works, constructor uses date from today
-        public CreatePracticePage() : this(DateTime.Today)
+        //Constructor uses date from today
+        public CreatePracticePage(RequestCreator requestCreator) : this(DateTime.Today, requestCreator)
         {
 
         }
 
         //Sets time to the selected date if its after current time
-        public CreatePracticePage(DateTime time)
+        public CreatePracticePage(DateTime time, RequestCreator requestCreator) : base(requestCreator)
         {
             if (time < DateTime.Today)
                 time = DateTime.Today;
 
-            Init(() => new CreatePracticeViewModel(time));
+            Init(() => new CreatePracticeViewModel(time, requestCreator, Navigation));
         }
 
         //Edit mode for PracticeSession
-        public CreatePracticePage(PracticeSession ps)
+        public CreatePracticePage(PracticeSession ps, RequestCreator requestCreator) : base(requestCreator)
         {
-            Init(() => new CreatePracticeViewModel(ps));
+            Init(() => new CreatePracticeViewModel(ps, requestCreator, Navigation));
             SetExercises();
         }
 
