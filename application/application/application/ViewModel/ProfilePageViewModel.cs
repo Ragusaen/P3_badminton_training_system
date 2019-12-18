@@ -297,7 +297,7 @@ namespace application.ViewModel
             RequestCreator.ChangeTrainerPrivileges(Member);
             if (Member.Id == RequestCreator.LoggedInMember.Id)
             {
-                Application.Current.MainPage = new NavigationPage(new LoginPage());
+                Application.Current.MainPage = new NavigationPage(new LoginPage(RequestCreator));
             }
             else
             {
