@@ -33,7 +33,7 @@ namespace Server.Function.Handlers
                 else if ((PlaySession.Type) DBps.Type == PlaySession.Type.Match)
                 {
                     response.PlaySessions.Add((TeamMatch)db.teammatches.Find(DBps.ID));
-                    response.IsRelevantForMember.Add(IsRelevant(requester, DBps.practicesession));
+                    response.IsRelevantForMember.Add(IsRelevant(requester, DBps.teammatch));
                 }
                 else
                     _log.Debug($"Found play session with invalid type {DBps.Type}. ID: {DBps.ID}");

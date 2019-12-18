@@ -36,20 +36,25 @@ namespace Server.Function.Rules
         {
             _ruleBreaks = new List<RuleBreak>();
             var db = new DatabaseEntities();
+
+            //Gets other team matches in the same season and round.
             List<TeamMatch> otherMatches = db.teammatches
                 .Where(m => m.Season == match.Season && m.LeagueRound == match.LeagueRound && m.TeamIndex != match.TeamIndex)
                 .ToList()
                 .Select(p => (TeamMatch)p)
                 .ToList();
             
+            //Compare with other lineups.
             foreach (TeamMatch teamMatch in otherMatches)
                 CompareLineups(match, teamMatch);
 
             return _ruleBreaks;
         }
 
+        //Compares 2 lineups for rulebreaks.
         private void CompareLineups(TeamMatch match, TeamMatch otherMatch)
         {
+            //Finds the higher ranked match and compares according to those rules.
             if (match.TeamIndex > otherMatch.TeamIndex)
             {
                 CompareLineupByLeague(match, otherMatch, true);
@@ -60,6 +65,7 @@ namespace Server.Function.Rules
             }
         }
 
+        //Compare lineups depending on the higher league's rules.
         private void CompareLineupByLeague(TeamMatch lower, TeamMatch higher, bool isLower)
         {
             switch (higher.League)
@@ -80,18 +86,24 @@ namespace Server.Function.Rules
             }
         }
 
+        //Compare two lineups in a specific way.
         private void CompareLineups(TeamMatch lower, TeamMatch higher, bool isLower, PlayersToCompare compare, RankingCompareType rankingType)
         {
+            //Get players in the team matches.
             var lowerPlayerPositions = GetPlayerPositions(lower, true);
             var higherPlayerPositions = GetPlayerPositions(higher, true);
 
             foreach (var lowerPlayerPosition in lowerPlayerPositions)
             {
+                //Find positions to compare with.
                 Dictionary<Player, List<Lineup.PositionType>> playersPositionsToCompare =
                     GetPlayerPositionsToCompare(lowerPlayerPosition, higherPlayerPositions, compare);
 
+                //Compare 2 positions.
                 foreach (var higherPlayerPos in playersPositionsToCompare)
                 {
+                    //If rankingtype is level, compare the players' levels.
+                    //Else, compare category points in the positions that the upper player plays in.
                     if (rankingType == RankingCompareType.Level)
                     {
                         if(!CheckPoints(lowerPlayerPosition.Key.Rankings.LevelPoints, higherPlayerPos.Key.Rankings.LevelPoints))
@@ -106,6 +118,8 @@ namespace Server.Function.Rules
             }
         }
 
+        //Gets players and positiontype.
+        //Might ignore a certain age group or reserves, depending on parameters.
         private Dictionary<Player, List<Lineup.PositionType>> GetPlayerPositions(TeamMatch match, bool ignoreReserves)
         {
             var matchPlayerPositions = new Dictionary<Player, List<Lineup.PositionType>>();
@@ -139,6 +153,7 @@ namespace Server.Function.Rules
             return matchPlayerPositions;
         }
 
+        //Finds the positions that a position needs to be compared with.
         private Dictionary<Player, List<Lineup.PositionType>> GetPlayerPositionsToCompare(KeyValuePair<Player, List<Lineup.PositionType>> lowerPosition, Dictionary<Player, List<Lineup.PositionType>> higherPositions, PlayersToCompare compare)
         {
             var playersToCompare = new Dictionary<Player, List<Lineup.PositionType>>();
@@ -153,11 +168,13 @@ namespace Server.Function.Rules
             return playersToCompare;
         }
 
+        //Check if point difference is less than or equal 50.
         private bool CheckPoints(int lowerPoints, int higherPoints)
         {
             return (lowerPoints - higherPoints) <= 50;
         }
         
+        //Compares positions from category points in the above players' positions.
         private bool CompareAbovePlayerPositions(KeyValuePair<Player, List<Lineup.PositionType>> lowerPos, KeyValuePair<Player, List<Lineup.PositionType>> higherPos, RankingCompareType compareType)
         {
             int count = 0;
@@ -174,6 +191,7 @@ namespace Server.Function.Rules
             return true;
         }
 
+        //Compare players' category points
         private bool ComparePlayerPointsType(Player lowerPlayer, Player higherPlayer, Lineup.PositionType comparePositionType)
         {
             if (comparePositionType == Lineup.PositionType.MixDouble)
@@ -184,6 +202,7 @@ namespace Server.Function.Rules
             return CheckPoints(lowerPlayer.Rankings.SinglesPoints, higherPlayer.Rankings.SinglesPoints);
         }
 
+        //Add rulebreaks to players.
         private void AddRuleBreaks(TeamMatch lowerMatch, Player lowerPlayer, TeamMatch higherMatch, Player higherPlayer, bool isLower)
         {
             if (isLower)
