@@ -5,20 +5,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using application.SystemInterface;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace application.UI
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class PracticeTeamPage : ContentPage
+    public partial class PracticeTeamPage 
     {
         private PracticeTeamViewModel _vm;
-        public PracticeTeamPage(int id)
+        public PracticeTeamPage(int id, RequestCreator requestCreator) : base(requestCreator)
         {
             InitializeComponent();
-            _vm = new PracticeTeamViewModel(id) {Navigation = Navigation};
+            _vm = new PracticeTeamViewModel(id, requestCreator, Navigation);
             BindingContext = _vm;
 
             var trainerNameTap = new TapGestureRecognizer();
@@ -38,7 +38,7 @@ namespace application.UI
             var player = (Common.Model.Player)e.SelectedItem;
             if (player != null)
             {
-                Navigation.PushAsync(new ProfilePage(player.Member.Id));
+                Navigation.PushAsync(new ProfilePage(player.Member.Id, RequestCreator));
                 PlayerList.SelectedItem = null;
             }
         }

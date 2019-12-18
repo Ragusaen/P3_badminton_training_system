@@ -1,9 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<pages:PopupPage xmlns="http://xamarin.com/schemas/2014/forms"
+<ui:BasePopupPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ui="clr-namespace:application.UI;assembly=application"
              mc:Ignorable="d"
              x:Class="application.UI.CreateFocusPointPopupPage">
     
@@ -24,4 +25,4 @@
     </StackLayout>
         <StackLayout x:Name="OuterStack" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"></StackLayout>
     </StackLayout>
-</pages:PopupPage>
+</ui:BasePopupPage>

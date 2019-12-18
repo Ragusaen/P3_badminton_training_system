@@ -14,17 +14,17 @@ using Xamarin.Forms.Xaml;
 namespace application.UI
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class PlaySessionPage : ContentPage
+    public partial class PlaySessionPage
     {
         private PlaySessionViewModel _vm;
         PlaySession PlaySession;
         bool Relevant;
 
-        public PlaySessionPage(PlaySession playSession, bool relevant)
+        public PlaySessionPage(PlaySession playSession, bool relevant, RequestCreator requestCreator) : base(requestCreator)
         {
             InitializeComponent();
+            _vm = new PlaySessionViewModel(playSession, relevant, requestCreator, Navigation);
             Relevant = relevant;
-            _vm = new PlaySessionViewModel(playSession, relevant);
             BindingContext = _vm;
             _vm.Navigation = Navigation;
             PlaySession = playSession;
@@ -46,10 +46,10 @@ namespace application.UI
 
             EditButton.Clicked += (s,a) => _vm.EditButtonClicked(this);
         }
+
         protected override void OnAppearing()
         {
-            base.OnAppearing();
-            _vm = new PlaySessionViewModel(PlaySession, Relevant);
+            _vm = new PlaySessionViewModel(PlaySession, Relevant, RequestCreator, Navigation);
             BindingContext = _vm;
             _vm.Navigation = Navigation;
         }
@@ -78,7 +78,7 @@ namespace application.UI
 
         private void GoToFocusPoint(FocusPointDescriptor fpd)
         {
-            PopupNavigation.Instance.PushAsync(new ViewFocusPointDetails(fpd));
+            PopupNavigation.Instance.PushAsync(new ViewFocusPointDetails(fpd, RequestCreator));
         }
 
         private void ListView_OnItemSelected(object sender, SelectedItemChangedEventArgs e)

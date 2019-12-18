@@ -61,7 +61,7 @@ namespace application.ViewModel
         }
         public bool IsTrainer { get; set; }
 
-        public ScheduleViewModel()
+        public ScheduleViewModel(RequestCreator requestCreator, INavigation navigation) : base(requestCreator, navigation)
         {
             IsTrainer = ((RequestCreator.LoggedInMember.MemberType & MemberType.Trainer) == MemberType.Trainer);
             SelectedDate = DateTime.Today;

@@ -16,18 +16,17 @@ using Xamarin.Forms.Xaml;
 namespace application.UI
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ProfilePage : ContentPage
+    public partial class ProfilePage
     {
         private ProfilePageViewModel _vm;
 
-        public ProfilePage(int profileId)
+        public ProfilePage(int profileId, RequestCreator requestCreator) : base(requestCreator)
         {
             InitializeComponent();
             SetupCommentEvents();
 
-            _vm = new ProfilePageViewModel(profileId);
+            _vm = new ProfilePageViewModel(profileId, requestCreator, Navigation);
             BindingContext = _vm;
-            _vm.Navigation = Navigation;
 
             if (_vm.Player != null)
                 FeedbackSection.IsVisible = _vm.Player.Feedbacks.Count > 0;

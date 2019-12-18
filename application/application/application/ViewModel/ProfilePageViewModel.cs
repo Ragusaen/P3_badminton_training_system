@@ -85,7 +85,7 @@ namespace application.ViewModel
 
         public string StringMemberType { get; set; } = "Neither Player nor Trainer";
 
-        public ProfilePageViewModel(int profileId)
+        public ProfilePageViewModel(int profileId, RequestCreator requestCreator, INavigation navigation) : base(requestCreator, navigation)
         {
             RequestCreator.LoggedInMember = RequestCreator.GetLoggedInMember(); // reload logged in member, because membertype might have changed
             Member = RequestCreator.GetMember(profileId);
@@ -188,7 +188,7 @@ namespace application.ViewModel
 
         private void ExecuteAddPlayerPracticeTeam(object param)
         {
-            var page = new PracticeTeamPopupPage(Player.PracticeTeams);
+            var page = new PracticeTeamPopupPage(Player.PracticeTeams, RequestCreator);
             page.CallBackEvent += PlayerPracticeTeamPopupPageCallback;
             PopupNavigation.Instance.PushAsync(page);
         }
@@ -205,7 +205,7 @@ namespace application.ViewModel
         // Focus Point Section
         public void PopupFocusPoint(FocusPointItem focusPoint)
         {
-            var popup = new ViewFocusPointDetails(focusPoint.Descriptor);
+            var popup = new ViewFocusPointDetails(focusPoint.Descriptor, RequestCreator);
             PopupNavigation.Instance.PushAsync(popup);
         }
 
@@ -214,7 +214,7 @@ namespace application.ViewModel
 
         private void ExecuteAddFocusPoint(object param)
         {
-            FocusPointPopupPage page = new FocusPointPopupPage(Player.FocusPointItems, Player);
+            FocusPointPopupPage page = new FocusPointPopupPage(Player.FocusPointItems, Player, RequestCreator);
             ((FocusPointPopupViewModel)page.BindingContext).CallBackEvent += FocusPointPopupPageCallback;
             PopupNavigation.Instance.PushAsync(page);
         }
@@ -272,7 +272,7 @@ namespace application.ViewModel
 
             RequestCreator.SetMemberSex(newSex, Player);
             RequestCreator.LoggedInMember = RequestCreator.GetLoggedInMember(); // reload logged in member, because changes
-            Navigation.InsertPageBefore(new ProfilePage(Member.Id), Navigation.NavigationStack.Last());
+            Navigation.InsertPageBefore(new ProfilePage(Member.Id, RequestCreator), Navigation.NavigationStack.Last());
             await Navigation.PopAsync();
         }
 
@@ -284,7 +284,6 @@ namespace application.ViewModel
             if (newRights == "Make Trainer")
             {
                 Member.MemberType |= MemberType.Trainer;
-
             }
             else if (newRights == "Unmake Trainer")
             {
@@ -296,9 +295,15 @@ namespace application.ViewModel
             }
 
             RequestCreator.ChangeTrainerPrivileges(Member);
-            RequestCreator.LoggedInMember = RequestCreator.GetLoggedInMember(); // reload logged in member, because changes
-            Navigation.InsertPageBefore(new ProfilePage(Member.Id), Navigation.NavigationStack.Last());
-            await Navigation.PopAsync();
+            if (Member.Id == RequestCreator.LoggedInMember.Id)
+            {
+                Application.Current.MainPage = new NavigationPage(new LoginPage(RequestCreator));
+            }
+            else
+            {
+                Navigation.InsertPageBefore(new ProfilePage(Member.Id, RequestCreator), Navigation.NavigationStack.Last());
+                await Navigation.PopAsync();
+            }
         }
 
         private RelayCommand _viewFeedbackCommand;
@@ -312,7 +317,7 @@ namespace application.ViewModel
         }
         private void ExecuteViewFeedbackClick(object param)
         {
-            Navigation.PushAsync(new ViewDetailedFeedbackPage(Player));
+            Navigation.PushAsync(new ViewDetailedFeedbackPage(Player, RequestCreator));
         }
 
         private RelayCommand _viewFeedbackGraphCommand;
@@ -326,7 +331,7 @@ namespace application.ViewModel
         }
         private void ExecuteViewFeedbackGraphClick(object param)
         {
-            Navigation.PushAsync(new ViewFeedbackPage(Player));
+            Navigation.PushAsync(new ViewFeedbackPage(Player, RequestCreator));
         }
         private RelayCommand _deleteListPlayerPracticeTeamCommand;
 

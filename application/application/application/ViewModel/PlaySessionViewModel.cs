@@ -52,8 +52,8 @@ namespace application.ViewModel
             set => SetProperty(ref _editVisibility, value);
         }
 
+        public PlaySessionViewModel(PlaySession playSession, bool relevant, RequestCreator requestCreator, INavigation navigation) : base(requestCreator, navigation)
 
-        public PlaySessionViewModel(PlaySession playSession, bool relevant)
         {
             EditVisibility = RequestCreator.LoggedInMember.MemberType.HasFlag(MemberType.Trainer);
             bool isPlayer = RequestCreator.LoggedInMember.MemberType.HasFlag(MemberType.Player);
@@ -144,7 +144,7 @@ namespace application.ViewModel
 
         private void FeedbackClick(object param)
         {
-            Navigation.PushAsync(new SubmitFeedbackPage(PlaySession));
+            Navigation.PushAsync(new SubmitFeedbackPage(PlaySession, RequestCreator));
         }
 
         public async void EditButtonClicked(Page currentPage)
@@ -155,9 +155,9 @@ namespace application.ViewModel
             {
                 Page page;
                 if (PracticeSession != null)
-                    page = new CreatePracticePage(PracticeSession);
+                    page = new CreatePracticePage(PracticeSession, RequestCreator);
                 else if (TeamMatch != null)
-                    page = new CreateMatchPage(TeamMatch); // Create Team match
+                    page = new CreateMatchPage(TeamMatch, RequestCreator); // Create Team match
                 else
                     return;
 

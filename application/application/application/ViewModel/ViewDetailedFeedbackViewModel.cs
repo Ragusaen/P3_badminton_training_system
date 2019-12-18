@@ -49,7 +49,7 @@ namespace application.ViewModel
             }
         }
 
-        public ViewDetailedFeedbackViewModel(Player player)
+        public ViewDetailedFeedbackViewModel(Player player, RequestCreator requestCreator, INavigation navigation) : base(requestCreator, navigation)
         {
             Player = player;
             Player.Feedbacks = RequestCreator.GetPlayerFeedback(Player.Member);

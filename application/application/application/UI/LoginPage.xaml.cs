@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using application.SystemInterface;
 using Xamarin.Forms;
 
 namespace application.UI
@@ -12,9 +13,9 @@ namespace application.UI
     // Learn more about making custom code visible in the Xamarin.Forms previewer
     // by visiting https://aka.ms/xamarinforms-previewer
     [DesignTimeVisible(false)]
-    public partial class LoginPage : ContentPage
+    public partial class LoginPage
     {
-        public LoginPage()
+        public LoginPage(RequestCreator requestCreator) : base(requestCreator)
         {
             InitializeComponent();
 
@@ -23,7 +24,7 @@ namespace application.UI
             Password.Completed += (s, a) => LoginButton.SendClicked();
 
             //Sets BindingContext ViewModel
-            LoginPageViewModel vm = new LoginPageViewModel();
+            LoginPageViewModel vm = new LoginPageViewModel(requestCreator, Navigation);
             BindingContext = vm;
             vm.Navigation = Navigation;
             

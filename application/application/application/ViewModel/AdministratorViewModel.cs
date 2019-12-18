@@ -74,7 +74,7 @@ namespace application.ViewModel
         }
 
 
-        public AdministratorViewModel()
+        public AdministratorViewModel(RequestCreator requestCreator, INavigation navigation) : base (requestCreator, navigation)
         {
             var pageInfo = RequestCreator.GetAdminPage();
             PracticeTeamList = new ObservableCollection<PracticeTeam>(pageInfo.practiceTeams);
@@ -104,7 +104,7 @@ namespace application.ViewModel
         private async void EditFocusPointClick(object param)
         {
             var fp = param as FocusPointDescriptor;
-            await PopupNavigation.Instance.PushAsync(new CreateFocusPointPopupPage(false, fp));
+            await PopupNavigation.Instance.PushAsync(new CreateFocusPointPopupPage(false, fp, RequestCreator));
             FocusPointList = new ObservableCollection<FocusPointDescriptor>(RequestCreator.GetFocusPoints());
         }
 
@@ -151,7 +151,7 @@ namespace application.ViewModel
 
         private void NewFocusPointClick(object param)
         {
-            var newPage = new CreateFocusPointPopupPage(false);
+            var newPage = new CreateFocusPointPopupPage(false, RequestCreator);
             PopupNavigation.Instance.PushAsync(newPage);
             ((CreateFocusPointPopupViewModel)newPage.BindingContext).CallBackEvent += OnCallBackEvent;
         }
@@ -163,7 +163,7 @@ namespace application.ViewModel
 
         public void PopupFocusPoint(FocusPointDescriptor focusPoint)
         {
-            var popup = new ViewFocusPointDetails(focusPoint);
+            var popup = new ViewFocusPointDetails(focusPoint, RequestCreator);
             PopupNavigation.Instance.PushAsync(popup);
         }
     }

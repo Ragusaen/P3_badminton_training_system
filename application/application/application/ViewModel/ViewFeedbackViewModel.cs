@@ -7,6 +7,7 @@ using SkiaSharp;
 using application.SystemInterface;
 using Common.Model;
 using System.Linq;
+using Xamarin.Forms;
 
 namespace application.ViewModel
 {
@@ -53,7 +54,7 @@ namespace application.ViewModel
                 SetProperty(ref _chart3, value);
             }
         }
-        public ViewFeedbackViewModel(Player player) 
+        public ViewFeedbackViewModel(Player player, RequestCreator requestCreator, INavigation navigation) : base(requestCreator, navigation)
         {
             List<Feedback> feedbacks = RequestCreator.GetPlayerFeedback(player.Member);
             feedbacks = feedbacks.OrderByDescending(p => p.PlaySession.Start.Date).ThenByDescending(p => p.PlaySession.Start.TimeOfDay).ToList();
