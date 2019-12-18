@@ -7,6 +7,8 @@
 
   <ItemGroup>
     <None Remove="Images\add.png" />
+    <None Remove="Images\arrow_down.png" />
+    <None Remove="Images\arrow_up.png" />
     <None Remove="Images\bullseyeicon.png" />
     <None Remove="Images\deleteicon.png" />
     <None Remove="Images\editicon.png" />
@@ -24,6 +26,8 @@
 
   <ItemGroup>
     <EmbeddedResource Include="Images\add.png" />
+    <EmbeddedResource Include="Images\arrow_down.png" />
+    <EmbeddedResource Include="Images\arrow_up.png" />
     <EmbeddedResource Include="Images\bullseyeicon.png" />
     <EmbeddedResource Include="Images\deleteicon.png" />
     <EmbeddedResource Include="Images\editicon.png" />

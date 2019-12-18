@@ -47,7 +47,7 @@ namespace application.UI
                 if (((MasterPageItem) e.SelectedItem).TargetType == typeof(ProfilePage))
                     (Detail as NavigationPage).PushAsync(new ProfilePage(RequestCreator.LoggedInMember.Id, RequestCreator));
                 else
-                    (Detail as NavigationPage).PushAsync((Page)Activator.CreateInstance(((MasterPageItem)e.SelectedItem).TargetType));
+                    (Detail as NavigationPage).PushAsync((Page)Activator.CreateInstance((((MasterPageItem)e.SelectedItem).TargetType), RequestCreator));
 
                 IsPresented = false;
                 NavigationList.SelectedItem = null;

@@ -152,9 +152,9 @@ namespace application.UI
                 minutesEntry.Focused += (s, a) => minutesEntry.Text = "";
 
                 //Makes the move exercise up button
-                Button upBtn = new Button
+                ImageButton upBtn = new ImageButton
                 {
-                    Text = "⬆️",
+                    Source = ImageSource.FromResource("application.Images.arrow_up.png"),
                     BackgroundColor = Color.White,
                     WidthRequest = 50,
                     VerticalOptions = LayoutOptions.End,
@@ -169,9 +169,9 @@ namespace application.UI
                 };
 
                 //Makes the move exercise up button
-                Button downBtn = new Button
+                ImageButton downBtn = new ImageButton
                 {
-                    Text = "⬇",
+                    Source = ImageSource.FromResource("application.Images.arrow_down.png"),
                     BackgroundColor = Color.White,
                     WidthRequest = 50,
                     VerticalOptions = LayoutOptions.End,
