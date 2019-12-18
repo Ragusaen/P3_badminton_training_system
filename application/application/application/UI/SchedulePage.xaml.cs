@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using application.SystemInterface;
 using Common.Model;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -13,10 +14,10 @@ using Xamarin.Plugin.Calendar.Controls;
 namespace application.UI
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class SchedulePage : ContentPage
+    public partial class SchedulePage
     {
         private ScheduleViewModel _vm;
-        public SchedulePage()
+        public SchedulePage(RequestCreator requestCreator) : base(requestCreator)
         {
             InitializeComponent();
             Plusicon.Source = ImageSource.FromResource("application.Images.plusicon.jpg");
@@ -44,7 +45,7 @@ namespace application.UI
             if (e.SelectedItem == null)
                 return;
 
-            var page = new PlaySessionPage(((ScheduleViewModel.PlaySessionEvent) e.SelectedItem).PlaySession);
+            var page = new PlaySessionPage(((ScheduleViewModel.PlaySessionEvent) e.SelectedItem).PlaySession, RequestCreator);
             Navigation.PushAsync(page);
 
             ((ListView) sender).SelectedItem = null;
@@ -61,9 +62,9 @@ namespace application.UI
 
             Page page;
             if (action == "New Practice Session")
-                page = new CreatePracticePage(_vm.SelectedDate);
+                page = new CreatePracticePage(_vm.SelectedDate, RequestCreator);
             else if (action == "New Team Match")
-                page = new CreateMatchPage(_vm.SelectedDate);
+                page = new CreateMatchPage(_vm.SelectedDate, RequestCreator);
             else
                 return;
 
@@ -73,7 +74,7 @@ namespace application.UI
         protected override void OnAppearing()
         {
             base.OnAppearing();
-            _vm = new ScheduleViewModel();
+            _vm = new ScheduleViewModel(RequestCreator, Navigation);
             BindingContext = _vm;
             _vm.Navigation = Navigation;
         }

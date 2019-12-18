@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using application.SystemInterface;
 using application.ViewModel;
 using Common.Model;
 using Rg.Plugins.Popup.Pages;
@@ -13,12 +14,12 @@ using Xamarin.Forms.Xaml;
 namespace application.UI
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class PracticeTeamPopupPage : PopupPage
+    public partial class PracticeTeamPopupPage
     {
-        public PracticeTeamPopupPage(List<PracticeTeam> practiceTeams)
+        public PracticeTeamPopupPage(List<PracticeTeam> practiceTeams, RequestCreator requestCreator) : base(requestCreator)
         {
             InitializeComponent();
-            PracticeTeamPopupViewModel vm = new PracticeTeamPopupViewModel(practiceTeams);
+            PracticeTeamPopupViewModel vm = new PracticeTeamPopupViewModel(practiceTeams, requestCreator, Navigation);
             BindingContext = vm;
         }
 

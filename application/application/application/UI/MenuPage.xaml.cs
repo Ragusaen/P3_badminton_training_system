@@ -12,16 +12,16 @@ using Xamarin.Forms.Xaml;
 namespace application.UI
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class MenuPage : MasterDetailPage
+    public partial class MenuPage
     {
         public List<MasterPageItem> MenuList { get; set; }
 
-        public MenuPage()
+        public MenuPage(RequestCreator requestCreator) : base(requestCreator)
         {
             InitializeComponent();
 
             //Sets BindingContext ViewModel
-            MenuViewModel vm = new MenuViewModel();
+            MenuViewModel vm = new MenuViewModel(RequestCreator, Navigation);
             BindingContext = vm;
             vm.Navigation = Navigation;
 
@@ -36,7 +36,7 @@ namespace application.UI
             NavigationList.ItemsSource = MenuList;
 
             //Navigate to Homepage
-            Detail = new NavigationPage(new SchedulePage());
+            Detail = new NavigationPage(new SchedulePage(RequestCreator));
             IsPresented = false;
         }
 
@@ -45,7 +45,7 @@ namespace application.UI
             if (e.SelectedItem != null) //Creates an instance of the selected page and navigates to it
             {
                 if (((MasterPageItem) e.SelectedItem).TargetType == typeof(ProfilePage))
-                    (Detail as NavigationPage).PushAsync(new ProfilePage(RequestCreator.LoggedInMember.Id));
+                    (Detail as NavigationPage).PushAsync(new ProfilePage(RequestCreator.LoggedInMember.Id, RequestCreator));
                 else
                     (Detail as NavigationPage).PushAsync((Page)Activator.CreateInstance(((MasterPageItem)e.SelectedItem).TargetType));
 
@@ -57,7 +57,7 @@ namespace application.UI
         //Logs out of app 
         private void Logout_Clicked(object sender, EventArgs e)
         {
-            Application.Current.MainPage = new NavigationPage(new LoginPage());
+            Application.Current.MainPage = new NavigationPage(new LoginPage(RequestCreator));
         }
     }
 }

@@ -15,7 +15,7 @@ namespace application.ViewModel
         public bool PrivateCheckBoxIsVisible { get; set; }
         private bool isEdit = false;
         public FocusPointDescriptor FocusPoint { get; set; }
-        public CreateFocusPointPopupViewModel(bool canCreatePrivateFocusPoint)
+        public CreateFocusPointPopupViewModel(bool canCreatePrivateFocusPoint, RequestCreator requestCreator, INavigation navigation) : base(requestCreator, navigation)
         {
             if (canCreatePrivateFocusPoint)
             {
@@ -40,7 +40,7 @@ namespace application.ViewModel
         }
 
 
-        public CreateFocusPointPopupViewModel(bool canCreatePrivateFocusPoint, FocusPointDescriptor fp) : this(canCreatePrivateFocusPoint)
+        public CreateFocusPointPopupViewModel(bool canCreatePrivateFocusPoint, FocusPointDescriptor fp, RequestCreator requestCreator, INavigation navigation) : this(canCreatePrivateFocusPoint, requestCreator, navigation)
         {
             FocusPoint = new FocusPointDescriptor
             {

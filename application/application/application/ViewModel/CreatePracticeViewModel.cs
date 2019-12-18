@@ -143,7 +143,7 @@ namespace application.ViewModel
         }
 
         //Ctor
-        public CreatePracticeViewModel(DateTime startDate)
+        public CreatePracticeViewModel(DateTime startDate, RequestCreator requestCreator, INavigation navigation) : base(requestCreator, navigation)
         {
             SelectedDateStart = startDate;
             TeamName = "Choose Team";
@@ -152,7 +152,7 @@ namespace application.ViewModel
             PlanElement = new ObservableCollection<ExerciseItem>();
         }
 
-        public CreatePracticeViewModel(PracticeSession ps)
+        public CreatePracticeViewModel(PracticeSession ps, RequestCreator requestCreator, INavigation navigation) : base(requestCreator, navigation)
         {
             Practice = ps;
             TeamName = ps.PracticeTeam.Name;
@@ -237,13 +237,13 @@ namespace application.ViewModel
 
             if (action == "Add Existing Exercise")
             {
-                var page = new ExercisePopupPage(Practice);
+                var page = new ExercisePopupPage(Practice, RequestCreator);
                 page.CallBackEvent += eventHandler;
                 await PopupNavigation.Instance.PushAsync(page);
             }
             else if (action == "Make New Exercise")
             {
-                var page = new CreateExercisePopupPage();
+                var page = new CreateExercisePopupPage(RequestCreator);
                 ((CreateExercisePopupViewModel) page.BindingContext).CallBackEvent += eventHandler;
                 await PopupNavigation.Instance.PushAsync(page);
             }
@@ -260,7 +260,7 @@ namespace application.ViewModel
         }
         private void AddNewFocusPointClick(object param)
         {
-            FocusPointPopupPage page = new FocusPointPopupPage(FocusPoints.ToList(), null);
+            FocusPointPopupPage page = new FocusPointPopupPage(FocusPoints.ToList(), null, RequestCreator);
             ((FocusPointPopupViewModel)page.BindingContext).CallBackEvent += FocusPointPage_CallBackEvent;
             PopupNavigation.Instance.PushAsync(page);
         }
@@ -282,7 +282,7 @@ namespace application.ViewModel
         }
         private void TeamClick(object param)
         {
-            PracticeTeamPopupPage page = new PracticeTeamPopupPage(new List<PracticeTeam>());
+            PracticeTeamPopupPage page = new PracticeTeamPopupPage(new List<PracticeTeam>(), RequestCreator);
             page.CallBackEvent += TeamPage_CallBackEvent;
             PopupNavigation.Instance.PushAsync(page);
         }

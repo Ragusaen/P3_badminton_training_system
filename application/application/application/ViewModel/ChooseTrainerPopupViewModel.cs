@@ -8,6 +8,7 @@ using Common.Model;
 using System.Linq;
 using Rg.Plugins.Popup.Pages;
 using Rg.Plugins.Popup.Services;
+using Xamarin.Forms;
 
 namespace application.ViewModel
 {
@@ -39,7 +40,7 @@ namespace application.ViewModel
             set => SetProperty(ref _trainers, value);
         }
 
-        public ChooseTrainerPopupViewModel()
+        public ChooseTrainerPopupViewModel(RequestCreator requestCreator, INavigation navigation) : base(requestCreator, navigation)
         {
             Trainers = new ObservableCollection<Trainer>(RequestCreator.GetAllTrainers());
             SearchText = null;

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using application.SystemInterface;
 using Common.Model;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -11,10 +12,10 @@ using Xamarin.Forms.Xaml;
 namespace application.UI
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class CreateAccountPage : ContentPage
+    public partial class CreateAccountPage
     {
         private CreateAccountViewModel _vm;
-        public CreateAccountPage()
+        public CreateAccountPage(RequestCreator requestCreator) : base(requestCreator)
         {
             InitializeComponent();
 
@@ -45,7 +46,7 @@ namespace application.UI
             NameSearch.TextChanged += (s, a) => _vm.PlayerUnselect();
 
             //Sets BindingContext ViewModel
-            _vm = new CreateAccountViewModel();
+            _vm = new CreateAccountViewModel(requestCreator, Navigation);
             BindingContext = _vm;
             _vm.Navigation = Navigation;
         }

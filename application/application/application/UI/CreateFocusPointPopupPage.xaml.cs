@@ -14,21 +14,21 @@ using Xamarin.Forms.Xaml;
 namespace application.UI
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class CreateFocusPointPopupPage : PopupPage
+    public partial class CreateFocusPointPopupPage
     {
         //Sets BindingContext ViewModel
         private CreateFocusPointPopupViewModel vm;
-        public CreateFocusPointPopupPage(bool canCreatePrivateFocusPoint)
+        public CreateFocusPointPopupPage(bool canCreatePrivateFocusPoint, RequestCreator requestCreator) : base(requestCreator)
         {
             InitializeComponent();
-            vm = new CreateFocusPointPopupViewModel(canCreatePrivateFocusPoint);
+            vm = new CreateFocusPointPopupViewModel(canCreatePrivateFocusPoint, requestCreator, Navigation);
             BindingContext = vm;
         }
         //Edit FocusPoint constructor
-        public CreateFocusPointPopupPage(bool canCreatePrivateFocusPoint, FocusPointDescriptor fp)
+        public CreateFocusPointPopupPage(bool canCreatePrivateFocusPoint, FocusPointDescriptor fp, RequestCreator requestCreator) : base(requestCreator)
         {
             InitializeComponent();
-            vm = new CreateFocusPointPopupViewModel(canCreatePrivateFocusPoint, fp);
+            vm = new CreateFocusPointPopupViewModel(canCreatePrivateFocusPoint, fp, requestCreator, Navigation);
             BindingContext = vm;
         }
 

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using application.SystemInterface;
 using application.ViewModel;
 using Common.Model;
 using Rg.Plugins.Popup.Services;
@@ -13,13 +14,13 @@ using Xamarin.Forms.Xaml;
 namespace application.UI
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ChooseLineupPlayerPopupPage : PopupPage
+    public partial class ChooseLineupPlayerPopupPage
     {
         //Sets BindingContext ViewModel
-        public ChooseLineupPlayerPopupPage(List<Player> players)
+        public ChooseLineupPlayerPopupPage(List<Player> players, RequestCreator requestCreator) : base(requestCreator)
         {
             InitializeComponent();
-            ChooseLineupPlayerPopupViewModel vm = new ChooseLineupPlayerPopupViewModel(players);
+            ChooseLineupPlayerPopupViewModel vm = new ChooseLineupPlayerPopupViewModel(players, requestCreator, Navigation);
             BindingContext = vm;
         }
 

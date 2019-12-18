@@ -12,6 +12,11 @@ namespace application.ViewModel
 {
     class LoginPageViewModel : BaseViewModel
     {
+        public LoginPageViewModel(RequestCreator requestCreator, INavigation navigation) : base(requestCreator,
+            navigation)
+        {
+
+        }
 
         #region InvalidLogin
         private bool _invalidLoginTextVisible;
@@ -69,7 +74,7 @@ namespace application.ViewModel
         {
             if (RequestCreator.LoginRequest(Username, Password)) { 
                 RequestCreator.LoggedInMember = RequestCreator.GetLoggedInMember();
-                Application.Current.MainPage = new NavigationPage(new MenuPage());
+                Application.Current.MainPage = new NavigationPage(new MenuPage(RequestCreator));
             }
             else
             {
@@ -91,7 +96,7 @@ namespace application.ViewModel
         //Check if user is in database. Navigate to main page.
         private void ExecuteForgotPassWordClick(object param)
         {
-            Navigation.PushAsync(new ForgotPasswordPage());
+            Navigation.PushAsync(new ForgotPasswordPage(RequestCreator));
         }
 
         private RelayCommand _createAccountClickCommand;
@@ -107,7 +112,7 @@ namespace application.ViewModel
         //Check if user is in database. Navigate to main page.
         private void ExecuteCreateAccountClick(object param)
         {
-            Navigation.PushAsync(new CreateAccountPage());
+            Navigation.PushAsync(new CreateAccountPage(RequestCreator));
         }
     }
 }
