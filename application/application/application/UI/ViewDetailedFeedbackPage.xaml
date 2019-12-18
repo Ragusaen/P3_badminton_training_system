@@ -16,14 +16,14 @@
 
     <StackLayout>
         <Label Text="{Binding Path=Player.Member.Name, StringFormat='Choose the feedback date for {0} to show details'}" FontSize="Large" TextColor="Black"/>
-        <ListView ItemsSource="{Binding Feedbacks}"
+        <ListView ItemsSource="{Binding Feedbacks}" 
               HasUnevenRows="True"
-              BackgroundColor="White" SelectionMode="None">
+              BackgroundColor="White" SelectionMode="None" Margin="10">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <StackLayout Padding="10">
-                            <Frame HasShadow="True" CornerRadius="5" BackgroundColor="#ffcccb">
+                        <StackLayout>
+                            <Frame HasShadow="True" CornerRadius="5" BackgroundColor="#ffcccb" Padding="0">
                                 <StackLayout>
                                     <Button Text="{Binding PlaySession.Start}" BackgroundColor="#ffcccb" TextColor="Black" FontSize="Medium" Command="{Binding BindingContext.ExpandCommand, Source={x:Reference rootpage}}" CommandParameter="{x:Reference Details}"/>
                                 </StackLayout>

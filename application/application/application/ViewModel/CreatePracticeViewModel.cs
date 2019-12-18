@@ -141,6 +141,19 @@ namespace application.ViewModel
                 }
             }
         }
+        private int _trainerIndex;
+
+        public int TrainerIndex
+        {
+            get => _trainerIndex;
+            set
+            {
+                if (SetProperty(ref _trainerIndex, value))
+                {
+                    SaveCreatedPracticeClickCommand.RaiseCanExecuteChanged();
+                }
+            }
+        }
 
         //Ctor
         public CreatePracticeViewModel(DateTime startDate, RequestCreator requestCreator, INavigation navigation) : base(requestCreator, navigation)
@@ -154,6 +167,14 @@ namespace application.ViewModel
 
         public CreatePracticeViewModel(PracticeSession ps, RequestCreator requestCreator, INavigation navigation) : base(requestCreator, navigation)
         {
+            Trainers = RequestCreator.GetAllTrainers();
+            foreach (Trainer T in Trainers) 
+            {
+                if (Practice.Trainer == T)
+                {
+                    TrainerIndex = Trainers.IndexOf(T);
+                }
+            }
             Practice = ps;
             TeamName = ps.PracticeTeam.Name;
             SelectedDateStart = ps.Start;
@@ -195,6 +216,7 @@ namespace application.ViewModel
         {
             if (ValidateUserInput())
             {
+                Practice.Trainer = Trainers[TrainerIndex];
                 Practice.Start = SelectedDateStart.Date + Convert.ToDateTime(SelectedTimeStart.ToString()).TimeOfDay;
                 Practice.End = SelectedDateStart.Date + Convert.ToDateTime(SelectedTimeEnd.ToString()).TimeOfDay;
                 if (Practice.PracticeTeam.Name == "Choose Team")
