@@ -260,7 +260,7 @@ namespace application.SystemInterface
             return response.FocusPointDescriptor;
         }
 
-        public static PracticeTeam GetPracticeTeam(int id)
+        public static (PracticeTeam team, List<Player> players) GetPracticeTeam(int id)
         {
             var request = new GetPracticeTeamRequest
             {
@@ -269,7 +269,7 @@ namespace application.SystemInterface
 
             var response = SendRequest<GetPracticeTeamRequest, GetPracticeTeamResponse>(RequestType.GetPracticeTeam, request);
 
-            return response.Team;
+            return (response.Team, response.Players);
         }
 
         public static List<PracticeTeam> GetTrainerPracticeTeams(Trainer trainer)
