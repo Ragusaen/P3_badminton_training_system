@@ -284,7 +284,6 @@ namespace application.ViewModel
             if (newRights == "Make Trainer")
             {
                 Member.MemberType |= MemberType.Trainer;
-
             }
             else if (newRights == "Unmake Trainer")
             {
@@ -296,9 +295,15 @@ namespace application.ViewModel
             }
 
             RequestCreator.ChangeTrainerPrivileges(Member);
-            RequestCreator.LoggedInMember = RequestCreator.GetLoggedInMember(); // reload logged in member, because changes
-            Navigation.InsertPageBefore(new ProfilePage(Member.Id), Navigation.NavigationStack.Last());
-            await Navigation.PopAsync();
+            if (Member.Id == RequestCreator.LoggedInMember.Id)
+            {
+                Application.Current.MainPage = new NavigationPage(new LoginPage());
+            }
+            else
+            {
+                Navigation.InsertPageBefore(new ProfilePage(Member.Id), Navigation.NavigationStack.Last());
+                await Navigation.PopAsync();
+            }
         }
 
         private RelayCommand _viewFeedbackCommand;

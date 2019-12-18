@@ -9,7 +9,7 @@ namespace Server.Function.Handlers
     {
         protected override ChangeTrainerPrivilegesResponse InnerHandle(ChangeTrainerPrivilegesRequest request, member requester)
         {
-            if (!((Common.Model.MemberType)requester.MemberType).HasFlag(MemberType.Trainer))
+            if (!((MemberType)requester.MemberType).HasFlag(MemberType.Trainer))
             {
                 return new ChangeTrainerPrivilegesResponse { AccessDenied = true };
             }
@@ -33,10 +33,18 @@ namespace Server.Function.Handlers
             }
             else
             {
-                // Remove the member as trainer from all practices
-                foreach (var practiceteam in db.practiceteams.Where(p => p.trainer.ID == request.Member.Id))
+                // Remove the member as trainer from all practice sessions, team matches and practice teams
+                foreach (var team in dbMember.practiceteamstrainer)
                 {
-                    practiceteam.trainer = null;
+                    team.trainer = null;
+                }
+                foreach (var practicesession in dbMember.practicesessions)
+                {
+                    practicesession.trainer = null;
+                }
+                foreach (var match in dbMember.teammatches)
+                {
+                    match.captain = null;
                 }
 
                 _log.Debug($"Member: {request.Member.Name} has been released from Trainer Type");
