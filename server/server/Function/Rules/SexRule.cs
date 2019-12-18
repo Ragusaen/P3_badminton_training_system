@@ -7,10 +7,10 @@ namespace Server.Function.Rules
 {
     class SexRule : IRule
     {
-        public int Priority { get; set; } = 5;
+        public int Priority { get; set; } = 2;
         private List<RuleBreak> _ruleBreaks = new List<RuleBreak>();
 
-        public List<RuleBreak> Rule(TeamMatch match)
+        public List<RuleBreak> Verify(TeamMatch match)
         {
             _ruleBreaks = new List<RuleBreak>();
             foreach (var group in match.Lineup)

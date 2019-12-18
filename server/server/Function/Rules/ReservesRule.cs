@@ -11,10 +11,10 @@ namespace Server.Function.Rules
 {
     class ReservesRule : IRule
     {
-        public int Priority { get; set; } = 10;
+        public int Priority { get; set; } = 5;
         private List<RuleBreak> _ruleBreaks = new List<RuleBreak>();
 
-        public List<RuleBreak> Rule(TeamMatch match)
+        public List<RuleBreak> Verify(TeamMatch match)
         {
             _ruleBreaks = new List<RuleBreak>();
             CheckPlayersReserveRound(match);

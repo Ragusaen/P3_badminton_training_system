@@ -237,7 +237,7 @@
     <Compile Include="Function\Rules\BelowEmptyPositionRule.cs" />
     <Compile Include="Function\Rules\HalfEmptyLineupRule.cs" />
     <Compile Include="Function\Rules\ReservesRule.cs" />
-    <Compile Include="Function\Rules\SamePositionType.cs" />
+    <Compile Include="Function\Rules\SamePositionTypeRule.cs" />
     <Compile Include="Function\Handlers\ChangeTrainerPrivilegesHandler.cs" />
     <Compile Include="Function\Handlers\CreateFocusPointDescriptorHandler.cs" />
     <Compile Include="Function\Handlers\DeleteFocusPointDescriptorHandler.cs" />

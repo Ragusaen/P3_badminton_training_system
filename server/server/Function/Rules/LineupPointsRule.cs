@@ -7,7 +7,7 @@ namespace Server.Function.Rules
 {
     class LineupPointsRule : IRule
     {
-        public int Priority { get; set; } = 12;
+        public int Priority { get; set; } = 3;
         private int _maxSingleDiff;
         private int _maxDoubleDiff;
         private List<PlayerRanking.AgeGroup> _ignoreAgeGroups;
@@ -21,7 +21,7 @@ namespace Server.Function.Rules
             _ignoreAgeGroups = ignoreAgeGroups;
         }
 
-        public List<RuleBreak> Rule(TeamMatch match)
+        public List<RuleBreak> Verify(TeamMatch match)
         {
             _ruleBreaks = new List<RuleBreak>();
             foreach (var group in match.Lineup)

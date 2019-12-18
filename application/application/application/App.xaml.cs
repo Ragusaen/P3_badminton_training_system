@@ -15,12 +15,6 @@ namespace application
         public App()
         {
             InitializeComponent();
-            MainPage = new NavigationPage(new LoginPage());
-        }
-
-        protected override void OnStart()
-        {
-
             try
             {
                 RequestCreator.Connect();
@@ -29,6 +23,12 @@ namespace application
             {
                 MainPage = new ConnectionFailedPage();
             }
+
+            MainPage = new NavigationPage(new LoginPage());
+        }
+
+        protected override void OnStart()
+        {
 
         }
     

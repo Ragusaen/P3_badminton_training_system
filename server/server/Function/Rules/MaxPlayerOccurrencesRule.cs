@@ -8,7 +8,7 @@ namespace Server.Function.Rules
 {
     class MaxPlayerOccurrencesRule : IRule
     {
-        public int Priority { get; set; } = 9;
+        public int Priority { get; set; } = 3;
         private int _max;
         private List<RuleBreak> _ruleBreaks = new List<RuleBreak>();
 
@@ -18,7 +18,7 @@ namespace Server.Function.Rules
             _max = maxOccurrences;
         }
 
-        public List<RuleBreak> Rule(TeamMatch match)
+        public List<RuleBreak> Verify(TeamMatch match)
         {
             _ruleBreaks = new List<RuleBreak>();
             List<Player> players = GetPlayersInLineup(match.Lineup);

@@ -9,8 +9,9 @@ namespace Server.Function.Rules
     /// </summary>
     interface IRule
     {
+        // Smaller value is higher priority
         int Priority { get; set; }
 
-        List<RuleBreak> Rule(TeamMatch match);
+        List<RuleBreak> Verify(TeamMatch match);
     }
 }

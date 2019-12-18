@@ -13,7 +13,7 @@ namespace Server.Function.Handlers
 
             var dbPracticeTeam = db.practiceteams.Find(request.Id);
             var practiceTeam = (PracticeTeam)dbPracticeTeam;
-            practiceTeam.Players = dbPracticeTeam.players.ToList().Select(p => (Common.Model.Player) p).ToList();
+            //practiceTeam.Players = dbPracticeTeam.players.ToList().Select(p => (Common.Model.Player) p).ToList();
 
             var response = new GetPracticeTeamResponse
             {

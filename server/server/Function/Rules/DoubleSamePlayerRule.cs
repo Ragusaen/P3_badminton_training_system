@@ -10,10 +10,10 @@ namespace Server.Function.Rules
 {
     class DoubleSamePlayerRule : IRule
     {
-        public int Priority { get; set; } = 3;
+        public int Priority { get; set; } = 4;
         private List<RuleBreak> _ruleBreaks = new List<RuleBreak>();
 
-        public List<RuleBreak> Rule(TeamMatch match)
+        public List<RuleBreak> Verify(TeamMatch match)
         {
             _ruleBreaks = new List<RuleBreak>();
             foreach (var group in match.Lineup)

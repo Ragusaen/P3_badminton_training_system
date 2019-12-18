@@ -22,7 +22,7 @@ namespace Server.Function.Rules
             Level
         }
 
-        public int Priority { get; set; } = 13;
+        public int Priority { get; set; } = 5;
         private List<PlayerRanking.AgeGroup> _ignoreAgeGroups;
         private List<RuleBreak> _ruleBreaks = new List<RuleBreak>();
         
@@ -32,7 +32,7 @@ namespace Server.Function.Rules
             _ignoreAgeGroups = ignoredAgeGroups;
         }
 
-        public List<RuleBreak> Rule(TeamMatch match)
+        public List<RuleBreak> Verify(TeamMatch match)
         {
             _ruleBreaks = new List<RuleBreak>();
             var db = new DatabaseEntities();
