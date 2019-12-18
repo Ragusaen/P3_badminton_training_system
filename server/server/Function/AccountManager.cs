@@ -18,6 +18,7 @@ namespace Server.Function
         public const int HashSize = 32;
         public const int SaltSize = 32;
         public const int TokenSize = 64;
+        public TimeSpan AccessTokenDuration = TimeSpan.FromHours(1);
 
         /// <summary>
         /// Logs in the user given a username and password.
@@ -41,7 +42,8 @@ namespace Server.Function
                 db.tokens.Add(new token()
                 {
                     account = account,
-                    AccessToken = token
+                    AccessToken = token,
+                    ValidUntil = DateTime.Now + AccessTokenDuration
                 });
                 db.SaveChanges();
                 return token;
@@ -96,9 +98,15 @@ namespace Server.Function
         public member GetMemberFromToken(byte[] token)
         {
             var db = new DatabaseEntities();
-            var tokenLocation = (from t in db.tokens where t.AccessToken == token select t).FirstOrDefault();
 
-            var r = tokenLocation?.account.members.SingleOrDefault(m => m.Username == tokenLocation.AccountUsername);
+            // Remove all invalid tokens
+            db.tokens.RemoveRange(db.tokens.Where(t => t.ValidUntil < DateTime.Now));
+
+            // Get the specified token
+            var dbToken = (from t in db.tokens where t.AccessToken == token select t).FirstOrDefault();
+
+            // Find the tokens user
+            var r = dbToken?.account.members.SingleOrDefault(m => m.Username == dbToken.AccountUsername);
             Debug.WriteLine($"{r}, {BitConverter.ToString(token)}");
             return r;
         }

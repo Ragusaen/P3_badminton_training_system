@@ -19,6 +19,18 @@ namespace Server
 
         public static void Main(string[] args)
         {
+
+            // If the program is called with the scrape only parameter, it should just scrape and then return
+            if (args.Contains("--scrape") || args.Contains("-s"))
+            {
+                _log.Debug("Starting scraping");
+                var scraper = new RankListScraper();
+                scraper.UpdatePlayers();
+
+                return;
+            }
+    
+            // Scrape all players if the database is empty
             using(var db = new DatabaseEntities()) {
                 if (!db.members.Any())
                 {

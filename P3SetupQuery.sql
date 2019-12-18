@@ -10,6 +10,7 @@ PasswordSalt binary(32) not null
 
 create table Token(
 AccessToken binary(64) primary key,
+ValidUntil datetime not null,
 AccountUsername varchar(32) not null,
 foreign key(AccountUsername) references `Account`(Username)
 );
