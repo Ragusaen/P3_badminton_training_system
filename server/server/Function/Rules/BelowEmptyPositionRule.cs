@@ -13,7 +13,7 @@ namespace Server.Function.Rules
         public int Priority { get; set; } = 4;
         private List<RuleBreak> _ruleBreaks = new List<RuleBreak>();
 
-        public List<RuleBreak> Verify(TeamMatch match)
+        public List<RuleBreak> Rule(TeamMatch match)
         {
             _ruleBreaks = new List<RuleBreak>();
 

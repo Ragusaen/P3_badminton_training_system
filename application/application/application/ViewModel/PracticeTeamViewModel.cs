@@ -63,9 +63,10 @@ namespace application.ViewModel
 
         public PracticeTeamViewModel(int id)
         {
-            PracticeTeam = RequestCreator.GetPracticeTeam(id);
+            var teamResponse = RequestCreator.GetPracticeTeam(id);
+            PracticeTeam = teamResponse.team;
             Trainer = PracticeTeam.Trainer;
-            Players = new ObservableCollection<Player>(PracticeTeam.Players);
+            Players = new ObservableCollection<Player>(teamResponse.players);
             PlayerListHeight = Players.Count * 45;
 
             SearchText = null;
@@ -82,9 +83,10 @@ namespace application.ViewModel
             {
                 RequestCreator.DeletePlayerPracticeTeam(player, PracticeTeam);
 
-                PracticeTeam = RequestCreator.GetPracticeTeam(PracticeTeam.Id);
+                var teamResponse = RequestCreator.GetPracticeTeam(PracticeTeam.Id);
+                PracticeTeam = teamResponse.team;
                 Trainer = PracticeTeam.Trainer;
-                Players = new ObservableCollection<Player>(PracticeTeam.Players);
+                Players = new ObservableCollection<Player>(teamResponse.players);
                 PlayerListHeight = Players.Count * 45;
             }
         }

@@ -18,7 +18,7 @@ namespace Server.Function.Rules
                 new MinAgeRule(PlayerRanking.AgeGroup.U17),
                 new MultipleLineupsPointsRule(new List<PlayerRanking.AgeGroup>() {PlayerRanking.AgeGroup.U17}),
                 new ReservesRule(),
-                new SamePositionTypeRule(),
+                new SamePositionType(),
                 new SexRule(),
             }},
             { TeamMatch.Leagues.Division1, new List<IRule>()
@@ -31,7 +31,7 @@ namespace Server.Function.Rules
                 new MinAgeRule(PlayerRanking.AgeGroup.U17),
                 new MultipleLineupsPointsRule(new List<PlayerRanking.AgeGroup>() {PlayerRanking.AgeGroup.U17}),
                 new ReservesRule(),
-                new SamePositionTypeRule(),
+                new SamePositionType(),
                 new SexRule(),
             }},
             { TeamMatch.Leagues.Division2, new List<IRule>()
@@ -44,7 +44,7 @@ namespace Server.Function.Rules
                 new MinAgeRule(PlayerRanking.AgeGroup.U17),
                 new MultipleLineupsPointsRule(new List<PlayerRanking.AgeGroup>() {PlayerRanking.AgeGroup.U17}),
                 new ReservesRule(),
-                new SamePositionTypeRule(),
+                new SamePositionType(),
                 new SexRule(),
             }},
             { TeamMatch.Leagues.Division3, new List<IRule>()
@@ -57,7 +57,7 @@ namespace Server.Function.Rules
                 new MinAgeRule(PlayerRanking.AgeGroup.U17),
                 new MultipleLineupsPointsRule(new List<PlayerRanking.AgeGroup>() {PlayerRanking.AgeGroup.U17}),
                 new ReservesRule(),
-                new SamePositionTypeRule(),
+                new SamePositionType(),
                 new SexRule(),
             }},
             { TeamMatch.Leagues.DenmarksSeries, new List<IRule>()
@@ -70,7 +70,7 @@ namespace Server.Function.Rules
                 new MinAgeRule(PlayerRanking.AgeGroup.U17),
                 new MultipleLineupsPointsRule(new List<PlayerRanking.AgeGroup>() {PlayerRanking.AgeGroup.U17}),
                 new ReservesRule(),
-                new SamePositionTypeRule(),
+                new SamePositionType(),
                 new SexRule(),
             }},
             { TeamMatch.Leagues.RegionalSeriesWest, new List<IRule>()
@@ -83,7 +83,7 @@ namespace Server.Function.Rules
                 new MinAgeRule(PlayerRanking.AgeGroup.U17),
                 new MultipleLineupsPointsRule(new List<PlayerRanking.AgeGroup>() {PlayerRanking.AgeGroup.U17, PlayerRanking.AgeGroup.U15}),
                 new ReservesRule(),
-                new SamePositionTypeRule(),
+                new SamePositionType(),
                 new SexRule(),
             }},
             { TeamMatch.Leagues.Series1West, new List<IRule>()
@@ -96,7 +96,7 @@ namespace Server.Function.Rules
                 new MinAgeRule(PlayerRanking.AgeGroup.U17),
                 new MultipleLineupsPointsRule(new List<PlayerRanking.AgeGroup>() {PlayerRanking.AgeGroup.U17, PlayerRanking.AgeGroup.U15}),
                 new ReservesRule(),
-                new SamePositionTypeRule(),
+                new SamePositionType(),
                 new SexRule(),
             }},
         };

@@ -6,7 +6,7 @@ namespace Server.Function.Rules
 {
     class MinAgeRule : IRule
     {
-        public int Priority { get; set; } = 1;
+        public int Priority { get; set; } = 6;
         private PlayerRanking.AgeGroup _minAge;
         private List<RuleBreak> _ruleBreaks = new List<RuleBreak>();
 
@@ -17,7 +17,7 @@ namespace Server.Function.Rules
         }
 
 
-        public List<RuleBreak> Verify(TeamMatch match)
+        public List<RuleBreak> Rule(TeamMatch match)
         {
             _ruleBreaks = new List<RuleBreak>();
             foreach (var group in match.Lineup)

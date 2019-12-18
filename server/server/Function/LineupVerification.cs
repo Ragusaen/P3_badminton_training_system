@@ -28,7 +28,7 @@ namespace Server.Function
             // Check every rule on the match
             foreach (IRule rule in rules)
             {
-                ruleBreak = rule.Verify(match);
+                ruleBreak = rule.Rule(match);
 
                 // If there were any errors, then don't check the rest of the rules
                 if (ruleBreak.Count > 0) break;

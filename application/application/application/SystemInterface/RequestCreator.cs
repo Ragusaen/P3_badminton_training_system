@@ -21,21 +21,21 @@ namespace application.SystemInterface
         }
     }
 
-    class RequestCreator
+    static class RequestCreator
     {
-        private ServerConnection _connection = new ServerConnection();
+        private static ServerConnection _connection = new ServerConnection();
 
-        private byte[] _accessToken = null;
-        public bool IsLoggedIn => _accessToken != null;
+        private static byte[] _accessToken = null;
+        public static bool IsLoggedIn => _accessToken != null;
 
-        public  Member LoggedInMember;
+        public static Member LoggedInMember;
 
-        public  bool Connect()
+        public static bool Connect()
         {
             return _connection.Connect();
         }
 
-        private  TResponse SendRequest<TRequest, TResponse>(RequestType requestType, TRequest request)
+        private static TResponse SendRequest<TRequest, TResponse>(RequestType requestType, TRequest request)
             where TRequest : Request where TResponse : Response
         {
             //Add access token
@@ -67,14 +67,14 @@ namespace application.SystemInterface
             return response;
         }
 
-        internal  List<ExerciseDescriptor> GetExercises()
+        internal static List<ExerciseDescriptor> GetExercises()
         {
             var request = new GetExercisesRequest();
             var response = SendRequest<GetExercisesRequest, GetExercisesResponse>(RequestType.GetExercises, request);
             return response.Exercises;
         }
 
-        public  bool LoginRequest(string username, string password)
+        public static bool LoginRequest(string username, string password)
         {
             LoginRequest request = new LoginRequest()
             {
@@ -90,7 +90,7 @@ namespace application.SystemInterface
             return response.LoginSuccessful;
         }
 
-        public  bool CreateAccountRequest(string username, string password, int badmintonId, string name)
+        public static bool CreateAccountRequest(string username, string password, int badmintonId, string name)
         {
             var careq = new CreateAccountRequest()
             {
@@ -106,7 +106,7 @@ namespace application.SystemInterface
             return response.WasSuccessful;
         }
 
-        public  List<Player> GetPlayersWithNoAccount()
+        public static List<Player> GetPlayersWithNoAccount()
         {
             var request = new GetPlayersWithNoAccountRequest();
 
@@ -117,7 +117,7 @@ namespace application.SystemInterface
             return response.Players;
         }
 
-        public  List<FocusPointDescriptor> GetFocusPoints()
+        public static List<FocusPointDescriptor> GetFocusPoints()
         {
             var request = new GetAllFocusPointsRequest();
             
@@ -126,7 +126,7 @@ namespace application.SystemInterface
             return response.FocusPointDescriptors;
         }
 
-        public  List<Feedback> GetPlayerFeedback(Member member)
+        public static List<Feedback> GetPlayerFeedback(Member member)
         {
             var request = new GetPlayerFeedbackRequest
             {
@@ -138,7 +138,7 @@ namespace application.SystemInterface
             return response.Feedback;
         }
 
-        public  Player GetPlayer(int id)
+        public static Player GetPlayer(int id)
         {
             var request = new GetPlayerRequest
             {
@@ -150,7 +150,7 @@ namespace application.SystemInterface
             return response.Player;
         }
 
-        public  List<Player> GetAllPlayers()
+        public static List<Player> GetAllPlayers()
         {
             var request = new GetAllPlayersRequest();
 
@@ -160,7 +160,7 @@ namespace application.SystemInterface
             return response.Players;
         }
 
-        public  List<FocusPointItem> GetPlayerFocusPointItems(int memberId)
+        public static List<FocusPointItem> GetPlayerFocusPointItems(int memberId)
         {
             var request = new GetPlayerFocusPointsRequest
             {
@@ -176,7 +176,7 @@ namespace application.SystemInterface
             return result;
         }
 
-        public  Member GetMember(int id)
+        public static Member GetMember(int id)
         {
             var request = new GetMemberRequest { Id = id};
 
@@ -185,7 +185,7 @@ namespace application.SystemInterface
             return response.Member;
         }
 
-        public  Member GetLoggedInMember()
+        public static Member GetLoggedInMember()
         {
             var request = new GetTokenMemberRequest();
 
@@ -197,7 +197,7 @@ namespace application.SystemInterface
         }
 
 
-        public List<PracticeTeam> GetPlayerPracticeTeams(Player player)
+        public static List<PracticeTeam> GetPlayerPracticeTeams(Player player)
         {
             var request = new GetPlayerPracticeTeamRequest
             {
@@ -211,7 +211,7 @@ namespace application.SystemInterface
             return response.PracticeTeams;
         }
 
-        public (List<PlaySession> playSessions, List<bool> relevance) GetSchedule(DateTime start, DateTime end)
+        public static (List<PlaySession> playSessions, List<bool> relevance) GetSchedule(DateTime start, DateTime end)
         {
             var request = new GetScheduleRequest()
             {
@@ -224,7 +224,7 @@ namespace application.SystemInterface
             return (response.PlaySessions, response.IsRelevantForMember);
         }
 
-        public (List<Member> members, List<PracticeTeam> practiceTeams, List<FocusPointDescriptor> focusPoints)
+        public static (List<Member> members, List<PracticeTeam> practiceTeams, List<FocusPointDescriptor> focusPoints)
             GetAdminPage()
         {
             var request = new GetAdminPageRequest();
@@ -235,7 +235,7 @@ namespace application.SystemInterface
         }
 
 
-        public List<PracticeTeam> GetAllPracticeTeams()
+        public static List<PracticeTeam> GetAllPracticeTeams()
         {
             var request = new GetAllPracticeTeamsRequest();
 
@@ -246,7 +246,7 @@ namespace application.SystemInterface
             return response.PracticeTeams;
         }
 
-        public FocusPointDescriptor GetFocusPointDescriptor(int id)
+        public static FocusPointDescriptor GetFocusPointDescriptor(int id)
         {
             var request = new GetFocusPointDescriptorRequest
             {
@@ -260,7 +260,7 @@ namespace application.SystemInterface
             return response.FocusPointDescriptor;
         }
 
-        public PracticeTeam GetPracticeTeam(int id)
+        public static (PracticeTeam team, List<Player> players) GetPracticeTeam(int id)
         {
             var request = new GetPracticeTeamRequest
             {
@@ -269,10 +269,10 @@ namespace application.SystemInterface
 
             var response = SendRequest<GetPracticeTeamRequest, GetPracticeTeamResponse>(RequestType.GetPracticeTeam, request);
 
-            return response.Team;
+            return (response.Team, response.Players);
         }
 
-        public List<PracticeTeam> GetTrainerPracticeTeams(Trainer trainer)
+        public static List<PracticeTeam> GetTrainerPracticeTeams(Trainer trainer)
         {
             var request = new GetTrainerPracticeTeamsRequest
             {
@@ -288,7 +288,7 @@ namespace application.SystemInterface
         }
 
         // Setters below
-        public void SetPlayer(Player player)
+        public static void SetPlayer(Player player)
         {
             var request = new SetPlayerRequest
             {
@@ -298,7 +298,7 @@ namespace application.SystemInterface
             SendRequest<SetPlayerRequest, SetPlayerResponse>(RequestType.SetPlayer, request);
         }
 
-        public bool SetPlayerFocusPoints(Player player, FocusPointDescriptor focusPointDescriptor)
+        public static bool SetPlayerFocusPoints(Player player, FocusPointDescriptor focusPointDescriptor)
         {
             var request = new AddPlayerFocusPointRequest
             {
@@ -313,7 +313,7 @@ namespace application.SystemInterface
             return response.WasSuccessful;
         }
 
-        public void SetComment(Member member, string comment)
+        public static void SetComment(Member member, string comment)
         {
             var request = new SetCommentRequest()
             {
@@ -324,7 +324,7 @@ namespace application.SystemInterface
             var response = SendRequest<SetCommentRequest, SetCommentResponse>(RequestType.SetComment, request);
         }
 
-        public void SetPlayerPracticeTeams(Player player, PracticeTeam practiceTeam)
+        public static void SetPlayerPracticeTeams(Player player, PracticeTeam practiceTeam)
         {
             var request = new SetPlayerPracticeTeamRequest
             {
@@ -336,7 +336,7 @@ namespace application.SystemInterface
                 RequestType.SetPlayerPracticeTeam, request);
         }
 
-        public void ChangeTrainerPrivileges(Member member)
+        public static void ChangeTrainerPrivileges(Member member)
         {
             var request = new ChangeTrainerPrivilegesRequest
             {
@@ -347,7 +347,7 @@ namespace application.SystemInterface
                 RequestType.ChangeTrainerPrivileges, request);
         }
 
-        public void SetNonPrivateFocusPoint(FocusPointDescriptor focusPointDescriptor)
+        public static void SetNonPrivateFocusPoint(FocusPointDescriptor focusPointDescriptor)
         {
             var request = new SetNonPrivateFocusPointRequest
             {
@@ -358,7 +358,7 @@ namespace application.SystemInterface
                 RequestType.SetNonPrivateFocusPoint, request);
         }
 
-        public void SetPracticeTeamTrainer(PracticeTeam practiceTeam, Trainer trainer)
+        public static void SetPracticeTeamTrainer(PracticeTeam practiceTeam, Trainer trainer)
         {
             var request = new SetPracticeTeamTrainerRequest
             {
@@ -372,7 +372,7 @@ namespace application.SystemInterface
 
         // Deleters below
 
-        public void DeletePlayerFocusPoints(Player player, FocusPointItem focusPointItem)
+        public static void DeletePlayerFocusPoints(Player player, FocusPointItem focusPointItem)
         {
             var request = new DeletePlayerFocusPointRequest
             {
@@ -383,7 +383,7 @@ namespace application.SystemInterface
             SendRequest<DeletePlayerFocusPointRequest, DeletePlayerFocusPointResponse>(
                 RequestType.DeletePlayerFocusPoint, request);
         }
-        public void DeletePlayerPracticeTeam(Player player, PracticeTeam practiceTeam)
+        public static void DeletePlayerPracticeTeam(Player player, PracticeTeam practiceTeam)
         {
             var request = new DeletePlayerPracticeTeamRequest
             {
@@ -395,7 +395,7 @@ namespace application.SystemInterface
                 RequestType.DeletePlayerPracticeTeam, request);
         }
 
-        public void DeleteFocusPointDescriptor(FocusPointDescriptor fp)
+        public static void DeleteFocusPointDescriptor(FocusPointDescriptor fp)
         {
             var request = new DeleteFocusPointDescriptorRequest
             {
@@ -406,7 +406,7 @@ namespace application.SystemInterface
                 RequestType.DeleteFocusPointDescriptor, request);
         }
 
-        public void DeletePracticeTeam(PracticeTeam team)
+        public static void DeletePracticeTeam(PracticeTeam team)
         {
             var request = new DeletePracticeTeamRequest
             {
@@ -417,7 +417,7 @@ namespace application.SystemInterface
                 RequestType.DeletePracticeTeam, request);
         }
         // creators below
-        public FocusPointDescriptor CreateFocusPointDescriptor(FocusPointDescriptor fp)
+        public static FocusPointDescriptor CreateFocusPointDescriptor(FocusPointDescriptor fp)
         {
             var request = new CreateFocusPointDescriptorRequest
             {
@@ -430,7 +430,7 @@ namespace application.SystemInterface
 
             return response.FocusPointDescriptor;
         }
-        public void SetExerciseDiscriptor(ExerciseDescriptor exercise)
+        public static void SetExerciseDiscriptor(ExerciseDescriptor exercise)
         {
             var request = new SetExerciseDescriptorRequest
             {
@@ -439,7 +439,7 @@ namespace application.SystemInterface
 
             var response = SendRequest<SetExerciseDescriptorRequest, SetExerciseDescriptorResponse>(RequestType.SetExerciseDiscriptor, request);
         }
-        public List<Trainer> GetAllTrainers()
+        public static List<Trainer> GetAllTrainers()
         {
             var request = new GetAllTrainersRequest();
 
@@ -449,7 +449,7 @@ namespace application.SystemInterface
             return response.Trainers;
         }
 
-        public List<Member> GetAllMembers()
+        public static List<Member> GetAllMembers()
         {
             var request = new GetAllMembersRequest();
             var response =
@@ -458,14 +458,14 @@ namespace application.SystemInterface
             return response.Members;
         }
 
-        public List<RuleBreak> VerifyLineup(TeamMatch match)
+        public static List<RuleBreak> VerifyLineup(TeamMatch match)
         {
             var request = new VerifyLineupRequest() {Match = match};
             var response = SendRequest<VerifyLineupRequest, VerifyLineupResponse>(RequestType.VerifyLineup, request);
             return response.RuleBreaks;
         }
 
-        public void SetPracticeSession(PracticeSession practice)
+        public static void SetPracticeSession(PracticeSession practice)
         {
             var request = new SetPracticeSessionRequest
             {
@@ -477,7 +477,7 @@ namespace application.SystemInterface
                     RequestType.SetPracticeSession, request);
         }
 
-        public void SetTeamMatch(TeamMatch match)
+        public static void SetTeamMatch(TeamMatch match)
         {
             var request = new SetTeamMatchRequest()
             {
@@ -487,7 +487,7 @@ namespace application.SystemInterface
             var response = SendRequest<SetTeamMatchRequest, SetTeamMatchResponse>(RequestType.SetTeamMatch, request);
         }
 
-        public void SetFeedback(Feedback feedback)
+        public static void SetFeedback(Feedback feedback)
         {
             var request = new SetFeedbackRequest
             {
@@ -499,7 +499,7 @@ namespace application.SystemInterface
                     RequestType.SetFeedback, request);
         }
 
-        public void SetPracticeTeam(PracticeTeam practiceTeam)
+        public static void SetPracticeTeam(PracticeTeam practiceTeam)
         {
             var request = new SetPracticeTeamRequest
             {
@@ -510,7 +510,7 @@ namespace application.SystemInterface
         }
 
 
-        public void SetMemberSex(Sex newSex, Player player)
+        public static void SetMemberSex(Sex newSex, Player player)
         {
             var request = new SetMemberSexRequest()
             {
@@ -521,7 +521,7 @@ namespace application.SystemInterface
             var response = SendRequest<SetMemberSexRequest, SetMemberSexResponse>(RequestType.SetMemberSex, request);
         }
 
-        public void DeleteTeamMatch(int id)
+        public static void DeleteTeamMatch(int id)
         {
             var request = new DeleteTeamMatchRequest
             {
@@ -531,7 +531,7 @@ namespace application.SystemInterface
             SendRequest<DeleteTeamMatchRequest, DeleteTeamMatchResponse>(RequestType.DeleteTeamMatch, request);
         }
 
-        public void DeletePracticeSession(int id)
+        public static void DeletePracticeSession(int id)
         {
             var request = new DeletePracticeSessionRequest
             {
@@ -542,7 +542,7 @@ namespace application.SystemInterface
                 RequestType.DeletePracticeSession, request);
         }
 
-        public void EditFocusPoint(FocusPointDescriptor fp)
+        public static void EditFocusPoint(FocusPointDescriptor fp)
         {
             var request = new EditFocusPointRequest
             {

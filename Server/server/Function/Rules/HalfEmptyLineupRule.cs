@@ -10,10 +10,10 @@ namespace Server.Function.Rules
 {
     class HalfEmptyLineupRule : IRule
     {
-        public int Priority { get; set; } = 6;
+        public int Priority { get; set; } = 2;
         private List<RuleBreak> _ruleBreaks = new List<RuleBreak>();
 
-        public List<RuleBreak> Verify(TeamMatch match)
+        public List<RuleBreak> Rule(TeamMatch match)
         {
             _ruleBreaks = new List<RuleBreak>();
             int posCount = match.Lineup.Sum(p => p.Positions.Count);

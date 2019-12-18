@@ -5,7 +5,7 @@ USE `p3_db`;
 create table `Account`(
 Username varchar(32) primary key,
 PasswordHash binary(32) not null,
-PasswordSalt binary(128) not null
+PasswordSalt binary(32) not null
 );
 
 create table Token(

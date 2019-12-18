@@ -330,12 +330,12 @@ namespace application.ViewModel
 
             foreach (var position in Positions)
             {
-                var posRuleBreak = ruleBreaks.Find(r => r.Position == position.Key && r.PlayerIndex == 0);
+                var posRuleBreak = ruleBreaks.Find(r => r.Position == position.Key && r.PositionIndex == 0);
                 position.Value.Error = posRuleBreak == null ? string.Empty : posRuleBreak.ErrorMessage;
 
                 if (Lineup.PositionType.Double.HasFlag(position.Key.Item1))
                 {
-                    var pos2RuleBreak = ruleBreaks.Find(r => r.Position == position.Key && r.PlayerIndex == 1);
+                    var pos2RuleBreak = ruleBreaks.Find(r => r.Position == position.Key && r.PositionIndex == 1);
                     position.Value.OtherError = pos2RuleBreak == null ? string.Empty : pos2RuleBreak.ErrorMessage;
                 }
             }
