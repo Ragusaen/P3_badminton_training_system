@@ -42,14 +42,13 @@ namespace application.UI
 
         private void OnMenuItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
-            if (e.SelectedItem != null)
+            if (e.SelectedItem != null) //Creates an instance of the selected page and navigates to it
             {
                 if (((MasterPageItem) e.SelectedItem).TargetType == typeof(ProfilePage))
                     (Detail as NavigationPage).PushAsync(new ProfilePage(RequestCreator.LoggedInMember.Id));
                 else
                     (Detail as NavigationPage).PushAsync((Page)Activator.CreateInstance(((MasterPageItem)e.SelectedItem).TargetType));
 
-                //Creates an instance of the selected page and navigates to it
                 IsPresented = false;
                 NavigationList.SelectedItem = null;
             }
