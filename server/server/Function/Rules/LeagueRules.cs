@@ -1,7 +1,7 @@
-﻿using Common.Model;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Common.Model;
 
-namespace Server.Function.Rules
+namespace server.Function.Rules
 {
     static class LeagueRules
     {

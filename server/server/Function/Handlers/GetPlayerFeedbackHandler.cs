@@ -2,9 +2,9 @@
 using System.Linq;
 using Common.Model;
 using Common.Serialization;
-using Server.DAL;
+using server.DAL;
 
-namespace Server.Function.Handlers
+namespace server.Function.Handlers
 {
     class GetPlayerFeedbackHandler : MiddleRequestHandler<GetPlayerFeedbackRequest, GetPlayerFeedbackResponse>
     {

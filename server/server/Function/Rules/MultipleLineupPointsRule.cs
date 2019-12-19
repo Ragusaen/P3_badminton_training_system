@@ -1,11 +1,10 @@
-﻿using Common.Model;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using Server.DAL;
 using Common;
+using Common.Model;
+using server.DAL;
 
-namespace Server.Function.Rules
+namespace server.Function.Rules
 {
     class MultipleLineupsPointsRule : IRule
     {

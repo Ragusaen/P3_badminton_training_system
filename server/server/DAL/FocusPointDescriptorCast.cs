@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Common.Model;
+﻿using Common.Model;
 
-namespace Server.DAL
+namespace server.DAL
 {
     partial class focuspoint
     {
-        public static explicit operator Common.Model.FocusPointDescriptor(Server.DAL.focuspoint fp)
+        public static explicit operator Common.Model.FocusPointDescriptor(focuspoint fp)
         {
             return new FocusPointDescriptor
             {
@@ -21,7 +16,7 @@ namespace Server.DAL
             };
         }
 
-        public static explicit operator Server.DAL.focuspoint(Common.Model.FocusPointDescriptor fp)
+        public static explicit operator focuspoint(Common.Model.FocusPointDescriptor fp)
         {
             return new focuspoint
             {

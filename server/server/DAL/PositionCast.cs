@@ -1,15 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Common.Model;
-
-namespace Server.DAL
+﻿namespace server.DAL
 {
     partial class position
     {
-        public static explicit operator Common.Model.Position(Server.DAL.position p)
+        public static explicit operator Common.Model.Position(position p)
         {
             var db = new DatabaseEntities();
             return new Common.Model.Position

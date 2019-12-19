@@ -1,6 +1,6 @@
 ﻿using Common.Model;
 
-namespace Server.DAL
+namespace server.DAL
 {
     partial class feedback
     {

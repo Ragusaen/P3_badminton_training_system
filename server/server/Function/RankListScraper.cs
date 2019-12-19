@@ -7,9 +7,9 @@ using Common.Model;
 using NLog;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
-using Server.DAL;
+using server.DAL;
 
-namespace Server.Function
+namespace server.Function
 {
     /// <summary>
     /// This class is used to scrape the rank list information from badmintonplayer.dk
@@ -210,8 +210,8 @@ namespace Server.Function
         {
             foreach (var p in players)
             {
-                Server.DAL.member dbMember;
-                Server.DAL.ranklist dbRankList;
+                member dbMember;
+                ranklist dbRankList;
 
                 if (p.Member.Id > 0)
                 {
@@ -220,7 +220,7 @@ namespace Server.Function
                 }
                 else
                 {
-                    dbMember = _db.members.Add(new Server.DAL.member());
+                    dbMember = _db.members.Add(new member());
                     dbRankList = dbMember.ranklist = new ranklist();
                     dbMember.BadmintonPlayerID = p.BadmintonPlayerId;
                     dbMember.MemberType = (int)MemberType.Player;

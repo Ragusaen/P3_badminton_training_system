@@ -1,13 +1,10 @@
-﻿using Common.Model;
-using Server.DAL;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Common;
+using Common.Model;
+using server.DAL;
 
-namespace Server.Function.Rules
+namespace server.Function.Rules
 {
     class ReservesRule : IRule
     {

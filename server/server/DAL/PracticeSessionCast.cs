@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using Common.Model;
 
-namespace Server.DAL
+namespace server.DAL
 {
     partial class practicesession
     {
-        public static explicit operator Common.Model.PracticeSession(Server.DAL.practicesession ps)
+        public static explicit operator Common.Model.PracticeSession(practicesession ps)
         {
             var db = new DatabaseEntities();
             return new PracticeSession

@@ -6,9 +6,9 @@ using Common;
 using Common.Model;
 using Common.Serialization;
 using NLog;
-using Server.DAL;
+using server.DAL;
 
-namespace Server.Function
+namespace server.Function
 {
     /// <summary>
     /// This is the super-class for all request handlers
@@ -109,7 +109,7 @@ namespace Server.Function
         /// <summary>
         /// Get the database member from the permission requests access token
         /// </summary>
-        private Server.DAL.member GetMember(PermissionRequest pr)
+        private member GetMember(PermissionRequest pr)
         {
             var um = new AccountManager();
             return um.GetMemberFromToken(pr.Token);

@@ -1,13 +1,9 @@
-﻿using Common.Model;
-using Server.Function.Rules;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Common;
+using Common.Model;
+using server.Function.Rules;
 
-namespace Server.Function
+namespace server.Function
 {
     class LineupVerification
     {

@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Common;
 using Common.Model;
 
-namespace Server.Function.Rules
+namespace server.Function.Rules
 {
     class DoubleSamePlayerRule : IRule
     {

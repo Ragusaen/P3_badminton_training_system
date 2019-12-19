@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Common.Model;
+﻿using Common.Model;
 
-namespace Server.DAL
+namespace server.DAL
 {
     partial class practicesessionexercise
     {
-        public static explicit operator Common.Model.ExerciseItem(Server.DAL.practicesessionexercise pse)
+        public static explicit operator Common.Model.ExerciseItem(practicesessionexercise pse)
         {
             return new ExerciseItem
             {

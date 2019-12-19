@@ -3,9 +3,9 @@ using System.Diagnostics;
 using System.Linq;
 using System.Security.Cryptography;
 using NLog;
-using Server.DAL;
+using server.DAL;
 
-namespace Server.Function
+namespace server.Function
 {
     class AccountManager
     {

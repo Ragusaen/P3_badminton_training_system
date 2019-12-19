@@ -1,17 +1,11 @@
-﻿using NLog;
-using Server.SystemInterface.Network;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
+﻿using System;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using Common.Model;
-using Common.Serialization;
-using Server.DAL;
-using Server.Function;
+using NLog;
+using server.DAL;
+using server.Function;
+using server.SystemInterface.Network;
 
-namespace Server
+namespace server
 {
     class Program
     {

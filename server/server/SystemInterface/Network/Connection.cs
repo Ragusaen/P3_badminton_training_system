@@ -1,9 +1,9 @@
-﻿using NLog;
-using System;
+﻿using System;
 using System.Net.Security;
 using System.Net.Sockets;
+using NLog;
 
-namespace Server.SystemInterface.Network
+namespace server.SystemInterface.Network
 {
     /// <summary>
     /// This class abstracts over the connection with a client. It handles the communication with the client.

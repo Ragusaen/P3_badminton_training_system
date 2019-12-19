@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Common.Serialization;
-using Server.DAL;
+﻿using Common.Serialization;
+using server.DAL;
 
-namespace Server.Function.Handlers
+namespace server.Function.Handlers
 {
     class EditFocusPointHandler : MiddleRequestHandler<EditFocusPointRequest, EditFocusPointResponse>
     {

@@ -1,7 +1,7 @@
 ﻿using Common.Serialization;
-using Server.DAL;
+using server.DAL;
 
-namespace Server.Function.Handlers
+namespace server.Function.Handlers
 {
     class GetMemberHandler : MiddleRequestHandler<GetMemberRequest, GetMemberResponse>
     {

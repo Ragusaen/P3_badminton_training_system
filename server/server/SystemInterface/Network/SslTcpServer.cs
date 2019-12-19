@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Net;
-using System.Net.Sockets;
 using System.Net.Security;
+using System.Net.Sockets;
 using System.Security.Authentication;
 using System.Security.Cryptography.X509Certificates;
-using System.IO;
-using System.Security;
 using System.Threading;
-using System.Collections.Generic;
 using NLog;
 
-namespace Server.SystemInterface.Network
+namespace server.SystemInterface.Network
 {
 
     sealed class SslTcpServer
