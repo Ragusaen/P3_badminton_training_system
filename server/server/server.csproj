@@ -228,6 +228,7 @@
     <Compile Include="DAL\token.cs">
       <DependentUpon>DatabaseModel.tt</DependentUpon>
     </Compile>
+    <Compile Include="DatabaseInitializer.cs" />
     <Compile Include="Function\Handlers\DeletePracticeSessionHandler.cs" />
     <Compile Include="Function\Handlers\DeleteTeamMatchHandler.cs" />
     <Compile Include="Function\Handlers\EditFocusPointHandler.cs" />

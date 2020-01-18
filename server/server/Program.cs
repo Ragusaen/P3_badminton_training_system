@@ -32,6 +32,13 @@ namespace server
                     scraper.UpdatePlayers();
                 }
             }
+            
+            if (false) //args.Contains("--initdb") || args.Contains("-i")
+            {
+                _log.Debug("Database is being initialized");
+                var di = new DatabaseInitializer();
+                di.Initialize();
+            }
 
             try
             {
