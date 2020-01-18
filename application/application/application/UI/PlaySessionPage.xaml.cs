@@ -14,18 +14,21 @@ using Xamarin.Forms.Xaml;
 namespace application.UI
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class PlaySessionPage : ContentPage
+    public partial class PlaySessionPage
     {
         private PlaySessionViewModel _vm;
+        PlaySession PlaySession;
+        bool Relevant;
 
-        public PlaySessionPage(PlaySession playSession)
+        public PlaySessionPage(PlaySession playSession, bool relevant, RequestCreator requestCreator) : base(requestCreator)
         {
             InitializeComponent();
-            _vm = new PlaySessionViewModel(playSession);
+            _vm = new PlaySessionViewModel(playSession, relevant, requestCreator, Navigation);
+            Relevant = relevant;
             BindingContext = _vm;
             _vm.Navigation = Navigation;
-
-            Time.Text = _vm.PlaySession.Start.ToString("hh:mm") + " - " + _vm.PlaySession.End.ToString("hh:mm");
+            PlaySession = playSession;
+            Time.Text = _vm.PlaySession.Start.ToString("HH:mm") + " - " + _vm.PlaySession.End.ToString("HH:mm");
             Date.Text = _vm.PlaySession.Start.ToString("dddd, d MMMM");
             Location.Text = _vm.PlaySession.Location;
 
@@ -41,16 +44,27 @@ namespace application.UI
             BullsEyeIcon.Source = ImageSource.FromResource("application.Images.bullseyeicon.png");
             EditButton.Source = ImageSource.FromResource("application.Images.editicon.png");
 
-            EditButton.Clicked += (s,a) => _vm.EditButtonClicked();
+            EditButton.Clicked += (s,a) => _vm.EditButtonClicked(this);
+        }
+
+        protected override void OnAppearing()
+        {
+            _vm = new PlaySessionViewModel(PlaySession, Relevant, RequestCreator, Navigation);
+            BindingContext = _vm;
+            _vm.Navigation = Navigation;
         }
 
         private void SetPracticeVisibility()
         {
             Name.Text = _vm.PracticeSession.PracticeTeam.Name;
 
-            var MFPTapGest = new TapGestureRecognizer();
-            MFPTapGest.Tapped += (s, a) => GoToFocusPoint(_vm.PracticeSession.MainFocusPoint.Descriptor);
-            MainFocusPoint.GestureRecognizers.Add(MFPTapGest);
+
+            if (_vm.PracticeSession.MainFocusPoint != null)
+            {
+                var MFPTapGest = new TapGestureRecognizer();
+                MFPTapGest.Tapped += (s, a) => GoToFocusPoint(_vm.PracticeSession.MainFocusPoint.Descriptor);
+                MainFocusPoint.GestureRecognizers.Add(MFPTapGest);
+            }
 
             PracticeRelevant.IsVisible = true;
 
@@ -64,7 +78,7 @@ namespace application.UI
 
         private void GoToFocusPoint(FocusPointDescriptor fpd)
         {
-            PopupNavigation.Instance.PushAsync(new StringAndHeaderPopup(fpd));
+            PopupNavigation.Instance.PushAsync(new ViewFocusPointDetails(fpd, RequestCreator));
         }
 
         private void ListView_OnItemSelected(object sender, SelectedItemChangedEventArgs e)

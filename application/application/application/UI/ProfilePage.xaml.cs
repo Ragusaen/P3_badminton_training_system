@@ -16,25 +16,23 @@ using Xamarin.Forms.Xaml;
 namespace application.UI
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ProfilePage : ContentPage
+    public partial class ProfilePage
     {
         private ProfilePageViewModel _vm;
 
-        public ProfilePage(int profileId)
+        public ProfilePage(int profileId, RequestCreator requestCreator) : base(requestCreator)
         {
             InitializeComponent();
-
             SetupCommentEvents();
 
-            _vm = new ProfilePageViewModel(profileId);
+            _vm = new ProfilePageViewModel(profileId, requestCreator, Navigation);
             BindingContext = _vm;
-            _vm.Navigation = Navigation;
+
+            if (_vm.Player != null)
+                FeedbackSection.IsVisible = _vm.Player.Feedbacks.Count > 0;
 
             ShownOnlyRelevantInfo();
-
             Settingsicon.Source = ImageSource.FromResource("application.Images.settingsicon.jpg");
-
-
             if (_vm.Player != null && _vm.Player.Sex == Sex.Unknown)
                 NoSexLabel.IsVisible = true;
         }
@@ -68,8 +66,8 @@ namespace application.UI
                 if (CommentEntry?.Text?.Length > 0)
                 {
                     Comment.Text = CommentEntry.Text;
-                    _vm.SetComment(CommentEntry.Text);
-                    _vm.Member.Comment = CommentEntry.Text;
+                    if(_vm.SetComment(CommentEntry.Text))
+                        _vm.Member.Comment = CommentEntry.Text;
                 }
             };
         }

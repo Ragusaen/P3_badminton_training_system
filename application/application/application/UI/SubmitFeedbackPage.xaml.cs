@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using application.SystemInterface;
 using application.ViewModel;
 using Common.Model;
 using Xamarin.Forms;
@@ -11,14 +12,15 @@ using Xamarin.Forms.Xaml;
 namespace application.UI
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class SubmitFeedbackPage : ContentPage
+    public partial class SubmitFeedbackPage
     {
-        public SubmitFeedbackPage(PlaySession playsession)
+        public SubmitFeedbackPage(PlaySession playsession, RequestCreator requestCreator) : base(requestCreator)
         {
             InitializeComponent();
-            SubmitFeedbackViewModel vm = new SubmitFeedbackViewModel(playsession);
+
+            //Sets BindingContext ViewModel
+            SubmitFeedbackViewModel vm = new SubmitFeedbackViewModel(playsession, requestCreator, Navigation);
             BindingContext = vm;
-            vm.Navigation = Navigation;
 
             Slider1.Value = 0f;
             Slider2.Value = 0f;

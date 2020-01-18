@@ -1,16 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<ui:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:cvtr="clr-namespace:application.UI.Converter"
+             xmlns:ui="clr-namespace:application.UI;assembly=application"
              mc:Ignorable="d"
-             x:Class="application.UI.PlaySessionPage">
+             x:Class="application.UI.PlaySessionPage" x:Name="rootpage">
 
     <NavigationPage.TitleView>
         <StackLayout Orientation="Horizontal">
             <Label x:Name="Name" Text="name" FontAttributes="Bold" FontSize="30" TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
-            <ImageButton Source="" x:Name="EditButton" HeightRequest="30" VerticalOptions="CenterAndExpand" HorizontalOptions="End" Margin="0,0,15,0" BackgroundColor="Red"/>
+            <ImageButton Source="" x:Name="EditButton" IsVisible="{Binding EditVisibility}" HeightRequest="30" VerticalOptions="CenterAndExpand" HorizontalOptions="End" Margin="0,0,15,0" BackgroundColor="Red"/>
         </StackLayout>
         </NavigationPage.TitleView>
 
@@ -83,7 +84,7 @@
                         <Label Grid.Row="4" Grid.Column="0" Text="Team Nr." FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
                         <Label Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding TeamMatch.TeamIndex}" VerticalOptions="Center"/>
                         <Label Grid.Row="6" Grid.Column="0" Grid.ColumnSpan="2" Text="Lineup" FontSize="Title" HorizontalOptions="Start" VerticalOptions="Center"/>
-                        <Label Grid.Row="7" Grid.Column="2" HorizontalOptions="End" Text="Reserve:" FontSize="12"/>
+                        <Label Grid.Row="7" Grid.Column="2" IsVisible="{Binding ReservesVisible}" HorizontalOptions="End" Text="Reserve:" FontSize="12"/>
                     </Grid>
                     <ListView x:Name="LineupList" SelectionMode="None" RowHeight="110" ItemsSource="{Binding Positions}" HeightRequest="{Binding LineupHeight}">
                         <ListView.ItemTemplate>
@@ -109,10 +110,10 @@
                                                 <RowDefinition Height="*"/>
                                             </Grid.RowDefinitions>
                                             <Label x:Name="SinglePicker" FontSize="20" Text="{Binding Value.Player, Converter={StaticResource PlayerNameOrEmptyConverter}}" Grid.Column="0" Grid.Row="0" VerticalOptions="Center"/>
-                                            <CheckBox IsChecked="{Binding Value.IsExtra}" IsEnabled="False" Grid.Column="1" Grid.Row="0" VerticalOptions="Center" HorizontalOptions="Center"/>
+                                            <CheckBox IsVisible="{Binding BindingContext.ReservesVisible, Source={x:Reference rootpage}}" IsChecked="{Binding Value.IsExtra}" IsEnabled="False" Grid.Column="1" Grid.Row="0" VerticalOptions="Center" HorizontalOptions="Center"/>
                                         </Grid>
 
-                                        <Grid Grid.Row="1" Grid.Column="1">
+                                        <Grid Grid.Row="1" Grid.Column="1" IsVisible="{Binding Key, Converter={StaticResource IsPositionDoubleConverter}}">
                                             <Grid.ColumnDefinitions>
                                                 <ColumnDefinition Width="6*"/>
                                                 <ColumnDefinition Width="*"/>
@@ -120,8 +121,8 @@
                                             <Grid.RowDefinitions>
                                                 <RowDefinition Height="*"/>
                                             </Grid.RowDefinitions>
-                                            <Label x:Name="DoublePicker" FontSize="20" Text="{Binding Value.OtherPlayer, Converter={StaticResource PlayerNameOrEmptyConverter}}" IsVisible="{Binding Key, Converter={StaticResource IsPositionDoubleConverter}}" Grid.Column="0" Grid.Row="0" VerticalOptions="Center"/>
-                                            <CheckBox IsEnabled="False" IsVisible="{Binding Key, Converter={StaticResource IsPositionDoubleConverter}}" IsChecked="{Binding Value.OtherIsExtra}" Grid.Column="1" Grid.Row="0" HorizontalOptions="CenterAndExpand"/>
+                                            <Label x:Name="DoublePicker" FontSize="20" Text="{Binding Value.OtherPlayer, Converter={StaticResource PlayerNameOrEmptyConverter}}" Grid.Column="0" Grid.Row="0" VerticalOptions="Center"/>
+                                            <CheckBox IsVisible="{Binding BindingContext.ReservesVisible, Source={x:Reference rootpage}}" IsEnabled="False" IsChecked="{Binding Value.OtherIsExtra}" Grid.Column="1" Grid.Row="0" HorizontalOptions="CenterAndExpand"/>
                                         </Grid>
                                     </Grid>
                                 </ViewCell>
@@ -129,8 +130,8 @@
                         </ListView.ItemTemplate>
                     </ListView>
                 </StackLayout>
-                <Button x:Name="FeedBackButton" Text="Submit feedback for this session" Command="{Binding FeedbackCommand}"/>
+                <Button x:Name="FeedBackButton" Text="Submit feedback for this session" Command="{Binding FeedbackCommand}" IsVisible="{Binding PracticeFeedbackIsVisible}"/>
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>
-</ContentPage>
+</ui:BasePage>

@@ -1,16 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<ui:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ui="clr-namespace:application.UI;assembly=application"
              mc:Ignorable="d"
              x:Class="application.UI.AdministratorPage" NavigationPage.HasBackButton="False"
              x:Name="rootpage">
 
     <NavigationPage.TitleView>
-        <StackLayout Orientation="Horizontal" Spacing="10">
-            <Label Text="Administration" FontAttributes="Bold" FontSize="30" TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
-        </StackLayout>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.40*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Column="1" Text="Administration" FontAttributes="Bold" FontSize="30" TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+
+        </Grid>
     </NavigationPage.TitleView>
 
     <ContentPage.Content>
@@ -72,11 +80,13 @@
                                     <StackLayout>
                                             <Grid Padding="0" Margin="0" RowSpacing="0">
                                                 <Grid.ColumnDefinitions>
-                                                    <ColumnDefinition Width="8*"/>
+                                                    <ColumnDefinition Width="6*"/>
+                                                    <ColumnDefinition Width="1*"/>
                                                     <ColumnDefinition Width="1*"/>
                                                 </Grid.ColumnDefinitions>
                                                 <Label Grid.Column="0" Text="{Binding Name}" VerticalOptions="Center"/>
-                                                <Button Grid.Column="1" Text="❌" BackgroundColor="White" WidthRequest="50" VerticalOptions="End" Command="{Binding BindingContext.DeleteFocusPointCommand, Source={x:Reference rootpage}}" CommandParameter="{Binding}"/>
+                                                <ImageButton  Grid.Column="1" Source="" x:Name="EditButton" BackgroundColor="White" WidthRequest="30" VerticalOptions="CenterAndExpand" HorizontalOptions="EndAndExpand" Command="{Binding BindingContext.EditFocusPointCommand, Source={x:Reference rootpage}}" CommandParameter="{Binding}"/>
+                                                <Button Grid.Column="2" Text="❌" BackgroundColor="White" WidthRequest="50" VerticalOptions="End" Command="{Binding BindingContext.DeleteFocusPointCommand, Source={x:Reference rootpage}}" HorizontalOptions="StartAndExpand" CommandParameter="{Binding}"/>
                                             </Grid>
                                     </StackLayout>
                                 </ViewCell>
@@ -89,4 +99,4 @@
         </StackLayout>
         </ScrollView>
     </ContentPage.Content>
-</ContentPage>
+</ui:BasePage>

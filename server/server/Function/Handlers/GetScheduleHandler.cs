@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.ServiceModel.Dispatcher;
-using System.Text;
-using System.Threading.Tasks;
 using Common.Model;
 using Common.Serialization;
-using Server.DAL;
+using server.DAL;
 
-namespace Server.SystemInterface.Requests.Handlers
+namespace server.Function.Handlers
 {
     class GetScheduleHandler : MiddleRequestHandler<GetScheduleRequest, GetScheduleResponse>
     {
@@ -22,21 +18,39 @@ namespace Server.SystemInterface.Requests.Handlers
             
             GetScheduleResponse response = new GetScheduleResponse()
             {
-                Matches = new List<TeamMatch>(),
-                PracticeSessions = new List<PracticeSession>()
+                PlaySessions = new List<PlaySession>(),
+                IsRelevantForMember = new List<bool>()
             };
 
             foreach (var DBps in s)
             {
-                if ((PlaySession.Type)DBps.Type == PlaySession.Type.Practice)
-                    response.PracticeSessions.Add((PracticeSession)db.practicesessions.Find(DBps.ID));
-                else if ((PlaySession.Type)DBps.Type == PlaySession.Type.Match)
-                    response.Matches.Add((TeamMatch)db.teammatches.Find(DBps.ID));
+                if ((PlaySession.Type) DBps.Type == PlaySession.Type.Practice)
+                {
+                    response.PlaySessions.Add((PracticeSession)db.practicesessions.Find(DBps.ID));
+                    response.IsRelevantForMember.Add(IsRelevant(requester, DBps.practicesession));
+                }
+                else if ((PlaySession.Type) DBps.Type == PlaySession.Type.Match)
+                {
+                    response.PlaySessions.Add((TeamMatch)db.teammatches.Find(DBps.ID));
+                    response.IsRelevantForMember.Add(IsRelevant(requester, DBps.teammatch));
+                }
                 else
-                    Console.WriteLine("Invalid type");
+                    _log.Debug($"Found play session with invalid type {DBps.Type}. ID: {DBps.ID}");
             }
 
             return response;
+        }
+
+        private bool IsRelevant(member m, practicesession ps)
+        {
+            return m.practiceteamsplayer.Any(p => p.ID == ps.practiceteam.ID)
+                   || ps.TrainerID == m.ID;
+        }
+
+        private bool IsRelevant(member m, teammatch tm)
+        {
+            return tm.CaptainID == m.ID ||
+                   tm.positions.Any(pos => pos.MemberID == m.ID);
         }
     }
 }

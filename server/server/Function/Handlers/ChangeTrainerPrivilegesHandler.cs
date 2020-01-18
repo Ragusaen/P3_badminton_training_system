@@ -1,37 +1,49 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Common.Model;
+﻿using Common.Model;
 using Common.Serialization;
-using NLog;
-using Server.DAL;
+using server.DAL;
 
-namespace Server.SystemInterface.Requests.Handlers
+namespace server.Function.Handlers
 {
     class ChangeTrainerPrivilegesHandler : MiddleRequestHandler<ChangeTrainerPrivilegesRequest, ChangeTrainerPrivilegesResponse>
     {
         protected override ChangeTrainerPrivilegesResponse InnerHandle(ChangeTrainerPrivilegesRequest request, member requester)
         {
-            if (!((Common.Model.MemberType)requester.MemberType).HasFlag(MemberType.Trainer))
+            if (!((MemberType)requester.MemberType).HasFlag(MemberType.Trainer))
             {
-                RequestMember = request.Member;
                 return new ChangeTrainerPrivilegesResponse { AccessDenied = true };
             }
 
             var db = new DatabaseEntities();
-            db.members.Find(request.Member.Id).MemberType = (int)request.Member.MemberType;
+            var dbMember = db.members.Find(request.Member.Id);
 
+            if (dbMember == null)
+                return new ChangeTrainerPrivilegesResponse()
+                {
+                    Error = "Trainer did not exist"
+                };
+
+            // Update the membertype in the database
+            dbMember.MemberType = (int)request.Member.MemberType;
+
+            // Check if it was made trainer or was unmade trainer
             if (request.Member.MemberType.HasFlag(MemberType.Trainer))
             {
                 _log.Debug($"Member: {request.Member.Name} has been made Trainer Type");
             }
             else
             {
-                foreach (var practiceteam in db.practiceteams.Where(p => p.trainer.ID == request.Member.Id))
+                // Remove the member as trainer from all practice sessions, team matches and practice teams
+                foreach (var team in dbMember.practiceteamstrainer)
                 {
-                    practiceteam.trainer = null;
+                    team.trainer = null;
+                }
+                foreach (var practicesession in dbMember.practicesessions)
+                {
+                    practicesession.trainer = null;
+                }
+                foreach (var match in dbMember.teammatches)
+                {
+                    match.captain = null;
                 }
 
                 _log.Debug($"Member: {request.Member.Name} has been released from Trainer Type");

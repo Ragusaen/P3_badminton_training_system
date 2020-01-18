@@ -3,6 +3,7 @@ using Common.Model;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Xamarin.Forms;
 
 namespace application.ViewModel
 {
@@ -10,8 +11,7 @@ namespace application.ViewModel
     {
         public Feedback Feedback { get; set; } = new Feedback();
 
-
-        public SubmitFeedbackViewModel(PlaySession playsession)
+        public SubmitFeedbackViewModel(PlaySession playsession, RequestCreator requestCreator, INavigation navigation) : base(requestCreator, navigation)
         {
             Feedback.PlaySession = playsession;
         }
@@ -26,6 +26,14 @@ namespace application.ViewModel
         }
         private void ExecuteSubmitFeedbackClick(object param)
         {
+            if ((Feedback.BadQuestion != null && Feedback.BadQuestion.Length > 1024) || 
+                (Feedback.DayQuestion != null && Feedback.DayQuestion.Length > 1024) ||
+                (Feedback.FocusPointQuestion != null && Feedback.FocusPointQuestion.Length > 1024) || 
+                (Feedback.GoodQuestion != null && Feedback.GoodQuestion.Length > 1024))
+            {
+                Application.Current.MainPage.DisplayAlert("Invalid input", "Question can not contain more than 1024 characters", "Ok");
+                return;
+            }
             RequestCreator.SetFeedback(Feedback);
             Navigation.PopAsync();
         }

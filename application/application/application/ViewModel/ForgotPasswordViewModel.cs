@@ -2,11 +2,20 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using application.SystemInterface;
+using Xamarin.Forms;
 
 namespace application.ViewModel
 {
     class ForgotPasswordViewModel : BaseViewModel
     {
+
+        public ForgotPasswordViewModel(RequestCreator requestCreator, INavigation navigation) : base(requestCreator,
+            navigation)
+        {
+
+        }
+
         private RelayCommand _backToLogInClickCommand;
 
         public RelayCommand BackToLogInClickCommand
@@ -20,7 +29,7 @@ namespace application.ViewModel
         //Check if user is in database. Navigate to main page.
         private void ExecuteBackToLogInClick(object param)
         {
-            Navigation.PushAsync(new LoginPage());
+            Navigation.PushAsync(new LoginPage(RequestCreator));
         }
     }
 }

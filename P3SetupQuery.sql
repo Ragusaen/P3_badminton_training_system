@@ -5,11 +5,12 @@ USE `p3_db`;
 create table `Account`(
 Username varchar(32) primary key,
 PasswordHash binary(32) not null,
-PasswordSalt binary(128) not null
+PasswordSalt binary(32) not null
 );
 
 create table Token(
 AccessToken binary(64) primary key,
+ValidUntil datetime not null,
 AccountUsername varchar(32) not null,
 foreign key(AccountUsername) references `Account`(Username)
 );
@@ -68,11 +69,11 @@ EndDate datetime not null
 create table PracticeSession(
 PlaySessionID int primary key,
 foreign key(PlaySessionID) references PlaySession(ID),
-TrainerID int not null,
+TrainerID int,
 foreign key(TrainerID) references `Member`(ID),
 MainFocusPointID int,
 foreign key (MainFocusPointID) references focuspoint(ID),
-TeamID int,
+TeamID int not null,
 foreign key (TeamId) references practiceteam(ID)
 );
 

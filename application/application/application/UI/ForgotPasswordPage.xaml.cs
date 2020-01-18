@@ -4,19 +4,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using application.SystemInterface;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 namespace application.UI
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class ForgotPasswordPage : ContentPage
+    public partial class ForgotPasswordPage
     {
-        public ForgotPasswordPage()
+        //Sets BindingContext ViewModel
+        public ForgotPasswordPage(RequestCreator requestCreator) : base(requestCreator)
         {
             InitializeComponent();
-            ForgotPasswordViewModel vm = new ForgotPasswordViewModel();
+            ForgotPasswordViewModel vm = new ForgotPasswordViewModel(requestCreator, Navigation);
             BindingContext = vm;
             vm.Navigation = Navigation;
         }

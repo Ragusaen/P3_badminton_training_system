@@ -1,18 +1,33 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<ui:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:controls="clr-namespace:Xamarin.Plugin.Calendar.Controls;assembly=Xamarin.Plugin.Calendar"
+             xmlns:ui="clr-namespace:application.UI;assembly=application"
              mc:Ignorable="d"
              x:Class="application.UI.SchedulePage" NavigationPage.HasBackButton="False">
 
     
     <NavigationPage.TitleView>
-        <StackLayout Orientation="Horizontal" Spacing="10" x:Name="Navigationbar">
-            <Label Text="Schedule" FontAttributes="Bold" FontSize="30" TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
-            <ImageButton Source="" x:Name="Plusicon" HeightRequest="25" VerticalOptions="CenterAndExpand" HorizontalOptions="End" Margin="0,0,15,0" Clicked="AddPlaysession_OnClicked" BackgroundColor="Red" IsVisible="{Binding IsTrainer}"/>
-        </StackLayout>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.48*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="1" Text="Schedule" FontAttributes="Bold" FontSize="30" TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+            <Grid Grid.Column="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <ImageButton Grid.Column="1" Source="" x:Name="Plusicon" HeightRequest="40" VerticalOptions="CenterAndExpand" HorizontalOptions="End" Padding="7" Clicked="AddPlaysession_OnClicked" BackgroundColor="Red" IsVisible="{Binding IsTrainer}"/>
+                <ImageButton Grid.Column="2" Source="" x:Name="FilterButton" HeightRequest="40" VerticalOptions="CenterAndExpand" HorizontalOptions="End" Padding="7" Margin="0,0,10,0" BackgroundColor="Red" />
+            </Grid>
+        </Grid>
     </NavigationPage.TitleView>
 
 
@@ -23,11 +38,11 @@
         </Grid.RowDefinitions>
         <controls:Calendar Grid.Row="0" SelectedDate="{Binding SelectedDate}" Month="{Binding Month}" Year="{Binding Year}" Events="{Binding Events}" x:Name="Calendar" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" YearLabelColor="Red" SelectedDateColor="Red" MonthLabelColor="Red" SelectedDayBackgroundColor="Red"/>
 
-        <ListView Grid.Row="1" ItemsSource="{Binding SelectedEvents}" RowHeight="100" ItemSelected="ListView_OnItemSelected">
+        <ListView Grid.Row="1" ItemsSource="{Binding SelectedEvents}" RowHeight="110" ItemSelected="ListView_OnItemSelected">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
-                        <Frame BackgroundColor="{Binding Color}" HasShadow="True" CornerRadius="5" Margin="5,5,5,5" Padding="15,15,15,5">
+                        <Frame BackgroundColor="{Binding Color}" HasShadow="True" CornerRadius="5" Margin="5,5,5,5" Padding="10,15,15,15">
                             <StackLayout>
                                 <StackLayout Orientation="Horizontal">
                                     <Label FontAttributes="Bold" HorizontalOptions="Start" Text="{Binding Name}"/>
@@ -43,4 +58,4 @@
         </ListView>
     </Grid>
 
-</ContentPage>
+</ui:BasePage>

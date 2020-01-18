@@ -11,7 +11,7 @@
           </Key>
           <Property Name="Username" Type="varchar" MaxLength="32" Nullable="false" />
           <Property Name="PasswordHash" Type="binary" MaxLength="32" Nullable="false" />
-          <Property Name="PasswordSalt" Type="binary" MaxLength="128" Nullable="false" />
+          <Property Name="PasswordSalt" Type="binary" MaxLength="32" Nullable="false" />
         </EntityType>
         <EntityType Name="exercise">
           <Key>
@@ -96,9 +96,9 @@
             <PropertyRef Name="PlaySessionID" />
           </Key>
           <Property Name="PlaySessionID" Type="int" Nullable="false" />
-          <Property Name="TrainerID" Type="int" Nullable="false" />
+          <Property Name="TrainerID" Type="int" />
           <Property Name="MainFocusPointID" Type="int" />
-          <Property Name="TeamID" Type="int" />
+          <Property Name="TeamID" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="practicesessionexercise">
           <Key>
@@ -163,6 +163,7 @@
             <PropertyRef Name="AccessToken" />
           </Key>
           <Property Name="AccessToken" Type="binary" MaxLength="64" Nullable="false" />
+          <Property Name="ValidUntil" Type="datetime" Precision="0" Nullable="false" />
           <Property Name="AccountUsername" Type="varchar" MaxLength="32" Nullable="false" />
         </EntityType>
         <Association Name="feedback_ibfk_1">
@@ -262,7 +263,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="practicesession_ibfk_2">
-          <End Role="member" Type="Self.member" Multiplicity="1" />
+          <End Role="member" Type="Self.member" Multiplicity="0..1" />
           <End Role="practicesession" Type="Self.practicesession" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="member">
@@ -286,7 +287,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="practicesession_ibfk_4">
-          <End Role="practiceteam" Type="Self.practiceteam" Multiplicity="0..1" />
+          <End Role="practiceteam" Type="Self.practiceteam" Multiplicity="1" />
           <End Role="practicesession" Type="Self.practicesession" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="practiceteam">
@@ -585,9 +586,9 @@
           <Property Name="IsPrivate" Type="Boolean" Nullable="false" />
           <Property Name="Description" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
           <Property Name="VideoURL" Type="String" MaxLength="256" FixedLength="false" Unicode="false" />
-          <NavigationProperty Name="practicesessions" Relationship="Self.practicesession_ibfk_3" FromRole="focuspoint" ToRole="practicesession" />
+          <NavigationProperty Name="practicesessionsmain" Relationship="Self.practicesession_ibfk_3" FromRole="focuspoint" ToRole="practicesession" />
           <NavigationProperty Name="members" Relationship="Self.memberfocuspoint" FromRole="focuspoint" ToRole="member" />
-          <NavigationProperty Name="practicesessions1" Relationship="Self.practicesessionfocuspoint" FromRole="focuspoint" ToRole="practicesession" />
+          <NavigationProperty Name="practicesessionssub" Relationship="Self.practicesessionfocuspoint" FromRole="focuspoint" ToRole="practicesession" />
         </EntityType>
         <EntityType Name="member">
           <Key>
@@ -644,9 +645,9 @@
             <PropertyRef Name="PlaySessionID" />
           </Key>
           <Property Name="PlaySessionID" Type="Int32" Nullable="false" />
-          <Property Name="TrainerID" Type="Int32" Nullable="false" />
+          <Property Name="TrainerID" Type="Int32" />
           <Property Name="MainFocusPointID" Type="Int32" />
-          <Property Name="TeamID" Type="Int32" />
+          <Property Name="TeamID" Type="Int32" Nullable="false" />
           <NavigationProperty Name="mainfocuspoint" Relationship="Self.practicesession_ibfk_3" FromRole="practicesession" ToRole="focuspoint" />
           <NavigationProperty Name="trainer" Relationship="Self.practicesession_ibfk_2" FromRole="practicesession" ToRole="member" />
           <NavigationProperty Name="playsession" Relationship="Self.practicesession_ibfk_1" FromRole="practicesession" ToRole="playsession" />
@@ -712,6 +713,7 @@
           <Property Name="AccessToken" Type="Binary" MaxLength="Max" FixedLength="false" Nullable="false" />
           <Property Name="AccountUsername" Type="String" MaxLength="32" FixedLength="false" Unicode="false" Nullable="false" />
           <NavigationProperty Name="account" Relationship="Self.token_ibfk_1" FromRole="token" ToRole="account" />
+          <Property Name="ValidUntil" Type="DateTime" Nullable="false" />
         </EntityType>
         <Association Name="member_ibfk_1">
           <End Role="account" Type="Self.account" Multiplicity="0..1" />
@@ -798,7 +800,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="practicesession_ibfk_2">
-          <End Role="member" Type="Self.member" Multiplicity="1" />
+          <End Role="member" Type="Self.member" Multiplicity="0..1" />
           <End Role="practicesession" Type="Self.practicesession" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="member">
@@ -882,7 +884,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="practicesession_ibfk_4">
-          <End Role="practiceteam" Type="Self.practiceteam" Multiplicity="0..1" />
+          <End Role="practiceteam" Type="Self.practiceteam" Multiplicity="1" />
           <End Role="practicesession" Type="Self.practicesession" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="practiceteam">
@@ -1153,6 +1155,7 @@
           <EntitySetMapping Name="tokens">
             <EntityTypeMapping TypeName="DatabaseModel.token">
               <MappingFragment StoreEntitySet="token">
+                <ScalarProperty Name="ValidUntil" ColumnName="ValidUntil" />
                 <ScalarProperty Name="AccessToken" ColumnName="AccessToken" />
                 <ScalarProperty Name="AccountUsername" ColumnName="AccountUsername" />
               </MappingFragment>

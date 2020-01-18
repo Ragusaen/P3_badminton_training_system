@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using Common.Serialization;
-using Server.DAL;
-using Server.SystemInterface.Requests.Handlers;
+using server.DAL;
 
-namespace Server.Function.Handlers
+namespace server.Function.Handlers
 {
     class GetTrainerPracticeTeamsHandler : MiddleRequestHandler<GetTrainerPracticeTeamsRequest, GetTrainerPracticeTeamsResponse>
     {

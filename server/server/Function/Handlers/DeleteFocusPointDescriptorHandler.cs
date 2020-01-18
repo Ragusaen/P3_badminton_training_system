@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Common.Model;
+﻿using Common.Model;
 using Common.Serialization;
-using Server.DAL;
+using server.DAL;
 
-namespace Server.SystemInterface.Requests.Handlers
+namespace server.Function.Handlers
 {
     class DeleteFocusPointDescriptorHandler : MiddleRequestHandler<DeleteFocusPointDescriptorRequest, DeleteFocusPointDescriptorResponse>
     {
@@ -17,10 +12,24 @@ namespace Server.SystemInterface.Requests.Handlers
             {
                 return new DeleteFocusPointDescriptorResponse { AccessDenied = true };
             }
+
             var db = new DatabaseEntities();
             var fp = db.focuspoints.Find(request.FocusPointDescriptor.Id);
             if (fp != null)
             {
+                var players = fp.members;
+                var pracsMain = fp.practicesessionsmain;
+                var pracsSub = fp.practicesessionssub;
+
+                foreach (var p in players)
+                    p.focuspoints.Remove(fp);
+
+                foreach (var prac in pracsMain)
+                    prac.mainfocuspoint = null;
+
+                foreach (var prac in pracsSub)
+                    prac.subfocuspoints.Remove(fp);
+
                 db.focuspoints.Remove(fp);
                 _log.Debug($"Completely removed focus point descriptor {fp.Name}");
             }

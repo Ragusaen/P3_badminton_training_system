@@ -17,28 +17,28 @@ namespace application.ViewModel
         private ObservableCollection<PracticeTeam> _practiceTeamList;
         public ObservableCollection<PracticeTeam> PracticeTeamList
         {
-            get { return _practiceTeamList; }
-            set { SetProperty(ref _practiceTeamList, value); }
+            get => _practiceTeamList;
+            set => SetProperty(ref _practiceTeamList, value);
         }
 
         private ObservableCollection<Member> _memberList;
         public ObservableCollection<Member> MemberList
         {
-            get { return _memberList; }
-            set { SetProperty(ref _memberList, value); }
+            get => _memberList;
+            set => SetProperty(ref _memberList, value);
         }
 
         private ObservableCollection<FocusPointDescriptor> _focusPointList;
         public ObservableCollection<FocusPointDescriptor> FocusPointList
         {
-            get { return _focusPointList; }
-            set { SetProperty(ref _focusPointList, value); }
+            get => _focusPointList;
+            set => SetProperty(ref _focusPointList, value); 
         }
 
         private string _searchFocusPointText;
         public string SearchFocusPointText
         {
-            get { return _searchFocusPointText; }
+            get => _searchFocusPointText;
             set { SetProperty(ref _searchFocusPointText, value);
                 FocusPointList = new ObservableCollection<FocusPointDescriptor>(FocusPointList.OrderByDescending((x => StringExtension.LongestCommonSubsequence(x.Name.ToLower(), SearchFocusPointText.ToLower()))).ThenBy(x => x.Name.Length).ToList());
             }
@@ -74,7 +74,7 @@ namespace application.ViewModel
         }
 
 
-        public AdministratorViewModel()
+        public AdministratorViewModel(RequestCreator requestCreator, INavigation navigation) : base (requestCreator, navigation)
         {
             var pageInfo = RequestCreator.GetAdminPage();
             PracticeTeamList = new ObservableCollection<PracticeTeam>(pageInfo.practiceTeams);
@@ -82,14 +82,10 @@ namespace application.ViewModel
             FocusPointList = new ObservableCollection<FocusPointDescriptor>(pageInfo.focusPoints);
         }
 
+
         private RelayCommand _deletePracticeTeamCommand;
-        public RelayCommand DeletePracticeTeamCommand
-        {
-            get
-            {
-                return _deletePracticeTeamCommand ?? (_deletePracticeTeamCommand = new RelayCommand(param => DeletePracticeTeamClick(param)));
-            }
-        }
+        public RelayCommand DeletePracticeTeamCommand => _deletePracticeTeamCommand ?? (_deletePracticeTeamCommand = new RelayCommand(DeletePracticeTeamClick));
+
 
         private async void DeletePracticeTeamClick(object param)
         {
@@ -102,14 +98,19 @@ namespace application.ViewModel
             }
         }
 
-        private RelayCommand _deleteFocusPointCommand;
-        public RelayCommand DeleteFocusPointCommand
+        private RelayCommand _editFocusPointCommand;
+        public RelayCommand EditFocusPointCommand => _editFocusPointCommand ?? (_editFocusPointCommand = new RelayCommand(EditFocusPointClick));
+
+        private async void EditFocusPointClick(object param)
         {
-            get
-            {
-                return _deleteFocusPointCommand ?? (_deleteFocusPointCommand = new RelayCommand(param => DeleteFocusPointClick(param)));
-            }
+            var fp = param as FocusPointDescriptor;
+            await PopupNavigation.Instance.PushAsync(new CreateFocusPointPopupPage(false, fp, RequestCreator));
+            FocusPointList = new ObservableCollection<FocusPointDescriptor>(RequestCreator.GetFocusPoints());
         }
+
+        private RelayCommand _deleteFocusPointCommand;
+        public RelayCommand DeleteFocusPointCommand => _deleteFocusPointCommand ?? (_deleteFocusPointCommand = new RelayCommand(param => DeleteFocusPointClick(param)));
+
         private async void DeleteFocusPointClick(object param)
         {
             FocusPointDescriptor fp = param as FocusPointDescriptor;
@@ -127,6 +128,11 @@ namespace application.ViewModel
 
         private void NewPracticeTeamClick(object param)
         {
+            if (NewPracticeTeam.Length > 64)
+            {
+                Application.Current.MainPage.DisplayAlert("Invalid input", "Practice team name can not contain more than 64 characters", "Ok");
+                return;
+            }
             var team = new PracticeTeam {Name = NewPracticeTeam};
             RequestCreator.SetPracticeTeam(team);
             PracticeTeamList = new ObservableCollection<PracticeTeam>(RequestCreator.GetAllPracticeTeams());
@@ -139,18 +145,13 @@ namespace application.ViewModel
                    && !string.IsNullOrWhiteSpace(NewPracticeTeam);
         }
 
+
         private RelayCommand _newFocusPointCommand;
-        public RelayCommand NewFocusPointCommand
-        {
-            get
-            {
-                return _newFocusPointCommand ?? (_newFocusPointCommand = new RelayCommand(NewFocusPointClick));
-            }
-        }
+        public RelayCommand NewFocusPointCommand =>_newFocusPointCommand ?? (_newFocusPointCommand = new RelayCommand(NewFocusPointClick));
 
         private void NewFocusPointClick(object param)
         {
-            var newPage = new CreateFocusPointPopupPage(false);
+            var newPage = new CreateFocusPointPopupPage(false, RequestCreator);
             PopupNavigation.Instance.PushAsync(newPage);
             ((CreateFocusPointPopupViewModel)newPage.BindingContext).CallBackEvent += OnCallBackEvent;
         }
@@ -162,7 +163,7 @@ namespace application.ViewModel
 
         public void PopupFocusPoint(FocusPointDescriptor focusPoint)
         {
-            StringAndHeaderPopup popup = new StringAndHeaderPopup(focusPoint);
+            var popup = new ViewFocusPointDetails(focusPoint, RequestCreator);
             PopupNavigation.Instance.PushAsync(popup);
         }
     }

@@ -10,6 +10,7 @@ using System.Text;
 using application.SystemInterface;
 using application.UI;
 using Rg.Plugins.Popup.Services;
+using Xamarin.Forms;
 
 namespace application.ViewModel
 {
@@ -42,7 +43,7 @@ namespace application.ViewModel
             set => SetProperty(ref _shownFocusPoints, value);
         }
 
-        public FocusPointPopupViewModel(List<FocusPointItem> focusPointItems, Player player)
+        public FocusPointPopupViewModel(List<FocusPointItem> focusPointItems, Player player, RequestCreator requestCreator, INavigation navigation) : base(requestCreator, navigation)
         {
             NotShownItems = focusPointItems;
             var list = RequestCreator.GetFocusPoints();
@@ -63,7 +64,7 @@ namespace application.ViewModel
 
         private async void CreateNewFocusPointDescriptor(object param)
         {
-            var newPage = new CreateFocusPointPopupPage(true);
+            var newPage = new CreateFocusPointPopupPage(true, RequestCreator);
             await PopupNavigation.Instance.PushAsync(newPage);
             ((CreateFocusPointPopupViewModel) newPage.BindingContext).CallBackEvent += OnCallBackEvent;
         }

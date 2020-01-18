@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Common.Model;
+﻿using Common.Model;
 using Common.Serialization;
-using NLog;
-using Server.DAL;
+using server.DAL;
 
-namespace Server.SystemInterface.Requests.Handlers
+namespace server.Function.Handlers
 {
     class SetPlayerPracticeTeamHandler : MiddleRequestHandler<SetPlayerPracticeTeamRequest, SetPlayerPracticeTeamResponse>
     {
@@ -17,7 +11,6 @@ namespace Server.SystemInterface.Requests.Handlers
             if (!(((Common.Model.MemberType)requester.MemberType).HasFlag(MemberType.Trainer) ||
                   requester.ID == request.Player.Member.Id))
             {
-                RequestMember = request.Player.Member;
                 return new SetPlayerPracticeTeamResponse { AccessDenied = true };
             }
 

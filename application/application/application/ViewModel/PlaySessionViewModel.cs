@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using application.Controller;
+using application.SystemInterface;
 using application.UI;
 using Common.Model;
 using Common.Serialization;
@@ -35,14 +36,41 @@ namespace application.ViewModel
             set => SetProperty(ref _focusPointListHeight, value);
         }
 
+        private bool _reservesVisible;
 
-
-        public PlaySessionViewModel(PlaySession playSession)
+        public bool ReservesVisible
         {
-            PlaySession = playSession;
+            get => _reservesVisible;
+            set => SetProperty(ref _reservesVisible, value);
+        }
 
-            if (PlaySession.Start < DateTime.Now && DateTime.Now < PlaySession.Start.AddDays(7))
+        private bool _editVisibility;
+
+        public bool EditVisibility
+        {
+            get => _editVisibility;
+            set => SetProperty(ref _editVisibility, value);
+        }
+
+        public PlaySessionViewModel(PlaySession playSession, bool relevant, RequestCreator requestCreator, INavigation navigation) : base(requestCreator, navigation)
+
+        {
+            EditVisibility = RequestCreator.LoggedInMember.MemberType.HasFlag(MemberType.Trainer);
+            bool isPlayer = RequestCreator.LoggedInMember.MemberType.HasFlag(MemberType.Player);
+            bool hasNotFeedbacked = true;
+            List<Feedback> feedbacks = RequestCreator.GetPlayerFeedback(RequestCreator.LoggedInMember);
+            foreach (Feedback fb in feedbacks) 
+            {
+                if (fb.PlaySession.Id == playSession.Id)
+                    hasNotFeedbacked = false;
+            }
+
+            PlaySession = playSession;
+            DateTime feedbackexdate = PlaySession.End.AddDays(7);
+            if (DateTime.Compare(PlaySession.Start, DateTime.Now) <= 0 && DateTime.Compare(DateTime.Now, feedbackexdate) <= 0 && hasNotFeedbacked && relevant && isPlayer)
                 PracticeFeedbackIsVisible = true;
+            else
+                PracticeFeedbackIsVisible = false;
 
             if (PlaySession is PracticeSession practice)
             {
@@ -52,6 +80,8 @@ namespace application.ViewModel
             else if (PlaySession is TeamMatch match)
             {
                 TeamMatch = match;
+                ReservesVisible = (match.League == TeamMatch.Leagues.BadmintonLeague ||
+                                   match.League == TeamMatch.Leagues.Division1);
                 SetLineupTemplate(match.League);
                 SetPositionsFromLineup(match.Lineup);
             }
@@ -114,34 +144,43 @@ namespace application.ViewModel
 
         private void FeedbackClick(object param)
         {
-            Navigation.PushAsync(new SubmitFeedbackPage(PlaySession));
+            Navigation.PushAsync(new SubmitFeedbackPage(PlaySession, RequestCreator));
         }
 
-        public async void EditButtonClicked()
+        public async void EditButtonClicked(Page currentPage)
         {
-            string edit = await Application.Current.MainPage.DisplayActionSheet("Options", "Cancel", null, "Edit", "Remove");
+            string edit = await Application.Current.MainPage.DisplayActionSheet("Options", "Cancel", null, "Edit", "Delete");
 
             if (edit == "Edit")
             {
+                Page page;
                 if (PracticeSession != null)
-                {
-                    var page = new CreatePracticePage(PracticeSession);
-                    page.Disappearing += (s, a) => Navigation.PopAsync();
-
-                    await Navigation.PushAsync(page);
-                }
+                    page = new CreatePracticePage(PracticeSession, RequestCreator);
                 else if (TeamMatch != null)
-                    ;// Create Team match
+                    page = new CreateMatchPage(TeamMatch, RequestCreator); // Create Team match
+                else
+                    return;
 
-            } else if (edit == "Remove")
+                page.Disappearing += (s, a) => Navigation.PopAsync();
+                await Navigation.PushAsync(page);
+
+            } else if (edit == "Delete")
             {
 
-            }
-            else
-            {
-                return;
-            }
+                bool answer = await Application.Current.MainPage.DisplayAlert("Delete", $"Are you sure you want to delete this?", "yes", "no");
+                if (answer)
+                {
+                    if (PracticeSession != null)
+                        RequestCreator.DeletePracticeSession(PracticeSession.Id);
+                    else if (TeamMatch != null)
+                        RequestCreator.DeleteTeamMatch(TeamMatch.Id);
+                    else return;
 
+                    Navigation.RemovePage(currentPage);
+                    await Navigation.PopAsync();
+                }
+            }
+            else return;
         }
     }
 }

@@ -1,13 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Common.Model;
+﻿using Common.Model;
 using Common.Serialization;
-using Server.DAL;
+using server.DAL;
 
-namespace Server.SystemInterface.Requests.Handlers
+namespace server.Function.Handlers
 {
     class SetCommentHandler : MiddleRequestHandler<SetCommentRequest, SetCommentResponse>
     {
@@ -16,7 +11,6 @@ namespace Server.SystemInterface.Requests.Handlers
             if (!(((Common.Model.MemberType)requester.MemberType).HasFlag(MemberType.Trainer) ||
                   requester.ID == request.Member.Id))
             {
-                RequestMember = request.Member;
                 return new SetCommentResponse { AccessDenied = true };
             }
 

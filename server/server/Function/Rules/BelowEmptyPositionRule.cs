@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using Common;
 using Common.Model;
 
-namespace Server.Function.Rules
+namespace server.Function.Rules
 {
-    class EmptyPositionRule : IRule
+    class BelowEmptyPositionRule : IRule
     {
         public int Priority { get; set; } = 4;
         private List<RuleBreak> _ruleBreaks = new List<RuleBreak>();
@@ -21,6 +18,9 @@ namespace Server.Function.Rules
                 for (int i = 0; i < group.Positions.Count; i++)
                 {
                     var pos = group.Positions[i];
+                    
+                    //If a position is empty, check if below positions are empty.
+                    //If false, rulebreaks are added and continue to next positiontype.
                     if (CheckPositionNull(pos, group.Type))
                         if (!CheckBelowPositions(group, i))
                             break;
@@ -29,6 +29,7 @@ namespace Server.Function.Rules
             return _ruleBreaks;
         }
 
+        //Checks if a position is empty
         private bool CheckPositionNull(Position pos, Lineup.PositionType type)
         {
             if (pos.Player == null)
@@ -38,6 +39,8 @@ namespace Server.Function.Rules
             return false;
         }
 
+        //Check if any position under a certain position is not empty.
+        //If so, add rulebreak.
         private bool CheckBelowPositions(Lineup.Group group, int i)
         {
             bool wasSuccessful = true;

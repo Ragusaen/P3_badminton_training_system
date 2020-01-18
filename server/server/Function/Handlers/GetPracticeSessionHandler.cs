@@ -1,9 +1,8 @@
 ﻿using System.Linq;
-using Common.Model;
 using Common.Serialization;
-using Server.DAL;
+using server.DAL;
 
-namespace Server.SystemInterface.Requests.Handlers
+namespace server.Function.Handlers
 {
     class GetPracticeSessionHandler : MiddleRequestHandler<GetPracticeSessionRequest, GetPracticeSessionResponse>
     {

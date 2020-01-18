@@ -1,19 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Common.Serialization;
-using Server.Controller;
-using Server.DAL;
+﻿using Common.Serialization;
+using server.DAL;
 
-namespace Server.SystemInterface.Requests.Handlers
+namespace server.Function.Handlers
 {
     class LoginHandler : MiddleRequestHandler<LoginRequest, LoginResponse>
     {
         protected override LoginResponse InnerHandle(LoginRequest request, member requester)
         {
-            UserManager userManager = new UserManager();
+            AccountManager userManager = new AccountManager();
             var response = new LoginResponse();
 
             // Attempt to login

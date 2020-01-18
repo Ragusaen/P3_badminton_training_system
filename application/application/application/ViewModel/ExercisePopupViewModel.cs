@@ -6,6 +6,7 @@ using System.Text;
 using application.Controller;
 using application.SystemInterface;
 using Common.Model;
+using Xamarin.Forms;
 
 namespace application.ViewModel
 {
@@ -31,7 +32,7 @@ namespace application.ViewModel
             set => SetProperty(ref _exercises, value);
         }
 
-        public ExercisePopupViewModel(PracticeSession practice)
+        public ExercisePopupViewModel(PracticeSession practice, RequestCreator requestCreator, INavigation navigation) : base(requestCreator, navigation)
         {
             var list = RequestCreator.GetExercises();
             Exercises = new ObservableCollection<ExerciseDescriptor>(list);

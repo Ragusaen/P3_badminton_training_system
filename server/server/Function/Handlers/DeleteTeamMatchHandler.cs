@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using Common.Model;
 using Common.Serialization;
-using Server.DAL;
-using Server.SystemInterface.Requests.Handlers;
+using server.DAL;
 
-namespace Server.Function.Handlers
+namespace server.Function.Handlers
 {
     class DeleteTeamMatchHandler : MiddleRequestHandler<DeleteTeamMatchRequest, DeleteTeamMatchResponse>
     {
@@ -25,10 +20,16 @@ namespace Server.Function.Handlers
             {
                 var positions = match.positions.ToList();
                 var captain = match.captain;
-                captain.teammatches.Remove(match);
+                var ps = match.playsession;
+                captain?.teammatches.Remove(match);
                 db.positions.RemoveRange(positions);
                 db.teammatches.Remove(match);
-                db.playsessions.Remove(db.playsessions.Find(request.Id));
+                if (ps != null)
+                {
+                    var fb = ps.feedbacks;
+                    db.feedbacks.RemoveRange(fb);
+                    db.playsessions.Remove(ps);
+                }
             }
 
             db.SaveChanges();

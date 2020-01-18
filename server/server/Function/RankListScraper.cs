@@ -1,23 +1,26 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Text;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium;
 using System.Threading;
 using Common.Model;
 using NLog;
-using Server.DAL;
+using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+using server.DAL;
 
-namespace Server.Controller
+namespace server.Function
 {
+    /// <summary>
+    /// This class is used to scrape the rank list information from badmintonplayer.dk
+    /// </summary>
     class RankListScraper
     {
         private static Logger _log = LogManager.GetCurrentClassLogger();
 
         public const string RankingListElementClassName = "RankingListGrid";
 
+        // The ranklist categories, this uses bitflags
         [Flags]
         public enum Category { 
             Level = 1, 
@@ -30,6 +33,7 @@ namespace Server.Controller
             Mens = MS | MD | MXD,
             Womens = WS | WD | WXD,
         }
+
         public static int RankingsCount = 7;
         public static string RankingRootUrl = "https://www.badmintonplayer.dk/DBF/Ranglister/#287,2019,,0,,,1492,0,,,,15,,,,0,,,,,,";
         public static string[] Categories = { "Level", "MS", "WS", "MD", "WD", "MXD", "WXD" };
@@ -39,114 +43,142 @@ namespace Server.Controller
         public void UpdatePlayers()
         {
             _log.Debug("UpdatePlayers started");
-            var chromeOptions = new ChromeOptions();
-            chromeOptions.AddArguments("--headless"); 
-            chromeOptions.AddUserProfilePreference("profile.default_content_setting_values.images", 2);
-            IWebDriver browser = new ChromeDriver(chromeOptions);
-            FindRootRankList(browser);
 
+            // Start the chrome driver
+            var browser = StartBrowser();
+            NavigateCorrectVersion(browser);  
+
+            // Set all the members in the database to not be on the rank list, this will be changed
+            // as they are found again
             foreach (var dbMember in _db.members)
             {
                 dbMember.OnRankList = false;
             }
 
+            // Start scraping from rank lists
             var players = new List<Player>();
+            var foundPlayers = new List<Player>();
             for (int i = 0; i < RankingsCount; i++)
             {
                 _log.Debug("Scraping category: {category}", Categories[i]);
+                
+                // Find the category and click on it
                 string nextCategoryXPath = $"/html/body/form/div[4]/div[1]/div[5]/div/div[{i + 1}]/a";
                 browser.FindElement(By.XPath(nextCategoryXPath)).Click();
                 WaitForPageLoad();
 
+                // Scrape the raw data from this list
                 List<IWebElement> rawRanking = ScrapeRankingsTable(browser);
 
-                DistributeRankings(players, rawRanking, 1 << i);
+                // Parse the data and assign it to the players
+                DistributeRankings(players, foundPlayers, rawRanking, (Category)(1 << i));
+                SetNotOnRankListPointsToZero(players, foundPlayers, (Category)(1 << i));
 
-                try // Checking for next page
+                // Try to scrape second page, throws exception if page doesn't exist
+                try
                 {
                     var nextPage = browser.FindElement(By.XPath("/html/body/form/div[4]/div[1]/div[5]/table/tbody/tr[102]/td/a"));
                     nextPage.Click();
                     WaitForPageLoad();
                     _log.Debug("Scraping page 2 for category: {category}", Categories[i]);
 
+                    // Scrape the raw data from this list
                     rawRanking = ScrapeRankingsTable(browser);
-                    DistributeRankings(players, rawRanking, 1 << i);
-                }
-                // ReSharper disable once EmptyGeneralCatchClause
-                catch (Exception) { }
-            }
-            browser.Quit();
 
+                    // Parse the data and assign it to the players
+                    DistributeRankings(players, foundPlayers, rawRanking, (Category)(1 << i));
+                    SetNotOnRankListPointsToZero(players, foundPlayers, (Category)(1 << i));
+                }
+                catch (Exception) { }
+
+                
+            }
+
+            // Close the browser
+            browser.Quit();
+            browser.Dispose();
+
+            // Write the players to the database
             UpdatePlayersInDatabase(players);
             _log.Debug("UpdatePlayers finished");
         }
 
-        private void DistributeRankings(List<Player> players, List<IWebElement> rawRanking, int i)
+        private void DistributeRankings(List<Player> players, List<Player> foundPlayers, List<IWebElement> rawRanking, Category category)
         {
-            Category category = (Category) i;
-
-            // skips first row to avoid the title
-            for (int j = 1; j < rawRanking.Count; j++)
+            // Go through all the rows from the raw ranking
+            for (int j = 1; j < rawRanking.Count; j++) // Skips first row to avoid the title
             {
+                // Try and find the player id, if not found skip this row
                 var currentRow = rawRanking[j];
                 try
                 {
                     currentRow.FindElement(By.ClassName("playerid")).GetAttribute("innerHTML");
                 }
-                catch (Exception) { continue;}
+                catch (Exception)
+                {
+                    continue;
+                }
                 
-                // Fetches information from the current row
-                string rawPlayerId = currentRow.FindElement(By.ClassName("playerid")).GetAttribute("innerHTML");
-                int badmintonPlayerId = RemoveFalseHyphen(rawPlayerId);
-                int points = FetchPointsFromRow(currentRow);
-                string ageAndLevel = FetchSkillLevelFromRow(currentRow);
-
-                Server.DAL.member dbPlayer = _db.members.SingleOrDefault(p => p.BadmintonPlayerID == badmintonPlayerId);
+                // Fetch BadmintonID from the current row
+                int badmintonPlayerId = RemoveFalseHyphen(currentRow.FindElement(By.ClassName("playerid")).GetAttribute("innerHTML"));
+                
+                // The current player; will be set in if block below
                 Player player;
-                if (players.Exists(p => p.BadmintonPlayerId == badmintonPlayerId))
-                {
-                    player = players.Single(p => p.BadmintonPlayerId == badmintonPlayerId);
-
-                    if ((category & Category.Womens) > 0)
-                        player.Sex = Sex.Female;
-                    else if((category & Category.Mens) > 0)
-                        player.Sex = Sex.Male;
-                    else
-                        player.Sex = Sex.Unknown;
-                }
-                else if (dbPlayer != null)
-                {
-                    player = (Common.Model.Player)dbPlayer;
-                    players.Add(player);
-                }
-                else
-                {
-                    string name = new string(currentRow.FindElement(By.ClassName("name")).Text.TakeWhile(p => p != ',').ToArray());
-                    var playerRanking = new PlayerRanking();
-
-                    player = new Player
-                    {
-                        BadmintonPlayerId = badmintonPlayerId,
-                        Rankings = playerRanking,
-                        Member = new Member
-                        {
-                            Name = name,
-                        }
-                    };
-
-                    _log.Debug($"New player found in Ranklist: {player.Member.Name} BadmintonId: {player.BadmintonPlayerId}");
-                    players.Add(player);
-                }
-
-                UpdateRankingsFromRow(player.Rankings, points, category);
+                // If it is scraping the Level rank list, find the player in the database or create a new one
                 if (category == Category.Level)
                 {
+                    // Try finding the player in the database
+                    member dbPlayer = _db.members.SingleOrDefault(p => p.BadmintonPlayerID == badmintonPlayerId);
+                    if (dbPlayer != null) // If the player was found, add it    
+                        player = (Common.Model.Player)dbPlayer;
+                    
+                    else // Create a new player and add them to the player list
+                    {
+                        string name = new string(currentRow.FindElement(By.ClassName("name")).Text.TakeWhile(p => p != ',').ToArray());
+                        player = new Player
+                        {
+                            BadmintonPlayerId = badmintonPlayerId,
+                            Rankings = new PlayerRanking(),
+                            Member = new Member
+                            {
+                                Name = name,
+                            }
+                        };
+                        _log.Debug($"New player found in Ranklist: {player.Member.Name} BadmintonId: {player.BadmintonPlayerId}");
+                    }
+
+                    string ageAndLevel = currentRow.FindElement(By.ClassName("clas")).GetAttribute("innerHTML");
                     player.Rankings.Age = FetchAgeGroup(ageAndLevel);
                     player.Rankings.Level = FetchLevelGroup(ageAndLevel);
+                    players.Add(player);
                 }
+                else // If it is on sexed rank list
+                {
+                    player = players.SingleOrDefault(p => p.BadmintonPlayerId == badmintonPlayerId);
+                    if (player != null) // If player has been found on the rank list
+                    {
+                        if (Category.Womens.HasFlag(category))
+                            player.Sex = Sex.Female;
+                        else if ((category & Category.Mens) != 0)
+                            player.Sex = Sex.Male;
+                        else
+                            player.Sex = Sex.Unknown;
+                    }
+                    else // If the player wasn't found on the Level list, they are a mistake
+                    {
+                        continue;
+                    }
+                }
+                foundPlayers.Add(player);
+                        
+                // Update the players rankings
+                UpdateRankingsFromRow(player.Rankings, FetchPointsFromRow(currentRow), category);
             }
         }
 
+        /// <summary>
+        /// Updates the provided rankings based on the points and the category
+        /// </summary>
         private void UpdateRankingsFromRow(PlayerRanking pr, int points, Category category)
         {
             switch (category)
@@ -171,11 +203,14 @@ namespace Server.Controller
             }
         }
 
+        /// <summary>
+        /// Updates the found players in the database
+        /// </summary>
         private void UpdatePlayersInDatabase(List<Player> players)
         {
             foreach (var p in players)
             {
-                Server.DAL.member dbMember;
+                member dbMember;
                 ranklist dbRankList;
 
                 if (p.Member.Id > 0)
@@ -185,7 +220,7 @@ namespace Server.Controller
                 }
                 else
                 {
-                    dbMember = _db.members.Add(new Server.DAL.member());
+                    dbMember = _db.members.Add(new member());
                     dbRankList = dbMember.ranklist = new ranklist();
                     dbMember.BadmintonPlayerID = p.BadmintonPlayerId;
                     dbMember.MemberType = (int)MemberType.Player;
@@ -204,12 +239,10 @@ namespace Server.Controller
             _db.SaveChanges();
         }
 
-        private string FetchSkillLevelFromRow(IWebElement elem)
-        {
-            return elem.FindElement(By.ClassName("clas")).GetAttribute("innerHTML");
-        }
-
-        private PlayerRanking.AgeGroup FetchAgeGroup(string a)
+        /// <summary>
+        /// Gets the age group enum from a string
+        /// </summary>
+        private PlayerRanking.AgeGroup FetchAgeGroup(string ageGroupString)
         {
             var ageDict = new Dictionary<string, PlayerRanking.AgeGroup>
             {
@@ -221,7 +254,7 @@ namespace Server.Controller
                 {"U19", PlayerRanking.AgeGroup.U19},
                 {"SEN", PlayerRanking.AgeGroup.Senior}
             };
-            string res = a.Split(' ').FirstOrDefault();
+            string res = ageGroupString.Split(' ').FirstOrDefault();
 
             if (res == null)
                 return PlayerRanking.AgeGroup.Unknown;
@@ -229,7 +262,7 @@ namespace Server.Controller
             return ageDict[res]; 
         }
 
-        private PlayerRanking.LevelGroup FetchLevelGroup(string a)
+        private PlayerRanking.LevelGroup FetchLevelGroup(string levelGroupString)
         {
             var levelDict = new Dictionary<string, PlayerRanking.LevelGroup>
             {
@@ -245,7 +278,7 @@ namespace Server.Controller
                 {"E-M", PlayerRanking.LevelGroup.EM},
                 {"E", PlayerRanking.LevelGroup.E},
             };
-            string res = a.Split(' ').LastOrDefault();
+            string res = levelGroupString.Split(' ').LastOrDefault();
 
             if (res == null)
                 return PlayerRanking.LevelGroup.Unknown;
@@ -253,10 +286,29 @@ namespace Server.Controller
             return levelDict[res]; 
         }
 
-        private List<IWebElement> ScrapeRankingsTable(IWebDriver driver)
+        private void SetNotOnRankListPointsToZero(List<Player> players, List<Player> foundPlayers, Category category)
         {
-            WaitForPageLoad();
-            return driver.FindElement(By.ClassName(RankingListElementClassName)).FindElements(By.TagName("tr")).ToList();
+            if (category != Category.Level)
+                foreach (var p in players)
+                {
+                    if (!foundPlayers.Contains(p))
+                    {
+                        if ((category & Category.Mens) > 0 && p.Sex == Sex.Male)
+                            UpdateRankingsFromRow(p.Rankings, 0, category);
+                        else if ((category & Category.Womens) > 0 && p.Sex == Sex.Female)
+                            UpdateRankingsFromRow(p.Rankings, 0, category);
+                        else if (p.Sex == Sex.Unknown) //If the sex is unknown then the player never appeared on any specialisation rank lists
+                            UpdateRankingsFromRow(p.Rankings, 0, category);
+                    }
+                    else
+                        p.OnRankList = true;
+                }
+            foundPlayers.Clear();
+        }
+
+        private List<IWebElement> ScrapeRankingsTable(IWebDriver browser)
+        {
+            return browser.FindElement(By.ClassName(RankingListElementClassName)).FindElements(By.TagName("tr")).ToList();
         }
 
         private int FetchPointsFromRow(IWebElement elem)
@@ -264,6 +316,9 @@ namespace Server.Controller
             return int.Parse(elem.FindElement(By.ClassName("points")).GetAttribute("innerHTML"));
         }
 
+        /// <summary>
+        /// Remove weird hyphen symbol and convert to int
+        /// </summary>
         private int RemoveFalseHyphen(string s)
         {
             byte[] bytes = Encoding.UTF8.GetBytes(s);
@@ -278,11 +333,23 @@ namespace Server.Controller
 
             return Int32.Parse(Encoding.UTF8.GetString(newBytes));
         }
-        private void FindRootRankList(IWebDriver browser)
-        {
+
+        private IWebDriver StartBrowser()
+        { 
+            var chromeOptions = new ChromeOptions();
+            chromeOptions.AddArguments("--headless");
+            chromeOptions.AddUserProfilePreference("profile.default_content_setting_values.images", 2);
+            IWebDriver browser = new ChromeDriver(chromeOptions);
+
+            // Navigate to the clubs rankings
             browser.Navigate().GoToUrl(RankingRootUrl);
             WaitForPageLoad();
 
+            return browser;
+        }
+
+        private void NavigateCorrectVersion(IWebDriver browser)
+        {
             string xpath = null;
             bool correctVersion = false;
             int i = 0;

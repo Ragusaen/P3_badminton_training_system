@@ -1,16 +1,11 @@
-﻿using NLog;
-using Server.SystemInterface.Network;
-using System;
-using System.Collections.Generic;
-using System.Data.Entity;
+﻿using System;
 using System.Linq;
-using System.Runtime.InteropServices;
-using Common.Model;
-using Common.Serialization;
-using Server.Controller;
-using Server.DAL;
+using NLog;
+using server.DAL;
+using server.Function;
+using server.SystemInterface.Network;
 
-namespace Server
+namespace server
 {
     class Program
     {
@@ -18,17 +13,28 @@ namespace Server
 
         public static void Main(string[] args)
         {
-            var db = new DatabaseEntities();
 
-            if (!db.members.Any())
+            // If the program is called with the scrape only parameter, it should just scrape and then return
+            if (args.Contains("--scrape") || args.Contains("-s"))
             {
-                RankListScraper scraper = new RankListScraper();
+                _log.Debug("Starting scraping");
+                var scraper = new RankListScraper();
                 scraper.UpdatePlayers();
+
+                return;
             }
-            
+    
+            // Scrape all players if the database is empty
+            using(var db = new DatabaseEntities()) {
+                if (!db.members.Any())
+                {
+                    var scraper = new RankListScraper();
+                    scraper.UpdatePlayers();
+                }
+            }
+
             try
             {
-
                 _log.Debug("Server started");
                 SslTcpServer sslTcpServer = new SslTcpServer("cert.pfx");
                 sslTcpServer.RunServer();

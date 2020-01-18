@@ -1,10 +1,11 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Runtime.Serialization;
 using System.Text;
 using System.Xml.Serialization;
 
-namespace Common.Serialization
+namespace Common
 {
     public class Serializer
     {
@@ -14,7 +15,7 @@ namespace Common.Serialization
             stream.Write(data, 0, data.Length);
             stream.Flush();
             stream.Position = 0;
-
+            
             var serializer = new XmlSerializer(typeof(T));
             T result;
             try

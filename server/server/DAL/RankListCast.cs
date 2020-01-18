@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Common.Model;
+﻿using Common.Model;
 
-namespace Server.DAL
+namespace server.DAL
 {
     partial class ranklist
     {
@@ -17,7 +12,8 @@ namespace Server.DAL
                 DoublesPoints = r.DoublesPoints,
                 MixPoints = r.MixPoints,
                 Level = (PlayerRanking.LevelGroup) r.Level,
-                LevelPoints = r.LevelPoints
+                LevelPoints = r.LevelPoints,
+                Age = (PlayerRanking.AgeGroup)r.AgeGroup
             };
         }
     }

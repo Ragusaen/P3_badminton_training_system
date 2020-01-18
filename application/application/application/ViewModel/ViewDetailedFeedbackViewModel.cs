@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using Common.Model;
 using Xamarin.Forms;
 using application.SystemInterface;
+using System.Linq;
 
 namespace application.ViewModel
 {
@@ -29,7 +30,6 @@ namespace application.ViewModel
             base.FocusPointQuestion = feedback.FocusPointQuestion;
             base.GoodQuestion = feedback.GoodQuestion;
             base.ReadyQuestion = feedback.ReadyQuestion;
-            base.Player = feedback.Player;
             base.PlaySession = feedback.PlaySession;
         }
     }
@@ -49,11 +49,12 @@ namespace application.ViewModel
             }
         }
 
-        public ViewDetailedFeedbackViewModel(Player player)
+        public ViewDetailedFeedbackViewModel(Player player, RequestCreator requestCreator, INavigation navigation) : base(requestCreator, navigation)
         {
             Player = player;
             Player.Feedbacks = RequestCreator.GetPlayerFeedback(Player.Member);
             Feedbacks = new ObservableCollection<FB>();
+
 
             foreach (Feedback fb in Player.Feedbacks)
             {
@@ -81,7 +82,7 @@ namespace application.ViewModel
                 Label7 = "What were the main focus points for you today?",
                 Label8 = "How has your day been today?"
             });
-
+            Feedbacks = new ObservableCollection<FB>(Feedbacks.OrderByDescending(p => p.PlaySession.Start.Date).ThenByDescending(p => p.PlaySession.Start.TimeOfDay).ToList());
 
             }
         }

@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Common.Model;
 using Common.Serialization;
-using Server.DAL;
+using server.DAL;
 
-namespace Server.SystemInterface.Requests.Handlers
+namespace server.Function.Handlers
 {
     class GetPracticeTeamHandler : MiddleRequestHandler<GetPracticeTeamRequest, GetPracticeTeamResponse>
     {
@@ -17,11 +14,12 @@ namespace Server.SystemInterface.Requests.Handlers
 
             var dbPracticeTeam = db.practiceteams.Find(request.Id);
             var practiceTeam = (PracticeTeam)dbPracticeTeam;
-            practiceTeam.Players = dbPracticeTeam.players.ToList().Select(p => (Common.Model.Player) p).ToList();
+            List<Player> players = dbPracticeTeam.players.ToList().Select(p => (Common.Model.Player) p).ToList();
 
             var response = new GetPracticeTeamResponse
             {
-                Team = practiceTeam
+                Team = practiceTeam,
+                Players = players
             };
 
             _log.Debug($"New practice team created: {practiceTeam.Name}");

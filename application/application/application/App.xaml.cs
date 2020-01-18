@@ -6,6 +6,7 @@ using application.SystemInterface.Network;
 using application.SystemInterface;
 using System.Diagnostics;
 using application.ViewModel;
+using SkiaSharp;
 
 namespace application
 {
@@ -14,20 +15,21 @@ namespace application
         public App()
         {
             InitializeComponent();
-            MainPage = new NavigationPage(new LoginPage());
-        }
 
-        protected override void OnStart()
-        {
+            RequestCreator requestCreator = new RequestCreator();
+
             try
             {
-                RequestCreator.Connect();
+                requestCreator.Connect();
             }
             catch (FailedToConnectToServerException)
             {
-                MainPage = new ConnectionFailedPage();
+                MainPage = new ConnectionFailedPage(requestCreator);
             }
+
+            MainPage = new NavigationPage(new LoginPage(requestCreator));
         }
+
 
         protected override void OnSleep()
         {

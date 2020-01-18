@@ -1,23 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Linq;
 using Common.Model;
 using Common.Serialization;
-using NLog;
-using Server.Controller;
-using Server.DAL;
+using server.DAL;
 
-namespace Server.SystemInterface.Requests.Handlers
+namespace server.Function.Handlers
 {
     class CreateAccountHandler : MiddleRequestHandler<CreateAccountRequest, CreateAccountResponse>
     {
 
         protected override CreateAccountResponse InnerHandle(CreateAccountRequest request, member requester)
         {
-            UserManager userManager = new UserManager();
+            AccountManager userManager = new AccountManager();
 
             if (!userManager.Create(request.Username, request.Password))
             {
@@ -27,6 +20,7 @@ namespace Server.SystemInterface.Requests.Handlers
                 };
             }
 
+            // Check wether the user should be added as an existing player or a new member
             var db = new DatabaseEntities();
             if (request.AddAsPlayer)
             {

@@ -1,19 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Common.Model;
 using Common.Serialization;
-using Server.DAL;
+using server.DAL;
 
-namespace Server.SystemInterface.Requests.Handlers
+namespace server.Function.Handlers
 {
     class GetPlayerFeedbackHandler : MiddleRequestHandler<GetPlayerFeedbackRequest, GetPlayerFeedbackResponse>
     {
         protected override GetPlayerFeedbackResponse InnerHandle(GetPlayerFeedbackRequest request, member requester)
         {
-            if ((MemberType)requester.MemberType != MemberType.Trainer && requester.ID != request.MemberId)
+            if (!((MemberType)requester.MemberType).HasFlag(MemberType.Trainer) && requester.ID != request.MemberId)
                 return new GetPlayerFeedbackResponse()
                 {
                     AccessDenied = true

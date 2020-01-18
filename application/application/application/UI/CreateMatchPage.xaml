@@ -1,15 +1,16 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<ui:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:cvtr="clr-namespace:application.UI.Converter"
+             xmlns:ui="clr-namespace:application.UI;assembly=application"
              mc:Ignorable="d"
              x:Class="application.UI.CreateMatchPage" x:Name="rootpage">
     <NavigationPage.TitleView>
         <StackLayout Orientation="Horizontal" Spacing="10">
             <Label Text="Team Match" FontAttributes="Bold" FontSize="30" TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
-            <ImageButton x:Name="SaveIcon" Command="{Binding SaveMatchClickCommand}" HeightRequest="25" VerticalOptions="CenterAndExpand" HorizontalOptions="End" Margin="0,0,15,0" BackgroundColor="Red"/>
+            <ImageButton x:Name="SaveIcon" Command="{Binding SaveMatchClickCommand}" Opacity="{Binding SaveButtonOpacity}" HeightRequest="35" Padding="5" VerticalOptions="CenterAndExpand" HorizontalOptions="End" Margin="0,0,15,0" BackgroundColor="Red"/>
         </StackLayout>
     </NavigationPage.TitleView>
 
@@ -17,7 +18,6 @@
         <cvtr:IntLeagueEnumConverter x:Key="IntLeagueEnumConverter"/>
         <cvtr:LineupPositionToStringConverter x:Key="LineupPositionConverter"/>
         <cvtr:IsPositionDoubleConverter x:Key="IsPositionDoubleConverter"/>
-        <cvtr:IsDoubleRowSpanConverter x:Key="IsDoubleRowSpanConverter"/>
         <cvtr:ErrorMessageColorConverter x:Key="ErrorMessageColorConverter"/>
         <cvtr:PlayerNameOrDefaultConverter x:Key="PlayerNameOrDefaultConverter"/>
     </ContentPage.Resources>
@@ -26,14 +26,14 @@
         <StackLayout>
             <Grid Margin="15,15,15,10">
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="40"/>
-                    <RowDefinition Height="40"/>
-                    <RowDefinition Height="40"/>
-                    <RowDefinition Height="40"/>
-                    <RowDefinition Height="40"/>
-                    <RowDefinition Height="40"/>
-                    <RowDefinition Height="40"/>
-                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="50"/>
                     <RowDefinition Height="15"/>
                     <RowDefinition Height="40"/>
                     <RowDefinition Height="15"/>
@@ -53,7 +53,7 @@
                     <TimePicker Format="HH:mm" Time="{Binding SelectedTimeEnd}" x:Name="EndDate"/>
                 </StackLayout>
                 <Label Grid.Row="2" Grid.Column="0" Text="Captain" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
-                <Picker Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Title="Choose team captain" ItemsSource="{Binding Members}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding Captain}" VerticalOptions="Center"/>
+                <Picker x:Name="CaptainPicker" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" Title="Choose team captain" ItemsSource="{Binding Members}" ItemDisplayBinding="{Binding Name}" SelectedItem="{Binding Captain}" VerticalOptions="Center"/>
                 <Label Grid.Row="3" Grid.Column="0" Text="Location" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
                 <Entry Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding Location}"  Placeholder="Enter location" VerticalOptions="Center"/>
                 <Label Grid.Row="4" Grid.Column="0" Text="League" FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
@@ -65,10 +65,10 @@
                 <Label Grid.Row="7" Grid.Column="0" Text="Team Nr." FontSize="20" HorizontalOptions="Start" VerticalOptions="Center"/>
                 <Entry Grid.Row="7" Grid.Column="1" Grid.ColumnSpan="2" Text="{Binding TeamIndex}" Keyboard="Numeric" Placeholder="Enter team number" VerticalOptions="Center"/>
                 <Label Grid.Row="9" Grid.Column="0" Grid.ColumnSpan="2" Text="Lineup" FontSize="Title" HorizontalOptions="Start" VerticalOptions="Center"/>
-                <Label Grid.Row="10" Grid.Column="2" HorizontalOptions="End" Text="Reserve:" FontSize="12"/>
+                <Label Grid.Row="10" Grid.Column="2" IsVisible="{Binding ReservesVisible}" HorizontalOptions="End" Text="Reserve:" FontSize="12"/>
             </Grid>
 
-            <ListView x:Name="LineupList" SelectionMode="None" RowHeight="120" ItemsSource="{Binding Positions}" HeightRequest="{Binding LineupHeight}">
+            <ListView x:Name="LineupList" SelectionMode="None" RowHeight="150" ItemsSource="{Binding Positions}" HeightRequest="{Binding LineupHeight}">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <ViewCell>
@@ -99,11 +99,11 @@
                                         </Label.GestureRecognizers>
                                     </Label>
                                     <BoxView Grid.Row="1" Grid.Column="0" Color="Black"/>
-                                    <CheckBox IsChecked="{Binding Value.IsExtra}" Grid.Column="1" Grid.Row="0" VerticalOptions="Center" HorizontalOptions="Center"/>
+                                    <CheckBox IsVisible="{Binding BindingContext.ReservesVisible, Source={x:Reference rootpage}}" IsChecked="{Binding Value.IsExtra}" Grid.Column="1" Grid.Row="0" VerticalOptions="Center" HorizontalOptions="Center"/>
                                     <Label Grid.Column="0" Grid.Row="2" TextColor="Red" FontSize="8" Text="{Binding Value.Error}" VerticalOptions="Start"/>
                                 </Grid>
-                                
-                                <Grid Grid.Row="1" Grid.Column="1">
+
+                                <Grid Grid.Row="1" Grid.Column="1" IsVisible="{Binding Key, Converter={StaticResource IsPositionDoubleConverter}}">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="6*"/>
                                         <ColumnDefinition Width="*"/>
@@ -118,8 +118,8 @@
                                             <TapGestureRecognizer Command="{Binding BindingContext.SelectDoublePlayerCommand, Source={x:Reference rootpage}}" CommandParameter="{Binding Key}" />
                                         </Label.GestureRecognizers>
                                     </Label>
-                                    <BoxView Grid.Row="1" Grid.Column="0" Color="Black" IsVisible="{Binding Key, Converter={StaticResource IsPositionDoubleConverter}}"/>
-                                    <CheckBox IsVisible="{Binding Key, Converter={StaticResource IsPositionDoubleConverter}}" IsChecked="{Binding Value.OtherIsExtra}" Grid.Column="1" Grid.Row="0" HorizontalOptions="CenterAndExpand"/>
+                                    <BoxView Grid.Row="1" Grid.Column="0" Color="Black"/>
+                                    <CheckBox IsVisible="{Binding BindingContext.ReservesVisible, Source={x:Reference rootpage}}" IsChecked="{Binding Value.OtherIsExtra}" Grid.Column="1" Grid.Row="0" HorizontalOptions="CenterAndExpand"/>
                                     <Label Grid.Column="0" Grid.Row="2" TextColor="Red" FontSize="8" Text="{Binding Value.OtherError}" VerticalOptions="Start"/>
                                 </Grid>
                             </Grid>
@@ -127,7 +127,7 @@
                     </DataTemplate>
                 </ListView.ItemTemplate>
             </ListView>
-            <Button Text="Verify Lineup!" Command="{Binding VerifyLineupCommand}"/>            
+            <Button Text="Verify Lineup!" Command="{Binding VerifyLineupCommand}" BackgroundColor="{Binding VerifyButtonColor}"/>            
         </StackLayout>
     </ScrollView>
-</ContentPage>
+</ui:BasePage>

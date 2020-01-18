@@ -18,5 +18,6 @@ namespace Common.Serialization
     public class GetPracticeTeamResponse : Response
     {
         public PracticeTeam Team;
+        public List<Player> Players;
     }
 }

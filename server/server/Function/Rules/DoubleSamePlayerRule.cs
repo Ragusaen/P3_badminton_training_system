@@ -1,11 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using Common;
 using Common.Model;
 
-namespace Server.Function.Rules
+namespace server.Function.Rules
 {
     class DoubleSamePlayerRule : IRule
     {
@@ -20,6 +17,8 @@ namespace Server.Function.Rules
                 for (int i = 0; i < group.Positions.Count; i++)
                 {
                     var pos = group.Positions[i];
+
+                    //If position is double and contains the same player, add rulebreaks.
                     if (Lineup.PositionType.Double.HasFlag(group.Type) && pos.Player != null && pos.OtherPlayer != null &&
                         pos.Player.Member.Id == group.Positions[i].OtherPlayer.Member.Id)
                     {

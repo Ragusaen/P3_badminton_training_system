@@ -7,6 +7,7 @@ using System.Text;
 using application.Controller;
 using application.SystemInterface;
 using Common.Model;
+using Xamarin.Forms;
 
 namespace application.ViewModel
 {
@@ -19,9 +20,6 @@ namespace application.ViewModel
             set
             {
                 SetProperty(ref _searchText, value);
-                /*if (string.IsNullOrEmpty(_searchtext))
-                    FocusPoints.OrderByDescending(p => p.Descriptor.Name);
-                else*/
                 FilteredPracticeTeams = new ObservableCollection<PracticeTeam>(_filteredPracticeTeams.OrderByDescending(
                         x => StringExtension.LongestCommonSubsequence(x.Name.ToLower(), SearchText.ToLower()))
                         .ThenBy(x => x.Name.Length).ToList());
@@ -35,7 +33,7 @@ namespace application.ViewModel
             set => SetProperty(ref _filteredPracticeTeams, value);
         }
 
-        public PracticeTeamPopupViewModel(List<PracticeTeam> practiceTeams)
+        public PracticeTeamPopupViewModel(List<PracticeTeam> practiceTeams, RequestCreator requestCreator, INavigation navigation) : base(requestCreator, navigation)
         {
             var notShown = practiceTeams;
             var allPracticeTeams = RequestCreator.GetAllPracticeTeams();

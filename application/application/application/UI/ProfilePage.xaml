@@ -1,18 +1,31 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+<ui:BasePage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:forms="clr-namespace:Microcharts.Forms;assembly=Microcharts.Forms"
+             xmlns:ui="clr-namespace:application.UI;assembly=application"
              mc:Ignorable="d"
              x:Class="application.UI.ProfilePage" BackgroundColor="White" NavigationPage.HasBackButton="False"
              x:Name="rootpage">
 
     <NavigationPage.TitleView>
-        <StackLayout Orientation="Horizontal" Spacing="10">
-            <Label Text="Profile" FontAttributes="Bold" FontSize="30" TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
-            <ImageButton Source="" x:Name="Settingsicon" HeightRequest="30" VerticalOptions="CenterAndExpand" HorizontalOptions="End" Margin="0,0,15,0" Command="{Binding ProfileSettingCommand}" BackgroundColor="Red"/>
-        </StackLayout>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.55*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Column="1" Text="Profile" FontAttributes="Bold" FontSize="30" TextColor="White" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+            <Grid Grid.Column="2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+                <ImageButton Grid.Column="1" x:Name="Settingsicon" HeightRequest="36" Padding="3" VerticalOptions="CenterAndExpand" HorizontalOptions="End" Margin="0,0,10,0" Command="{Binding ProfileSettingCommand}" BackgroundColor="Red"/>
+            </Grid>
+        </Grid>
     </NavigationPage.TitleView>
 
     <ContentPage.Content>
@@ -89,18 +102,22 @@
                             <Button Text="Add Focus Point" Command="{Binding AddFocusPointCommand}" HeightRequest="50"/>
                         </StackLayout>
                     </Frame>
-                    <Label Text="Feedback graph" FontSize="Medium"/>
-                    <forms:ChartView  Chart="{Binding Chart}" HeightRequest="300" Margin="-80, 0, -80, 0"/>
-                    <Button Text="View Feedback" Command="{Binding ViewFeedbackCommand}"/>
-                    <Button Text="View all Feedback graph" Command="{Binding ViewFeedbackGraphCommand}"/>
-                    </StackLayout>
+                    <Frame x:Name="FeedbackSection" HasShadow="True" CornerRadius="5">
+                        <StackLayout>
+                            <Label Text="Feedback graph" FontSize="Medium"/>
+                            <forms:ChartView  Chart="{Binding Chart}" HeightRequest="300" Margin="0"/>
+                            <Button Text="View Feedback" Command="{Binding ViewFeedbackCommand}"/>
+                            <Button Text="View all Feedback graph" Command="{Binding ViewFeedbackGraphCommand}"/>
+                        </StackLayout>
+                    </Frame>
+                </StackLayout>
                     <Frame HasShadow="True" CornerRadius="5">
                         <StackLayout>
-                            <Label Text="Comments" FontSize="Medium"/>
-                            <Frame HasShadow="True" CornerRadius="5">
+                            <Label Text="Comment" FontSize="Medium"/>
+                            <Frame HasShadow="False" CornerRadius="2" BorderColor="#FFBBBB">
                             <StackLayout>
                                 <Label x:Name="Comment" TextColor="Black" Text="{Binding CommentText}" FontSize="Medium" IsVisible="True"></Label>
-                                <Editor x:Name="CommentEntry" IsVisible="False" Placeholder="Enter a comment" AutoSize="TextChanges" Keyboard="Chat"/>
+                                <Editor x:Name="CommentEntry" IsVisible="False" Placeholder="Enter a comment" AutoSize="TextChanges"/>
                             </StackLayout>
                         </Frame>
                     </StackLayout>
@@ -108,4 +125,4 @@
             </StackLayout>
         </ScrollView>
     </ContentPage.Content>
-</ContentPage>
+</ui:BasePage>

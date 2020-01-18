@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Mime;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -11,13 +12,14 @@ using application.SystemInterface;
 using Common.Model;
 using application.Controller;
 using Common.Serialization;
+using Xamarin.Forms;
 
 namespace application.ViewModel
 {
     class CreateAccountViewModel : BaseViewModel
     {
 
-        public CreateAccountViewModel()
+        public CreateAccountViewModel(RequestCreator requestCreator, INavigation navigation) : base(requestCreator, navigation)
         {
             _availablePlayers = RequestCreator.GetPlayersWithNoAccount();
             SearchText = "";
@@ -113,10 +115,12 @@ namespace application.ViewModel
             bool success;
             if (!NotOnList)
             {
+                if (!ValidateUserInput(NotOnList)) return;
                 success = RequestCreator.CreateAccountRequest(Username, Password, _selectedBadmintonId.Value, null);
             }
             else
             {
+                if (!ValidateUserInput(NotOnList)) return;
                 success = RequestCreator.CreateAccountRequest(Username, Password, 0, SearchText);
             }
 
@@ -124,9 +128,29 @@ namespace application.ViewModel
                 //Navigate back
                 Navigation.PopAsync();
             else
-            {
                 UsernameErrorVisibility = true;
+        }
+
+        private bool ValidateUserInput(bool notOnList)
+        {
+            if (Username.Length > 32)
+            {
+                Application.Current.MainPage.DisplayAlert("Invalid input", "Username can not contain more than 32 characters", "Ok");
+                return false;
             }
+
+            if (Password.Length < 8)
+            {
+                Application.Current.MainPage.DisplayAlert("Invalid input", "Password must contain at least than 8 characters", "Ok");
+                return false;
+            }
+
+            if (notOnList && SearchText.Length > 256)
+            {
+                Application.Current.MainPage.DisplayAlert("Invalid input", "Name can not contain more than 256 characters", "Ok");
+                return false;
+            }
+            return true;
         }
 
         private List<Player> _availablePlayers;

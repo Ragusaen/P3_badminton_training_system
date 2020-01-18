@@ -1,11 +1,13 @@
-﻿using NLog;
-using Server.SystemInterface.Requests;
-using System;
+﻿using System;
 using System.Net.Security;
 using System.Net.Sockets;
+using NLog;
 
-namespace Server.SystemInterface.Network
+namespace server.SystemInterface.Network
 {
+    /// <summary>
+    /// This class abstracts over the connection with a client. It handles the communication with the client.
+    /// </summary>
     class Connection
     {
         private static Logger _nlog = LogManager.GetCurrentClassLogger();
@@ -18,28 +20,34 @@ namespace Server.SystemInterface.Network
             _sslStream = sslStream;
         }
 
+        /// <summary>
+        /// Reads requests from the client and sends the data to the request manager.
+        /// </summary>
         public void AcceptRequests()
         {
-            bool isOpen = true;
-            while (isOpen)
+            var requestManager = new RequestManager();
+
+            while (true) // Repeat until the connection drops
             {
                 byte[] request = new byte[1];
                 try
                 {
-                    // Wait for request
-                    request = ReadRequestData();
-                    RequestManager reqman = new RequestManager();
+                    // Read a request
+                    request = ReadRequest(); // Blocks until client writes
 
-                    var response = reqman.Parse(request);
-                    Respond(response);
+                    // ParseAndHandle the request and handle it
+                    var response = requestManager.ParseAndHandle(request);
+
+                    // Send response to the client
+                    WriteResponse(response);
 
                 }
-                catch (InvalidRequestException e)
+                catch (InvalidRequestException e) // If the request type was unknown
                 {
                     _nlog.Error(e, $"Client send a request with an invalid request type: {request[0]}");
                     break;
                 }
-                catch (System.IO.IOException e)
+                catch (System.IO.IOException e) // If the connection was disrupted
                 {
                     _nlog.Error(e, "Error reading from client");
                     break;
@@ -48,16 +56,26 @@ namespace Server.SystemInterface.Network
             Close();
         }
 
-        private void Respond(byte[] data)
+        /// <summary>
+        /// Send data to the client
+        /// </summary>
+        /// <param name="data"> Raw bytes to send to client</param>
+        private void WriteResponse(byte[] data)
         {
-            byte[] response = new byte[data.Length + 4];
+            // Create the buffer for the data. Add 4 bytes to store the length of the request-
+            byte[] responseBuffer = new byte[data.Length + 4];
+
+            // Convert the request length (int 32 bit) into 4 bytes (8 bit)
             byte[] lengthBytes = BitConverter.GetBytes(data.Length);
-            Array.Copy(lengthBytes, 0, response, 0, lengthBytes.Length);
 
-            Array.Copy(data, 0, response, 4, data.Length);
+            // Copy the 4 bytes that define the length of the request into the beginning of the request
+            Array.Copy(lengthBytes, 0, responseBuffer, 0, lengthBytes.Length);
 
-            _sslStream.Write(response);
-            Console.WriteLine($"SERVER: Wrote {response.Length}");
+            // Copy the rest of the request data in afterwards
+            Array.Copy(data, 0, responseBuffer, 4, data.Length);
+
+            // Write the response to the ssl stream
+            _sslStream.Write(responseBuffer);
         }
 
         public void Close()
@@ -66,26 +84,36 @@ namespace Server.SystemInterface.Network
             _client.Close();
         }
 
-        private byte[] ReadRequestData()
+        /// <summary>
+        /// Read raw data send from the ssl stream from the client.
+        /// </summary>
+        private byte[] ReadRequest()
         {
             // Read first 4 bytes, which is the size of the request
-            byte[] request_size_buffer = new byte[4];
-            int bytes = _sslStream.Read(request_size_buffer, 0, request_size_buffer.Length);
+            byte[] requestSizeBuffer = new byte[4];
+            int bytes = _sslStream.Read(requestSizeBuffer, 0, requestSizeBuffer.Length);
             if (bytes != 4)
             {
                 throw new InvalidRequestException("Request was smaller than 4 bytes");
             }
 
             // Convert to int (byte order is big endian)
-            int request_size = BitConverter.ToInt32(request_size_buffer, 0);
+            int requestSize = BitConverter.ToInt32(requestSizeBuffer, 0);
 
-            byte[] buffer = new byte[request_size];
-            bytes = _sslStream.Read(buffer, 0, buffer.Length);
+            // Buffer to insert the data into
+            byte[] buffer = new byte[requestSize];
             
-            if (bytes != request_size)
+            // Keep reading until the whole request is read
+            int bytesRead = 0;
+            while (bytesRead < buffer.Length)
+                bytesRead += _sslStream.Read(buffer, bytesRead, buffer.Length - bytesRead);
+
+            // Throw exception if the request was improperly read, or the client send an improper request
+            if (bytesRead != requestSize)
             {
                 throw new InvalidRequestException("Request was not expected size");
             }
+
             Console.WriteLine($"SERVER: Read {bytes} bytes");
             return buffer;
         }

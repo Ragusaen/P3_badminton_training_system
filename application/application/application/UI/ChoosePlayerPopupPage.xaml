@@ -1,26 +1,28 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<pages:PopupPage
+<ui:BasePopupPage
     xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup" 
     xmlns="http://xamarin.com/schemas/2014/forms"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:d="http://xamarin.com/schemas/2014/forms/design"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:cvtr="clr-namespace:application.UI.Converter"
+    xmlns:ui="clr-namespace:application.UI;assembly=application"
     mc:Ignorable="d"
     x:Class="application.UI.ChoosePlayerPopupPage" >
 
-    <StackLayout Padding="24" Spacing="24" Margin="12">
+    <StackLayout Margin="36">
         <StackLayout BackgroundColor="White">
-        <SearchBar Placeholder="Search Player" Text="{Binding SearchText}"/>
-        <ListView x:Name="PlayerList" ItemsSource="{Binding Players}" VerticalScrollBarVisibility="Default" ItemSelected="ListView_OnItemSelected" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding PlayerListHeight}">
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <Label FontSize="Medium" HorizontalOptions="Center" Text="{Binding Member.Name}"/>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
+            <SearchBar Placeholder="Search Player" Text="{Binding SearchText}"/>
+            <ListView x:Name="PlayerList" ItemsSource="{Binding Players}" BackgroundColor="#F0F0F0" VerticalScrollBarVisibility="Default" ItemSelected="ListView_OnItemSelected" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding PlayerListHeight}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Label FontSize="Medium" HorizontalOptions="Center" Text="{Binding Member.Name}"/>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+            <Button x:Name="CancelButton" Text="CANCEL" TextColor="#BB0000" BackgroundColor="#FFEEEE" Clicked="Dismiss" CornerRadius="15" Margin="10"/>
+        </StackLayout>
     </StackLayout>
-    </StackLayout>
-</pages:PopupPage>
+</ui:BasePopupPage>

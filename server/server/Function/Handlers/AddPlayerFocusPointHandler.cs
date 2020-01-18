@@ -1,24 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Common.Model;
+﻿using Common.Model;
 using Common.Serialization;
-using NLog;
-using Server.DAL;
+using server.DAL;
 
-namespace Server.SystemInterface.Requests.Handlers
+namespace server.Function.Handlers
 {
     class AddPlayerFocusPointHandler : MiddleRequestHandler<AddPlayerFocusPointRequest, AddPlayerFocusPointResponse>
     {
         protected override AddPlayerFocusPointResponse InnerHandle(AddPlayerFocusPointRequest request,
             member requester)
         {
+            // Only allow request if it is a trainer or the player itself
             if (!(((Common.Model.MemberType) requester.MemberType).HasFlag(MemberType.Trainer) ||
                   requester.ID == request.Player.Member.Id))
             {
-                RequestMember = request.Player.Member;
                 return new AddPlayerFocusPointResponse {AccessDenied = true};
             }
 
@@ -28,7 +22,7 @@ namespace Server.SystemInterface.Requests.Handlers
             var dbPlayer = db.members.Find(request.Player.Member.Id);
             db.SaveChanges();
 
-            if (dbFp == null) // if focus point is completely new
+            if (dbFp == null) // if focus point is completely new create a new one
             {
                 dbFp = new focuspoint
                 {
@@ -42,7 +36,7 @@ namespace Server.SystemInterface.Requests.Handlers
                 _log.Debug($"New FocusPointDescriptor: {dbFp.Name}: {dbFp.Description}");
                 db.SaveChanges();
             }
-            else
+            else // otherwise add the existing one
             {
                 dbPlayer.focuspoints.Add(dbFp);
             }

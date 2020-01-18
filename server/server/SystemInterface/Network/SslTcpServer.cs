@@ -1,18 +1,14 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections.Generic;
+using System.IO;
 using System.Net;
-using System.Net.Sockets;
 using System.Net.Security;
+using System.Net.Sockets;
 using System.Security.Authentication;
 using System.Security.Cryptography.X509Certificates;
-using System.IO;
-using System.Security;
-using Server.Controller;
 using System.Threading;
-using System.Collections.Generic;
 using NLog;
 
-namespace Server.SystemInterface.Network
+namespace server.SystemInterface.Network
 {
 
     sealed class SslTcpServer
@@ -35,6 +31,9 @@ namespace Server.SystemInterface.Network
             _certificatePath = certificatePath;
         }
 
+        /// <summary>
+        /// Run the server and accept clients.
+        /// </summary>
         public void RunServer()
         {
             // Create the server certificate
@@ -57,6 +56,7 @@ namespace Server.SystemInterface.Network
                 // Process the client
                 try
                 {
+                    // Start a new connection with the client
                     StartConnection(client);
                 } catch (IOException e)
                 {
@@ -73,14 +73,17 @@ namespace Server.SystemInterface.Network
             clients.ForEach(c => c.Close());
         }
 
+        /// <summary>
+        /// Authenticate client and start the connection
+        /// </summary>
         private void StartConnection(TcpClient client)
         {
             // Create the SSL stream
             SslStream sslStream = new SslStream(client.GetStream(), false);
 
-            // Authenticate the server but don't require the client to authenticate.
             try
             {
+                // Authenticate the server but don't require the client to authenticate.
                 sslStream.AuthenticateAsServer(_serverCertificate, clientCertificateRequired: false, checkCertificateRevocation: true);
             }
             catch (AuthenticationException e)
@@ -96,13 +99,16 @@ namespace Server.SystemInterface.Network
                 return;
             }
 
+            // Create connection
             Connection connection = new Connection(client, sslStream);
 
+            // Start the connection in a new thread
             Thread t = new Thread(connection.AcceptRequests) { IsBackground = true };
             _threads.Add(t);
             t.Start();
 
             _log.Debug("Connection established.");
+            // Go back to accepting clients
         }
 
     }

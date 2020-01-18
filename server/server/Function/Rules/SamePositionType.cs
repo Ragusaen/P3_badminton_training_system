@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using Common;
 using Common.Model;
 
-namespace Server.Function.Rules
+namespace server.Function.Rules
 {
     class SamePositionType : IRule
     {
@@ -23,10 +21,18 @@ namespace Server.Function.Rules
                 foreach (var pos in group.Positions)
                 {
                     if (pos.Player != null)
+                    {
+                        if(!playerCount.ContainsKey(pos.Player.Member.Id))
+                            playerCount.Add(pos.Player.Member.Id, 0);
                         playerCount[pos.Player.Member.Id]++;
+                    }
 
                     if (Lineup.PositionType.Double.HasFlag(group.Type) && pos.OtherPlayer != null)
+                    {
+                        if (!playerCount.ContainsKey(pos.OtherPlayer.Member.Id))
+                            playerCount.Add(pos.OtherPlayer.Member.Id, 0);
                         playerCount[pos.OtherPlayer.Member.Id]++;
+                    }
                 }
                 playerCount.Where(p => p.Value > 1).ToList().ForEach(p => AddRuleBreaks(p.Key, group));
             }

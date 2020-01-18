@@ -8,7 +8,10 @@ using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Text;
+using application.Controller;
 using application.SystemInterface;
+using application.UI.Converter;
+using Common.Serialization;
 using Xamarin.Forms;
 using Xamarin.Plugin.Calendar.Controls;
 using Xamarin.Plugin.Calendar.Models;
@@ -58,7 +61,7 @@ namespace application.ViewModel
         }
         public bool IsTrainer { get; set; }
 
-        public ScheduleViewModel()
+        public ScheduleViewModel(RequestCreator requestCreator, INavigation navigation) : base(requestCreator, navigation)
         {
             IsTrainer = ((RequestCreator.LoggedInMember.MemberType & MemberType.Trainer) == MemberType.Trainer);
             SelectedDate = DateTime.Today;
@@ -77,11 +80,10 @@ namespace application.ViewModel
         private void SetSelectedEvents()
         {
             if (Events.ContainsKey(SelectedDate))
-                SelectedEvents = new ObservableCollection<PlaySessionEvent>((List<PlaySessionEvent>)Events[SelectedDate]);
+                SelectedEvents = new ObservableCollection<PlaySessionEvent>(((List<PlaySessionEvent>)Events[SelectedDate]).OrderBy(p => p.Time));
             else
                 SelectedEvents = new ObservableCollection<PlaySessionEvent>();
         }
-
 
         public class PlaySessionEvent
         {
@@ -91,6 +93,20 @@ namespace application.ViewModel
             public string Detail { get; set; }
             public Color Color { get; set; }
             public PlaySession PlaySession;
+            public bool Relevant;
+        }
+
+        private bool _relevantOnly = false;
+        public bool RelevantOnly
+        {
+            get => _relevantOnly;
+            set
+            {
+                _relevantOnly = value;
+                Events = new EventCollection();
+                LoadEvents();
+                SetSelectedEvents();
+            }
         }
 
         private void LoadEvents()
@@ -98,33 +114,43 @@ namespace application.ViewModel
             DateTime start = new DateTime(_year, _month, 1);
             DateTime end = start.AddMonths(1);
 
-            List<PlaySession> playSessions = RequestCreator.GetSchedule(start, end);
+            var scheduleData = RequestCreator.GetSchedule(start, end);
 
-            foreach (PlaySession ps in playSessions)
+            List<PlaySession> playSessions = scheduleData.playSessions;
+            List<bool> isMemberRelevant = scheduleData.relevance;
+
+            for (int i = 0; i < playSessions.Count; i++)
             {
+                var ps = playSessions[i];
+
+                if (RelevantOnly && !isMemberRelevant[i])
+                    continue;
+
                 // Add entry to dictionary if it doesn't exist
                 if (!Events.ContainsKey(ps.Start.Date))
                     Events.Add(ps.Start.Date, new List<PlaySessionEvent>());
                 // Skip if the event already has been added
                 else if (((List<PlaySessionEvent>) Events[ps.Start]).Any(pse => pse.PlaySession.Id == ps.Id))
                     continue;
-                
+
                 var psEvent = new PlaySessionEvent()
                 {
                     Location = ps.Location,
-                    Time = ps.Start.ToString("hh:mm"),
-                    PlaySession = ps
+                    Time = ps.Start.ToString("HH:mm"),
+                    PlaySession = ps,
+                    Relevant = isMemberRelevant[i]
                 };
 
                 if (ps is PracticeSession practice)
                 {
                     psEvent.Name = practice.PracticeTeam.Name;
-                    psEvent.Detail = practice.Trainer.Member.Name;
+                    psEvent.Detail = practice.Trainer == null ? null : practice.Trainer.Member.Name;
                     psEvent.Color = Color.DarkSeaGreen;
                 }
                 else if (ps is TeamMatch tm)
                 {
-                    psEvent.Name = Enum.GetName(typeof(TeamMatch.Leagues), tm.League);
+                    string leagueString = Enum.GetName(typeof(TeamMatch.Leagues), (TeamMatch.Leagues) tm.League);
+                    psEvent.Name = StringExtension.SplitCamelCase(leagueString);
                     psEvent.Detail = tm.OpponentName;
                     psEvent.Color = Color.CornflowerBlue;
                 }

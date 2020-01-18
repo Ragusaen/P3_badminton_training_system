@@ -1,21 +1,23 @@
-﻿using Common.Model;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Common;
+using Common.Model;
 
-namespace Server.Function.Rules
+namespace server.Function.Rules
 {
     class LineupPointsRule : IRule
     {
-        public int Priority { get; set; } = 8;
+        public int Priority { get; set; } = 12;
         private int _maxSingleDiff;
         private int _maxDoubleDiff;
+        private List<PlayerRanking.AgeGroup> _ignoreAgeGroups;
         private List<RuleBreak> _ruleBreaks = new List<RuleBreak>();
 
 
-        public LineupPointsRule(int maxSingleDiff, int maxDoubleDiff)
+        public LineupPointsRule(int maxSingleDiff, int maxDoubleDiff, List<PlayerRanking.AgeGroup> ignoreAgeGroups)
         {
             _maxSingleDiff = maxSingleDiff;
             _maxDoubleDiff = maxDoubleDiff;
+            _ignoreAgeGroups = ignoreAgeGroups;
         }
 
         public List<RuleBreak> Rule(TeamMatch match)
@@ -29,13 +31,15 @@ namespace Server.Function.Rules
             return _ruleBreaks;
         }
 
+        //Checks positions for rulebreaks.
         private bool CheckPositions(List<Position> positions, Lineup.PositionType type)
         {
             bool success = true;
             for (int i = 1; i < positions.Count; i++)
             {
-                for (int j = 0; j < i; j++)
+                for (int j = 0; j < i; j++) //Compare position with above positions.
                 {
+                    //If positions are in wrong order, add rulebreaks.
                     if (!ComparePositions(positions[i], positions[j], type))
                     {
                         success = false;
@@ -54,18 +58,43 @@ namespace Server.Function.Rules
             return success;
         }
 
+        //Compare if 2 positions are in the right order.
         private bool ComparePositions(Position lower, Position upper, Lineup.PositionType type)
         {
-            if (Lineup.PositionType.Single.HasFlag(type) && lower.Player != null && upper.Player != null)
+            //If single, positions is not empty and players age group is not ignored
+            if (Lineup.PositionType.Single.HasFlag(type) && lower.Player != null && upper.Player != null &&
+                !ContainsIgnoredAgeGroup(lower.Player.Rankings.Age) && !ContainsIgnoredAgeGroup(upper.Player.Rankings.Age))
+            {
                 return (lower.Player.Rankings.SinglesPoints - upper.Player.Rankings.SinglesPoints) <= _maxSingleDiff;
-            if (type == Lineup.PositionType.MixDouble && lower.Player != null && lower.OtherPlayer != null && upper.Player != null && upper.OtherPlayer != null)
-                return ((lower.Player.Rankings.MixPoints + lower.OtherPlayer.Rankings.MixPoints) 
+            }
+
+            //If mix double, positions is not empty and players age group is not ignored
+            if (type == Lineup.PositionType.MixDouble && lower.Player != null && lower.OtherPlayer != null &&
+                upper.Player != null && upper.OtherPlayer != null &&
+                !ContainsIgnoredAgeGroup(lower.Player.Rankings.Age) && !ContainsIgnoredAgeGroup(upper.Player.Rankings.Age) &&
+                !ContainsIgnoredAgeGroup(lower.OtherPlayer.Rankings.Age) && !ContainsIgnoredAgeGroup(upper.OtherPlayer.Rankings.Age))
+            {
+                return ((lower.Player.Rankings.MixPoints + lower.OtherPlayer.Rankings.MixPoints)
                         - (upper.Player.Rankings.MixPoints + upper.OtherPlayer.Rankings.MixPoints))
                        <= _maxDoubleDiff;
-            if (Lineup.PositionType.Double.HasFlag(type) && lower.Player != null && lower.OtherPlayer != null && upper.Player != null && upper.OtherPlayer != null)
+            }
+
+            //If double, positions is not empty and players age group is not ignored
+            if (Lineup.PositionType.Double.HasFlag(type) && lower.Player != null && lower.OtherPlayer != null &&
+                upper.Player != null && upper.OtherPlayer != null &&
+                !ContainsIgnoredAgeGroup(lower.Player.Rankings.Age) && !ContainsIgnoredAgeGroup(upper.Player.Rankings.Age) &&
+                !ContainsIgnoredAgeGroup(lower.OtherPlayer.Rankings.Age) && !ContainsIgnoredAgeGroup(upper.OtherPlayer.Rankings.Age))
+            {
                 return ((lower.Player.Rankings.DoublesPoints + lower.OtherPlayer.Rankings.DoublesPoints)
                         - (upper.Player.Rankings.DoublesPoints + upper.OtherPlayer.Rankings.DoublesPoints)) <= _maxDoubleDiff;
+            }
+                
             return true;
+        }
+
+        private bool ContainsIgnoredAgeGroup(PlayerRanking.AgeGroup age)
+        {
+            return _ignoreAgeGroups.Contains(age);
         }
     }
 }

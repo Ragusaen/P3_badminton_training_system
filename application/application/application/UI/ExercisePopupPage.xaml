@@ -1,18 +1,19 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<pages:PopupPage
+<ui:BasePopupPage
              xmlns:pages="clr-namespace:Rg.Plugins.Popup.Pages;assembly=Rg.Plugins.Popup" 
              xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:cvtr="clr-namespace:application.UI.Converter"
+             xmlns:ui="clr-namespace:application.UI;assembly=application"
              mc:Ignorable="d"
              x:Class="application.UI.ExercisePopupPage">
 
-    <StackLayout Padding="24" Spacing="24" Margin="12">
+    <StackLayout Margin="36">
         <StackLayout BackgroundColor="White">
-        <SearchBar Placeholder="Enter your focus point" Text="{Binding SearchText}"/>
-        <ListView VerticalScrollBarVisibility="Always" ItemSelected="ListView_ItemSelected" ItemsSource="{Binding Exercises}" SeparatorVisibility="None">
+        <SearchBar Placeholder="Enter Your Exercise" Text="{Binding SearchText}"/>
+            <ListView VerticalScrollBarVisibility="Always" BackgroundColor="#F0F0F0" ItemSelected="ListView_ItemSelected" ItemsSource="{Binding Exercises}" SeparatorVisibility="None">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
@@ -21,6 +22,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
+        <Button x:Name="CancelButton" Text="CANCEL" TextColor="#BB0000" BackgroundColor="#FFEEEE" Clicked="Dismiss" CornerRadius="15" Margin="10"/>
+        </StackLayout>
     </StackLayout>
-    </StackLayout>
-</pages:PopupPage>
+</ui:BasePopupPage>

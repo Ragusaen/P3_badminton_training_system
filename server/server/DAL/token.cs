@@ -7,7 +7,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Server.DAL
+namespace server.DAL
 {
     using System;
     using System.Collections.Generic;
@@ -16,6 +16,7 @@ namespace Server.DAL
     {
         public byte[] AccessToken { get; set; }
         public string AccountUsername { get; set; }
+        public System.DateTime ValidUntil { get; set; }
     
         public virtual account account { get; set; }
     }

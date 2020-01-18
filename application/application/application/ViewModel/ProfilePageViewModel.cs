@@ -85,7 +85,7 @@ namespace application.ViewModel
 
         public string StringMemberType { get; set; } = "Neither Player nor Trainer";
 
-        public ProfilePageViewModel(int profileId)
+        public ProfilePageViewModel(int profileId, RequestCreator requestCreator, INavigation navigation) : base(requestCreator, navigation)
         {
             RequestCreator.LoggedInMember = RequestCreator.GetLoggedInMember(); // reload logged in member, because membertype might have changed
             Member = RequestCreator.GetMember(profileId);
@@ -106,13 +106,37 @@ namespace application.ViewModel
                     PlayerPracticeTeamsListHeight = PlayerPracticeTeams.Count * 45;
 
                     List<Feedback> feedbacks = RequestCreator.GetPlayerFeedback(Member);
-                    List<Entry> entries = new List<Entry>();
-                    foreach (Feedback fb in feedbacks)
+                    Player.Feedbacks = feedbacks;
+                    if (feedbacks.Count > 0)
                     {
-                        entries.Add(new Entry(((float)fb.ReadyQuestion + (float)fb.EffortQuestion + (float)fb.ChallengeQuestion + (float)fb.AbsorbQuestion) / 4) { Color = SKColor.Parse("#33ccff"), ValueLabel = fb.PlaySession.Start.Date.ToString("dd/MM-yyyy") });
+                        feedbacks = feedbacks.OrderByDescending(p => p.PlaySession.Start.Date)
+                            .ThenByDescending(p => p.PlaySession.Start.TimeOfDay).ToList();
+                        Player.Feedbacks = feedbacks;
+                        List<Entry> entries = new List<Entry>();
+                        int i = 0;
+                        foreach (Feedback fb in feedbacks)
+                        {
+                            if (i == 15)
+                                break;
+                            entries.Add(
+                                new Entry(((float) fb.ReadyQuestion + (float) fb.EffortQuestion +
+                                           (float) fb.ChallengeQuestion + (float) fb.AbsorbQuestion) / 4)
+                                {
+                                    Color = SKColor.Parse("#33ccff"),
+                                    ValueLabel = fb.PlaySession.Start.Date.ToString("dd/MM-yyyy")
+                                });
+                            i++;
+                        }
+
+                        entries.Reverse();
+                        Chart = new LineChart
+                        {
+                            Entries = entries, LineMode = LineMode.Straight, PointMode = PointMode.Circle,
+                            LabelTextSize = 25, PointSize = 12, MaxValue = 2, MinValue = -2
+                        };
                     }
-                    Chart = new LineChart { Entries = entries, LineMode = LineMode.Straight, PointMode = PointMode.Circle, LabelTextSize = 25, PointSize = 12, MaxValue = 2, MinValue = -2 };
                 }
+
                 if (Member.MemberType.HasFlag(MemberType.Trainer))
                 {
                     Trainer = new Trainer {Member = Member};
@@ -164,7 +188,7 @@ namespace application.ViewModel
 
         private void ExecuteAddPlayerPracticeTeam(object param)
         {
-            var page = new PracticeTeamPopupPage(Player.PracticeTeams);
+            var page = new PracticeTeamPopupPage(Player.PracticeTeams, RequestCreator);
             page.CallBackEvent += PlayerPracticeTeamPopupPageCallback;
             PopupNavigation.Instance.PushAsync(page);
         }
@@ -181,7 +205,7 @@ namespace application.ViewModel
         // Focus Point Section
         public void PopupFocusPoint(FocusPointItem focusPoint)
         {
-            StringAndHeaderPopup popup = new StringAndHeaderPopup(focusPoint.Descriptor);
+            var popup = new ViewFocusPointDetails(focusPoint.Descriptor, RequestCreator);
             PopupNavigation.Instance.PushAsync(popup);
         }
 
@@ -190,7 +214,7 @@ namespace application.ViewModel
 
         private void ExecuteAddFocusPoint(object param)
         {
-            FocusPointPopupPage page = new FocusPointPopupPage(Player.FocusPointItems, Player);
+            FocusPointPopupPage page = new FocusPointPopupPage(Player.FocusPointItems, Player, RequestCreator);
             ((FocusPointPopupViewModel)page.BindingContext).CallBackEvent += FocusPointPopupPageCallback;
             PopupNavigation.Instance.PushAsync(page);
         }
@@ -226,14 +250,6 @@ namespace application.ViewModel
             {
                 await ChangeSex();
             }
-            else
-            {
-                return;
-            }
-
-            RequestCreator.LoggedInMember = RequestCreator.GetLoggedInMember(); // reload logged in member, because changes
-            Navigation.InsertPageBefore(new ProfilePage(Member.Id), Navigation.NavigationStack.Last());
-            await Navigation.PopAsync();
         }
 
         private async Task ChangeSex()
@@ -255,6 +271,9 @@ namespace application.ViewModel
             }
 
             RequestCreator.SetMemberSex(newSex, Player);
+            RequestCreator.LoggedInMember = RequestCreator.GetLoggedInMember(); // reload logged in member, because changes
+            Navigation.InsertPageBefore(new ProfilePage(Member.Id, RequestCreator), Navigation.NavigationStack.Last());
+            await Navigation.PopAsync();
         }
 
         private async Task ChangeTrainerPrivileges()
@@ -265,7 +284,6 @@ namespace application.ViewModel
             if (newRights == "Make Trainer")
             {
                 Member.MemberType |= MemberType.Trainer;
-
             }
             else if (newRights == "Unmake Trainer")
             {
@@ -277,6 +295,15 @@ namespace application.ViewModel
             }
 
             RequestCreator.ChangeTrainerPrivileges(Member);
+            if (Member.Id == RequestCreator.LoggedInMember.Id)
+            {
+                Application.Current.MainPage = new NavigationPage(new LoginPage(RequestCreator));
+            }
+            else
+            {
+                Navigation.InsertPageBefore(new ProfilePage(Member.Id, RequestCreator), Navigation.NavigationStack.Last());
+                await Navigation.PopAsync();
+            }
         }
 
         private RelayCommand _viewFeedbackCommand;
@@ -290,7 +317,7 @@ namespace application.ViewModel
         }
         private void ExecuteViewFeedbackClick(object param)
         {
-            Navigation.PushAsync(new ViewDetailedFeedbackPage(Player));
+            Navigation.PushAsync(new ViewDetailedFeedbackPage(Player, RequestCreator));
         }
 
         private RelayCommand _viewFeedbackGraphCommand;
@@ -304,7 +331,7 @@ namespace application.ViewModel
         }
         private void ExecuteViewFeedbackGraphClick(object param)
         {
-            Navigation.PushAsync(new ViewFeedbackPage(Player));
+            Navigation.PushAsync(new ViewFeedbackPage(Player, RequestCreator));
         }
         private RelayCommand _deleteListPlayerPracticeTeamCommand;
 
@@ -355,9 +382,15 @@ namespace application.ViewModel
             set => SetProperty(ref _commentText, value);
         }
 
-        public void SetComment(string comment)
+        public bool SetComment(string comment)
         {
+            if (comment.Length > 512)
+            {
+                Application.Current.MainPage.DisplayAlert("Invalid input", "Comment can not contain more than 512 characters", "Ok");
+                return false;
+            }
             RequestCreator.SetComment(Member, comment);
+            return true;
         }
     }
 }

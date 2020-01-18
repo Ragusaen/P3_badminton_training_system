@@ -6,6 +6,7 @@ using System.Text;
 using application.Controller;
 using application.SystemInterface;
 using Common.Model;
+using Xamarin.Forms;
 
 namespace application.ViewModel
 {
@@ -37,9 +38,9 @@ namespace application.ViewModel
             set => SetProperty(ref _players, value);
         }
 
-        public ChooseLineupPlayerPopupViewModel()
+        public ChooseLineupPlayerPopupViewModel(List<Player> players, RequestCreator requestCreator, INavigation navigation) : base(requestCreator, navigation)
         {
-            Players = new ObservableCollection<Player>(RequestCreator.GetAllPlayers());
+            Players = new ObservableCollection<Player>(players);
             SearchText = null;
         }
     }

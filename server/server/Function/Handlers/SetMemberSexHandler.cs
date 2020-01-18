@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Common.Model;
-using Server.SystemInterface.Requests.Handlers;
+﻿using Common.Model;
 using Common.Serialization;
-using Server.DAL;
+using server.DAL;
 
-namespace Server.Function.Handlers
+namespace server.Function.Handlers
 {
     class SetMemberSexHandler : MiddleRequestHandler<SetMemberSexRequest, SetMemberSexResponse>
     {

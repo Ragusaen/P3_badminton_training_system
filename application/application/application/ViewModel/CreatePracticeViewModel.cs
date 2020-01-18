@@ -17,6 +17,14 @@ namespace application.ViewModel
     {
         public PracticeSession Practice { get; set; } = new PracticeSession();
 
+        private double _saveOpacity;
+
+        public double SaveOpacity
+        {
+            get { return _saveOpacity; }
+            set { SetProperty(ref _saveOpacity, value); }
+        }
+
         private bool IsEdit = false;
 
         //Date
@@ -127,12 +135,28 @@ namespace application.ViewModel
             get => _teamName;
             set
             {
-                SetProperty(ref _teamName, value);
+                if (SetProperty(ref _teamName, value))
+                {
+                    SaveCreatedPracticeClickCommand.RaiseCanExecuteChanged();
+                }
+            }
+        }
+        private int _trainerIndex;
+
+        public int TrainerIndex
+        {
+            get => _trainerIndex;
+            set
+            {
+                if (SetProperty(ref _trainerIndex, value))
+                {
+                    SaveCreatedPracticeClickCommand.RaiseCanExecuteChanged();
+                }
             }
         }
 
         //Ctor
-        public CreatePracticeViewModel(DateTime startDate)
+        public CreatePracticeViewModel(DateTime startDate, RequestCreator requestCreator, INavigation navigation) : base(requestCreator, navigation)
         {
             SelectedDateStart = startDate;
             TeamName = "Choose Team";
@@ -141,8 +165,16 @@ namespace application.ViewModel
             PlanElement = new ObservableCollection<ExerciseItem>();
         }
 
-        public CreatePracticeViewModel(PracticeSession ps)
+        public CreatePracticeViewModel(PracticeSession ps, RequestCreator requestCreator, INavigation navigation) : base(requestCreator, navigation)
         {
+            Trainers = RequestCreator.GetAllTrainers();
+            foreach (Trainer T in Trainers) 
+            {
+                if (Practice.Trainer == T)
+                {
+                    TrainerIndex = Trainers.IndexOf(T);
+                }
+            }
             Practice = ps;
             TeamName = ps.PracticeTeam.Name;
             SelectedDateStart = ps.Start;
@@ -169,46 +201,74 @@ namespace application.ViewModel
         }
         
         private bool CanExecuteSaveCreatedPracticeClick(object param)
-        { 
+        {
+            if (Practice.PracticeTeam == null || string.IsNullOrEmpty(Practice.PracticeTeam.Name) || Practice.PracticeTeam.Name == "Choose Team")
+            {
+                SaveOpacity = 0.5;
+                return false;
+            }
+
+            SaveOpacity = 1;
             return true;
         }
 
         private void ExecuteSaveCreatedPracticeClick(object param)
         {
-            Practice.Start = SelectedDateStart.Date + Convert.ToDateTime(SelectedTimeStart.ToString()).TimeOfDay;
-            Practice.End = SelectedDateStart.Date + Convert.ToDateTime(SelectedTimeEnd.ToString()).TimeOfDay;
-            if (Practice.PracticeTeam.Name == "Choose Team")
-                Practice.PracticeTeam.Name = "";
-            if (string.IsNullOrEmpty(Practice.Location))
-                Practice.Location = "Stjernevej 5, 9200 Aalborg";
-            Practice.Exercises = PlanElement.ToList();
-            Practice.FocusPoints = FocusPoints?.ToList();
-            int i = 0;
-            foreach (ExerciseItem exerciseitem in Practice.Exercises) 
+            if (ValidateUserInput())
             {
-                exerciseitem.Index = i;
-                i++;
-            }
-            if (IsEdit)
-                RequestCreator.DeletePracticeSession(Practice.Id);
+                Practice.Trainer = Trainers[TrainerIndex];
+                Practice.Start = SelectedDateStart.Date + Convert.ToDateTime(SelectedTimeStart.ToString()).TimeOfDay;
+                Practice.End = SelectedDateStart.Date + Convert.ToDateTime(SelectedTimeEnd.ToString()).TimeOfDay;
+                if (Practice.PracticeTeam.Name == "Choose Team")
+                    Practice.PracticeTeam.Name = "";
+                if (string.IsNullOrEmpty(Practice.Location))
+                    Practice.Location = "Stjernevej 5, 9200 Aalborg";
+                Practice.Exercises = PlanElement.ToList();
 
-            RequestCreator.SetPracticeSession(Practice);
-            Navigation.PopAsync();
+                if (Practice.MainFocusPoint != null)
+                    FocusPoints?.Remove(Practice.MainFocusPoint);
+
+                Practice.FocusPoints = FocusPoints?.ToList();
+                int i = 0;
+                foreach (ExerciseItem exerciseitem in Practice.Exercises)
+                {
+                    exerciseitem.Index = i;
+                    i++;
+                }
+                if (IsEdit)
+                    RequestCreator.DeletePracticeSession(Practice.Id);
+
+                RequestCreator.SetPracticeSession(Practice);
+                Navigation.PopAsync();
+            }
+        }
+
+        private bool ValidateUserInput()
+        {
+            if (Practice.Location != null && Practice.Location.Length > 256)
+            {
+                Application.Current.MainPage.DisplayAlert("Invalid input", "Location can not contain more than 256 characters", "Ok");
+                return false;
+            }
+            return true;
         }
 
         public async void AddNewPlanElement(EventHandler<ExerciseDescriptor> eventHandler)
         {
-            Debug.WriteLine("SOMWHERE");
-            string action = await Application.Current.MainPage.DisplayActionSheet("Settings", "Cancel", null,"Add Existing Exercise", "Make New Exercise");
+            string action = await Application.Current.MainPage.DisplayActionSheet("Exercise", "Cancel", null,"Add Existing Exercise", "Make New Exercise");
 
             if (action == "Add Existing Exercise")
             {
-                var page = new ExercisePopupPage(Practice);
+                var page = new ExercisePopupPage(Practice, RequestCreator);
                 page.CallBackEvent += eventHandler;
                 await PopupNavigation.Instance.PushAsync(page);
             }
             else if (action == "Make New Exercise")
-                await PopupNavigation.Instance.PushAsync(new CreateExercisePopupPage());
+            {
+                var page = new CreateExercisePopupPage(RequestCreator);
+                ((CreateExercisePopupViewModel) page.BindingContext).CallBackEvent += eventHandler;
+                await PopupNavigation.Instance.PushAsync(page);
+            }
         }
 
         private RelayCommand _addNewFocusPointCommand;
@@ -222,7 +282,7 @@ namespace application.ViewModel
         }
         private void AddNewFocusPointClick(object param)
         {
-            FocusPointPopupPage page = new FocusPointPopupPage(FocusPoints.ToList(), null);
+            FocusPointPopupPage page = new FocusPointPopupPage(FocusPoints.ToList(), null, RequestCreator);
             ((FocusPointPopupViewModel)page.BindingContext).CallBackEvent += FocusPointPage_CallBackEvent;
             PopupNavigation.Instance.PushAsync(page);
         }
@@ -244,8 +304,8 @@ namespace application.ViewModel
         }
         private void TeamClick(object param)
         {
-            PracticeTeamPopupPage page = new PracticeTeamPopupPage(new List<PracticeTeam>());
-            page.CallBackEvent += TeamPage_CallBackEvent; ;
+            PracticeTeamPopupPage page = new PracticeTeamPopupPage(new List<PracticeTeam>(), RequestCreator);
+            page.CallBackEvent += TeamPage_CallBackEvent;
             PopupNavigation.Instance.PushAsync(page);
         }
 

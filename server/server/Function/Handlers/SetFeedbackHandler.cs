@@ -1,13 +1,8 @@
 ﻿using Common.Model;
 using Common.Serialization;
-using Server.DAL;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using server.DAL;
 
-namespace Server.SystemInterface.Requests.Handlers
+namespace server.Function.Handlers
 {
     class SetFeedbackHandler : MiddleRequestHandler<SetFeedbackRequest, SetFeedbackResponse>
     {

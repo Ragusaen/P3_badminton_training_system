@@ -1,21 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Common.Model;
+﻿using Common.Model;
 
-namespace Server.DAL
+namespace server.DAL
 {
     partial class teammatch
     {
-        public static explicit operator Common.Model.TeamMatch(Server.DAL.teammatch tm)
+        public static explicit operator Common.Model.TeamMatch(teammatch tm)
         {
             var db = new DatabaseEntities();
             return new TeamMatch()
             {
                 Id = tm.PlaySessionID,
-                Captain = (Member)db.members.First(p => p.ID == tm.CaptainID),
+                Captain = tm.captain == null ? null : (Member)tm.captain,
                 End = tm.playsession.EndDate,
                 Start = tm.playsession.StartDate,
                 League = (TeamMatch.Leagues)tm.League,

@@ -7,12 +7,30 @@ using System.Text;
 using application.Controller;
 using application.SystemInterface;
 using System.Collections.ObjectModel;
+using Common;
 using Rg.Plugins.Popup.Services;
+using Xamarin.Forms;
 
 namespace application.ViewModel
 {
     class CreateMatchViewModel : BaseViewModel
     {
+        private bool _reservesVisible;
+
+        public bool ReservesVisible
+        {
+            get { return _reservesVisible; }
+            set { SetProperty(ref _reservesVisible, value); }
+        }
+
+        private Color _verifyButtonColor;
+
+        public Color VerifyButtonColor
+        {
+            get { return _verifyButtonColor; }
+            set { SetProperty(ref _verifyButtonColor, value); }
+        }
+
         private string _opponentName;
 
         public string OpponentName
@@ -25,7 +43,6 @@ namespace application.ViewModel
             }
         }
 
-
         public DateTime MinDate { get; set; } = DateTime.Today;
 
         private DateTime _selectedDateStart;
@@ -35,8 +52,13 @@ namespace application.ViewModel
             get { return _selectedDateStart; }
             set
             {
-                if (SetProperty(ref _selectedDateStart, value)) { }
+                if (SetProperty(ref _selectedDateStart, value))
+                {
+                    Season = value.Year;
+                    if (value.Month <= 6)
+                        Season--;
                     SaveMatchClickCommand.RaiseCanExecuteChanged();
+                }
             }
         }
 
@@ -95,9 +117,9 @@ namespace application.ViewModel
             }
         }
 
-        private int _season;
+        private int? _season;
 
-        public int Season
+        public int? Season
         {
             get { return _season; }
             set
@@ -110,9 +132,9 @@ namespace application.ViewModel
             }
         }
 
-        private int _leagueRound;
+        private int? _leagueRound;
 
-        public int LeagueRound
+        public int? LeagueRound
         {
             get { return _leagueRound; }
             set 
@@ -125,9 +147,9 @@ namespace application.ViewModel
             }
         }
 
-        private int _teamIndex;
+        private int? _teamIndex;
 
-        public int TeamIndex
+        public int? TeamIndex
         {
             get { return _teamIndex; }
             set
@@ -141,11 +163,10 @@ namespace application.ViewModel
         }
 
         private int _lineupHeight;
-
         public int LineupHeight
         {
-            get { return _lineupHeight; }
-            set { SetProperty(ref _lineupHeight, value); }
+            get => _lineupHeight;
+            set => SetProperty(ref _lineupHeight, value);
         }
 
         public List<string> LeagueNames
@@ -156,11 +177,15 @@ namespace application.ViewModel
         private TeamMatch.Leagues _selectedLeague;
         public TeamMatch.Leagues SelectedLeague
         {
-            get { return _selectedLeague; }
+            get => _selectedLeague;
             set
             {
-                SetProperty(ref _selectedLeague, value);
-                SetLineupTemplate(_selectedLeague);
+                if (SetProperty(ref _selectedLeague, value))
+                {
+                    SetLineupTemplate(_selectedLeague);
+                    ReservesVisible = _selectedLeague == TeamMatch.Leagues.BadmintonLeague ||
+                                      _selectedLeague == TeamMatch.Leagues.Division1;
+                }
             }
         }
 
@@ -182,37 +207,73 @@ namespace application.ViewModel
 
         public Dictionary<(Lineup.PositionType, int), PositionError> Positions
         {
-            get { return _positions; }
+            get => _positions;
             set
             {
                 if (SetProperty(ref _positions, value))
-                    LineupHeight = _positions.Count * 120;
+                {
+                    LineupHeight = _positions.Count * 150;
+                }
             }
         }
 
         private ObservableCollection<Player> _players;
-
         public ObservableCollection<Player> Players
         {
-            get { return _players; }
-            set { SetProperty(ref _players, value); }
+            get => _players;
+            set => SetProperty(ref _players, value);
         }
 
         private ObservableCollection<Member> _members;
-
         public ObservableCollection<Member> Members
         {
-            get { return _members; }
-            set { SetProperty(ref _members, value); }
+            get => _members;
+            set => SetProperty(ref _members, value);
         }
 
-        public CreateMatchViewModel(DateTime startDate)
+        private readonly bool _isEdit = false;
+        private readonly int _matchId = 0;
+
+        //Ctor
+        private CreateMatchViewModel(RequestCreator requestCreator, INavigation navigation) : base(requestCreator, navigation)
         {
             Members = new ObservableCollection<Member>(RequestCreator.GetAllMembers().OrderBy(p => p.Name));
             Players = new ObservableCollection<Player>(RequestCreator.GetAllPlayers().OrderBy(p => p.Member.Name));
+            Players.ToList().RemoveAll(p => !p.OnRankList);
+            SelectedLeague = TeamMatch.Leagues.DenmarksSeries;
+        }
+
+        public CreateMatchViewModel(DateTime startDate, RequestCreator requestCreator, INavigation navigation) : this(requestCreator, navigation)
+        {
             SelectedDateStart = startDate;
-            SelectedLeague = TeamMatch.Leagues.BadmintonLeague;
             Location = "Stjernevej 5, 9200 Aalborg";
+        }
+
+        public CreateMatchViewModel(TeamMatch match, RequestCreator requestCreator, INavigation navigation) : this(requestCreator, navigation)
+        {
+            OpponentName = match.OpponentName;
+            SelectedDateStart = match.Start.Date;
+            SelectedTimeStart = match.Start.TimeOfDay;
+            SelectedTimeEnd = match.End.TimeOfDay;
+            Location = match.Location;
+            SelectedLeague = match.League;
+            LeagueRound = match.LeagueRound;
+            Season = match.Season;
+            TeamIndex = match.TeamIndex;
+
+            _isEdit = true;
+            _matchId = match.Id;
+        }
+
+        public void SetUILineup(Lineup lineup)
+        {
+            foreach (var group in lineup)
+            {
+                for (int i = 0; i < group.Positions.Count; i++)
+                {
+                    Positions[(group.Type, i)] = new PositionError(group.Positions[i]);
+                }
+            }
         }
 
         private void RemoveSamePlayerDouble(Lineup lineup)
@@ -245,19 +306,27 @@ namespace application.ViewModel
 
         private bool CanExecuteVerifyLineup(object param)
         {
-            return LeagueRound != 0 && Season != 0 && TeamIndex != 0;
+            return LeagueRound != null && LeagueRound > 0 && 
+                   Season != null && Season > 0 && 
+                   TeamIndex != null && TeamIndex > 0;
         }
 
         private void ExecuteVerifyLineup(object param)
         {
             TeamMatch match = new TeamMatch()
             { 
-                Season = Season,
-                LeagueRound = LeagueRound,
-                TeamIndex = TeamIndex,
+                Season = (int)Season,
+                LeagueRound = (int)LeagueRound,
+                TeamIndex = (int)TeamIndex,
+                League = SelectedLeague,
                 Lineup = ConvertPositionDictionaryToLineup(Positions)
             };
+            if (_matchId != 0) 
+                match.Id = _matchId;
+            
             List<RuleBreak> ruleBreaks = RequestCreator.VerifyLineup(match);
+
+            VerifyButtonColor = ruleBreaks.Count > 0 ? Color.Red : Color.Green;
 
             foreach (var position in Positions)
             {
@@ -326,7 +395,7 @@ namespace application.ViewModel
         {
             var pos = ((Lineup.PositionType, int))param;
 
-            ChooseLineupPlayerPopupPage page = new ChooseLineupPlayerPopupPage();
+            ChooseLineupPlayerPopupPage page = new ChooseLineupPlayerPopupPage(Players.ToList(), RequestCreator);
             page.CallBackEvent += (sender, e) => SetChosenPlayer(sender, e, pos, index);
             PopupNavigation.Instance.PushAsync(page);
         }
@@ -348,6 +417,14 @@ namespace application.ViewModel
             Positions = newPositions;
         }
 
+        private double _saveButtonOpacity;
+
+        public double SaveButtonOpacity
+        {
+            get => _saveButtonOpacity; 
+            set => SetProperty(ref _saveButtonOpacity, value); 
+        }
+
         private RelayCommand _saveMatchClickCommand;
 
         public RelayCommand SaveMatchClickCommand
@@ -360,35 +437,76 @@ namespace application.ViewModel
 
         private bool CanExecuteSaveMatchClick(object param)
         {
-            if ((string.IsNullOrEmpty(Location)) || 
-                (string.IsNullOrEmpty(OpponentName)) || 
-                Captain == null ||
-                LeagueRound == 0 || Season == 0 || TeamIndex == 0)
+            if (((string.IsNullOrEmpty(Location)) ||
+                  (string.IsNullOrEmpty(OpponentName)) ||
+                  LeagueRound == null || LeagueRound < 0 ||
+                  Season == null || Season < 0 ||
+                  TeamIndex == null || TeamIndex < 0))
+            {
+                SaveButtonOpacity = 0.5;
                 return false;
-            else
-                return true;
+            }
+
+            SaveButtonOpacity = 1;
+            return true;
         }
 
         private void ExecuteSaveMatchClick(object param)
         {
-            TeamMatch match = new TeamMatch()
+            if (ValidateUserInput())
             {
-                Captain = Captain,
-                Start = SelectedDateStart.Date + Convert.ToDateTime(SelectedTimeStart.ToString()).TimeOfDay,
-                End = SelectedDateStart.Date + Convert.ToDateTime(SelectedTimeEnd.ToString()).TimeOfDay,
-                League = SelectedLeague,
-                Lineup = ConvertPositionDictionaryToLineup(Positions),
-                LeagueRound = LeagueRound,
-                Location = Location,
-                OpponentName = OpponentName,
-                Season = Season,
-                TeamIndex = TeamIndex
-            };
-            RemoveSamePlayerDouble(match.Lineup);
-            RequestCreator.SetTeamMatch(match);
+                TeamMatch match = new TeamMatch()
+                {
+                    Captain = Captain,
+                    Start = SelectedDateStart.Date + Convert.ToDateTime(SelectedTimeStart.ToString()).TimeOfDay,
+                    End = SelectedDateStart.Date + Convert.ToDateTime(SelectedTimeEnd.ToString()).TimeOfDay,
+                    League = SelectedLeague,
+                    Lineup = ConvertPositionDictionaryToLineup(Positions),
+                    LeagueRound = (int)LeagueRound,
+                    Location = Location,
+                    OpponentName = OpponentName,
+                    Season = (int)Season,
+                    TeamIndex = (int)TeamIndex
+                };
+                RemoveSamePlayerDouble(match.Lineup);
 
-            //Navigate back
-            Navigation.PopAsync();
+                if (_isEdit)
+                    RequestCreator.DeleteTeamMatch(_matchId);
+                RequestCreator.SetTeamMatch(match);
+
+                //Navigate back
+                Navigation.PopAsync();
+            }
+        }
+
+        private bool ValidateUserInput()
+        {
+            if (LeagueRound < 0 || LeagueRound > 100)
+            {
+                Application.Current.MainPage.DisplayAlert("Invalid input", "League round must be between 0 and 100", "Ok");
+                return false;
+            }
+            if (TeamIndex < 0 || TeamIndex > 100)
+            {
+                Application.Current.MainPage.DisplayAlert("Invalid input", "Team index must be between 0 and 100", "Ok");
+                return false;
+            }
+            if (Season < 2000 || Season > 3000)
+            {
+                Application.Current.MainPage.DisplayAlert("Invalid input", "Season must be between 2000 and 3000", "Ok");
+                return false;
+            }
+            if (Location.Length > 256)
+            {
+                Application.Current.MainPage.DisplayAlert("Invalid input", "Location can not contain more than 256 characters", "Ok");
+                return false;
+            }
+            if (OpponentName.Length > 64)
+            {
+                Application.Current.MainPage.DisplayAlert("Invalid input", "Opponent name can not contain more than 64 characters", "Ok");
+                return false;
+            }
+            return true;
         }
     }
 }

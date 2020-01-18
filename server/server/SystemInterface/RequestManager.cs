@@ -1,13 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using Common;
-using Common.Serialization;
-using Server.Controller;
-using Server.DAL;
-using Server.Function.Handlers;
-using Server.SystemInterface.Requests.Handlers;
+using server.Function;
+using server.Function.Handlers;
 
-namespace Server.SystemInterface.Requests
+namespace server.SystemInterface
 {
     class InvalidRequestException : Exception
     {
@@ -17,12 +14,13 @@ namespace Server.SystemInterface.Requests
         }
     }
 
-    delegate TResponse RequestHandlerDelegate<out TResponse, in TRequest>(TRequest request);
-
+    /// <summary>
+    /// This class is for managing requests. This connects the raw data from the client with the correct request handler.
+    /// </summary>
     class RequestManager
     {
-
-        private Dictionary<RequestType, RequestHandler> _requestDictionary =
+        // Dictionary to match each request type to a request handler
+        private readonly Dictionary<RequestType, RequestHandler> _requestDictionary =
             new Dictionary<RequestType, RequestHandler>()
             {
                 {RequestType.Login, new LoginHandler() },
@@ -60,6 +58,7 @@ namespace Server.SystemInterface.Requests
                 {RequestType.ChangeTrainerPrivileges, new ChangeTrainerPrivilegesHandler() },
                 {RequestType.SetPracticeTeamTrainer, new SetPracticeTeamTrainerHandler() },
                 {RequestType.SetMemberSex, new SetMemberSexHandler() },
+                {RequestType.EditFocusPoint, new EditFocusPointHandler() },
                 //Deleters below
                 {RequestType.DeletePlayerFocusPoint, new DeletePlayerFocusPointsHandler() },
                 {RequestType.DeletePlayerPracticeTeam, new DeletePlayerPracticeTeamHandler() },
@@ -76,14 +75,20 @@ namespace Server.SystemInterface.Requests
                 {RequestType.SetNonPrivateFocusPoint, new SetNonPrivateFocusPointHandler() },
                 {RequestType.SetPracticeTeam, new SetPracticeTeamHandler() },
             }; 
-
-        public byte[] Parse(byte[] request)
+        
+        /// <summary>
+        /// ParseAndHandle the request and call the request handler
+        /// </summary>
+        public byte[] ParseAndHandle(byte[] request)
         {
+            // The first byte is the request type
             byte type = request[0];
 
+            // Extract the request data (remaining bytes)
             byte[] data = new byte[request.Length - 1];
             Array.Copy(request, 1, data, 0, data.Length);
             
+            // Handle the request and get a response
             var response = _requestDictionary[(RequestType) type].Handle(data);
 
             return response;
