@@ -33,7 +33,7 @@ namespace server
                 }
             }
             
-            if (false) //args.Contains("--initdb") || args.Contains("-i")
+            if (true) //args.Contains("--initdb") || args.Contains("-i")
             {
                 _log.Debug("Database is being initialized");
                 var di = new DatabaseInitializer();
