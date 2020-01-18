@@ -14,10 +14,12 @@ namespace server
 
         public void Initialize()
         {
-            var headCoach = _db.members.Single(p => p.BadmintonPlayerID == 95032401);
-            var secondCoach = _db.members.Single(p => p.BadmintonPlayerID == 81100101);
-            headCoach.MemberType = (int)MemberType.Both;
-            secondCoach.MemberType = (int) MemberType.Both;
+            {
+                var headCoach = _db.members.Single(p => p.BadmintonPlayerID == 95032401);
+                var secondCoach = _db.members.Single(p => p.BadmintonPlayerID == 81100101);
+                headCoach.MemberType = (int) MemberType.Both;
+                secondCoach.MemberType = (int) MemberType.Both;
+            }
 
             var fp1 = new focuspoint
             {
@@ -78,8 +80,8 @@ namespace server
                 mainfocuspoint = fp2,
                 playsession = new playsession()
                 {
-                    EndDate = new DateTime(2020, 1, 21, 19, 30, 0),
-                    StartDate = new DateTime(2020, 1, 21, 21, 30, 0),
+                    EndDate = new DateTime(2020, 1, 21, 21, 30, 0),
+                    StartDate = new DateTime(2020, 1, 21, 19, 30, 0),
                     Location = "Vester Mariendal Skole",
                     Type = (int)PlaySession.Type.Practice
                 },
@@ -92,8 +94,8 @@ namespace server
                 mainfocuspoint = fp2,
                 playsession = new playsession()
                 {
-                    EndDate = new DateTime(2020, 1, 22, 17, 0, 0),
-                    StartDate = new DateTime(2020, 1, 22, 19, 0, 0),
+                    EndDate = new DateTime(2020, 1, 22, 19, 0, 0),
+                    StartDate = new DateTime(2020, 1, 22, 17, 0, 0),
                     Location = "Vester Mariendal Skole",
                     Type = (int)PlaySession.Type.Practice
                 },
@@ -106,8 +108,8 @@ namespace server
                 mainfocuspoint = fp2,
                 playsession = new playsession()
                 {
-                    EndDate = new DateTime(2020, 1, 23, 19, 0, 0),
-                    StartDate = new DateTime(2020, 1, 23, 21, 0, 0),
+                    EndDate = new DateTime(2020, 1, 23, 21, 0, 0),
+                    StartDate = new DateTime(2020, 1, 23, 19, 0, 0),
                     Location = "Vester Mariendal Skole",
                     Type = (int)PlaySession.Type.Practice
                 },
