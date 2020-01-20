@@ -430,7 +430,7 @@ namespace application.SystemInterface
 
             return response.FocusPointDescriptor;
         }
-        public void SetExerciseDiscriptor(ExerciseDescriptor exercise)
+        public ExerciseDescriptor SetExerciseDescriptor(ExerciseDescriptor exercise)
         {
             var request = new SetExerciseDescriptorRequest
             {
@@ -438,6 +438,7 @@ namespace application.SystemInterface
             };
 
             var response = SendRequest<SetExerciseDescriptorRequest, SetExerciseDescriptorResponse>(RequestType.SetExerciseDiscriptor, request);
+            return response.Exercise;
         }
         public List<Trainer> GetAllTrainers()
         {

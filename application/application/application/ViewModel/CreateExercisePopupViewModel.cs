@@ -66,8 +66,8 @@ namespace application.ViewModel
                     Name = Name
                 };
 
-                RequestCreator.SetExerciseDiscriptor(exercise);
-                CallBackEvent?.Invoke(this, exercise);
+                var ex = RequestCreator.SetExerciseDescriptor(exercise);
+                CallBackEvent?.Invoke(this, ex);
                 PopupNavigation.Instance.PopAsync();
             }
         }

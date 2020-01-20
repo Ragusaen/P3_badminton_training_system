@@ -21,9 +21,9 @@ namespace server.Function.Handlers
                 Description = e.Description
             };
 
-            db.exercises.Add(dbEx);
+            var ex = db.exercises.Add(dbEx);
             db.SaveChanges();
-            return new SetExerciseDescriptorResponse();
+            return new SetExerciseDescriptorResponse {Exercise = (ExerciseDescriptor)ex};
         }
     }
 }
