@@ -251,7 +251,35 @@ namespace server
                     Type = (int)Lineup.PositionType.MensDouble,
                 },
             };
-            
+
+            var oldThursdaySession = _db.practicesessions.Add(new practicesession
+            {
+                mainfocuspoint = fp2,
+                playsession = new playsession()
+                {
+                    EndDate = new DateTime(2020, 1, 16, 21, 0, 0),
+                    StartDate = new DateTime(2020, 1, 16, 19, 0, 0),
+                    Location = "Vester Mariendal Skole",
+                    Type = (int)PlaySession.Type.Practice
+                },
+                practiceteam = thursdayPrac,
+                trainer = headCoach,
+            });
+
+            var oldTuesdaySession = _db.practicesessions.Add(new practicesession
+            {
+                mainfocuspoint = fp2,
+                playsession = new playsession()
+                {
+                    EndDate = new DateTime(2020, 1, 14, 21, 30, 0),
+                    StartDate = new DateTime(2020, 1, 14, 19, 30, 0),
+                    Location = "Vester Mariendal Skole",
+                    Type = (int)PlaySession.Type.Practice
+                },
+                practiceteam = tuesdayPrac,
+                trainer = headCoach,
+            });
+
             _db.SaveChanges();
         }
     }
