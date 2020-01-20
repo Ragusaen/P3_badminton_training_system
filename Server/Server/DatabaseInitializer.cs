@@ -27,7 +27,6 @@ namespace server
                 Name = "Defensive long backhand",
                 VideoURL = "https://www.youtube.com/watch?v=fzmT3qcMq4s",
             };
-
             var fp2 = new focuspoint
             {
                 Description =
@@ -36,7 +35,6 @@ namespace server
                 Name = "Fast movement to the rear court",
                 VideoURL = null,
             };
-
             var fp3 = new focuspoint
             {
                 Description = "This focus point should be trained during matches.",
@@ -44,12 +42,11 @@ namespace server
                 Name = "Forcing net play in doubles",
                 VideoURL = null,
             };
-
             var fp4 = new focuspoint
             {
                 Description = "This focus point should be trained during matches.",
                 IsPrivate = false,
-                Name = "Defensive close to line.",
+                Name = "Defensive close to line",
                 VideoURL = null,
             };
             _db.focuspoints.AddRange(new focuspoint[] {fp1, fp2, fp3, fp4});
@@ -154,20 +151,6 @@ namespace server
             {
                 new position
                 {
-                    member = _db.members.Find(4),
-                    IsExtra = false,
-                    Order = 0,
-                    Type = (int)Lineup.PositionType.MixDouble,
-                },
-                new position
-                {
-                    member = _db.members.Find(21),
-                    IsExtra = false,
-                    Order = 0,
-                    Type = (int)Lineup.PositionType.MixDouble,
-                },
-                new position
-                {
                     member = _db.members.Find(1),
                     IsExtra = false,
                     Order = 1,
@@ -175,31 +158,38 @@ namespace server
                 },
                 new position
                 {
-                    member = _db.members.Find(33),
+                    member = _db.members.Find(21),
                     IsExtra = false,
                     Order = 1,
                     Type = (int)Lineup.PositionType.MixDouble,
                 },
                 new position
                 {
-                    member = _db.members.Find(21),
+                    member = _db.members.Find(4),
                     IsExtra = false,
-                    Order = 0,
-                    Type = (int)Lineup.PositionType.WomensSingle,
+                    Order = 2,
+                    Type = (int)Lineup.PositionType.MixDouble,
                 },
                 new position
                 {
-                    member = _db.members.Find(39),
+                    member = _db.members.Find(33),
+                    IsExtra = false,
+                    Order = 2,
+                    Type = (int)Lineup.PositionType.MixDouble,
+                },
+                new position
+                {
+                    member = _db.members.Find(21),
                     IsExtra = false,
                     Order = 1,
                     Type = (int)Lineup.PositionType.WomensSingle,
                 },
                 new position
                 {
-                    member = _db.members.Find(5),
+                    member = _db.members.Find(39),
                     IsExtra = false,
-                    Order = 0,
-                    Type = (int)Lineup.PositionType.MensSingle,
+                    Order = 2,
+                    Type = (int)Lineup.PositionType.WomensSingle,
                 },
                 new position
                 {
@@ -210,44 +200,51 @@ namespace server
                 },
                 new position
                 {
+                    member = _db.members.Find(5),
+                    IsExtra = false,
+                    Order = 2,
+                    Type = (int)Lineup.PositionType.MensSingle,
+                },
+                new position
+                {
                     member = _db.members.Find(33),
                     IsExtra = false,
-                    Order = 0,
+                    Order = 1,
                     Type = (int)Lineup.PositionType.WomensDouble,
                 },
                 new position
                 {
                     member = _db.members.Find(39),
                     IsExtra = false,
-                    Order = 0,
+                    Order = 1,
                     Type = (int)Lineup.PositionType.WomensDouble,
                 },
                 new position
                 {
                     member = _db.members.Find(1),
                     IsExtra = false,
-                    Order = 0,
+                    Order = 1,
                     Type = (int)Lineup.PositionType.MensDouble,
                 },
                 new position
                 {
                     member = _db.members.Find(4),
                     IsExtra = false,
-                    Order = 0,
+                    Order = 1,
                     Type = (int)Lineup.PositionType.MensDouble,
                 },
                 new position
                 {
                     member = _db.members.Find(5),
                     IsExtra = false,
-                    Order = 1,
+                    Order = 2,
                     Type = (int)Lineup.PositionType.MensDouble,
                 },
                 new position
                 {
                     member = _db.members.Find(6),
                     IsExtra = false,
-                    Order = 1,
+                    Order = 2,
                     Type = (int)Lineup.PositionType.MensDouble,
                 },
             };
