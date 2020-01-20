@@ -156,7 +156,7 @@ namespace server
             {
                 new position
                 {
-                    member = _db.members.Find(1),
+                    member = _db.members.Find(4),
                     IsExtra = false,
                     Order = 0,
                     Type = (int)Lineup.PositionType.MixDouble,
@@ -170,7 +170,7 @@ namespace server
                 },
                 new position
                 {
-                    member = _db.members.Find(4),
+                    member = _db.members.Find(1),
                     IsExtra = false,
                     Order = 1,
                     Type = (int)Lineup.PositionType.MixDouble,

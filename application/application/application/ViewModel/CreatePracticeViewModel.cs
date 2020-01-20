@@ -168,14 +168,15 @@ namespace application.ViewModel
         public CreatePracticeViewModel(PracticeSession ps, RequestCreator requestCreator, INavigation navigation) : base(requestCreator, navigation)
         {
             Trainers = RequestCreator.GetAllTrainers();
-            foreach (Trainer T in Trainers) 
+            Practice = ps;
+            foreach (Trainer T in Trainers)
             {
-                if (Practice.Trainer == T)
+                if (Practice.Trainer.Member.Id == T.Member.Id)
                 {
                     TrainerIndex = Trainers.IndexOf(T);
                 }
             }
-            Practice = ps;
+
             TeamName = ps.PracticeTeam.Name;
             SelectedDateStart = ps.Start;
             SelectedTimeStart = ps.Start.TimeOfDay;

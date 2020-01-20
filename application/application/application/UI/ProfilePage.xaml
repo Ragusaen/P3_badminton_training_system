@@ -33,7 +33,7 @@
             <StackLayout Padding="10,10,10,10">
                 <Frame BackgroundColor="#F0F0F0" HasShadow="True" CornerRadius="5">
                     <StackLayout BackgroundColor="#F0F0F0" >
-                        <Label Text="{Binding Member.Name}" FontSize="Large" HorizontalOptions="CenterAndExpand" VerticalOptions="Start"/>
+                        <Label Text="{Binding Member.Name}" FontSize="Large" HorizontalOptions="CenterAndExpand" VerticalOptions="Start" FontAttributes="Bold"/>
                         <Label Text="{Binding StringMemberType}" FontSize="Small" HorizontalOptions="CenterAndExpand"/>
                         <Label x:Name="NoSexLabel" IsVisible="False" Text="This player has no assigned sex!" TextColor="Red" HorizontalTextAlignment="Center"/>
                     </StackLayout>
@@ -42,7 +42,7 @@
                 <StackLayout x:Name="TrainerRelevant">
                     <Frame HasShadow="True" CornerRadius="5">
                         <StackLayout>
-                            <Label Text="Trainer on Teams" VerticalOptions="Start" HorizontalOptions="StartAndExpand" FontSize="Medium"/>
+                            <Label Text="Trainer on Teams" VerticalOptions="Start" HorizontalOptions="StartAndExpand" FontSize="Medium" FontAttributes="Bold"/>
                             <Label Text="Currently not a trainer on any team" IsVisible="{Binding NoTrainerVisibility}" FontSize="Small"/>
                             <ListView ItemsSource="{Binding TrainerPracticeTeams}" VerticalScrollBarVisibility="Never" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding TrainerPracticeTeamsListHeight}">
                                 <ListView.ItemTemplate>
@@ -60,7 +60,7 @@
                 <StackLayout x:Name="PlayerRelevant">
                     <Frame HasShadow="True" CornerRadius="5">
                         <StackLayout>
-                            <Label Text="Player on Teams" VerticalOptions="Start" HorizontalOptions="StartAndExpand" FontSize="Medium"/>
+                            <Label Text="Player on Teams" VerticalOptions="Start" HorizontalOptions="StartAndExpand" FontSize="Medium" FontAttributes="Bold"/>
                             <ListView ItemsSource="{Binding PlayerPracticeTeams}" VerticalScrollBarVisibility="Never" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding PlayerPracticeTeamsListHeight}">
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
@@ -82,7 +82,7 @@
                     </Frame>
                     <Frame HasShadow="True" CornerRadius="5">
                         <StackLayout>
-                            <Label Text="Focus Points" FontSize="Medium"/>
+                            <Label Text="Focus Points" FontSize="Medium" FontAttributes="Bold"/>
                             <ListView x:Name="FocusPointList" VerticalScrollBarVisibility="Never" ItemSelected="ListView_OnItemSelected" ItemsSource="{Binding FocusPoints}" VerticalOptions="Fill" SeparatorVisibility="None" HeightRequest="{Binding FocusPointsListHeight}">
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
@@ -104,7 +104,7 @@
                     </Frame>
                     <Frame x:Name="FeedbackSection" HasShadow="True" CornerRadius="5">
                         <StackLayout>
-                            <Label Text="Feedback graph" FontSize="Medium"/>
+                            <Label Text="Feedback Graph" FontSize="Medium" FontAttributes="Bold"/>
                             <forms:ChartView  Chart="{Binding Chart}" HeightRequest="300" Margin="0"/>
                             <Button Text="View Feedback" Command="{Binding ViewFeedbackCommand}"/>
                             <Button Text="View all Feedback graph" Command="{Binding ViewFeedbackGraphCommand}"/>
@@ -113,7 +113,7 @@
                 </StackLayout>
                     <Frame HasShadow="True" CornerRadius="5">
                         <StackLayout>
-                            <Label Text="Comment" FontSize="Medium"/>
+                        <Label Text="Comment" FontSize="Medium" FontAttributes="Bold"/>
                             <Frame HasShadow="False" CornerRadius="2" BorderColor="#FFBBBB">
                             <StackLayout>
                                 <Label x:Name="Comment" TextColor="Black" Text="{Binding CommentText}" FontSize="Medium" IsVisible="True"></Label>
