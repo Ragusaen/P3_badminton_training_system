@@ -14,12 +14,10 @@ namespace server
 
         public void Initialize()
         {
-            {
-                var headCoach = _db.members.Single(p => p.BadmintonPlayerID == 95032401);
-                var secondCoach = _db.members.Single(p => p.BadmintonPlayerID == 81100101);
-                headCoach.MemberType = (int) MemberType.Both;
-                secondCoach.MemberType = (int) MemberType.Both;
-            }
+            var headCoach = _db.members.Single(p => p.BadmintonPlayerID == 95032401);
+            var secondCoach = _db.members.Single(p => p.BadmintonPlayerID == 81100101);
+            headCoach.MemberType = (int) MemberType.Both;
+            secondCoach.MemberType = (int) MemberType.Both;
 
             var fp1 = new focuspoint
             {
@@ -156,7 +154,7 @@ namespace server
             {
                 new position
                 {
-                    member = _db.members.Find(1),
+                    member = _db.members.Find(4),
                     IsExtra = false,
                     Order = 0,
                     Type = (int)Lineup.PositionType.MixDouble,
@@ -170,7 +168,7 @@ namespace server
                 },
                 new position
                 {
-                    member = _db.members.Find(4),
+                    member = _db.members.Find(1),
                     IsExtra = false,
                     Order = 1,
                     Type = (int)Lineup.PositionType.MixDouble,

@@ -15,5 +15,6 @@ namespace Common.Serialization
     [Serializable, XmlRoot]
     public class SetExerciseDescriptorResponse : PermissionResponse
     {
+        public ExerciseDescriptor Exercise;
     }
 }
